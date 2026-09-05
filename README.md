@@ -5,13 +5,13 @@ High-performance Next.js 16 and Solana monorepo starter with 4-Layer Functional 
 <!-- DOCS-AUTO:START -->
 ## Documentation Snapshot (Auto-generated)
 
-Updated: 2026-09-05 21:37:50 UTC
+Updated: 2026-09-05 23:09:53 UTC
 
 | Document | Scope | Last Updated | Last Commit |
 | --- | --- | --- | --- |
 | [`architecture-overview.md`](./knowledge/architecture/architecture-overview.md) | general | not set | 2026-08-23 a69db56b |
 | [`auth-flow.md`](./knowledge/architecture/auth-flow.md) | frontend/auth | not set | 2026-08-23 a69db56b |
-| [`index.md`](./knowledge/architecture/index.md) | general | not set | 2026-08-23 a69db56b |
+| [`index.md`](./knowledge/architecture/index.md) | general | not set | 2026-09-05 2ec48eff |
 | [`session-model.md`](./knowledge/architecture/session-model.md) | frontend/auth | not set | 2026-08-23 a69db56b |
 | [`state-machine.md`](./knowledge/architecture/state-machine.md) | general | not set | 2026-08-23 a69db56b |
 | [`threat-model.md`](./knowledge/architecture/threat-model.md) | general | not set | 2026-08-23 a69db56b |

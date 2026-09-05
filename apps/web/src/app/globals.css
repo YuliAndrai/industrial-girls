@@ -1,10 +1,21 @@
+/**
+ * @file apps/web/src/app/globals.css
+ * @description Layer 1: Presentation - Global Brutalist Industrial Rave Stylesheet.
+ * Configures Tailwind directives, custom scanlines, grain textures, and tactical scrollbar styling.
+ */
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 :root {
-  --background: #0a0a0c;
+  --background: #050505;
   --foreground: #ededed;
+  --rave-red: #ff0000;
+}
+
+html {
+  scroll-behavior: smooth;
 }
 
 body {
@@ -14,4 +25,40 @@ body {
   min-height: 100vh;
   margin: 0;
   padding: 0;
+  overflow-x: hidden;
+}
+
+/* Custom Tactical Scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: #080808;
+}
+::-webkit-scrollbar-thumb {
+  background: #ff0000;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #cc0000;
+}
+
+/* Grain texture overlay */
+.rave-grain {
+  background-image: radial-gradient(rgba(255, 0, 0, 0.08) 1px, transparent 0);
+  background-size: 24px 24px;
+}
+
+/* Scanline effect */
+.rave-scanlines {
+  background: linear-gradient(
+    rgba(18, 16, 16, 0) 50%, 
+    rgba(0, 0, 0, 0.25) 50%
+  ), linear-gradient(
+    90deg,
+    rgba(255, 0, 0, 0.03),
+    rgba(0, 255, 0, 0.01),
+    rgba(0, 0, 255, 0.03)
+  );
+  background-size: 100% 3px, 6px 100%;
 }

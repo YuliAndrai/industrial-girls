@@ -9,8 +9,11 @@ import { Providers } from "./providers";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "Industrial Girls - Next.js Starter",
-  description: "High-performance Next.js 16 monorepo with 4-Layer Architecture and Autonomous Governance",
+  title: "INDUSTRIAL GIRLS | Underground Techno Record Label",
+  description: "Advocates for the industrial underground. High-velocity techno, warehouse showcases, vinyl catalog, and dark electronic body music.",
+  icons: {
+    icon: "/assets/images/industrial-girls-badge-mask.jpg",
+  },
 };
 
 export default function RootLayout({
@@ -21,7 +24,7 @@ export default function RootLayout({
   // Step 1: Wrap app contents in HTML shell with dark theme and providers
   return (
     <html lang="en" className="dark">
-      <body className="bg-neutral-950 text-neutral-100 antialiased selection:bg-blue-500 selection:text-white">
+      <body className="bg-bg text-neutral-100 antialiased selection:bg-raveRed selection:text-black">
         <Providers>{children}</Providers>
       </body>
     </html>
