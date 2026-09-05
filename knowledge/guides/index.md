@@ -25,4 +25,3 @@ Implementation guides and best practices.
 * [Linear Single Issue Slice Planning](linear-single-issue-slice-planning.md)
 * [Operability Observability Security Deploy](operability-observability-security-deploy.md)
 * [Route Architecture and Templates](route-architecture-and-templates.md)
-* [Solana Kit Migration Recipes](solana-kit-migration-recipes.md)

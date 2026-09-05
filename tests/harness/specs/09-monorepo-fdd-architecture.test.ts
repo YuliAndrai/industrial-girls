@@ -32,18 +32,18 @@ describe('09 - Monorepo 4-Layer Architecture & Governance Harness', () => {
       }
     });
 
-    test('infrastructure layer provides Solana RPC configuration', () => {
-      const solanaInfra = path.join(libRoot, 'infrastructure/solana.ts');
-      expect(fs.existsSync(solanaInfra)).toBe(true);
-      const content = fs.readFileSync(solanaInfra, 'utf8');
-      expect(content).toContain('getSolanaRpcUrl');
+    test('infrastructure layer provides API client configuration', () => {
+      const apiInfra = path.join(libRoot, 'infrastructure/api-client.ts');
+      expect(fs.existsSync(apiInfra)).toBe(true);
+      const content = fs.readFileSync(apiInfra, 'utf8');
+      expect(content).toContain('getApiBaseUrl');
     });
 
-    test('hooks layer provides wallet hook', () => {
-      const walletHook = path.join(libRoot, 'hooks/use-solana-wallet.ts');
-      expect(fs.existsSync(walletHook)).toBe(true);
-      const content = fs.readFileSync(walletHook, 'utf8');
-      expect(content).toContain('useSolanaWallet');
+    test('hooks layer provides mount lifecycle hook', () => {
+      const mountHook = path.join(libRoot, 'hooks/use-mounted.ts');
+      expect(fs.existsSync(mountHook)).toBe(true);
+      const content = fs.readFileSync(mountHook, 'utf8');
+      expect(content).toContain('useMounted');
     });
   });
 

@@ -25,14 +25,8 @@ generated_at="$(date -u +"%Y-%m-%d %H:%M:%S UTC")"
 collect_scope() {
   local name="$1"
   case "$name" in
-    architecture.md|authority-model.md|state-machine.md|threat-model.md|devnet-proof.md)
-      echo "blockchain"
-      ;;
     auth-flow.md|session-model.md)
       echo "frontend/auth"
-      ;;
-    nft-spec.md)
-      echo "nft"
       ;;
     *)
       echo "general"
@@ -74,9 +68,8 @@ collect_scope() {
 
   echo
   echo "### Required Docs by Change Type"
-  echo '- Blockchain (/programs): `knowledge/architecture/architecture-overview.md`, `knowledge/architecture/authority-model.md`, `knowledge/architecture/state-machine.md`, `knowledge/architecture/threat-model.md`, `knowledge/architecture/devnet-proof.md`'
   echo '- Frontend/Auth (/app): `knowledge/architecture/auth-flow.md`, `knowledge/architecture/session-model.md`'
-  echo '- NFT features: `knowledge/architecture/nft-spec.md`'
+  echo '- Architecture: `knowledge/architecture/architecture-overview.md`, `knowledge/architecture/state-machine.md`, `knowledge/architecture/threat-model.md`'
 } > "$TMP_BLOCK"
 
 if grep -q "$START_MARKER" "$README_FILE" && grep -q "$END_MARKER" "$README_FILE"; then

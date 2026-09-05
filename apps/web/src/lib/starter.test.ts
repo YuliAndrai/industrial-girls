@@ -1,11 +1,11 @@
 /**
  * @file tests/starter/starter.test.ts
- * @description Unit tests for starter utilities, Solana infrastructure, and pipeline execution.
+ * @description Unit tests for starter utilities, API infrastructure, and pipeline execution.
  */
 
 import { describe, test, expect } from "vitest";
-import { cn, formatAddress } from "@/lib/utils";
-import { getSolanaRpcUrl, getSolscanTransactionUrl } from "@/lib/infrastructure/solana";
+import { cn, truncateText } from "@/lib/utils";
+import { getApiBaseUrl, DEFAULT_API_BASE_URL } from "@/lib/infrastructure/api-client";
 import { executeHealthPipeline } from "@/lib/pipelines/example-pipeline";
 
 describe("Starter Utilities & Infrastructure", () => {
@@ -19,46 +19,46 @@ describe("Starter Utilities & Infrastructure", () => {
     });
   });
 
-  describe("formatAddress", () => {
-    test("formats valid Solana address into truncated representation", () => {
+  describe("truncateText", () => {
+    test("formats long text into truncated representation with ellipsis", () => {
       // Arrange
-      const address = "7xKXtg2CW87d97TXJSDpbD5jBkheTqA83TZRuJosgAsU";
+      const text = "0123456789abcdefghijklmnopqrstuvwxyz";
 
       // Act
-      const formatted = formatAddress(address, 4);
+      const formatted = truncateText(text, 4);
 
       // Assert
-      expect(formatted).toBe("7xKX...gAsU");
+      expect(formatted).toBe("0123...wxyz");
     });
 
-    test("returns empty string or original if invalid", () => {
-      expect(formatAddress(null)).toBe("");
-      expect(formatAddress("short")).toBe("short");
+    test("returns empty string or original if invalid or short", () => {
+      expect(truncateText(null)).toBe("");
+      expect(truncateText("short")).toBe("short");
     });
   });
 
-  describe("Solana Infrastructure", () => {
-    test("returns devnet RPC url by default", () => {
-      const url = getSolanaRpcUrl();
-      expect(url).toContain("devnet");
+  describe("API Infrastructure", () => {
+    test("returns configured or default API base url", () => {
+      const url = getApiBaseUrl();
+      expect(url).toBeDefined();
+      expect(typeof url).toBe("string");
+      expect(url.length).toBeGreaterThan(0);
     });
 
-    test("generates correct Solscan Devnet transaction URL", () => {
-      const sig = "5J7X...";
-      const url = getSolscanTransactionUrl(sig);
-      expect(url).toBe("https://solscan.io/tx/5J7X...?cluster=devnet");
+    test("default API base URL points to local API route", () => {
+      expect(DEFAULT_API_BASE_URL).toContain("http");
     });
   });
 
   describe("Domain Pipeline", () => {
-    test("executes health pipeline successfully against Devnet", async () => {
+    test("executes health pipeline successfully against configured environment", async () => {
       // Act
       const result = await executeHealthPipeline();
 
       // Assert
       expect(result.success).toBe(true);
-      expect(result.context.network).toBe("devnet");
-      expect(result.context.rpcEndpoint).toContain("devnet");
+      expect(result.context).toBeDefined();
+      expect(result.context.apiEndpoint).toBeDefined();
     });
   });
 
@@ -67,35 +67,36 @@ describe("Starter Utilities & Infrastructure", () => {
       const { z } = await import("zod");
       const UserSchema = z.object({
         name: z.string(),
-        rpc: z.string().url(),
+        apiUrl: z.string().url(),
       });
 
       const parsed = UserSchema.parse({
-        name: "Solana Dev",
-        rpc: "https://api.devnet.solana.com",
+        name: "Admin User",
+        apiUrl: "http://localhost:3001/api",
       });
 
-      expect(parsed.name).toBe("Solana Dev");
-      expect(parsed.rpc).toBe("https://api.devnet.solana.com");
+      expect(parsed.name).toBe("Admin User");
+      expect(parsed.apiUrl).toBe("http://localhost:3001/api");
     });
 
     test("validates schema with Valibot", async () => {
       const v = await import("valibot");
       const ConfigSchema = v.object({
-        cluster: v.string(),
-        autoConnect: v.boolean(),
+        env: v.string(),
+        enabled: v.boolean(),
       });
 
       const result = v.safeParse(ConfigSchema, {
-        cluster: "devnet",
-        autoConnect: true,
+        env: "development",
+        enabled: true,
       });
 
       expect(result.success).toBe(true);
       if (result.success) {
-        expect(result.output.cluster).toBe("devnet");
+        expect(result.output.env).toBe("development");
       }
     });
   });
 });
+
 

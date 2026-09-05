@@ -2,9 +2,6 @@
   "name": "brids",
   "version": "0.2.0",
   "private": true,
-  "bin": {
-    "reasoning-agent": "./lib/reasoning-agent/cli.ts"
-  },
   "scripts": {
     "predev": "node ./scripts/db-migrate-if-configured.js",
     "dev": "next dev apps/web -p 3001 --webpack",
@@ -48,19 +45,7 @@
   },
   "dependencies": {
     "@cfworker/json-schema": "^4.1.1",
-    "@metaplex-foundation/mpl-core": "^1.7.0",
-    "@metaplex-foundation/mpl-core-candy-machine": "^0.3.0",
-    "@metaplex-foundation/umi": "^1.5.1",
-    "@metaplex-foundation/umi-bundle-defaults": "^1.5.1",
-    "@metaplex-foundation/umi-signer-wallet-adapters": "^1.5.1",
-    "@metaplex-foundation/umi-web3js-adapters": "^1.5.1",
     "@modelcontextprotocol/server": "^2.0.0-alpha.2",
-    "@solana/kit": "^2.3.0",
-    "@solana/wallet-adapter-base": "^0.9.23",
-    "@solana/wallet-adapter-phantom": "^0.9.28",
-    "@solana/wallet-adapter-react": "^0.15.39",
-    "@solana/wallet-adapter-react-ui": "^0.9.39",
-    "@solana/web3.js": "^1.98.4",
     "@vercel/blob": "^2.3.3",
     "@vercel/speed-insights": "^2.0.0",
     "@workos-inc/authkit-nextjs": "^4.0.1",
@@ -72,7 +57,6 @@
     "react-dom": "19.0.0",
     "react-map-gl": "^8.1.1",
     "server-only": "^0.0.1",
-    "tweetnacl": "^1.0.3",
     "valibot": "^1.4.2",
     "zod": "^4.4.3"
   },

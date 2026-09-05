@@ -1,10 +1,10 @@
 /**
  * @file apps/web/src/lib/pipelines/example-pipeline.ts
- * @description Layer 3: Domain / Pipelines - Example Solana Validation Pipeline.
- * Encapsulates multi-step business logic validation for Solana RPC health.
+ * @description Layer 3: Domain / Pipelines - System & API Health Validation Pipeline.
+ * Encapsulates pure business logic validation for runtime and API connectivity health.
  */
 
-import { getSolanaRpcUrl } from "../infrastructure/solana";
+import { getApiBaseUrl } from "../infrastructure/api-client";
 
 /**
  * Pipeline execution context contract.
@@ -12,10 +12,10 @@ import { getSolanaRpcUrl } from "../infrastructure/solana";
 export interface HealthPipelineContext {
   /** Timestamp when pipeline started */
   startedAt: number;
-  /** Resolved RPC endpoint URL */
-  rpcEndpoint: string;
-  /** Active network target */
-  network: "devnet" | "mainnet-beta";
+  /** Resolved API endpoint URL */
+  apiEndpoint: string;
+  /** Active runtime environment */
+  environment: "development" | "production" | "test";
 }
 
 /**
@@ -31,22 +31,23 @@ export interface HealthPipelineResult {
 }
 
 /**
- * Executes the starter domain health check pipeline against Solana Devnet.
+ * Executes the starter domain health check pipeline against configured API infrastructure.
  *
  * @returns {Promise<HealthPipelineResult>} The pipeline result and diagnostic metadata.
  */
 export async function executeHealthPipeline(): Promise<HealthPipelineResult> {
   // Step 1: Initialize pipeline execution context
+  const currentEnv = process.env.NODE_ENV === "production" ? "production" : "development";
   const context: HealthPipelineContext = {
     startedAt: Date.now(),
-    rpcEndpoint: getSolanaRpcUrl(),
-    network: "devnet",
+    apiEndpoint: getApiBaseUrl(),
+    environment: currentEnv,
   };
 
   try {
-    // Step 2: Validate Devnet-only invariant
-    if (!context.rpcEndpoint.includes("devnet") && !context.rpcEndpoint.includes("127.0.0.1")) {
-      throw new Error("Violation: Non-devnet RPC endpoint configured in starter pipeline.");
+    // Step 2: Validate API endpoint invariant (must be a valid non-empty HTTP/HTTPS URL)
+    if (!context.apiEndpoint || !/^https?:\/\//i.test(context.apiEndpoint)) {
+      throw new Error("Violation: Invalid API endpoint configured in health pipeline.");
     }
 
     // Step 3: Return verified success result
@@ -55,6 +56,7 @@ export async function executeHealthPipeline(): Promise<HealthPipelineResult> {
       context,
     };
   } catch (err: unknown) {
+    // Step 4: Gracefully handle and wrap execution failures
     const message = err instanceof Error ? err.message : "Unknown error in health pipeline";
     return {
       success: false,

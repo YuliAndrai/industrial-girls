@@ -11,22 +11,22 @@
 - If this file, `.agents/*`, or repo-local agent skills drift, update the summary to match canonical knowledge docs and scripts. Do not loosen rules here.
 
 ## Identity & Stack Alignment
-- Primary stack: **Google Antigravity SDK + Gemini Models + Next.js + Solana**.
+- Primary stack: **Google Antigravity SDK + Gemini Models + Next.js**.
 - Reference policies and workflows under `.agents/policies/` and `.agents/workflows/`.
 - **Token Efficiency & Graph Reading**: Prioritize consulting `.agents/graph.json` and OKF indexes before performing recursive file searches or reading full file contents.
 
 ## Global Non-Negotiable Rules
-1. **Agent Sub-Orchestration**: Always use `invoke_subagent` to delegate complex verifications (QA, Security, Frontend, Solana, Structure) rather than switching personas internally.
+1. **Agent Sub-Orchestration**: Always use `invoke_subagent` to delegate complex verifications (QA, Security, Frontend, Structure) rather than switching personas internally.
 2. **Tool Best Practices**: Always use `replace_file_content`, `grep_search`, `read_file`, and native MCP server tools instead of arbitrary bash scripts. Send long-running tasks to the background.
 3. **Planning Mode**: Rely on `implementation_plan.md`, `task.md`, and `walkthrough.md` artifacts to track and report progress.
-4. **Devnet Only**: NEVER use `localnet`, mocks, or simulated transactions. All blockchain interactions must be real transactions on Devnet.
+4. **Production Quality**: Build secure, production-grade applications with zero mock credentials or bypassed security boundaries.
 5. **Clean Code, Monorepo Structure & In-Code Commentary**: No dead code, no implicit `any`, no unclear naming. Never pollute the root directory; enforce directory whitelists. **MANDATORY IN-CODE COMMENTARY**: Every code artifact (`.ts`, `.tsx`, `.rs`, `.sql`) MUST include explicit header comments declaring layer role, JSDoc/TSDoc/Rust doc blocks on all functions/types, step-by-step logic indicators (`// Step N: ...`), and inline invariant/security explanations. Zero magic or undocumented code.
 6. **Wait for Authorization**: NEVER automatically merge Pull Requests or finish a parent branch without explicit user authorization (Human Acceptance).
 
 ## Entry Rules
 - Start with `planner`.
 - When the brief is vague or underspecified, run `pnpm task:init` before branching; it is the canonical bootstrap entrypoint.
-- For non-trivial issue-type-driven work, require the governing artifact before implementation and derive the branch family from the Linear issue type chosen in the doc-first phase. Supported families include `feature/*`, `bugfix/*`, `fix/*`, `hotfix/*`, `epic/*`, `security/*`, `nft/*`, and `refactor/*`.
+- For non-trivial issue-type-driven work, require the governing artifact before implementation and derive the branch family from the Linear issue type chosen in the doc-first phase. Supported families include `feature/*`, `bugfix/*`, `fix/*`, `hotfix/*`, `epic/*`, `security/*`, and `refactor/*`.
 - For new features, require:
   - `knowledge/features/feature-<slug>.md`
   - `knowledge/features/feature-<slug>-implementation.md`
@@ -40,13 +40,8 @@
 - Load only the matching `.agents/workflows/*.md` and `.agents/policies/*.md`.
 
 ## Workflow Routing
-- Solana-related work: prefer Solana Developer MCP tools over model memory. Use `list_sections` first for non-trivial Solana questions, `get_documentation` for canonical source/framework/library docs, and `Solana_Documentation_Search` or `Solana_Expert__Ask_For_Help` for narrow how-to, errors, or API usage.
-- Solana program Rust: whenever writing or modifying it, run `program_autofixer`, apply fixes, and repeat until `require_another_tool_call_after_fixing` is false.
-- `/programs` or on-chain runtime changes: `.agents/workflows/blockchain-cycle.md`
 - `/app`, `components`, auth flows, or browser-critical routes: `.agents/workflows/frontend-cycle.md`. Next.js App Router implementations must consult version-accurate bundled documentation at `node_modules/next/dist/docs/` and verify live runtime state via `next-devtools-mcp` and `next-dev-loop`.
 - Motion-driven UX/UI delivery slices must keep Motion 12 (`motion.dev`), current `motion` syntax, and any provider-specific tooling references explicit in the governing artifact.
-- Mint, metadata, collection, royalty, or Metaplex scope: `.agents/workflows/nft-cycle.md`
-- Release hardening or security-critical rollout: `.agents/workflows/mainnet-hardening.md`
 - Explicit `refactor/*` work, clean-code debt slices, or behavior-preserving structural changes: `.agents/workflows/refactor-cycle.md`
 - Responsive or critical browser QA: `.agents/workflows/responsive-qa.md`
 - `/db`, `lib/db`, persistence repositories, or `scripts/db-*`: choose dominant runtime workflow, then add `qa`, `docs`, and `reviewer`; enforce DB migration gate from `testing-policy`.
@@ -54,23 +49,21 @@
 
 ## Agent Specialists (`.agents/agents/*.yaml`)
 - `planner`: detect scope, require Linear/artifact preconditions, activate workflows, delegate, aggregate evidence, enforce Definition of Done and in-code commentary standards across subagents.
-- `architect`: Monorepo root directory structure guardian and strict 4-Layered Functional Web3 Architect for Solana & Next.js (Presentation, Application/Consumption, Domain/Pipelines, Infrastructure separation, `@solana/kit` enforcement, zero legacy web3.js v1, in-code layer annotation & commentary audit).
-- `solana`: Solana/Anchor/devnet execution, runtime constraints, RPC and account-state proof, explicit Rust doc comments, and step-by-step transaction pipeline annotations.
-- `frontend`: Next.js App Router, SSR-first boundaries, client-wallet isolation, UI implementation, component header comments, and step-by-step hook/action commentary.
-- `api`: REST/GraphQL/tRPC endpoints, Zod validation, webhooks, third-party integrations (Resend, Brevo, QStash, Pinata, GCS), and endpoint documentation.
+- `architect`: Monorepo root directory structure guardian and strict 4-Layered Functional Architect for Next.js (Presentation, Application/Consumption, Domain/Pipelines, Infrastructure separation, in-code layer annotation & commentary audit).
+- `frontend`: Next.js App Router, SSR-first boundaries, UI implementation, component header comments, and step-by-step hook/action commentary.
+- `api`: REST/GraphQL/tRPC endpoints, Zod validation, webhooks, third-party integrations (Resend, Brevo, QStash, GCS), and endpoint documentation.
 - `db`: Database schemas, migrations, query performance, persistence repositories, and SQL transaction commentary.
 - `state`: Client and global state management (Zustand, React Query/TanStack Query), and store mutation commentary.
-- `nft`: mint authority, metadata, collection, royalties, Metaplex-specific invariants, and metadata pipeline commentary.
-- `qa`: tests, Playwright, Synpress, MCP/browser evidence, responsive verification, and Arrange/Act/Assert test commentary.
+- `qa`: tests, Playwright, MCP/browser evidence, responsive verification, and Arrange/Act/Assert test commentary.
 - `docs`: canonical knowledge sync, feature/fix artifacts, RFC traceability, migration notes.
-- `security`: authority, replay, signer, CPI, dependency, and trust-boundary review with security invariant commentary.
+- `security`: authority, replay, signer, dependency, and trust-boundary review with security invariant commentary.
 - `reviewer`: explicit clean-code audit, in-code commentary verification, duplication, naming, dead-code, governance, and final completion gate.
 
 ## Harness & Lifecycle Enforcement (`.agents/hooks.json`)
 - **Canonical Entrypoint Workflow**: Every single task, issue, feature, fix, or SPEC MUST strictly follow the lifecycle defined in `.agents/workflows/spec-execution-cycle.md`.
 - **Double-Gatekeeper Protocol**:
   1. **Gate 1 (Pre-Implementation Architecture Review & Initial Scaffolding)**: `architect` inspects and approves the projected 4-layer file paths in the Solution Spec, and **physically creates/scaffolds those files** with proper layer headers, interface/type contracts, and minimal stubs before code implementation begins.
-  2. **Gate 2 (Post-Implementation Diff Audit)**: `architect` audits the written diff, enforcing strict layer isolation, zero forbidden patterns (`@solana/web3.js` v1, `class`, `new Connection()`), clean monorepo root, and mandatory in-code commentary/indicators.
+  2. **Gate 2 (Post-Implementation Diff Audit)**: `architect` audits the written diff, enforcing strict layer isolation, clean monorepo root, and mandatory in-code commentary/indicators.
 - **Idempotent 8-Phase Task Lifecycle & Dual Human Gates**:
   1. **BOOTSTRAP**: `./scripts/task-init.sh` initializes branch and state tracker `.agents/active_task_state.json`.
   2. **DOCS FILLED**: Populate governing dual artifacts without placeholders (`<!-- Describir... -->`).
@@ -82,7 +75,6 @@
   8. **🛑 HUMAN MERGE ACCEPTANCE**: Stop & wait for explicit user authorization BEFORE merging to `develop`.
 - **Automatic Post-Human Acceptance PR Execution**: Upon receiving explicit Human Acceptance, the agent MUST automatically run `pnpm pr:auto` (`scripts/ci/pr-auto.sh`) to generate `pr-body.md`, infer labels (`scope:*`, `type:*`, `risk:*`), push the branch, open/update the PR, and apply GitHub labels via `gh api`.
 
-
 ## Definition of Done
 - `pnpm validate`
 - Explicit `clean-code` and in-code commentary pass completed and any blocking findings are resolved
@@ -90,7 +82,6 @@
 - Required docs updated per `knowledge/governance/documentation-policy.md`
 - Required PR/RFC metadata aligns with `knowledge/governance/pr-policy-source-of-truth.json`
 - Final `develop` merge has explicit user manual-test approval recorded as `Human Acceptance`
-- Blockchain/NFT acceptance: devnet only, real transactions, real signatures, on-chain confirmation
 
 ## 🚫 MANDATORY BOOTSTRAP SEQUENCE / PREFLIGHT
 

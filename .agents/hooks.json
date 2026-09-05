@@ -32,10 +32,6 @@
     }
   },
   "domain_subagent_bindings": {
-    "solana": {
-      "primary": "solana",
-      "supporting": ["architect", "security"]
-    },
     "app": {
       "primary": "frontend",
       "supporting": ["state", "architect"]
@@ -48,10 +44,6 @@
       "primary": "db",
       "supporting": ["qa", "docs"]
     },
-    "nft": {
-      "primary": "nft",
-      "supporting": ["solana", "architect"]
-    },
     "shared": {
       "primary": "architect",
       "supporting": ["reviewer", "docs"]
@@ -60,7 +52,6 @@
   "enforcement_rules": {
     "strict_mode": true,
     "block_on_unassigned_subagent": true,
-    "prohibit_direct_web3_v1": true,
     "require_dual_governing_artifact": true,
     "require_double_gatekeeper_architect_approval": true,
     "allowed_developer_handles": ["jaymusicmachine", "jeisonsosa"],

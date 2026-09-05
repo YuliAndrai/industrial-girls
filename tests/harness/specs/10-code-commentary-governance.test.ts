@@ -43,7 +43,6 @@ describe('10 - Canonical In-Code Commentary Governance & Harness Standards', () 
     const agentsToVerify = [
       'architect',
       'reviewer',
-      'solana',
       'frontend',
       'api',
       'db',
@@ -76,7 +75,6 @@ describe('10 - Canonical In-Code Commentary Governance & Harness Standards', () 
   describe('3. Agents Policies Execution Constraints & Required Evidence', () => {
     const policiesToVerify = [
       'frontend-policy.md',
-      'blockchain-policy.md',
       'testing-policy.md',
       'docs-policy.md',
       'security-policy.md'
@@ -97,7 +95,6 @@ describe('10 - Canonical In-Code Commentary Governance & Harness Standards', () 
 
   describe('4. Workflows Sequence and Gate 2 Auditing', () => {
     const workflowsToVerify = [
-      'blockchain-cycle.md',
       'frontend-cycle.md',
       'refactor-cycle.md'
     ];

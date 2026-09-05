@@ -24,5 +24,4 @@ export interface AppClientState {
  */
 export const STORAGE_KEYS = {
   THEME_PREFERENCE: "app_theme_mode",
-  LAST_CONNECTED_WALLET: "app_last_wallet",
 } as const;
