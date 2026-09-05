@@ -24,7 +24,7 @@ export function Footer(): React.ReactElement {
         </div>
       </div>
 
-      <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6 sm:py-16">
+      <div className="mx-auto max-w-7xl px-4 pt-12 pb-28 sm:px-6 sm:pt-16 sm:pb-32">
         <div className="grid grid-cols-1 gap-10 sm:grid-cols-2 lg:grid-cols-4">
           {/* Column 1: Brand & Logo */}
           <div className="flex flex-col gap-4">

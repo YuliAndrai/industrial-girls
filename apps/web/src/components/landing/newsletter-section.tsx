@@ -61,8 +61,11 @@ export function NewsletterSection(): React.ReactElement {
           <form onSubmit={handleSubmit} className="mt-8 flex flex-col sm:flex-row gap-3">
             <div className="flex-1 relative">
               <input
+                id="newsletter-email-input"
+                name="email"
                 type="email"
                 required
+                aria-label="Enter your frequency email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="ENTER YOUR FREQUENCY (EMAIL)..."

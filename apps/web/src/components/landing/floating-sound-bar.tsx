@@ -53,7 +53,7 @@ export function FloatingSoundBar({
   return (
     <div
       className={cn(
-        "fixed bottom-6 left-1/2 -translate-x-1/2 z-50",
+        "fixed bottom-6 left-6 sm:bottom-8 sm:left-8 z-50",
         "pointer-events-auto",
         className
       )}
