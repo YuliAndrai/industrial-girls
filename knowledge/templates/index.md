@@ -4,7 +4,7 @@ title: templates
 description: Index for templates
 tags: [reference, index, templates]
 timestamp: 2026-06-16T00:00:00Z
-resource: https://github.com/jeisonsosablockdev/brids/tree/develop/knowledge/knowledge/knowledge/templates
+resource: https://github.com/jeisonsosablockdev/industrial-girls/tree/develop/knowledge/knowledge/knowledge/templates
 ---
 
 # templates

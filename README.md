@@ -1,11 +1,11 @@
-# Next.js + Solana Monorepo Starter
+# Industrial Girls
 
-High-performance Next.js 16 and Solana monorepo starter with 4-Layer Functional Architecture, Autonomous Agent Governance Harness, and Solana Devnet integration.
+Underground Techno Record Label & Digital Platform with 4-Layer Functional Architecture and Autonomous Agent Governance Harness.
 
 <!-- DOCS-AUTO:START -->
 ## Documentation Snapshot (Auto-generated)
 
-Updated: 2026-09-05 23:09:53 UTC
+Updated: 2026-09-06 02:58:34 UTC
 
 | Document | Scope | Last Updated | Last Commit |
 | --- | --- | --- | --- |
@@ -24,11 +24,9 @@ Updated: 2026-09-05 23:09:53 UTC
 
 ## Operational Architecture
 
-This repository is structured as a high-performance **pnpm monorepo** for **Next.js** and **Solana**:
+This repository is structured as a high-performance **pnpm monorepo** for **Next.js**:
 
-- `apps/web/`: Next.js 16 (App Router) presentation application with Tailwind CSS, `@solana/wallet-adapter-react`, and 4-layer functional architecture.
-- `programs/`: Solana on-chain programs written in Rust with Anchor framework.
-- `packages/solana-client/`: Shared Solana SDK, types, and IDL client bindings.
+- `apps/web/`: Next.js 16 (App Router) presentation application with Tailwind CSS, Web Audio API sound synthesis, Motion 12, and 4-layer functional architecture.
 - `knowledge/`: Canonical OKF documentation, governance policies (`knowledge/governance/`), and architecture specifications.
 - `scripts/`: Task lifecycle automation (`task-init.sh`), 4-layer architecture linter, and CI governance scripts.
 - `tests/`: Integration tests, unit tests, and autonomous agent governance harness (`tests/harness/`).
@@ -36,18 +34,18 @@ This repository is structured as a high-performance **pnpm monorepo** for **Next
 
 ---
 
-## 4-Layer Functional Web3 Architecture
+## 4-Layer Functional Architecture
 
-All frontend and client code in `apps/web/src/` adheres strictly to 4 decoupled layers:
+All frontend and application code in `apps/web/src/` adheres strictly to 4 decoupled layers:
 
 1. **Layer 1: Presentation** (`apps/web/src/app`, `apps/web/src/components`):
-   - UI views, layout skeletons, wallet connection buttons, client interaction boundaries.
+   - UI views, layout skeletons, interactive brutalist components, client interaction boundaries.
 2. **Layer 2: Application / Consumption** (`apps/web/src/lib/hooks`, `apps/web/src/lib/state`):
-   - React custom hooks, normalized wallet state, application store mutations.
+   - React custom hooks, Web Audio synthesizer hooks, drawer/navigation state, application store mutations.
 3. **Layer 3: Domain / Pipelines** (`apps/web/src/lib/pipelines`):
-   - Pure domain business logic, transaction construction pipelines, validation rules.
+   - Pure domain business logic, data transformers, validation rules.
 4. **Layer 4: Infrastructure** (`apps/web/src/lib/infrastructure`, `apps/web/src/lib/utils.ts`):
-   - Solana Devnet RPC connectors, Solscan URL generators, class name and formatting helpers.
+   - Record label catalog, API clients, external service connectors, utility helpers.
 
 ---
 

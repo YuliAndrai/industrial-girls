@@ -4,7 +4,7 @@ title: Linear Single Issue Slices.Template
 description: Linear Single Issue Slices.Template - migrated from knowledge/
 tags: [templates]
 timestamp: 2026-07-20T04:23:56Z
-resource: https://github.com/jeisonsosablockdev/brids/blob/develop/knowledge/templates/linear-single-issue-slices.template.md
+resource: https://github.com/jeisonsosablockdev/industrial-girls/blob/develop/knowledge/templates/linear-single-issue-slices.template.md
 ---
 
 # Human Brief

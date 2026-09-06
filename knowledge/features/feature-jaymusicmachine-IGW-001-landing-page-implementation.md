@@ -52,6 +52,6 @@ La implementación estructura el landing page siguiendo estrictamente la arquite
 - [ ] Aprobación explícita del humano registrada.
 
 ## 6. Spec Artifact Traceability
-- **Problem Spec**: [feature-jaymusicmachine-BRI-001-landing-page.md](file:///Users/jaymusicmachine/Documents/Desarrollo/industrial-girls/knowledge/features/feature-jaymusicmachine-BRI-001-landing-page.md)
-- **Solution Spec**: [feature-jaymusicmachine-BRI-001-landing-page-implementation.md](file:///Users/jaymusicmachine/Documents/Desarrollo/industrial-girls/knowledge/features/feature-jaymusicmachine-BRI-001-landing-page-implementation.md)
+- **Problem Spec**: [feature-jaymusicmachine-IGW-001-landing-page.md](file:///Users/jaymusicmachine/Documents/Desarrollo/industrial-girls/knowledge/features/feature-jaymusicmachine-IGW-001-landing-page.md)
+- **Solution Spec**: [feature-jaymusicmachine-IGW-001-landing-page-implementation.md](file:///Users/jaymusicmachine/Documents/Desarrollo/industrial-girls/knowledge/features/feature-jaymusicmachine-IGW-001-landing-page-implementation.md)
 - **Linear Issue**: Bypassed per developer instruction (`skip linear`).

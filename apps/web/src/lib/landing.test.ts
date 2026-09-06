@@ -3,7 +3,7 @@
  * @description Master TDD Test Suite for Feature-001 Industrial Girls Landing Page.
  * Verifies catalog data integrity, query functions, and initial client state.
  *
- * @spec BRI-001-LANDING-PAGE
+ * @spec IGW-001-LANDING-PAGE
  */
 
 import { describe, it, expect } from "vitest";
@@ -22,7 +22,7 @@ import {
 import { INITIAL_LANDING_STATE } from "./state/landing-state";
 
 describe("Industrial Girls Landing Page — TDD Test Suite", () => {
-  describe("1. Infrastructure Layer: Releases Catalog (@spec BRI-001-RELEASES)", () => {
+  describe("1. Infrastructure Layer: Releases Catalog (@spec IGW-001-RELEASES)", () => {
     it("should provide an immutable list of releases with valid catalog numbers", () => {
       // Step 1: Arrange & Act
       const releases = getReleases();
@@ -56,7 +56,7 @@ describe("Industrial Girls Landing Page — TDD Test Suite", () => {
     });
   });
 
-  describe("2. Infrastructure Layer: Events & Showcases Catalog (@spec BRI-001-EVENTS)", () => {
+  describe("2. Infrastructure Layer: Events & Showcases Catalog (@spec IGW-001-EVENTS)", () => {
     it("should return valid upcoming tour events with venue, city, and ticket URLs", () => {
       // Step 1: Arrange & Act
       const upcoming = getUpcomingEvents();
@@ -84,7 +84,7 @@ describe("Industrial Girls Landing Page — TDD Test Suite", () => {
     });
   });
 
-  describe("3. Infrastructure Layer: Residents & Artists Catalog (@spec BRI-001-RESIDENTS)", () => {
+  describe("3. Infrastructure Layer: Residents & Artists Catalog (@spec IGW-001-RESIDENTS)", () => {
     it("should list label residents with monikers and sound roles", () => {
       // Step 1: Arrange & Act
       const residents = getResidents();
@@ -100,7 +100,7 @@ describe("Industrial Girls Landing Page — TDD Test Suite", () => {
     });
   });
 
-  describe("4. Infrastructure Layer: Merch Catalog (@spec BRI-001-MERCH)", () => {
+  describe("4. Infrastructure Layer: Merch Catalog (@spec IGW-001-MERCH)", () => {
     it("should expose official merchandise items including the Balaclava and Hoodie", () => {
       // Step 1: Arrange & Act
       const products = getMerchProducts();
@@ -119,7 +119,7 @@ describe("Industrial Girls Landing Page — TDD Test Suite", () => {
     });
   });
 
-  describe("5. Application State: Initial Landing State Invariants (@spec BRI-001-STATE)", () => {
+  describe("5. Application State: Initial Landing State Invariants (@spec IGW-001-STATE)", () => {
     it("should initialize with sound inactive (muted by default) and drawer closed", () => {
       // Step 1: Assert initial invariants
       expect(INITIAL_LANDING_STATE.isSoundActive).toBe(false);
