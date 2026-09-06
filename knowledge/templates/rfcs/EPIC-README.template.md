@@ -4,7 +4,7 @@ title: EPIC README Template
 description: Template for RFC Epic README — metadata, scope, success criteria, story index, decision log, risks, and traceability
 tags: [template, rfc, epic, governance, documentation]
 timestamp: 2026-06-16T00:00:00Z
-resource: https://github.com/jeisonsosablockdev/brids/blob/develop/docs/rfcs/templates/EPIC-README.template.md
+resource: https://github.com/jeisonsosablockdev/industrial-girls/blob/develop/docs/rfcs/templates/EPIC-README.template.md
 ---
 
 # EPIC-<id>-<slug>

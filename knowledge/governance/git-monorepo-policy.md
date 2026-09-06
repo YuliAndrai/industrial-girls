@@ -4,7 +4,7 @@ title: Git Monorepo Policy
 description: Git Monorepo Policy - migrated from knowledge/
 tags: [governance]
 timestamp: 2026-07-20T04:23:56Z
-resource: https://github.com/jeisonsosablockdev/brids/blob/develop/knowledge/governance/git-monorepo-policy.md
+resource: https://github.com/jeisonsosablockdev/industrial-girls/blob/develop/knowledge/governance/git-monorepo-policy.md
 ---
 
 🌿 GIT GOVERNANCE + MONOREPO POLICY
@@ -144,42 +144,42 @@ refactor/<developer>-<issue>-<name>
 Parent work branches (Git branch name stored on the parent Linear issue):
 
 feature/<developer>-<issue>-<name>
-fix/czambrano-BRI-171-landing-copy-cleanup
-bugfix/czambrano-BRI-172-list-scroll-jump
-hotfix/czambrano-BRI-173-login-redirect-fix
+fix/czambrano-IGW-171-landing-copy-cleanup
+bugfix/czambrano-IGW-172-list-scroll-jump
+hotfix/czambrano-IGW-173-login-redirect-fix
 epic/czambrano-EPIC-011-admin-collections-console
 
 SPEC branches (created one at a time from the parent work branch):
 
 SPEC/<developer>-<issue>-<spec-slug>
 
-BRIDS SPEC branches for feature issues intentionally split from a main `Feature` branch:
+Industrial Girls SPEC branches for feature issues intentionally split from a main `Feature` branch:
 
-SPEC/<developer>-bri-<id>-specNN-<spec-slug>
+SPEC/<developer>-igw-<id>-specNN-<spec-slug>
 
 Ejemplo:
 
-SPEC/czambrano-bri-168-spec01-landing-dark-hero-look-and-feel
+SPEC/czambrano-igw-168-spec01-landing-dark-hero-look-and-feel
 
 Política de rama transversal:
-Toda documentación, SPEC o cambio de implementación (por ejemplo, relacionado con BRI-168) debe vivir primero en la rama principal `feature/<developer>-bri-<id>-<name>` y mantenerse congruente con el cuerpo del issue en Linear.
+Toda documentación, SPEC o cambio de implementación (por ejemplo, relacionado con IGW-168) debe vivir primero en la rama principal `feature/<developer>-igw-<id>-<name>` y mantenerse congruente con el cuerpo del issue en Linear.
 La rama `Feature` principal se divide en múltiples ramas `SPEC`, desarrolladas una por una según estabilidad, dependencia técnica y prioridad del producto. El orden numérico (specNN) ayuda a organizar el scope, pero no obliga a ejecutar los SPECS en ese orden si la estabilidad del producto recomienda otra secuencia. Cada rama SPEC debe partir desde la rama `Feature` principal y volver a ella para revisión. El cierre completo del bloque debe integrarse desde la rama `Feature` principal hacia la rama base definida por el flujo del proyecto.
 
 Rules:
 	•	**Ownership & Template Protocol:** Antes de escribir código, el desarrollador asignado (`czambrano` o `Jeison Sosa`) debe estar declarado en el bloque `Ownership` del issue en Linear y en su respectivo artefacto Markdown (`Human Brief` template).
-	•	Use the lowercase Linear issue key in branch names (example: `bri-149`).
+	•	Use the lowercase Linear issue key in branch names (example: `igw-149`).
 	•	`-sNN-` is the zero-padded slice order from the parent issue Markdown table.
 	•	For `SPEC/*` branches, `specNN` is the zero-padded SPEC number from the parent issue body, and the number organizes scope rather than mandatory execution priority.
 	•	Linear initiative branches start from latest `develop`.
 	•	The Linear initiative branch name must match the parent issue `git branch name` field.
 	•	Slice branches start from the Linear initiative branch, not directly from `develop`.
 	•	`SPEC DEVELOPMENT HISTORY`: Es un registro obligatorio al final del issue de Linear para documentar por SPEC los patrones, decisiones y resultados que quedaron estables.
-	•	For BRIDS SPEC branches, `SPEC MERGE` is the internal merge from `SPEC/*` back into the issue `Feature` branch and does not require a PR.
+	•	For Industrial Girls SPEC branches, `SPEC MERGE` is the internal merge from `SPEC/*` back into the issue `Feature` branch and does not require a PR.
 	•	The Feature branch still requires the project-defined PR before integration into the base branch.
 
 Examples:
 
-feature/czambrano-BRI-149-staking-architecture
+feature/czambrano-IGW-149-catalog-architecture
 feature/<developer>-<issue>-<name>
 epic/czambrano-EPIC-011-admin-collections-console
 SPEC/<developer>-<issue>-<spec-slug>
@@ -199,7 +199,7 @@ SPEC/<developer>-<issue>-<spec-slug>
 
 ⸻
 
-🔀 BRIDS SPEC MERGE FLOW (MANDATORY WHEN USING SPEC/* BRANCHES)
+🔀 INDUSTRIAL GIRLS SPEC MERGE FLOW (MANDATORY WHEN USING SPEC/* BRANCHES)
 
 VERSION ESPAÑOL
 
@@ -225,7 +225,7 @@ ENGLISH VERSION
 
 ⸻
 
-🔀 BRIDS SPEC MERGE FLOW (MANDATORY WHEN USING SPEC/* BRANCHES)
+🔀 INDUSTRIAL GIRLS SPEC MERGE FLOW (MANDATORY WHEN USING SPEC/* BRANCHES)
 
 VERSION ESPAÑOL
 

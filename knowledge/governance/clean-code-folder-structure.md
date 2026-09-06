@@ -5,7 +5,7 @@
 
 ## 1. Visión General y Filosofía de Diseño
 
-Esta especificación define la estructura canónica de directorios y reglas de encapsulamiento para el monorepo **Next.js + Solana**:
+Esta especificación define la estructura canónica de directorios y reglas de encapsulamiento para el monorepo **Industrial Girls (Next.js)**:
 
 1. **Monorepo Workspaces (Nivel Macro)**: Organización estructurada mediante `pnpm-workspace.yaml` centrada en la aplicación web (`apps/web/`), el harness de agentes e IA (`.agents/`), los scripts de automatización (`scripts/`), la base de conocimiento (`knowledge/`) y la suite de pruebas (`tests/`).
 2. **Arquitectura Funcional en 4 Capas (Nivel Micro)**: Organización modular en `apps/web/src/` con estricto desacoplamiento y flujo unidireccional de dependencias:
@@ -34,16 +34,17 @@ Esta especificación define la estructura canónica de directorios y reglas de e
 │           │   └── not-found.tsx
 │           │
 │           ├── components/               <-- Capa 1: Componentes UI Atómicos y Wrappers
-│           │   ├── ui/                   <-- Button, Card, Inputs
-│           │   ├── wallet/               <-- WalletConnectButton, WalletRuntimeProvider
+│           │   ├── ui/                   <-- Button, Card, TactileButton
+│           │   ├── landing/              <-- HeroSection, RecordsSection, EventsSection
+│           │   ├── layout/               <-- Header, Footer, NavigationDrawer
 │           │   ├── theme/                <-- ThemeToggle
 │           │   └── motion/               <-- MotionProvider
 │           │
 │           └── lib/                      <-- Lógica Central y 4 Capas Funcionales
-│               ├── hooks/                <-- Capa 2: Custom React Hooks (useSolanaWallet)
+│               ├── hooks/                <-- Capa 2: Custom React Hooks (useDrawer, useSoundFx)
 │               ├── state/                <-- Capa 2: Estado del Cliente y Preferencias
 │               ├── pipelines/            <-- Capa 3: Pipelines de Dominio y Validación
-│               ├── infrastructure/       <-- Capa 4: RPC Solana Devnet & Conectores
+│               ├── infrastructure/       <-- Capa 4: Catálogo de Sello & Conectores
 │               └── utils.ts              <-- Capa 4: Helpers de Formato y Clases
 │
 ├── .agents/                              <-- 🤖 HARNESS DE GOBERNANZA DE AGENTES
@@ -82,11 +83,9 @@ Esta especificación define la estructura canónica de directorios y reglas de e
    - `Layer 4 (Infraestructura)` -> No depende de ninguna capa superior.
 2. **Prohibición de Acceso a DB Directo en UI**:
    - Los componentes de presentación y hooks tienen estrictamente prohibido importar drivers de base de datos (`pg`, clientes SQL directos).
-3. **Solana Devnet Only**:
-   - Todos los conectores y configuraciones de RPC deben apuntar exclusivamente a Devnet.
-4. **Comentarios Obligatorios en Código**:
+3. **Comentarios Obligatorios en Código**:
    - Cada archivo debe incluir encabezado de capa, bloques TSDoc/JSDoc y pasos numerados (`// Step N:`).
-5. **Estrategia de Testing Colocalizado en FDD**:
+4. **Estrategia de Testing Colocalizado en FDD**:
    - Los tests unitarios y de integración de cada Vertical Slice se escriben colocalizados junto al archivo que prueban (`*.test.ts`, `*.test.tsx`). La carpeta centralizada `tests/` se reserva para el harness de gobernanza (`tests/harness/`) y pruebas E2E de navegador (`tests/e2e/`).
 
 ---

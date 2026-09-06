@@ -4,7 +4,7 @@ title: Linear Single Issue Slice Planning
 description: Linear Single Issue Slice Planning - migrated from knowledge/
 tags: [guides]
 timestamp: 2026-07-20T04:23:56Z
-resource: https://github.com/jeisonsosablockdev/brids/blob/develop/knowledge/guides/linear-single-issue-slice-planning.md
+resource: https://github.com/jeisonsosablockdev/industrial-girls/blob/develop/knowledge/guides/linear-single-issue-slice-planning.md
 ---
 
 # Linear Single-Issue Feature + SPEC Planning
@@ -85,7 +85,7 @@ SPEC definitions must use a numbered-list format for readability: `1. **SPEC01 -
 
 Every completed SPEC must add to `SPEC DEVELOPMENT HISTORY` at the end of the parent Feature documentation and the SPEC documentation. This history records stable outcomes, reusable decisions, and implementation patterns that were validated during the SPEC. In the main issue body, it lives after `VERSION ESPAÑOL` and `ENGLISH VERSION`.
 
-For BRIDS SPEC branches, the internal completion protocol is called `SPEC MERGE`. Before merging a `SPEC/*` branch back into the main `Feature` branch, the developer must update `SPEC DEVELOPMENT HISTORY`, sync Linear, run scope-appropriate validation, review the worktree, and then merge into the `Feature` branch. No PR is required for this internal SPEC-to-Feature merge; the PR belongs to the final Feature branch integration.
+For Industrial Girls SPEC branches, the internal completion protocol is called `SPEC MERGE`. Before merging a `SPEC/*` branch back into the main `Feature` branch, the developer must update `SPEC DEVELOPMENT HISTORY`, sync Linear, run scope-appropriate validation, review the worktree, and then merge into the `Feature` branch. No PR is required for this internal SPEC-to-Feature merge; the PR belongs to the final Feature branch integration.
 
 Use `knowledge/templates/linear-single-issue-slices.template.md` as the Markdown skeleton.
 
@@ -98,35 +98,35 @@ Use `knowledge/templates/linear-single-issue-slices.template.md` as the Markdown
 - SPEC PRs target the parent work branch.
 - The final parent work branch PR targets `develop`.
 - Create only one SPEC at a time; do not pre-create the whole sequence.
-- Use the canonical Linear issue key exactly as Linear exposes it, for example `BRI-149`.
+- Use the canonical Linear issue key exactly as Linear exposes it, for example `IGW-149`.
 - Use a lowercase developer handle in the branch prefix, for example `czambrano`.
 
-For BRIDS feature issues where the team explicitly uses a main `Feature` branch divided into multiple SPECS, use SPEC branches with this naming convention:
+For Industrial Girls feature issues where the team explicitly uses a main `Feature` branch divided into multiple SPECS, use SPEC branches with this naming convention:
 
 ```text
-SPEC/<developer>-bri<issue-number>-specNN-<slug>
+SPEC/<developer>-igw<issue-number>-specNN-<slug>
 ```
 
 Example:
 
 ```text
-SPEC/czambrano-bri168-spec01-landing-dark-hero-look-and-feel
+SPEC/czambrano-igw168-spec01-landing-dark-hero-look-and-feel
 ```
 
 In that model, the main `Feature` branch acts as the integration branch for the issue, and each `SPEC` branch starts from it and targets it back for review. `SPEC01`, `SPEC02`, and later numbers organize scope but do not force delivery order when stability, technical dependencies, or integration risk require a different sequence.
 
 Before each `SPEC` branch returns to the main `Feature` branch, run `SPEC MERGE`: document `SPEC DEVELOPMENT HISTORY`, sync Linear as the source of truth, validate the touched scope, inspect `git status`, and merge at the responsible developer's discretion without an intermediate PR.
 
-For BRIDS feature issues where the team explicitly uses a main `Feature` branch divided into multiple SPECS, use SPEC branches with this naming convention:
+For Industrial Girls feature issues where the team explicitly uses a main `Feature` branch divided into multiple SPECS, use SPEC branches with this naming convention:
 
 ```text
-SPEC/<developer>-bri<issue-number>-specNN-<slug>
+SPEC/<developer>-igw<issue-number>-specNN-<slug>
 ```
 
 Example:
 
 ```text
-SPEC/czambrano-bri168-spec01-landing-dark-hero-look-and-feel
+SPEC/czambrano-igw168-spec01-landing-dark-hero-look-and-feel
 ```
 
 In that model, the main `Feature` branch acts as the integration branch for the issue, and each `SPEC` branch starts from it and targets it back for review. `SPEC01`, `SPEC02`, and later numbers organize scope but do not force delivery order when stability, technical dependencies, or integration risk require a different sequence.

@@ -4,7 +4,7 @@ title: Content Pipeline And Serializers
 description: Content Pipeline And Serializers - migrated from knowledge/
 tags: [guides]
 timestamp: 2026-07-20T04:23:56Z
-resource: https://github.com/jeisonsosablockdev/brids/blob/develop/knowledge/guides/content-pipeline-and-serializers.md
+resource: https://github.com/jeisonsosablockdev/industrial-girls/blob/develop/knowledge/guides/content-pipeline-and-serializers.md
 ---
 
 # Content Pipeline and Serializers

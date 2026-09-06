@@ -8,10 +8,14 @@ PR_RUN_FILE="${ROOT_DIR}/.agents/pr_last_run.json"
 BRANCH="$(git -C "${ROOT_DIR}" branch --show-current 2>/dev/null || echo "feature/work")"
 ISSUE_ID="$(node -e "try{const p=JSON.parse(require('fs').readFileSync(process.argv[1],'utf8'));process.stdout.write(p.task_id||'');}catch(e){}" "${ROOT_DIR}/.agents/active_task_state.json" 2>/dev/null || echo "")"
 if [[ -z "${ISSUE_ID}" ]]; then
-  ISSUE_ID="$(echo "${BRANCH}" | grep -oE 'BRI-[0-9]+' | head -1 || echo "BRI-186")"
+  ISSUE_ID="$(echo "${BRANCH}" | grep -oE '(IGW|[A-Z]+)-[0-9]+' | head -1 || echo "IGW-001")"
 fi
 
-DEFAULT_TITLE="feat(landing): Industrial Girls Tactile Brutalism Landing Page (${ISSUE_ID})"
+if [[ "${BRANCH}" == *"fix"* || "${BRANCH}" == *"bugfix"* || "${ISSUE_ID}" == "IGW-002" ]]; then
+  DEFAULT_TITLE="fix(governance): rebrand project to Industrial Girls, purge Web3 and standardize on IGW (${ISSUE_ID})"
+else
+  DEFAULT_TITLE="feat(landing): Industrial Girls Tactile Brutalism Landing Page (${ISSUE_ID})"
+fi
 TITLE="${PR_TITLE:-${DEFAULT_TITLE}}"
 CURRENT_SHA="$(git -C "${ROOT_DIR}" rev-parse HEAD)"
 

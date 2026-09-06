@@ -12,19 +12,40 @@ echo "== Generating Compliant PR Body =="
 
 ISSUE_ID="$(node -e "try{const p=JSON.parse(require('fs').readFileSync('${ROOT_DIR}/.agents/active_task_state.json','utf8'));process.stdout.write(p.task_id||'');}catch(e){}" 2>/dev/null || echo "")"
 if [[ -z "${ISSUE_ID}" ]]; then
-  ISSUE_ID="$(echo "${BRANCH}" | grep -oE 'BRI-[0-9]+' | head -1 || echo "BRI-186")"
+  ISSUE_ID="$(echo "${BRANCH}" | grep -oE '(IGW|[A-Z]+)-[0-9]+' | head -1 || echo "IGW-001")"
 fi
 
 FEATURE_DOC="$(find "${ROOT_DIR}/knowledge/features" "${ROOT_DIR}/knowledge/fixes" -maxdepth 1 -name "*${ISSUE_ID}*.md" ! -name "*-implementation.md" 2>/dev/null | head -1 | sed "s|${ROOT_DIR}/||" || echo "")"
 RFC_DOC="$(find "${ROOT_DIR}/knowledge/features" "${ROOT_DIR}/knowledge/fixes" -maxdepth 1 -name "*${ISSUE_ID}*-implementation.md" 2>/dev/null | head -1 | sed "s|${ROOT_DIR}/||" || echo "")"
 
 if [[ -z "${FEATURE_DOC}" ]]; then
-  FEATURE_DOC="knowledge/features/feature-jeisonsosa-BRI-186-monorepo-fdd-architecture.md"
+  FEATURE_DOC="knowledge/features/feature-jaymusicmachine-IGW-001-landing-page.md"
 fi
 if [[ -z "${RFC_DOC}" ]]; then
-  RFC_DOC="knowledge/features/feature-jeisonsosa-BRI-186-monorepo-fdd-architecture-implementation.md"
+  RFC_DOC="knowledge/features/feature-jaymusicmachine-IGW-001-landing-page-implementation.md"
 fi
 
+if [[ "${BRANCH}" == *"fix"* || "${BRANCH}" == *"bugfix"* || "${ISSUE_ID}" == "IGW-002" ]]; then
+cat <<EOF > "${OUTPUT_FILE}"
+## Summary
+Este Pull Request implementa el fix **${ISSUE_ID}**: Rebranding integral del proyecto a **Industrial Girls** (\`IGW\`), erradicación de referencias residuales a Web3/Solana, y estandarización del prefijo de tareas en **IGW**.
+
+- Feature-Flag Strategy: Modificación de gobernanza, configuración y políticas de repo sin impacto destructivo en runtime.
+
+### 🚀 Principales Cambios:
+1. **Rebranding de Paquetes e Identidad**:
+   - \`package.json\`: Renombrado a \`"industrial-girls"\`.
+   - \`apps/web/package.json\`: Renombrado a \`"@industrial-girls/web"\`.
+   - \`.agents/hooks.json\`: Actualizado a monorepo oficial de Industrial Girls.
+2. **Erradicación de Residuos Web3/Solana**:
+   - \`README.md\`: Purgadas todas las descripciones de Web3, devnet y dependencias ajenas. Actualizado al manifiesto underground techno de Industrial Girls.
+   - \`knowledge/architecture/architecture-overview.md\` y guías de arquitectura: Removidas menciones a Web3/Solana.
+3. **Estandarización del Prefijo Canónico (\`BRI\` -> \`IGW\`)**:
+   - Actualización exhaustiva en scripts (\`task-init.sh\`, \`git-start.sh\`, \`linear-*.js\`, \`linear-mcp-server.ts\`, \`generate-pr-body.sh\`, \`pr-auto.sh\`) y tests de harness (\`sandbox-builder.ts\`, \`03-lifecycle-state.test.ts\`, \`06-pr-governance.test.ts\`).
+   - Documentación y especificaciones sincronizadas a \`IGW\` (\`knowledge/fixes/fix-jaymusicmachine-IGW-002-rebrand-and-cleanup.md\`).
+   - Regeneración completa de \`.agents/graph.json\`.
+EOF
+else
 cat <<EOF > "${OUTPUT_FILE}"
 ## Summary
 Este Pull Request implementa la Feature-001: Landing Page completa del sello discográfico underground **Industrial Girls**, clonando la arquitectura estructural de **Exhale Music** bajo la estética **Tactile Brutalism**.
@@ -56,9 +77,13 @@ Este Pull Request implementa la Feature-001: Landing Page completa del sello dis
 4. **Validación y Debugging Visual (/next-dev-loop)**:
    - Configuración Tailwind y PostCSS a nivel de paquete (\`apps/web/tailwind.config.ts\`, \`apps/web/postcss.config.js\`).
    - 0 warnings en consola de Chrome DevTools y 60 tests aprobados en Vitest.
+EOF
+fi
+
+cat <<EOF >> "${OUTPUT_FILE}"
 
 ## Issue
-- Issue link/id: [${ISSUE_ID}](https://linear.app/brids/issue/${ISSUE_ID})
+- Issue link/id: [${ISSUE_ID}](https://linear.app/industrial-girls/issue/${ISSUE_ID})
 
 ## RFC
 - RFC link/path: [${RFC_DOC}](${RFC_DOC})
