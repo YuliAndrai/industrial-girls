@@ -55,10 +55,10 @@ export function HeroSection(): React.ReactElement {
         </div>
 
         {/* Step 3: Massive Slogan Header (Exhale Parity) */}
-        <h1 className="max-w-4xl text-4xl font-black uppercase tracking-tight text-white sm:text-6xl md:text-7xl lg:text-8xl">
-          ADVOCATES FOR THE <br />
+        <h1 className="max-w-5xl text-3xl font-black uppercase tracking-tight text-white sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl">
+          TALENTO, IDENTIDAD <br />
           <span className="text-raveRed drop-shadow-[0_0_20px_rgba(255,0,0,0.6)]">
-            UNDERGROUND
+            Y REVOLUCIÓN SONORA
           </span>
         </h1>
 
