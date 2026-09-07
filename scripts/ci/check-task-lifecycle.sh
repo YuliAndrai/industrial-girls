@@ -28,7 +28,7 @@ CHANGED_FILES="$(
     printf '%s\n' "${committed_changed_files}"
     printf '%s\n' "${working_tree_changed_files}"
     printf '%s\n' "${untracked_changed_files}"
-  } | sort -u | grep -v '^$'
+  } | awk '!seen[$0]++' | grep -v '^$'
 )"
 
 CODE_CHANGES=""

@@ -80,7 +80,7 @@ export function HeroSection(): React.ReactElement {
           <Link href="#records" className="focus:outline-none">
             <TactileButton variant="outline" size="lg">
               <span className="flex items-center gap-2">
-                <span>[ LATEST RELEASES ]</span>
+                <span>[ AGENCIA DE DIRECCIÓN CREATIVA ]</span>
                 <span className="text-xs">&rarr;</span>
               </span>
             </TactileButton>
