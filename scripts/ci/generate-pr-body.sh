@@ -25,7 +25,33 @@ if [[ -z "${RFC_DOC}" ]]; then
   RFC_DOC="knowledge/features/feature-jaymusicmachine-IGW-001-landing-page-implementation.md"
 fi
 
-if [[ "${BRANCH}" == *"fix"* || "${BRANCH}" == *"bugfix"* || "${ISSUE_ID}" == "IGW-002" ]]; then
+if [[ "${BRANCH}" == *"artist-development"* || "${ISSUE_ID}" == "IGW-003" ]]; then
+cat <<EOF > "${OUTPUT_FILE}"
+## Summary
+Este Pull Request implementa la Feature **${ISSUE_ID}**: Módulo de **Desarrollo Artístico 360°** para Industrial Girls, proporcionando infraestructura estratégica, técnica y legal para productoras y artistas de música electrónica.
+
+- Feature-Flag Strategy: Implementación modular y desacoplada en arquitectura de 4 capas para Next.js App Router en ruta \`/desarrollo-artistico\`.
+
+### 🚀 Principales Cambios y Componentes:
+1. **Hero & Propuesta de Valor (Layer 1)**:
+   - Título H1: "AGENCIA DE DESARROLLO ARTÍSTICO 360°"
+   - Subtítulo: "Infraestructura estratégica, técnica y legal para productoras y artistas de la música electrónica que buscan consolidar su carrera global."
+   - 5 Badges tácticos: Diagnóstico Nivel 1, Identidad & EPK, Ingeniería de Audio, Legal & Publishing, Soluciones Digitales.
+2. **Cuadrícula Modular de 4 Pilares (Layer 1)**:
+   - 01: Estrategia & Diagnóstico (Diagnóstico Nivel 1, Plan Completo 360°).
+   - 02: Ingeniería Sonora & Producción (Ghost Production, Masterización [Add-on], Arte Visual).
+   - 03: Legal, Registros & Lanzamientos (Contratos [Add-on], Registro Formal, Campaña de Lanzamiento).
+   - 04: Infraestructura Digital & Automatización (Web, Automatización de Procesos, Software).
+3. **Formulario de Diagnóstico Interactivo (Layers 1 & 3)**:
+   - Validación de dominio con mensajes en tiempo real.
+   - Selección múltiple de pilares de interés y confirmación táctil.
+4. **Navegación & Catálogo Tipado (Layers 1 & 4)**:
+   - Actualización de Header (\`/07\`), Navigation Drawer y botón CTA principal del Hero.
+   - Catálogo fuertemente tipado en \`artist-development-catalog.ts\` y pipeline en \`intake-diagnostic-pipeline.ts\`.
+5. **Suite de Pruebas Unitarias TDD**:
+   - Validación de invariantes de catálogo y pipeline en \`apps/web/src/lib/artist-development.test.ts\`.
+EOF
+elif [[ "${BRANCH}" == *"fix"* || "${BRANCH}" == *"bugfix"* || "${ISSUE_ID}" == "IGW-002" ]]; then
 cat <<EOF > "${OUTPUT_FILE}"
 ## Summary
 Este Pull Request implementa el fix **${ISSUE_ID}**: Rebranding integral del proyecto a **Industrial Girls** (\`IGW\`), erradicación de referencias residuales a Web3/Solana, y estandarización del prefijo de tareas en **IGW**.
