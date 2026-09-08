@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-09-06T02:49:21.791Z",
+  "generatedAt": "2026-09-08T21:13:21.951Z",
   "nodes": [
     {
       "id": "AGENTS.md",
@@ -8,340 +8,340 @@
       "path": "AGENTS.md"
     },
     {
-      "id": "knowledge/README.md",
-      "type": "governance",
-      "label": "README",
-      "path": "knowledge/README.md"
-    },
-    {
-      "id": "knowledge/api/endpoints/index.md",
+      "id": "knowledge\\api\\endpoints\\index.md",
       "type": "governance",
       "label": "index",
-      "path": "knowledge/api/endpoints/index.md"
+      "path": "knowledge\\api\\endpoints\\index.md"
     },
     {
-      "id": "knowledge/api/index.md",
+      "id": "knowledge\\api\\index.md",
       "type": "governance",
       "label": "index",
-      "path": "knowledge/api/index.md"
+      "path": "knowledge\\api\\index.md"
     },
     {
-      "id": "knowledge/api/rpc/index.md",
+      "id": "knowledge\\api\\rpc\\index.md",
       "type": "governance",
       "label": "index",
-      "path": "knowledge/api/rpc/index.md"
+      "path": "knowledge\\api\\rpc\\index.md"
     },
     {
-      "id": "knowledge/api/schemas/index.md",
+      "id": "knowledge\\api\\schemas\\index.md",
       "type": "governance",
       "label": "index",
-      "path": "knowledge/api/schemas/index.md"
+      "path": "knowledge\\api\\schemas\\index.md"
     },
     {
-      "id": "knowledge/architecture/architecture-overview.md",
+      "id": "knowledge\\architecture\\architecture-overview.md",
       "type": "governance",
       "label": "architecture-overview",
-      "path": "knowledge/architecture/architecture-overview.md"
+      "path": "knowledge\\architecture\\architecture-overview.md"
     },
     {
-      "id": "knowledge/architecture/auth-flow.md",
+      "id": "knowledge\\architecture\\auth-flow.md",
       "type": "governance",
       "label": "auth-flow",
-      "path": "knowledge/architecture/auth-flow.md"
+      "path": "knowledge\\architecture\\auth-flow.md"
     },
     {
-      "id": "knowledge/architecture/index.md",
+      "id": "knowledge\\architecture\\index.md",
       "type": "governance",
       "label": "index",
-      "path": "knowledge/architecture/index.md"
+      "path": "knowledge\\architecture\\index.md"
     },
     {
-      "id": "knowledge/architecture/session-model.md",
+      "id": "knowledge\\architecture\\session-model.md",
       "type": "governance",
       "label": "session-model",
-      "path": "knowledge/architecture/session-model.md"
+      "path": "knowledge\\architecture\\session-model.md"
     },
     {
-      "id": "knowledge/architecture/state-machine.md",
+      "id": "knowledge\\architecture\\state-machine.md",
       "type": "governance",
       "label": "state-machine",
-      "path": "knowledge/architecture/state-machine.md"
+      "path": "knowledge\\architecture\\state-machine.md"
     },
     {
-      "id": "knowledge/architecture/threat-model.md",
+      "id": "knowledge\\architecture\\threat-model.md",
       "type": "governance",
       "label": "threat-model",
-      "path": "knowledge/architecture/threat-model.md"
+      "path": "knowledge\\architecture\\threat-model.md"
     },
     {
-      "id": "knowledge/architecture/toolchain-policy.md",
+      "id": "knowledge\\architecture\\toolchain-policy.md",
       "type": "governance",
       "label": "toolchain-policy",
-      "path": "knowledge/architecture/toolchain-policy.md"
+      "path": "knowledge\\architecture\\toolchain-policy.md"
     },
     {
-      "id": "knowledge/database/index.md",
+      "id": "knowledge\\database\\index.md",
       "type": "governance",
       "label": "index",
-      "path": "knowledge/database/index.md"
+      "path": "knowledge\\database\\index.md"
     },
     {
-      "id": "knowledge/database/models/index.md",
+      "id": "knowledge\\database\\models\\index.md",
       "type": "governance",
       "label": "index",
-      "path": "knowledge/database/models/index.md"
+      "path": "knowledge\\database\\models\\index.md"
     },
     {
-      "id": "knowledge/features/feature-jaymusicmachine-IGW-001-landing-page-implementation.md",
-      "type": "feature",
+      "id": "knowledge\\features\\feature-jaymusicmachine-IGW-001-landing-page-implementation.md",
+      "type": "governance",
       "label": "feature-jaymusicmachine-IGW-001-landing-page-implementation",
-      "path": "knowledge/features/feature-jaymusicmachine-IGW-001-landing-page-implementation.md"
+      "path": "knowledge\\features\\feature-jaymusicmachine-IGW-001-landing-page-implementation.md"
     },
     {
-      "id": "knowledge/features/feature-jaymusicmachine-IGW-001-landing-page.md",
-      "type": "feature",
+      "id": "knowledge\\features\\feature-jaymusicmachine-IGW-001-landing-page.md",
+      "type": "governance",
       "label": "feature-jaymusicmachine-IGW-001-landing-page",
-      "path": "knowledge/features/feature-jaymusicmachine-IGW-001-landing-page.md"
+      "path": "knowledge\\features\\feature-jaymusicmachine-IGW-001-landing-page.md"
     },
     {
-      "id": "knowledge/fixes/fix-jaymusicmachine-IGW-002-rebrand-and-cleanup-implementation.md",
-      "type": "fix",
+      "id": "knowledge\\fixes\\fix-jaymusicmachine-IGW-002-rebrand-and-cleanup-implementation.md",
+      "type": "governance",
       "label": "fix-jaymusicmachine-IGW-002-rebrand-and-cleanup-implementation",
-      "path": "knowledge/fixes/fix-jaymusicmachine-IGW-002-rebrand-and-cleanup-implementation.md"
+      "path": "knowledge\\fixes\\fix-jaymusicmachine-IGW-002-rebrand-and-cleanup-implementation.md"
     },
     {
-      "id": "knowledge/fixes/fix-jaymusicmachine-IGW-002-rebrand-and-cleanup.md",
-      "type": "fix",
+      "id": "knowledge\\fixes\\fix-jaymusicmachine-IGW-002-rebrand-and-cleanup.md",
+      "type": "governance",
       "label": "fix-jaymusicmachine-IGW-002-rebrand-and-cleanup",
-      "path": "knowledge/fixes/fix-jaymusicmachine-IGW-002-rebrand-and-cleanup.md"
+      "path": "knowledge\\fixes\\fix-jaymusicmachine-IGW-002-rebrand-and-cleanup.md"
     },
     {
-      "id": "knowledge/governance/clean-code-folder-structure.md",
+      "id": "knowledge\\governance\\clean-code-folder-structure.md",
       "type": "governance",
       "label": "clean-code-folder-structure",
-      "path": "knowledge/governance/clean-code-folder-structure.md"
+      "path": "knowledge\\governance\\clean-code-folder-structure.md"
     },
     {
-      "id": "knowledge/governance/documentation-policy.md",
+      "id": "knowledge\\governance\\documentation-policy.md",
       "type": "governance",
       "label": "documentation-policy",
-      "path": "knowledge/governance/documentation-policy.md"
+      "path": "knowledge\\governance\\documentation-policy.md"
     },
     {
-      "id": "knowledge/governance/frontend-ui-policy.md",
+      "id": "knowledge\\governance\\frontend-ui-policy.md",
       "type": "governance",
       "label": "frontend-ui-policy",
-      "path": "knowledge/governance/frontend-ui-policy.md"
+      "path": "knowledge\\governance\\frontend-ui-policy.md"
     },
     {
-      "id": "knowledge/governance/git-monorepo-policy.md",
+      "id": "knowledge\\governance\\git-monorepo-policy.md",
       "type": "governance",
       "label": "git-monorepo-policy",
-      "path": "knowledge/governance/git-monorepo-policy.md"
+      "path": "knowledge\\governance\\git-monorepo-policy.md"
     },
     {
-      "id": "knowledge/governance/iconography-rules.md",
+      "id": "knowledge\\governance\\iconography-rules.md",
       "type": "governance",
       "label": "iconography-rules",
-      "path": "knowledge/governance/iconography-rules.md"
+      "path": "knowledge\\governance\\iconography-rules.md"
     },
     {
-      "id": "knowledge/governance/index.md",
+      "id": "knowledge\\governance\\index.md",
       "type": "governance",
       "label": "index",
-      "path": "knowledge/governance/index.md"
+      "path": "knowledge\\governance\\index.md"
     },
     {
-      "id": "knowledge/governance/licenses-report.md",
+      "id": "knowledge\\governance\\licenses-report.md",
       "type": "governance",
       "label": "licenses-report",
-      "path": "knowledge/governance/licenses-report.md"
+      "path": "knowledge\\governance\\licenses-report.md"
     },
     {
-      "id": "knowledge/governance/monorepo-symlink-deprecation-guide.md",
+      "id": "knowledge\\governance\\monorepo-symlink-deprecation-guide.md",
       "type": "governance",
       "label": "monorepo-symlink-deprecation-guide",
-      "path": "knowledge/governance/monorepo-symlink-deprecation-guide.md"
+      "path": "knowledge\\governance\\monorepo-symlink-deprecation-guide.md"
     },
     {
-      "id": "knowledge/governance/pr-policy-source-of-truth.md",
+      "id": "knowledge\\governance\\pr-policy-source-of-truth.md",
       "type": "governance",
       "label": "pr-policy-source-of-truth",
-      "path": "knowledge/governance/pr-policy-source-of-truth.md"
+      "path": "knowledge\\governance\\pr-policy-source-of-truth.md"
     },
     {
-      "id": "knowledge/governance/security-quality-policy.md",
+      "id": "knowledge\\governance\\security-quality-policy.md",
       "type": "governance",
       "label": "security-quality-policy",
-      "path": "knowledge/governance/security-quality-policy.md"
+      "path": "knowledge\\governance\\security-quality-policy.md"
     },
     {
-      "id": "knowledge/governance/toolchain-policy.md",
+      "id": "knowledge\\governance\\toolchain-policy.md",
       "type": "governance",
       "label": "toolchain-policy",
-      "path": "knowledge/governance/toolchain-policy.md"
+      "path": "knowledge\\governance\\toolchain-policy.md"
     },
     {
-      "id": "knowledge/guides/ai-readable-endpoints-contracts.md",
+      "id": "knowledge\\guides\\ai-readable-endpoints-contracts.md",
       "type": "governance",
       "label": "ai-readable-endpoints-contracts",
-      "path": "knowledge/guides/ai-readable-endpoints-contracts.md"
+      "path": "knowledge\\guides\\ai-readable-endpoints-contracts.md"
     },
     {
-      "id": "knowledge/guides/codex-orchestration-architecture.md",
+      "id": "knowledge\\guides\\codex-orchestration-architecture.md",
       "type": "governance",
       "label": "codex-orchestration-architecture",
-      "path": "knowledge/guides/codex-orchestration-architecture.md"
+      "path": "knowledge\\guides\\codex-orchestration-architecture.md"
     },
     {
-      "id": "knowledge/guides/content-authoring-code-only.md",
+      "id": "knowledge\\guides\\content-authoring-code-only.md",
       "type": "governance",
       "label": "content-authoring-code-only",
-      "path": "knowledge/guides/content-authoring-code-only.md"
+      "path": "knowledge\\guides\\content-authoring-code-only.md"
     },
     {
-      "id": "knowledge/guides/content-pipeline-and-serializers.md",
+      "id": "knowledge\\guides\\content-pipeline-and-serializers.md",
       "type": "governance",
       "label": "content-pipeline-and-serializers",
-      "path": "knowledge/guides/content-pipeline-and-serializers.md"
+      "path": "knowledge\\guides\\content-pipeline-and-serializers.md"
     },
     {
-      "id": "knowledge/guides/gitflow-pr-structure.md",
+      "id": "knowledge\\guides\\gitflow-pr-structure.md",
       "type": "governance",
       "label": "gitflow-pr-structure",
-      "path": "knowledge/guides/gitflow-pr-structure.md"
+      "path": "knowledge\\guides\\gitflow-pr-structure.md"
     },
     {
-      "id": "knowledge/guides/index.md",
+      "id": "knowledge\\guides\\index.md",
       "type": "governance",
       "label": "index",
-      "path": "knowledge/guides/index.md"
+      "path": "knowledge\\guides\\index.md"
     },
     {
-      "id": "knowledge/guides/json-ld-contracts.md",
+      "id": "knowledge\\guides\\json-ld-contracts.md",
       "type": "governance",
       "label": "json-ld-contracts",
-      "path": "knowledge/guides/json-ld-contracts.md"
+      "path": "knowledge\\guides\\json-ld-contracts.md"
     },
     {
-      "id": "knowledge/guides/knowledge-promotion-gitflow.md",
+      "id": "knowledge\\guides\\knowledge-promotion-gitflow.md",
       "type": "governance",
       "label": "knowledge-promotion-gitflow",
-      "path": "knowledge/guides/knowledge-promotion-gitflow.md"
+      "path": "knowledge\\guides\\knowledge-promotion-gitflow.md"
     },
     {
-      "id": "knowledge/guides/linear-developer-identity-and-documentation-protocol.md",
+      "id": "knowledge\\guides\\linear-developer-identity-and-documentation-protocol.md",
       "type": "governance",
       "label": "linear-developer-identity-and-documentation-protocol",
-      "path": "knowledge/guides/linear-developer-identity-and-documentation-protocol.md"
+      "path": "knowledge\\guides\\linear-developer-identity-and-documentation-protocol.md"
     },
     {
-      "id": "knowledge/guides/linear-mcp-bridge.md",
+      "id": "knowledge\\guides\\linear-mcp-bridge.md",
       "type": "governance",
       "label": "linear-mcp-bridge",
-      "path": "knowledge/guides/linear-mcp-bridge.md"
+      "path": "knowledge\\guides\\linear-mcp-bridge.md"
     },
     {
-      "id": "knowledge/guides/linear-single-issue-slice-planning.md",
+      "id": "knowledge\\guides\\linear-single-issue-slice-planning.md",
       "type": "governance",
       "label": "linear-single-issue-slice-planning",
-      "path": "knowledge/guides/linear-single-issue-slice-planning.md"
+      "path": "knowledge\\guides\\linear-single-issue-slice-planning.md"
     },
     {
-      "id": "knowledge/guides/next-devtools-mcp.md",
+      "id": "knowledge\\guides\\next-devtools-mcp.md",
       "type": "governance",
       "label": "next-devtools-mcp",
-      "path": "knowledge/guides/next-devtools-mcp.md"
+      "path": "knowledge\\guides\\next-devtools-mcp.md"
     },
     {
-      "id": "knowledge/guides/operability-observability-security-deploy.md",
+      "id": "knowledge\\guides\\operability-observability-security-deploy.md",
       "type": "governance",
       "label": "operability-observability-security-deploy",
-      "path": "knowledge/guides/operability-observability-security-deploy.md"
+      "path": "knowledge\\guides\\operability-observability-security-deploy.md"
     },
     {
-      "id": "knowledge/guides/route-architecture-and-templates.md",
+      "id": "knowledge\\guides\\route-architecture-and-templates.md",
       "type": "governance",
       "label": "route-architecture-and-templates",
-      "path": "knowledge/guides/route-architecture-and-templates.md"
+      "path": "knowledge\\guides\\route-architecture-and-templates.md"
     },
     {
-      "id": "knowledge/index.md",
+      "id": "knowledge\\index.md",
       "type": "governance",
       "label": "index",
-      "path": "knowledge/index.md"
+      "path": "knowledge\\index.md"
     },
     {
-      "id": "knowledge/log.md",
+      "id": "knowledge\\log.md",
       "type": "governance",
       "label": "log",
-      "path": "knowledge/log.md"
+      "path": "knowledge\\log.md"
     },
     {
-      "id": "knowledge/security/index.md",
+      "id": "knowledge\\README.md",
+      "type": "governance",
+      "label": "README",
+      "path": "knowledge\\README.md"
+    },
+    {
+      "id": "knowledge\\security\\index.md",
       "type": "governance",
       "label": "index",
-      "path": "knowledge/security/index.md"
+      "path": "knowledge\\security\\index.md"
     },
     {
-      "id": "knowledge/templates/KNOW.template.md",
+      "id": "knowledge\\templates\\index.md",
+      "type": "governance",
+      "label": "index",
+      "path": "knowledge\\templates\\index.md"
+    },
+    {
+      "id": "knowledge\\templates\\KNOW.template.md",
       "type": "governance",
       "label": "KNOW.template",
-      "path": "knowledge/templates/KNOW.template.md"
+      "path": "knowledge\\templates\\KNOW.template.md"
     },
     {
-      "id": "knowledge/templates/PROMOTION.template.md",
-      "type": "governance",
-      "label": "PROMOTION.template",
-      "path": "knowledge/templates/PROMOTION.template.md"
-    },
-    {
-      "id": "knowledge/templates/index.md",
-      "type": "governance",
-      "label": "index",
-      "path": "knowledge/templates/index.md"
-    },
-    {
-      "id": "knowledge/templates/linear-brief-template.md",
+      "id": "knowledge\\templates\\linear-brief-template.md",
       "type": "governance",
       "label": "linear-brief-template",
-      "path": "knowledge/templates/linear-brief-template.md"
+      "path": "knowledge\\templates\\linear-brief-template.md"
     },
     {
-      "id": "knowledge/templates/linear-single-issue-slices.template.md",
+      "id": "knowledge\\templates\\linear-single-issue-slices.template.md",
       "type": "governance",
       "label": "linear-single-issue-slices.template",
-      "path": "knowledge/templates/linear-single-issue-slices.template.md"
+      "path": "knowledge\\templates\\linear-single-issue-slices.template.md"
     },
     {
-      "id": "knowledge/templates/problem-spec-template.md",
+      "id": "knowledge\\templates\\problem-spec-template.md",
       "type": "governance",
       "label": "problem-spec-template",
-      "path": "knowledge/templates/problem-spec-template.md"
+      "path": "knowledge\\templates\\problem-spec-template.md"
     },
     {
-      "id": "knowledge/templates/rfcs/EPIC-README.template.md",
+      "id": "knowledge\\templates\\PROMOTION.template.md",
+      "type": "governance",
+      "label": "PROMOTION.template",
+      "path": "knowledge\\templates\\PROMOTION.template.md"
+    },
+    {
+      "id": "knowledge\\templates\\rfcs\\EPIC-README.template.md",
       "type": "governance",
       "label": "EPIC-README.template",
-      "path": "knowledge/templates/rfcs/EPIC-README.template.md"
+      "path": "knowledge\\templates\\rfcs\\EPIC-README.template.md"
     },
     {
-      "id": "knowledge/templates/rfcs/STORY.template.md",
-      "type": "governance",
-      "label": "STORY.template",
-      "path": "knowledge/templates/rfcs/STORY.template.md"
-    },
-    {
-      "id": "knowledge/templates/rfcs/index.md",
+      "id": "knowledge\\templates\\rfcs\\index.md",
       "type": "governance",
       "label": "index",
-      "path": "knowledge/templates/rfcs/index.md"
+      "path": "knowledge\\templates\\rfcs\\index.md"
     },
     {
-      "id": "knowledge/templates/solution-spec-template.md",
+      "id": "knowledge\\templates\\rfcs\\STORY.template.md",
+      "type": "governance",
+      "label": "STORY.template",
+      "path": "knowledge\\templates\\rfcs\\STORY.template.md"
+    },
+    {
+      "id": "knowledge\\templates\\solution-spec-template.md",
       "type": "governance",
       "label": "solution-spec-template",
-      "path": "knowledge/templates/solution-spec-template.md"
+      "path": "knowledge\\templates\\solution-spec-template.md"
     },
     {
       "id": "module:app",
@@ -381,61 +381,6 @@
     }
   ],
   "edges": [
-    {
-      "source": "AGENTS.md",
-      "target": "knowledge/governance/clean-code-folder-structure.md",
-      "relation": "governs"
-    },
-    {
-      "source": "AGENTS.md",
-      "target": "knowledge/governance/documentation-policy.md",
-      "relation": "governs"
-    },
-    {
-      "source": "AGENTS.md",
-      "target": "knowledge/governance/frontend-ui-policy.md",
-      "relation": "governs"
-    },
-    {
-      "source": "AGENTS.md",
-      "target": "knowledge/governance/git-monorepo-policy.md",
-      "relation": "governs"
-    },
-    {
-      "source": "AGENTS.md",
-      "target": "knowledge/governance/iconography-rules.md",
-      "relation": "governs"
-    },
-    {
-      "source": "AGENTS.md",
-      "target": "knowledge/governance/index.md",
-      "relation": "governs"
-    },
-    {
-      "source": "AGENTS.md",
-      "target": "knowledge/governance/licenses-report.md",
-      "relation": "governs"
-    },
-    {
-      "source": "AGENTS.md",
-      "target": "knowledge/governance/monorepo-symlink-deprecation-guide.md",
-      "relation": "governs"
-    },
-    {
-      "source": "AGENTS.md",
-      "target": "knowledge/governance/pr-policy-source-of-truth.md",
-      "relation": "governs"
-    },
-    {
-      "source": "AGENTS.md",
-      "target": "knowledge/governance/security-quality-policy.md",
-      "relation": "governs"
-    },
-    {
-      "source": "AGENTS.md",
-      "target": "knowledge/governance/toolchain-policy.md",
-      "relation": "governs"
-    },
     {
       "source": "AGENTS.md",
       "target": "module:app",

@@ -29,14 +29,15 @@ export interface NavigationDrawerProps {
 export function NavigationDrawer({ isOpen, onClose }: NavigationDrawerProps): React.ReactElement | null {
   if (!isOpen) return null;
 
-  // Step 1: Nav items definition mapping to landing page anchors
+  // Step 1: Nav items definition mapping to landing page anchors and routes
   const navItems = [
-    { number: "01", label: "NEXT EVENTS", href: "#events", note: "CLUB & WAREHOUSE SHOWCASES" },
-    { number: "02", label: "RECORDS CATALOG", href: "#records", note: "VINYL & DIGITAL VAULT" },
-    { number: "03", label: "RESIDENT ARTISTS", href: "#residents", note: "COLLECTIVE DJ ROSTER" },
-    { number: "04", label: "OFFICIAL MERCH", href: "#shop", note: "BALACLAVAS, HOODIES & WAX" },
-    { number: "05", label: "TRANSMISSIONS", href: "#videos", note: "LIVE SETS & AFTERMOVIES" },
-    { number: "06", label: "COMMUNITY ARCHIVE", href: "#community", note: "RAVE CROWD & MEMORIES" },
+    { number: "01", label: "NEXT EVENTS", href: "/#events", note: "CLUB & WAREHOUSE SHOWCASES" },
+    { number: "02", label: "RECORDS CATALOG", href: "/#records", note: "VINYL & DIGITAL VAULT" },
+    { number: "03", label: "RESIDENT ARTISTS", href: "/#residents", note: "COLLECTIVE DJ ROSTER" },
+    { number: "04", label: "OFFICIAL MERCH", href: "/#shop", note: "BALACLAVAS, HOODIES & WAX" },
+    { number: "05", label: "TRANSMISSIONS", href: "/#videos", note: "LIVE SETS & AFTERMOVIES" },
+    { number: "06", label: "COMMUNITY ARCHIVE", href: "/#community", note: "RAVE CROWD & MEMORIES" },
+    { number: "07", label: "DESARROLLO ARTÍSTICO", href: "/desarrollo-artistico", note: "AGENCIA 360° // INFRAESTRUCTURA & GESTIÓN" },
   ];
 
   return (

@@ -77,7 +77,7 @@ export function HeroSection(): React.ReactElement {
             </TactileButton>
           </Link>
 
-          <Link href="#records" className="focus:outline-none">
+          <Link href="/desarrollo-artistico" className="focus:outline-none">
             <TactileButton variant="outline" size="lg">
               <span className="flex items-center gap-2">
                 <span>[ AGENCIA DE DIRECCIÓN CREATIVA ]</span>
