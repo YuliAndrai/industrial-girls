@@ -25,7 +25,32 @@ if [[ -z "${RFC_DOC}" ]]; then
   RFC_DOC="knowledge/features/feature-jaymusicmachine-IGW-001-landing-page-implementation.md"
 fi
 
-if [[ "${BRANCH}" == *"master-architecture"* || "${ISSUE_ID}" == "IGW-004" ]]; then
+if [[ "${BRANCH}" == *"home-brand-statement"* || "${ISSUE_ID}" == "IGW-005" ]]; then
+cat <<EOF > "${OUTPUT_FILE}"
+## Summary
+Este Pull Request implementa la Feature **${ISSUE_ID}**: **Home Page Hero & Brand Statement Refactor** para Industrial Girls, optimizando la jerarquía visual, hashtags oficiales, bloque editorial minimalista y navegación responsive:
+
+- Feature-Flag Strategy: Implementación modular y desacoplada en arquitectura de 4 capas para Next.js App Router.
+
+### 🚀 Principales Cambios y Componentes:
+1. **Hero Section Badges (Layer 1)**:
+   - Sustitución de badges desactualizados por los 3 oficiales: \`#IndustrialGirls\`, \`#TechnoGirls\`, \`#HardGirls\` con píldoras oscuras y acento rojo signal.
+   - Slogan central intacto: "TALENTO, IDENTIDAD / REVOLUCIÓN SONORA" preservado con su estilo brutalista original.
+2. **Brand Statement Minimalista (Layer 1)**:
+   - Eliminación de encabezados gigantes y mayúsculas sostenidas densas.
+   - Bloque tipográfico lead/body de alta legibilidad (\`text-lg sm:text-xl\`) con acento vertical rojo sutil:
+     *"Industrial Girls Music es una plataforma de música electrónica, sello discográfico y serie de eventos especializada en techno, hard techno, hard dance, trance y cultura underground. A través de lanzamientos, podcasts, showcases y eventos, conecta artistas, público y comunidad dentro de la escena electrónica internacional."*
+3. **Navegación Limpia y Responsive en Navbar (Layer 1)**:
+   - Eliminación de la fila redundante \`// NAVEGACIÓN DIRECTA\` en la Home.
+   - Traducción al español del CTA superior: \`[ ENVIAR DEMO ]\`.
+   - Lógica responsive calibrada:
+     - Escritorio (>= 1024px): 5 enlaces troncales visibles + \`[ ENVIAR DEMO ]\`, botón de menú lateral oculto (\`lg:hidden\`).
+     - Móvil (< 1024px): Enlaces de texto ocultos y botón \`[ MENU // ]\` visible como disparador del drawer.
+4. **Infraestructura y TDD (Layers 4 & Tests)**:
+   - Catálogo de dominio tipado en \`apps/web/src/lib/infrastructure/brand-catalog.ts\`.
+   - 9/9 pruebas unitarias TDD aprobadas en \`apps/web/src/lib/home-brand-statement.test.ts\` y 94 tests globales en verde.
+EOF
+elif [[ "${BRANCH}" == *"master-architecture"* || "${ISSUE_ID}" == "IGW-004" ]]; then
 cat <<EOF > "${OUTPUT_FILE}"
 ## Summary
 Este Pull Request implementa la Feature **${ISSUE_ID}**: **Arquitectura Maestra y Refactor Integral del Sitio** para Industrial Girls, consolidando las 5 secciones principales del ecosistema bajo la estética **Tactile Brutalism** y la arquitectura de 4 capas.

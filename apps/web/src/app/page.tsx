@@ -12,6 +12,7 @@ import { Header } from "@/components/layout/header";
 import { NavigationDrawer } from "@/components/layout/navigation-drawer";
 import { Footer } from "@/components/layout/footer";
 import { HeroSection } from "@/components/landing/hero-section";
+import { BrandStatementSection } from "@/components/landing/brand-statement-section";
 import { EventsSection } from "@/components/landing/events-section";
 import { RecordsSection } from "@/components/landing/records-section";
 import { ResidentsSection } from "@/components/landing/residents-section";
@@ -47,6 +48,9 @@ export default function HomePage(): React.ReactElement {
       <main className="flex-1 w-full">
         {/* 1. Hero Section */}
         <HeroSection />
+
+        {/* 1.1 Brand Statement & Platform Description (IGW-005) */}
+        <BrandStatementSection />
 
         {/* 2. Next Events Section */}
         <EventsSection />
