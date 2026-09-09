@@ -25,7 +25,45 @@ if [[ -z "${RFC_DOC}" ]]; then
   RFC_DOC="knowledge/features/feature-jaymusicmachine-IGW-001-landing-page-implementation.md"
 fi
 
-if [[ "${BRANCH}" == *"artist-development"* || "${ISSUE_ID}" == "IGW-003" ]]; then
+if [[ "${BRANCH}" == *"master-architecture"* || "${ISSUE_ID}" == "IGW-004" ]]; then
+cat <<EOF > "${OUTPUT_FILE}"
+## Summary
+Este Pull Request implementa la Feature **${ISSUE_ID}**: **Arquitectura Maestra y Refactor Integral del Sitio** para Industrial Girls, consolidando las 5 secciones principales del ecosistema bajo la estética **Tactile Brutalism** y la arquitectura de 4 capas.
+
+- Feature-Flag Strategy: Implementación modular y desacoplada en arquitectura de 4 capas para Next.js App Router.
+
+### 🚀 Principales Cambios y Componentes:
+1. **Navegación Global & Rutas Maestras (Layer 1)**:
+   - Header y Navigation Drawer actualizados estrictamente a 5 secciones:
+     - \`/musica\` (Catálogo VA 001-005, Podcasts IG MIX & Demo Drop)
+     - \`/desarrollo-artistico\` (Agencia 360°)
+     - \`/eventos\` (Gira y radar geográfico)
+     - \`/archivo\` (Roster +30 artistas & Media Archive)
+     - \`/comunidad\` (Journal editorial & debate)
+   - Botón CTA de acción rápida en Header: \`[ DEMO DROP ]\` apuntando a \`/musica#demo-drop\`.
+   - Footer con enlaces directos, redes oficiales y modal interactivo para lista de espera \`Merch (Coming Soon)\`.
+2. **Nueva Sección MÚSICA (\`/musica\`)**:
+   - Hero con selector rápido (Releases | Podcasts | Demo Drop).
+   - Catálogo de compilados VA 001 a VA 005 con tracklists completas, covers y enlaces a Bandcamp/Beatport.
+   - Reproductores embebidos de SoundCloud y enlaces a YouTube para IG MIX 001 a 004.
+   - Módulo Demo Drop con especificaciones técnicas y canal directo de escucha.
+3. **Nueva Sección EVENTOS (\`/eventos\`)**:
+   - Estado del calendario *"PRÓXIMAS FECHAS — EN PREPARACIÓN"* (Temporada en curaduría).
+   - Formulario de Captación Geográfica con selector de país y ciudad para preventas.
+   - Historial de showcases pasados con registro audiovisual (Tresor, Warehouse Bogotá, Fold Londres).
+4. **Nueva Sección ARCHIVO (\`/archivo\`)**:
+   - Roster con más de 30 artistas internacionales (Clara Cuvé, Øtta, Parfait, Wallis, Caravel, Somniac One, Lady Maru, etc.) con buscador en vivo.
+   - Media Archive con registros fotográficos y documentales de eventos.
+5. **Nueva Sección COMUNIDAD (\`/comunidad\`)**:
+   - Journal editorial con 5 artículos técnicos y culturales (Pioneras de síntesis, Hardware analógico, DAWs, Almacenes y Diseño sonoro táctil).
+   - Módulo reactivo de comentarios y debate activo al pie de cada artículo.
+   - Formulario geográfico para suscripción al despacho editorial.
+6. **Infraestructura, Pipelines & TDD (Layers 2, 3, 4)**:
+   - Catálogos fuertemente tipados en \`music-catalog.ts\`, \`events-catalog.ts\`, \`archive-catalog.ts\` y \`community-catalog.ts\`.
+   - Pipelines de validación para captación geográfica, comentarios y lista de espera de merch.
+   - 20/20 pruebas unitarias TDD aprobadas en \`apps/web/src/lib/master-architecture.test.ts\` y 85/85 tests globales.
+EOF
+elif [[ "${BRANCH}" == *"artist-development"* || "${ISSUE_ID}" == "IGW-003" ]]; then
 cat <<EOF > "${OUTPUT_FILE}"
 ## Summary
 Este Pull Request implementa la Feature **${ISSUE_ID}**: Módulo de **Desarrollo Artístico 360°** para Industrial Girls, proporcionando infraestructura estratégica, técnica y legal para productoras y artistas de música electrónica.

@@ -1,7 +1,7 @@
 {
   "version": "1.0.0",
-  "task_id": "IGW-003",
-  "branch": "feature/jaymusicmachine-IGW-003-artist-development",
+  "task_id": "IGW-004",
+  "branch": "feature/jaymusicmachine-IGW-004-master-architecture",
   "current_phase": "PHASE_8_HUMAN_MERGE_APPROVED",
   "phases": {
     "PHASE_1_BOOTSTRAP": { "completed": true },

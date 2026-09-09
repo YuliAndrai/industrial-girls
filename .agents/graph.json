@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-09-08T21:13:21.951Z",
+  "generatedAt": "2026-09-09T01:59:33.793Z",
   "nodes": [
     {
       "id": "AGENTS.md",
@@ -96,6 +96,18 @@
       "type": "governance",
       "label": "feature-jaymusicmachine-IGW-001-landing-page",
       "path": "knowledge\\features\\feature-jaymusicmachine-IGW-001-landing-page.md"
+    },
+    {
+      "id": "knowledge\\features\\feature-jaymusicmachine-IGW-003-artist-development-implementation.md",
+      "type": "governance",
+      "label": "feature-jaymusicmachine-IGW-003-artist-development-implementation",
+      "path": "knowledge\\features\\feature-jaymusicmachine-IGW-003-artist-development-implementation.md"
+    },
+    {
+      "id": "knowledge\\features\\feature-jaymusicmachine-IGW-003-artist-development.md",
+      "type": "governance",
+      "label": "feature-jaymusicmachine-IGW-003-artist-development",
+      "path": "knowledge\\features\\feature-jaymusicmachine-IGW-003-artist-development.md"
     },
     {
       "id": "knowledge\\fixes\\fix-jaymusicmachine-IGW-002-rebrand-and-cleanup-implementation.md",
