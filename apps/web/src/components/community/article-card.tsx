@@ -48,9 +48,15 @@ export function ArticleCard({
   const author = article?.author ?? "Industrial Girls Editorial";
   const tags = article?.tags ?? ["HARDWARE", "SÍNTESIS"];
   const excerpt = article?.excerpt ?? "Investigación crítica sobre los fundamentos del sonido electrónico.";
-  const displayImage =
+  const resolvedImage =
     imageUrl ??
+    article?.imageUrl ??
     "https://images.unsplash.com/photo-1598488035139-bdbb2231ce04?q=80&w=800&auto=format&fit=crop";
+  const [hasError, setHasError] = React.useState(false);
+  const displayImage = hasError
+    ? "https://images.unsplash.com/photo-1598488035139-bdbb2231ce04?q=80&w=800&auto=format&fit=crop"
+    : resolvedImage;
+
   const question =
     triggerQuestion ??
     "¿De qué manera este desarrollo técnico transformó tu comprensión de la producción de vanguardia?";
@@ -69,8 +75,12 @@ export function ArticleCard({
           alt={title}
           fill
           unoptimized
+          referrerPolicy="no-referrer"
           sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
           className="object-cover grayscale transition-all duration-300 group-hover:scale-105 group-hover:grayscale-0"
+          onError={() => {
+            setHasError(true);
+          }}
         />
         <div className="absolute top-2 right-2 border border-raveRed bg-black/80 px-2 py-0.5 font-mono text-[10px] font-bold text-raveRed">
           {readingTime}
