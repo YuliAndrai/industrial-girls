@@ -90,23 +90,25 @@ export function Header({ isDrawerOpen, onToggleDrawer }: HeaderProps): React.Rea
           </Link>
         </nav>
 
-        {/* Step 3: Fast Action [ DEMO DROP ] & Tactile Drawer Trigger */}
+        {/* Step 3: Fast Action [ ENVIAR DEMO ] & Tactile Drawer Trigger */}
         <div className="flex items-center gap-3">
-          <Link href="/musica#demo-drop" className="hidden sm:inline-block focus:outline-none">
+          <Link href="/musica#demo-drop" className="hidden sm:inline-block focus:outline-none" aria-label="Enviar demo musical">
             <TactileButton variant="outline" size="sm" className="border-raveRed text-white hover:bg-raveRed hover:text-black">
               <span className="flex items-center gap-1.5 font-mono text-xs font-bold tracking-wider">
                 <span className="h-1.5 w-1.5 rounded-full bg-raveRed animate-pulse" />
-                <span>[ DEMO DROP ]</span>
+                <span>[ ENVIAR DEMO ]</span>
               </span>
             </TactileButton>
           </Link>
 
+          {/* Step 3.2: Mobile Menu Trigger (Hidden on desktop >= 1024px) */}
           <TactileButton
             variant={isDrawerOpen ? "outline" : "primary"}
             size="sm"
             onClick={onToggleDrawer}
             aria-expanded={isDrawerOpen}
             aria-label={isDrawerOpen ? "Close menu" : "Open menu"}
+            className="lg:hidden"
           >
             <span className="flex items-center gap-2">
               <span className="inline-block font-mono text-xs font-bold">

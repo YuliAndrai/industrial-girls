@@ -43,14 +43,17 @@ export function HeroSection(): React.ReactElement {
 
         {/* Step 2: Hashtags and Metadata Tags */}
         <div className="mb-4 flex flex-wrap items-center justify-center gap-2 sm:gap-3">
-          <span className="border border-raveRed/60 bg-raveRed/10 px-2.5 py-1 font-mono text-[10px] font-bold uppercase tracking-widest text-raveRed sm:text-xs">
-            #INDUSTRIALGIRLS
+          <span className="inline-flex items-center rounded-full border border-raveRed/40 bg-black/80 px-3 py-1 font-mono text-[10px] font-semibold tracking-wider text-neutral-200 backdrop-blur-sm transition-colors hover:border-raveRed hover:text-white sm:text-xs">
+            <span className="mr-1.5 inline-block h-1.5 w-1.5 rounded-full bg-raveRed animate-pulse" />
+            #IndustrialGirls
           </span>
-          <span className="border border-white/20 bg-black/60 px-2.5 py-1 font-mono text-[10px] uppercase tracking-widest text-neutral-300 sm:text-xs">
-            #HARDTECHNO
+          <span className="inline-flex items-center rounded-full border border-raveRed/40 bg-black/80 px-3 py-1 font-mono text-[10px] font-semibold tracking-wider text-neutral-200 backdrop-blur-sm transition-colors hover:border-raveRed hover:text-white sm:text-xs">
+            <span className="mr-1.5 inline-block h-1.5 w-1.5 rounded-full bg-raveRed" />
+            #TechnoGirls
           </span>
-          <span className="border border-white/20 bg-black/60 px-2.5 py-1 font-mono text-[10px] uppercase tracking-widest text-neutral-300 sm:text-xs">
-            #FUTURESOUNDSOFTECHNO
+          <span className="inline-flex items-center rounded-full border border-raveRed/40 bg-black/80 px-3 py-1 font-mono text-[10px] font-semibold tracking-wider text-neutral-200 backdrop-blur-sm transition-colors hover:border-raveRed hover:text-white sm:text-xs">
+            <span className="mr-1.5 inline-block h-1.5 w-1.5 rounded-full bg-raveRed" />
+            #HardGirls
           </span>
         </div>
 
