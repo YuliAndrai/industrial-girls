@@ -1,7 +1,7 @@
 /**
  * @file apps/web/src/components/layout/navigation-drawer.tsx
  * @description Layer 1: Presentation - Fullscreen Brutalist Navigation Drawer.
- * Slide-out dark rave menu with high-impact typography, sound toggles, and section shortcuts.
+ * Slide-out dark rave menu structured strictly with the 5 master routes and Demo Drop access.
  */
 
 "use client";
@@ -29,15 +29,13 @@ export interface NavigationDrawerProps {
 export function NavigationDrawer({ isOpen, onClose }: NavigationDrawerProps): React.ReactElement | null {
   if (!isOpen) return null;
 
-  // Step 1: Nav items definition mapping to landing page anchors and routes
+  // Step 1: Nav items definition mapping to the 5 master routes
   const navItems = [
-    { number: "01", label: "NEXT EVENTS", href: "/#events", note: "CLUB & WAREHOUSE SHOWCASES" },
-    { number: "02", label: "RECORDS CATALOG", href: "/#records", note: "VINYL & DIGITAL VAULT" },
-    { number: "03", label: "RESIDENT ARTISTS", href: "/#residents", note: "COLLECTIVE DJ ROSTER" },
-    { number: "04", label: "OFFICIAL MERCH", href: "/#shop", note: "BALACLAVAS, HOODIES & WAX" },
-    { number: "05", label: "TRANSMISSIONS", href: "/#videos", note: "LIVE SETS & AFTERMOVIES" },
-    { number: "06", label: "COMMUNITY ARCHIVE", href: "/#community", note: "RAVE CROWD & MEMORIES" },
-    { number: "07", label: "DESARROLLO ARTÍSTICO", href: "/desarrollo-artistico", note: "AGENCIA 360° // INFRAESTRUCTURA & GESTIÓN" },
+    { number: "01", label: "MÚSICA", href: "/musica", note: "CATÁLOGO VA 001-005, PODCASTS & DEMO DROP" },
+    { number: "02", label: "DESARROLLO ARTÍSTICO", href: "/desarrollo-artistico", note: "AGENCIA 360° // INFRAESTRUCTURA & GESTIÓN" },
+    { number: "03", label: "EVENTOS", href: "/eventos", note: "CALENDARIO DE GIRAS, ALERTA GEOGRÁFICA & SHOWCASES" },
+    { number: "04", label: "ARCHIVO", href: "/archivo", note: "ROSTER DE MÁS DE 30 ARTISTAS & REGISTRO VISUAL" },
+    { number: "05", label: "COMUNIDAD", href: "/comunidad", note: "JOURNAL EDITORIAL, DEBATE TÉCNICO & SUSCRIPCIÓN" },
   ];
 
   return (
@@ -60,7 +58,7 @@ export function NavigationDrawer({ isOpen, onClose }: NavigationDrawerProps): Re
             />
           </div>
           <span className="font-mono text-xs uppercase tracking-widest text-raveRed">
-            DISPATCH INDEX // 2026
+            DISPATCH INDEX // 5 SECCIONES MAESTRAS
           </span>
         </div>
         <button
@@ -95,6 +93,23 @@ export function NavigationDrawer({ isOpen, onClose }: NavigationDrawerProps): Re
               </span>
             </Link>
           ))}
+
+          {/* Quick Demo Drop item in drawer */}
+          <Link
+            href="/musica#demo-drop"
+            onClick={onClose}
+            className="group flex flex-col border border-raveRed/50 bg-raveRed/10 p-4 transition-all hover:border-raveRed hover:bg-raveRed/20 focus:outline-none"
+          >
+            <div className="flex items-center gap-2">
+              <span className="h-2 w-2 rounded-full bg-raveRed animate-ping" />
+              <span className="font-mono text-sm font-black uppercase tracking-wider text-white group-hover:text-raveRed">
+                [ DEMO DROP // ENVIAR PISTA ]
+              </span>
+            </div>
+            <span className="mt-1 font-mono text-[10px] text-neutral-300">
+              RECEPCIÓN DE TRACKS INÉDITOS VÍA SOUNDCLOUD / DROPBOX
+            </span>
+          </Link>
         </nav>
 
         {/* Step 4: Footer Info & Social Links */}
@@ -115,20 +130,20 @@ export function NavigationDrawer({ isOpen, onClose }: NavigationDrawerProps): Re
                 SOUNDCLOUD
               </a>
               <a
+                href="https://youtube.com"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="hover:text-raveRed transition-colors"
+              >
+                YOUTUBE
+              </a>
+              <a
                 href="https://instagram.com"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="hover:text-raveRed transition-colors"
               >
                 INSTAGRAM
-              </a>
-              <a
-                href="https://residentadvisor.net"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="hover:text-raveRed transition-colors"
-              >
-                RESIDENT ADVISOR
               </a>
             </div>
           </div>

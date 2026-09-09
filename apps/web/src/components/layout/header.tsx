@@ -1,7 +1,7 @@
 /**
  * @file apps/web/src/components/layout/header.tsx
  * @description Layer 1: Presentation - Main Top Navigation Header.
- * Displays the Gothic Industrial Girls red grid logo, live city status, and tactile drawer trigger.
+ * Displays the Gothic Industrial Girls logo, the 5 master routes, the quick action [ DEMO DROP ] CTA, and the menu drawer trigger.
  */
 
 "use client";
@@ -22,7 +22,7 @@ export interface HeaderProps {
 }
 
 /**
- * Top sticky navigation bar with brutalist industrial branding and quick actions.
+ * Top sticky navigation bar with 5 master routes and Demo Drop quick CTA.
  *
  * @param {HeaderProps} props - Component properties.
  * @returns {React.ReactElement} The rendered header bar.
@@ -56,48 +56,51 @@ export function Header({ isDrawerOpen, onToggleDrawer }: HeaderProps): React.Rea
           </div>
         </Link>
 
-        {/* Step 2: Global Nodes & Quick Navigation */}
-        <div className="hidden items-center gap-6 lg:flex">
-          <span className="font-mono text-[11px] tracking-wider text-raveTextMuted">
-            <span className="inline-block h-2 w-2 rounded-full bg-raveRed animate-ping mr-2" />
-            LIVE // BERLIN &bull; LONDON &bull; BOGOTÁ
-          </span>
-          <nav className="flex items-center gap-4">
-            <Link
-              href="/#events"
-              className="font-mono text-xs uppercase tracking-wider text-neutral-300 hover:text-raveRed transition-colors"
-            >
-              Events
-            </Link>
-            <Link
-              href="/#records"
-              className="font-mono text-xs uppercase tracking-wider text-neutral-300 hover:text-raveRed transition-colors"
-            >
-              Records
-            </Link>
-            <Link
-              href="/#residents"
-              className="font-mono text-xs uppercase tracking-wider text-neutral-300 hover:text-raveRed transition-colors"
-            >
-              Residents
-            </Link>
-            <Link
-              href="/#shop"
-              className="font-mono text-xs uppercase tracking-wider text-neutral-300 hover:text-raveRed transition-colors"
-            >
-              Shop
-            </Link>
-            <Link
-              href="/desarrollo-artistico"
-              className="border border-raveRed/50 bg-raveRed/10 px-2.5 py-1 font-mono text-xs uppercase tracking-wider text-white hover:border-raveRed hover:bg-raveRed hover:text-black transition-all"
-            >
-              Desarrollo Artístico
-            </Link>
-          </nav>
-        </div>
+        {/* Step 2: Global 5 Master Routes Navigation */}
+        <nav className="hidden items-center gap-5 xl:gap-7 lg:flex">
+          <Link
+            href="/musica"
+            className="font-mono text-xs uppercase tracking-wider text-neutral-300 hover:text-raveRed transition-colors"
+          >
+            Música
+          </Link>
+          <Link
+            href="/desarrollo-artistico"
+            className="font-mono text-xs uppercase tracking-wider text-neutral-300 hover:text-raveRed transition-colors"
+          >
+            Desarrollo Artístico
+          </Link>
+          <Link
+            href="/eventos"
+            className="font-mono text-xs uppercase tracking-wider text-neutral-300 hover:text-raveRed transition-colors"
+          >
+            Eventos
+          </Link>
+          <Link
+            href="/archivo"
+            className="font-mono text-xs uppercase tracking-wider text-neutral-300 hover:text-raveRed transition-colors"
+          >
+            Archivo
+          </Link>
+          <Link
+            href="/comunidad"
+            className="font-mono text-xs uppercase tracking-wider text-neutral-300 hover:text-raveRed transition-colors"
+          >
+            Comunidad
+          </Link>
+        </nav>
 
-        {/* Step 3: Tactile Menu Trigger */}
+        {/* Step 3: Fast Action [ DEMO DROP ] & Tactile Drawer Trigger */}
         <div className="flex items-center gap-3">
+          <Link href="/musica#demo-drop" className="hidden sm:inline-block focus:outline-none">
+            <TactileButton variant="outline" size="sm" className="border-raveRed text-white hover:bg-raveRed hover:text-black">
+              <span className="flex items-center gap-1.5 font-mono text-xs font-bold tracking-wider">
+                <span className="h-1.5 w-1.5 rounded-full bg-raveRed animate-pulse" />
+                <span>[ DEMO DROP ]</span>
+              </span>
+            </TactileButton>
+          </Link>
+
           <TactileButton
             variant={isDrawerOpen ? "outline" : "primary"}
             size="sm"
