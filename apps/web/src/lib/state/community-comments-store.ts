@@ -38,6 +38,8 @@ export function getCommentsForArticle(articleId: string): ArticleComment[] {
   return state.commentsByArticle[articleId] || [];
 }
 
+let commentCounter = 0;
+
 /**
  * Adds a new comment to the in-memory store.
  *
@@ -57,9 +59,10 @@ export function addArticleComment(
   parentId?: string,
   email?: string
 ): ArticleComment {
-  // Step 1: Construct new comment entity
+  // Step 1: Construct new comment entity with collision-free unique ID
+  const uniqueId = `comm-${Date.now()}-${++commentCounter}-${Math.random().toString(36).substring(2, 7)}`;
   const newComment: ArticleComment = {
-    id: "comm-" + Date.now(),
+    id: uniqueId,
     articleId,
     author: author.trim(),
     content: content.trim(),
@@ -76,4 +79,17 @@ export function addArticleComment(
   state.commentsByArticle[articleId].unshift(newComment);
 
   return newComment;
+}
+
+/**
+ * Resets the in-memory comments store back to initial catalog comments.
+ */
+export function resetCommentsStore(): void {
+  state.commentsByArticle = {};
+  INITIAL_COMMENTS.forEach((comment) => {
+    if (!state.commentsByArticle[comment.articleId]) {
+      state.commentsByArticle[comment.articleId] = [];
+    }
+    state.commentsByArticle[comment.articleId].push(comment);
+  });
 }
