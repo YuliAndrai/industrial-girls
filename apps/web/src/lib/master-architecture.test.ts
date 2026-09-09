@@ -256,9 +256,9 @@ describe("Master Architecture (IGW-004) — TDD Test Suite", () => {
 
     it("should query journal articles by slug", () => {
       // Step 1: Query article
-      const article = getArticleBySlug("pioneras-de-la-sintesis");
+      const article = getArticleBySlug("pioneras-del-voltaje");
       expect(article).toBeDefined();
-      expect(article?.title).toContain("Pioneras de la Síntesis");
+      expect(article?.title).toContain("Pioneras del Voltaje");
 
       // Step 2: Query non-existent
       const nonExistent = getArticleBySlug("art-999");
@@ -267,7 +267,7 @@ describe("Master Architecture (IGW-004) — TDD Test Suite", () => {
 
     it("should retrieve initial comments linked to articles", () => {
       // Step 1: Query comments
-      const comments = getArticleComments("pioneras-de-la-sintesis");
+      const comments = getArticleComments("pioneras-del-voltaje");
       expect(comments.length).toBeGreaterThan(0);
       expect(comments[0].author).toBe("VANE_LIVE");
     });
@@ -319,9 +319,11 @@ describe("Master Architecture (IGW-004) — TDD Test Suite", () => {
       it("should accept valid article comment submission", () => {
         // Step 1: Arrange
         const payload: CommentSubmissionInput = {
-          articleId: "pioneras-de-la-sintesis",
+          articleId: "pioneras-del-voltaje",
           author: "AnalogExplorer",
           commentText: "Gran artículo sobre Daphne Oram y la técnica Oramics.",
+          email: "analog@explorer.org",
+          role: "Ingeniera de Sonido",
         };
 
         // Step 2: Act
@@ -375,7 +377,7 @@ describe("Master Architecture (IGW-004) — TDD Test Suite", () => {
   describe("6. Community Comments Application State (@spec IGW-004-STATE)", () => {
     it("should allow querying and adding comments reactively", () => {
       // Step 1: Query initial comments count
-      const articleId = "pioneras-de-la-sintesis";
+      const articleId = "pioneras-del-voltaje";
       const initial = getCommentsForArticle(articleId);
       const initialCount = initial.length;
 

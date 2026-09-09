@@ -1,7 +1,7 @@
 /**
  * @file apps/web/src/lib/state/community-comments-store.ts
  * @description Layer 2: Application - Client State Store for Journal Article Comments.
- * Manages reactive comment additions alongside initial catalog comments.
+ * Manages reactive comment additions alongside initial catalog comments, with roles and threading.
  */
 
 import { ArticleComment, INITIAL_COMMENTS } from "../infrastructure/community-catalog";
@@ -44,12 +44,18 @@ export function getCommentsForArticle(articleId: string): ArticleComment[] {
  * @param {string} articleId - Target article slug.
  * @param {string} author - Author alias.
  * @param {string} content - Comment body.
+ * @param {string} [role] - Participant scene role.
+ * @param {string} [parentId] - Optional parent comment ID for threading.
+ * @param {string} [email] - Optional email address.
  * @returns {ArticleComment} The created comment.
  */
 export function addArticleComment(
   articleId: string,
   author: string,
-  content: string
+  content: string,
+  role?: string,
+  parentId?: string,
+  email?: string
 ): ArticleComment {
   // Step 1: Construct new comment entity
   const newComment: ArticleComment = {
@@ -58,6 +64,9 @@ export function addArticleComment(
     author: author.trim(),
     content: content.trim(),
     createdAt: new Date().toISOString(),
+    ...(role ? { role } : {}),
+    ...(parentId ? { parentId } : {}),
+    ...(email ? { email: email.trim() } : {}),
   };
 
   // Step 2: Append to article comments

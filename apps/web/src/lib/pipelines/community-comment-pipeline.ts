@@ -1,10 +1,22 @@
 /**
  * @file apps/web/src/lib/pipelines/community-comment-pipeline.ts
  * @description Layer 3: Domain / Pipeline - Article Comment Submission Validation Pipeline.
- * Enforces text length, valid article reference, and author identity invariants.
+ * Enforces text length, valid article reference, author identity, and participant role invariants.
  */
 
 import { JOURNAL_ARTICLES } from "../infrastructure/community-catalog";
+
+/**
+ * Allowed community participant roles in technical debates.
+ */
+export const ALLOWED_PARTICIPANT_ROLES = [
+  "Productora / Live Act",
+  "DJ / Selector",
+  "Ingeniera de Sonido",
+  "Melómana / Asistente",
+] as const;
+
+export type ParticipantRole = (typeof ALLOWED_PARTICIPANT_ROLES)[number];
 
 /**
  * Input payload for posting a comment on an article.
@@ -16,6 +28,12 @@ export interface CommentSubmissionInput {
   author: string;
   /** Content of the comment */
   commentText: string;
+  /** Subscriber email address (required, not published) */
+  email?: string;
+  /** Selected participant role */
+  role?: string;
+  /** Optional parent comment ID for threading */
+  parentId?: string;
 }
 
 /**
@@ -27,6 +45,11 @@ export interface CommentValidationResult {
   /** Specific error messages */
   errors: Record<string, string>;
 }
+
+/**
+ * RFC 5322 compliant email regex validator.
+ */
+const EMAIL_REGEX = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)+$/;
 
 /**
  * Validates reader comment submission.
@@ -46,15 +69,27 @@ export function validateCommentSubmission(
   }
 
   // Step 2: Validate Author
-  if (!input.author || input.author.trim().length < 2) {
+  const trimmedAuthor = input.author ? input.author.trim() : "";
+  if (!trimmedAuthor || trimmedAuthor.length < 2) {
     errors.author = "Indica tu alias o nombre (mínimo 2 caracteres).";
   }
 
-  // Step 3: Validate Comment Content Length
-  const trimmed = input.commentText ? input.commentText.trim() : "";
-  if (trimmed.length < 5) {
+  // Step 3: Validate Email
+  const trimmedEmail = input.email ? input.email.trim() : "";
+  if (!trimmedEmail || !EMAIL_REGEX.test(trimmedEmail)) {
+    errors.email = "Ingresa un correo electrónico válido.";
+  }
+
+  // Step 4: Validate Role
+  if (!input.role || !ALLOWED_PARTICIPANT_ROLES.includes(input.role as ParticipantRole)) {
+    errors.role = "Selecciona un rol válido dentro de la escena.";
+  }
+
+  // Step 5: Validate Comment Content Length
+  const trimmedText = input.commentText ? input.commentText.trim() : "";
+  if (trimmedText.length < 5) {
     errors.commentText = "El comentario debe tener al menos 5 caracteres.";
-  } else if (trimmed.length > 1000) {
+  } else if (trimmedText.length > 1000) {
     errors.commentText = "El comentario no puede exceder los 1000 caracteres.";
   }
 

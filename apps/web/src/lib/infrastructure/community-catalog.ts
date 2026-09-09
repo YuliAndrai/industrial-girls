@@ -1,7 +1,8 @@
 /**
  * @file apps/web/src/lib/infrastructure/community-catalog.ts
  * @description Layer 4: Infrastructure - Editorial Journal & Community Catalog (/comunidad).
- * Contains the 5 specialized articles on music technology, sound design, and rave culture, plus initial discussions.
+ * Contains the 5 specialized articles on pioneering women in electronic music, sound engineering,
+ * hardware architecture, and rave culture, plus initial discussions with roles and threading.
  */
 
 /**
@@ -18,6 +19,12 @@ export interface ArticleComment {
   content: string;
   /** Timestamp ISO string */
   createdAt: string;
+  /** Participant role in the scene */
+  role?: string;
+  /** Optional subscriber email address (not published publicly) */
+  email?: string;
+  /** Optional parent comment ID for threaded replies */
+  parentId?: string;
 }
 
 /**
@@ -40,115 +47,148 @@ export interface JournalArticle {
   tags: string[];
   /** Short summary snippet */
   excerpt: string;
+  /** Archival image URL */
+  imageUrl?: string;
+  /** Accessible image description */
+  imageAlt?: string;
+  /** Provocative technical debate question */
+  debateQuestion?: string;
   /** Paragraphs of content */
   contentParagraphs: string[];
 }
 
 /**
- * Dataset: 5 Editorial Articles.
+ * Dataset: 5 Editorial Articles with archival Wikimedia Commons imagery and debate triggers.
  */
 export const JOURNAL_ARTICLES: JournalArticle[] = [
   {
-    slug: "pioneras-de-la-sintesis",
-    title: "Pioneras de la Síntesis: De Daphne Oram a Eliane Radigue",
-    subtitle: "La historia no contada de las mujeres que diseñaron la base tecnológica de la música electrónica.",
+    slug: "pioneras-del-voltaje",
+    title: "Pioneras del Voltaje: De la Música Concreta a la Resonancia Modular",
+    subtitle: "De la experimentación en cinta a los sintetizadores modulares que redefinieron el sonido contemporáneo.",
     date: "2025-02-10",
-    readingTime: "6 min",
-    author: "Redacción Industrial Girls",
-    tags: ["HISTORIA", "SÍNTESIS", "INNOVACIÓN"],
-    excerpt: "Mucho antes de que los sintetizadores comerciales poblaran los estudios, visionarias como Daphne Oram creaban música dibujando ondas ópticas, mientras Eliane Radigue esculpía drones infinitos con el sintetizador modular ARP 2500.",
-    contentParagraphs: [
-      "La narrativa tradicional de la tecnología musical suele pasar por alto que las bases mismas del sonido electrónico fueron codificadas por mujeres. En el Radiophonic Workshop de la BBC, Daphne Oram inventó la técnica 'Oramics', dibujando directamente sobre cinta de 35mm para transformar trazos gráficos en voltaje analógico y oscilaciones sonoras audibles.",
-      "Por su parte, Eliane Radigue dedicó décadas al dominio exhaustivo del ARP 2500, operando sin teclado mediante matrices de pines para explorar microtonalidades, modulaciones de fase lentas y armónicos casi imperceptibles que hoy constituyen la columna vertebral del ambient y el techno hipnótico.",
-      "Recuperar su legado no es un ejercicio de nostalgia, sino un recordatorio urgente de que la investigación sonora radical pertenece a quienes se atreven a reconfigurar la máquina desde sus circuitos fundamentales.",
-    ],
-  },
-  {
-    slug: "hardware-analogico-silicio",
-    title: "Hardware Analógico y Chips de Silicio: El Alma del Sonido Industrial",
-    subtitle: "Por qué los filtros discretos y la saturación de transistores siguen venciendo al modelado digital.",
-    date: "2025-04-18",
     readingTime: "8 min",
-    author: "Ingeniería Sonora Lab",
-    tags: ["HARDWARE", "SISTEMAS", "DISTORSIÓN"],
-    excerpt: "Analizamos el comportamiento de circuitos icónicos como el filtro OTA del Korg MS-20, los chips SSM y la distorsión por sobrecarga de preamplificadores analógicos en la generación de kicks industriales.",
+    author: "Industrial Girls Editorial",
+    tags: ["PIONERAS", "SÍNTESIS", "MODULAR"],
+    imageUrl: "https://upload.wikimedia.org/wikipedia/commons/e/ec/Delia_Derbyshire_in_the_BBC_Radiophonic_Workshop%2C_1965.jpg",
+    imageAlt: "Delia Derbyshire en el BBC Radiophonic Workshop, 1965",
+    excerpt: "Delia Derbyshire, Daphne Oram y Éliane Radigue esculpieron las bases del sonido electrónico manipulando cinta, dibujando sonido óptico y dominando el sintetizador ARP 2500.",
+    debateQuestion: "¿Cómo influyen las limitaciones de la manipulación física de cinta y los sistemas como Oramics en la textura orgánica que hoy buscamos replicar digitalmente?",
     contentParagraphs: [
-      "En la era del software moderno, la obsesión por el hardware analógico no es capricho estético; es física de semiconductores. Cuando un circuito de transistores se somete a voltajes fuera de su zona lineal, no clipea abruptamente como un entero digital: introduce armónicos pares e impares que comprimen la señal con una textura orgánica y agresiva.",
-      "El legendario filtro del Korg MS-20 (chip Korg35 / LM13600) genera una auto-oscilación violenta que ha definido el sonido del EBM y el industrial desde 1978. Al empujar una señal de caja de ritmos a través de su circuito de entrada externa, el umbral de saturación actúa como un compresor dinámico natural.",
-      "Comprender la no-linealidad de estos componentes permite a las productoras contemporáneas integrar pedales de distorsión analógica y sintetizadores modulares en su cadena de mastering para lograr un impacto físico demoledor en sistemas de club.",
+      "La historia de la música electrónica moderna no puede escribirse sin Delia Derbyshire y sus innovaciones pioneras en el BBC Radiophonic Workshop. Su técnica para cortar, bucleizar y manipular cinta magnética transformó oscilaciones analógicas crudas en paisajes sonoros revolucionarios sin ayuda de ordenadores comerciales.",
+      "Daphne Oram llevó la experimentación un paso más allá concibiendo la técnica Oramics, un sistema donde ondas sonoras y parámetros de modulación eran dibujados directamente a mano sobre tiras de celuloide de 35mm para ser convertidos fotoeléctricamente en voltaje audible.",
+      "Por su parte, Éliane Radigue consagró décadas al dominio absoluto del sintetizador modular ARP 2500, operando sin teclado mediante matrices de pines para explorar microtonalidades sutiles, armónicos lentos y retroalimentación controlada que sentaron las bases espirituales del ambient y el techno hipnótico.",
     ],
   },
   {
-    slug: "evolucion-daws-hard-techno",
-    title: "Evolución de DAWs en la Escena Hard Techno Global",
-    subtitle: "De las limitaciones de secuenciadores antiguos al flujo ultrarrápido de Ableton Live y Bitwig.",
-    date: "2025-06-30",
-    readingTime: "5 min",
-    author: "Producción & Flujos",
-    tags: ["DAWS", "WORKFLOW", "TECNOLOGÍA"],
-    excerpt: "Cómo el ruteo modular moderno, los racks de efectos paralelos y la automatización por clip transformaron la producción de pistas de más de 155 BPM en los últimos 5 años.",
-    contentParagraphs: [
-      "El hard techno contemporáneo exige una precisión rítmica milimétrica que habría sido inviable con las herramientas de los noventa. Hoy, la producción se basa en cadenas de sidechain ultrarrápidas, división de bandas de frecuencia para tratar sub-bajos y medios de manera independiente, y saturaciones multicapa.",
-      "Ableton Live y Bitwig Studio han liderado esta transformación al ofrecer entornos donde el diseño sonoro y la composición ocurren en tiempo real sin latencia perceptible. La capacidad de encapsular sintetizadores y efectos en macro-racks modulares permite a los artistas recrear la inmediatez de un directo en el estudio.",
-      "La democratización de estos entornos ha permitido que una nueva generación de productoras autogestione sus pistas con estándares de club internacional sin necesidad de grandes consolas comerciales.",
-    ],
-  },
-  {
-    slug: "hard-techno-resistencia-almacenes",
-    title: "Hard Techno y la Resistencia Cultural en los Almacenes",
-    subtitle: "El espacio físico clandestino como trinchera contra la comercialización masiva del clubbing.",
-    date: "2025-09-14",
+    slug: "huella-de-silicio-chips-circuitos",
+    title: "La Huella de Silicio: Las Mentes Femeninas detrás de los Chips y Circuitos",
+    subtitle: "La arquitectura analógica de los sintetizadores Moog y Buchla guiada por la visión matemática y acústica femenina.",
+    date: "2025-04-18",
     readingTime: "7 min",
-    author: "Crónica Rave",
-    tags: ["CULTURA", "ESPACIOS", "COMUNIDAD"],
-    excerpt: "Desde las fábricas desmanteladas de Berlín Este hasta los almacenes industriales de Bogotá y Medellín, el rave clandestino resiste como un espacio de libertad, catarsis y seguridad colectiva.",
+    author: "Industrial Girls Editorial",
+    tags: ["HARDWARE", "CIRCUIT DESIGN", "SÍNTESIS"],
+    imageUrl: "https://upload.wikimedia.org/wikipedia/commons/e/ee/Suzanne_Ciani_in_studio%2C_1970s.jpg",
+    imageAlt: "Suzanne Ciani en su estudio analógico, años 70",
+    excerpt: "Suzanne Ciani y Wendy Carlos rediseñaron la síntesis analógica: desde la espacialización cuadrafónica en el Buchla 200 hasta el desarrollo de redes de filtros con pendiente de 24dB en el sistema Moog.",
+    debateQuestion: "¿De qué manera la arquitectura abierta y no lineal del Buchla 200 desafía el paradigma compositivo occidental basado en notas discretas?",
     contentParagraphs: [
-      "Cuando los clubes comerciales encarecieron los accesos e impusieron normas de consumo elitistas, la verdadera energía del underground regresó a sus orígenes: los almacenes abandonados, las naves de carga y los sótanos de concreto sin letreros ni teléfonos móviles.",
-      "En Bogotá y Berlín, estos espacios no son meras locaciones; son zonas temporalmente autónomas donde la política de 'cero tolerancia al acoso' y el respeto mutuo garantizan que mujeres, personas disidentes y amantes del sonido duro bailen sin vigilancia corporativa.",
-      "La música que suena en estos espacios no busca las listas de éxitos: está diseñada para reverberar contra muros de hormigón armado a volúmenes que exigen una entrega física total.",
+      "Suzanne Ciani dominó el complejo sintetizador modular Buchla 200 como una virtuosa del voltaje, integrando modulación en anillo, espacialización cuadrafónica y síntesis de voz analógica en producciones artísticas y comerciales que desmitificaron la tecnología sonora en los años setenta.",
+      "En paralelo, Wendy Carlos colaboró estrechamente con Robert Moog, aportando rigor musical e ingeniería de diseño para el perfeccionamiento del sintetizador Moog modular. Su trabajo empujó la creación de teclados sensibles al tacto, afinaciones microtonales y las emblemáticas redes de filtros con pendientes de 24dB por octava.",
+      "Comprender el silicio y los transistores desde la perspectiva de estas pioneras nos recuerda que la máquina es un lienzo plástico donde la respuesta no lineal de los componentes define la calidez y el alma del sonido underground.",
     ],
   },
   {
-    slug: "diseno-sonoro-tactil",
-    title: "Diseño Sonoro Táctil: Distorsión Armónica y Microtonalidad",
-    subtitle: "Técnicas avanzadas para moldear bombos y sintetizadores que conmocionan la arquitectura del club.",
-    date: "2025-11-20",
+    slug: "espectro-ensanchado-hedy-lamarr",
+    title: "Espectro Ensanchado y Telecomunicaciones: El Vínculo Científico de Hedy Lamarr",
+    subtitle: "De los rollos de pianola al salto de frecuencia que sostiene el audio digital inalámbrico y las redes modernas.",
+    date: "2025-06-12",
     readingTime: "6 min",
-    author: "Laboratorio de Síntesis",
-    tags: ["DISEÑO SONORO", "ACÚSTICA", "MASTERING"],
-    excerpt: "Guía práctica de procesamiento: cómo capas de síntesis FM, clipping suave, resonadores estéreo y pitch-bends microtonales construyen una presencia física sin enturbiar el rango de frecuencias graves.",
+    author: "Industrial Girls Editorial",
+    tags: ["TELECOMUNICACIONES", "DSP", "TECNOLOGÍA"],
+    imageUrl: "https://upload.wikimedia.org/wikipedia/commons/8/83/Hedy_lamarr_-_actress.jpg",
+    imageAlt: "Hedy Lamarr, inventora de la tecnología de espectro ensanchado por salto de frecuencia",
+    excerpt: "En 1942, Hedy Lamarr patentó el salto de frecuencia mediante rollos mecánicos de pianola, sentando los fundamentos del espectro ensanchado sobre los que se construyen Wi-Fi, Bluetooth y la sincronización de audio.",
+    debateQuestion: "¿Qué paralelismos encuentras entre la sincronización rítmica de audio digital en redes modernas y el salto de frecuencia mecánico patentado en 1942?",
     contentParagraphs: [
-      "El error más común al producir techno de alta velocidad es pensar que más distorsión siempre genera más potencia. En un sistema de sonido de 50.000 vatios, el exceso de energía armónica descontrolada anula la pegada del bombo y genera fatiga auditiva instantánea.",
-      "El diseño sonoro táctil se fundamenta en esculpir cada capa: un sub limpio generado por onda senoidal pura entre 40 y 85 Hz, un cuerpo medio procesado con saturación de cinta o válvulas para ganar presencia, y un transitorio de impacto filtrado con precisión para cortar a través de la mezcla.",
-      "Al incorporar microtonalidad y ligeras desafinaciones de milicéntimos en sintetizadores solistas, se crea un efecto de coro físico que parece expandir las paredes de la sala de baile sin recurrir a reverbs largas que empantanen el groove.",
+      "La actriz y científica Hedy Lamarr patentó en 1942, junto al compositor George Antheil, un sistema secreto de comunicaciones basado en 88 frecuencias que cambiaban de forma impredecible guiadas por rollos perforados de pianola, evitando la interferencia de torpedos guiados por radio.",
+      "Este concepto seminal de salto de frecuencia sentó los cimientos teóricos del espectro ensanchado, un principio matemático y radioeléctrico sin el cual las redes celulares modernas, los protocolos Wi-Fi, Bluetooth y la transmisión digital de audio inalámbrico de baja latencia no existirían.",
+      "El cruce entre música mecánica y física cuántica de telecomunicaciones demuestra que la vanguardia técnica surge de conectar disciplinas artísticas con el pensamiento electromagnético más radical.",
+    ],
+  },
+  {
+    slug: "arquitectura-software-tarjetas-perforadas-beat",
+    title: "Arquitectura de Software: De las Tarjetas Perforadas a la Democratización del Beat",
+    subtitle: "Las líneas de código que abrieron el camino desde el motor analítico de Lovelace hasta el software generativo en Bell Labs.",
+    date: "2025-08-20",
+    readingTime: "8 min",
+    author: "Industrial Girls Editorial",
+    tags: ["SOFTWARE", "ALGORITMOS", "HISTORIA"],
+    imageUrl: "https://upload.wikimedia.org/wikipedia/commons/7/7b/Laurie_Spiegel_at_Bell_Labs_1974.jpg",
+    imageAlt: "Laurie Spiegel en Bell Labs operando el sistema GROOVE, 1974",
+    excerpt: "Desde la profecía algorítmica de Ada Lovelace hasta la creación del sistema interactivo GROOVE y Music Mouse por Laurie Spiegel en Bell Labs, cuyo sonido viaja en el disco de oro de las sondas Voyager.",
+    debateQuestion: "¿Cómo reinterpreta el software generativo actual la visión de interactividad táctil e intuición que Laurie Spiegel diseñó con Music Mouse?",
+    contentParagraphs: [
+      "Ada Lovelace fue la primera persona en vislumbrar que el motor analítico de Babbage no solo manipularía números, sino que podría componer piezas musicales elaboradas de cualquier grado de complejidad si se le suministraban las relaciones armónicas adecuadas en tarjetas perforadas.",
+      "Más de un siglo después, en los laboratorios Bell Labs, la investigadora y compositora Laurie Spiegel materializó esa profecía programando GROOVE, el primer sistema interactivo en tiempo real para síntesis híbrida, y más tarde Music Mouse, democratizando la composición asistida por ordenador para computadoras personales.",
+      "Su composición 'Harmonices Mundi' fue seleccionada para viajar a bordo del disco de oro de las sondas espaciales Voyager, convirtiendo su código sonoro en el testimonio humano de la Tierra navegando el espacio interestelar.",
+    ],
+  },
+  {
+    slug: "arquitectura-hard-techno-distorsion-armonica",
+    title: "Arquitectura del Hard Techno: Distorsión Armónica y Resistencia Sónica",
+    subtitle: "Deconstrucción sónica a 150+ BPM: saturación Eurorack, wavefolding y la reapropiación del almacén industrial.",
+    date: "2025-10-30",
+    readingTime: "6 min",
+    author: "Industrial Girls Editorial",
+    tags: ["HARD TECHNO", "DSP", "DISEÑO SONORO"],
+    imageUrl: "https://upload.wikimedia.org/wikipedia/commons/c/c5/Eurorack_modular_synthesizer_patch_cables.jpg",
+    imageAlt: "Sistema modular Eurorack con cables de patch y módulos de saturación analógica",
+    excerpt: "Análisis del diseño sonoro a 150+ BPM: módulos Eurorack de clipping asimétrico, síntesis percusiva de kicks aplastantes y el almacén como espacio físico de resistencia comunitaria.",
+    debateQuestion: "¿En qué punto la distorsión extrema y el wavefolding dejan de ser un efecto estético para convertirse en la estructura armónica principal del techno moderno?",
+    contentParagraphs: [
+      "La evolución del hard techno contemporáneo a más de 150 BPM ha empujado el diseño sonoro hacia límites acústicos extremos. El uso de sintetizadores con módulos de Eurorack wavefolding y clipping asimétrico genera armónicos densos que atraviesan los subwoofers de club sin perder impacto físico.",
+      "El procesamiento percusivo de bombos industriales requiere técnicas avanzadas: capas separadas para el transitorio de ataque, síntesis FM en el rango medio y saturación valvular controlada para que la presión sonora sea aplastante pero inteligible en recintos de hormigón armado.",
+      "Esta música no se diseñó para la radio comercial ni para las listas de reproducción estandarizadas; vive en los almacenes industriales clandestinos, donde la acústica cruda, el anonimato y la política de cero tolerancia al acoso convierten la pista de baile en un reducto de liberación colectiva y resistencia sónica.",
     ],
   },
 ];
 
 /**
- * Initial reader discussion comments.
+ * Initial reader discussion comments with roles and threading.
  */
 export const INITIAL_COMMENTS: ArticleComment[] = [
   {
     id: "comm-01",
-    articleId: "pioneras-de-la-sintesis",
+    articleId: "pioneras-del-voltaje",
     author: "VANE_LIVE",
     content: "El trabajo de Eliane Radigue con el ARP 2500 cambió completamente mi forma de entender los drones modulares. Fundamental este rescate.",
     createdAt: "2025-02-12T14:30:00Z",
+    role: "Productora / Live Act",
+  },
+  {
+    id: "comm-01-reply",
+    articleId: "pioneras-del-voltaje",
+    author: "AUDIO_ING_BOG",
+    content: "La retroalimentación en matrices de pines es un arte perdido; hoy pocos plugins logran emular esa micro-inestabilidad térmica.",
+    createdAt: "2025-02-13T10:15:00Z",
+    role: "Ingeniera de Sonido",
+    parentId: "comm-01",
   },
   {
     id: "comm-02",
-    articleId: "hardware-analogico-silicio",
+    articleId: "huella-de-silicio-chips-circuitos",
     author: "ModularKicks",
-    content: "Totalmente de acuerdo con el MS-20. Ningún plugin emula la resonancia salvaje de ese filtro cuando saturas la entrada.",
+    content: "Totalmente de acuerdo con el Buchla 200. La modulación cruzada analógica introduce una riqueza que la cuantización digital aún no alcanza.",
     createdAt: "2025-04-20T09:15:00Z",
+    role: "Productora / Live Act",
   },
   {
     id: "comm-03",
-    articleId: "hard-techno-resistencia-almacenes",
+    articleId: "arquitectura-hard-techno-distorsion-armonica",
     author: "BogotaUnderground",
-    content: "Las fiestas de almacén en Bogotá son los únicos lugares donde todavía se siente la pureza de la música sin poses de postureo.",
+    content: "Las fiestas de almacén en Bogotá son los únicos lugares donde todavía se siente la pureza de la música sin vigilancia corporativa.",
     createdAt: "2025-09-16T22:05:00Z",
+    role: "Melómana / Asistente",
   },
 ];
 

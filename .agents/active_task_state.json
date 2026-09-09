@@ -1,7 +1,7 @@
 {
   "version": "1.0.0",
-  "task_id": "IGW-005",
-  "branch": "feature/jaymusicmachine-IGW-005-home-brand-statement",
+  "task_id": "IGW-006",
+  "branch": "feature/jaymusicmachine-IGW-006-community-journal-page",
   "current_phase": "PHASE_8_HUMAN_MERGE_APPROVED",
   "phases": {
     "PHASE_1_BOOTSTRAP": {
@@ -26,7 +26,7 @@
       "completed": true
     },
     "PHASE_8_HUMAN_MERGE_APPROVED": {
-      "completed": true
+      "completed": false
     }
   }
 }
