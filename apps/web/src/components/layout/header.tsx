@@ -33,7 +33,7 @@ export function Header({ isDrawerOpen, onToggleDrawer }: HeaderProps): React.Rea
       <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-3 sm:px-6">
         {/* Step 1: Brand Logo Anchor with Gothic Cage Artwork */}
         <Link
-          href="#top"
+          href="/"
           className="group flex items-center gap-3 transition-opacity hover:opacity-85 focus:outline-none"
         >
           <div className="relative h-10 w-16 overflow-hidden rounded-sm border border-raveRed/40 bg-black/80 transition-transform group-hover:scale-105">
@@ -64,28 +64,34 @@ export function Header({ isDrawerOpen, onToggleDrawer }: HeaderProps): React.Rea
           </span>
           <nav className="flex items-center gap-4">
             <Link
-              href="#events"
+              href="/#events"
               className="font-mono text-xs uppercase tracking-wider text-neutral-300 hover:text-raveRed transition-colors"
             >
               Events
             </Link>
             <Link
-              href="#records"
+              href="/#records"
               className="font-mono text-xs uppercase tracking-wider text-neutral-300 hover:text-raveRed transition-colors"
             >
               Records
             </Link>
             <Link
-              href="#residents"
+              href="/#residents"
               className="font-mono text-xs uppercase tracking-wider text-neutral-300 hover:text-raveRed transition-colors"
             >
               Residents
             </Link>
             <Link
-              href="#shop"
+              href="/#shop"
               className="font-mono text-xs uppercase tracking-wider text-neutral-300 hover:text-raveRed transition-colors"
             >
               Shop
+            </Link>
+            <Link
+              href="/desarrollo-artistico"
+              className="border border-raveRed/50 bg-raveRed/10 px-2.5 py-1 font-mono text-xs uppercase tracking-wider text-white hover:border-raveRed hover:bg-raveRed hover:text-black transition-all"
+            >
+              Desarrollo Artístico
             </Link>
           </nav>
         </div>
