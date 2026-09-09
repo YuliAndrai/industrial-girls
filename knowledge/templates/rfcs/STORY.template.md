@@ -4,7 +4,7 @@ title: STORY RFC Template
 description: Template for RFC Story — metadata, context, proposal, critique, resolution, decision, test plan, and traceability
 tags: [template, rfc, story, governance, documentation]
 timestamp: 2026-06-16T00:00:00Z
-resource: https://github.com/jeisonsosablockdev/brids/blob/develop/docs/rfcs/templates/STORY.template.md
+resource: https://github.com/jeisonsosablockdev/industrial-girls/blob/develop/docs/rfcs/templates/STORY.template.md
 ---
 
 # STORY-<id>-<slug>

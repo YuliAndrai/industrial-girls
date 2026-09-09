@@ -10,22 +10,29 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        bg: "#04060F",
-        panel: "#0E1324",
-        soft: "#1A2140",
-        accentFrom: "#2FC6FF",
-        accentTo: "#7C3AED"
+        bg: "#050505",
+        panel: "#0C0C0C",
+        soft: "#161616",
+        raveRed: "#FF0000",
+        raveRedDark: "#990000",
+        raveRedGlow: "rgba(255, 0, 0, 0.4)",
+        raveBorder: "#222222",
+        raveTextMuted: "#888888"
       },
       fontFamily: {
-        sans: ["Inter", "system-ui", "sans-serif"]
+        sans: ["Inter", "system-ui", "sans-serif"],
+        mono: ["ui-monospace", "SFMono-Regular", "Menlo", "Monaco", "Consolas", "monospace"]
       },
       boxShadow: {
-        glow: "0 0 0 1px rgba(255,255,255,0.06), 0 12px 30px rgba(80, 56, 255, 0.35)"
+        rave: "0 0 30px rgba(255, 0, 0, 0.45)",
+        raveGlow: "0 0 15px rgba(255, 0, 0, 0.3)",
+        tactileRed: "3px 3px 0px #FF0000",
+        tactileWhite: "3px 3px 0px #FFFFFF",
+        tactilePressed: "1px 1px 0px #FF0000"
       },
       backgroundImage: {
-        gradientPrimary: "linear-gradient(135deg, #2FC6FF 0%, #7C3AED 100%)",
-        gradientHero: "radial-gradient(circle at 15% 10%, rgba(66,188,255,0.23), transparent 38%), radial-gradient(circle at 82% 82%, rgba(140,68,255,0.3), transparent 45%), linear-gradient(165deg, #090E1E, #111936 68%, #1D2154)",
-        gradientPanel: "linear-gradient(145deg, rgba(47,198,255,0.18), rgba(124,58,237,0.2))"
+        scanline: "repeating-linear-gradient(0deg, rgba(0,0,0,0.15), rgba(0,0,0,0.15) 1px, transparent 1px, transparent 2px)",
+        gridPattern: "radial-gradient(rgba(255,0,0,0.15) 1px, transparent 0)"
       }
     }
   },

@@ -1,13 +1,13 @@
 ---
 type: ADR
-title: Architecture Overview — Feature-Driven Design (FDD) & 4-Layer Functional Web3
-description: Canonical architectural blueprint combining Feature-Driven Design (Vertical Slices) with strict 4-Layer Functional Web3 separation for Next.js and Solana.
-tags: [architecture, fdd, feature-driven-design, 4-layers, nextjs, solana]
+title: Architecture Overview — Feature-Driven Design (FDD) & 4-Layer Functional Architecture
+description: Canonical architectural blueprint combining Feature-Driven Design (Vertical Slices) with strict 4-Layer Functional separation for Next.js.
+tags: [architecture, fdd, feature-driven-design, 4-layers, nextjs]
 timestamp: 2026-08-23T00:00:00Z
 resource: local
 ---
 
-# Architecture Overview — Feature-Driven Design (FDD) & 4-Layer Functional Web3
+# Architecture Overview — Feature-Driven Design (FDD) & 4-Layer Functional Architecture
 
 ## 1. Visión General y Filosofía de Diseño
 

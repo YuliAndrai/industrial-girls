@@ -4,7 +4,7 @@ title: Linear Developer Identity And Documentation Protocol
 description: Linear Developer Identity And Documentation Protocol - migrated from knowledge/
 tags: [guides]
 timestamp: 2026-07-20T04:23:56Z
-resource: https://github.com/jeisonsosablockdev/brids/blob/develop/knowledge/guides/linear-developer-identity-and-documentation-protocol.md
+resource: https://github.com/jeisonsosablockdev/industrial-girls/blob/develop/knowledge/guides/linear-developer-identity-and-documentation-protocol.md
 ---
 
 # Linear Developer Identity And Documentation Protocol
@@ -12,7 +12,7 @@ resource: https://github.com/jeisonsosablockdev/brids/blob/develop/knowledge/gui
 ## VERSION ESPAÑOL
 
 ### Propósito
-Este protocolo define una política transversal de desarrollo para que la documentación de Linear y los artefactos locales queden atribuidos al desarrollador correcto, vivan en el lugar correcto y se mantengan sincronizados en el workflow del proyecto BRIDS.
+Este protocolo define una política transversal de desarrollo para que la documentación de Linear y los artefactos locales queden atribuidos al desarrollador correcto, vivan en el lugar correcto y se mantengan sincronizados en el workflow del proyecto Industrial Girls.
 
 ### Política de identidad del desarrollador
 - Antes de crear, actualizar o sincronizar cualquier contenido en Linear, el agente debe confirmar con qué desarrollador del proyecto está trabajando.
@@ -29,14 +29,14 @@ Este protocolo define una política transversal de desarrollo para que la docume
 - Linear es la fuente principal para el issue, sus objetivos, alcance, SPECS y criterios de aceptación.
 - Los archivos `.md` del repositorio son el registro Git local y deben mantenerse congruentes con Linear.
 - Cuando haya diferencia entre Linear y los `.md`, se debe sincronizar Linear primero y luego actualizar el registro local.
-- Esta política debe integrarse en los documentos principales de gobierno, documentación y workflow del proyecto BRIDS.
+- Esta política debe integrarse en los documentos principales de gobierno, documentación y workflow del proyecto Industrial Girls.
 
 ### Regla de SPECS
 - Los SPECS deben quedar en el cuerpo del issue de Linear.
 - No se deben guardar SPECS principales como comentarios sueltos del chat de Linear.
 - Los documentos o comentarios solo pueden usarse como apoyo si el cuerpo del issue ya contiene la información principal.
-- Cuando una rama `Feature` principal se divida en múltiples SPECS, cada SPEC debe tener una rama propia con la nomenclatura `SPEC/<developer>-bri<issue-number>-specNN-<slug>`.
-- Ejemplo: `SPEC/czambrano-bri168-spec01-landing-dark-hero-look-and-feel`.
+- Cuando una rama `Feature` principal se divida en múltiples SPECS, cada SPEC debe tener una rama propia con la nomenclatura `SPEC/<developer>-igw<issue-number>-specNN-<slug>`.
+- Ejemplo: `SPEC/czambrano-igw168-spec01-landing-dark-hero-look-and-feel`.
 - La numeración `SPEC01`, `SPEC02` y siguientes organiza el scope, pero no impone prioridad obligatoria de ejecución. La estabilidad, las dependencias técnicas y el riesgo de integración pueden cambiar el orden de desarrollo.
 - Cada SPEC debe incluir un `Alcance inicial propuesto` para que el desarrollador valide, ajuste o corrija el alcance antes de implementar.
 - Cada definición de SPEC debe escribirse como lista numerada con título en negrita e indentación interna: `1. **SPEC01 - Nombre del SPEC**`, seguido por bullets indentados para rama, objetivo, alcance y criterios. Entre un SPEC y el siguiente deben dejarse dos saltos de línea normales para crear separación visual antes del siguiente número. No se debe usar heading plano para el título del SPEC dentro del listado principal.
@@ -70,7 +70,7 @@ Este protocolo define una política transversal de desarrollo para que la docume
   - `ENGLISH VERSION`
 - La versión en español va primero.
 - La versión en inglés va después y debe preservar el mismo significado, alcance y criterios.
-- Esta política debe integrarse en los documentos principales de documentación del proyecto BRIDS.
+- Esta política debe integrarse en los documentos principales de documentación del proyecto Industrial Girls.
 
 ### Política ortográfica del español
 - La documentación en español debe escribirse con tildes y signos correctos.
@@ -92,7 +92,7 @@ Este protocolo define una política transversal de desarrollo para que la docume
 ## ENGLISH VERSION
 
 ### Purpose
-This protocol defines a cross-project development policy so Linear documentation and local artifacts are attributed to the correct developer, live in the correct place, and remain synchronized in the BRIDS project workflow.
+This protocol defines a cross-project development policy so Linear documentation and local artifacts are attributed to the correct developer, live in the correct place, and remain synchronized in the Industrial Girls project workflow.
 
 ### Developer Identity Policy
 - Before creating, updating, or syncing any Linear content, the agent must confirm which project developer is responsible for the task.
@@ -109,14 +109,14 @@ This protocol defines a cross-project development policy so Linear documentation
 - Linear is the primary source for the issue, objectives, scope, SPECS, and acceptance criteria.
 - Repository `.md` files are the local Git record and must stay consistent with Linear.
 - When Linear and local `.md` files diverge, sync Linear first and then update the local record.
-- This policy must be integrated into the primary governance, documentation, and workflow documents of the BRIDS project.
+- This policy must be integrated into the primary governance, documentation, and workflow documents of the Industrial Girls project.
 
 ### SPEC Rule
 - SPECS must live in the Linear issue body.
 - Main SPECS must not be stored as loose Linear chat comments.
 - Documents or comments may only be used as supporting material if the issue body already contains the primary information.
-- When a main `Feature` branch is divided into multiple SPECS, each SPEC must have its own branch using the naming convention `SPEC/<developer>-bri<issue-number>-specNN-<slug>`.
-- Example: `SPEC/czambrano-bri168-spec01-landing-dark-hero-look-and-feel`.
+- When a main `Feature` branch is divided into multiple SPECS, each SPEC must have its own branch using the naming convention `SPEC/<developer>-igw<issue-number>-specNN-<slug>`.
+- Example: `SPEC/czambrano-igw168-spec01-landing-dark-hero-look-and-feel`.
 - The `SPEC01`, `SPEC02`, and later numbering organizes scope, but it does not impose mandatory execution priority. Stability, technical dependencies, and integration risk may change development order.
 - Each SPEC must include a `Proposed Initial Scope` so the developer can validate, adjust, or correct the scope before implementation.
 - Each SPEC definition must be written as a numbered list with a bold title and internal indentation: `1. **SPEC01 - SPEC Name**`, followed by indented bullets for branch, objective, scope, and criteria. Leave two normal line breaks between one SPEC and the next to create visual spacing before the next number. Do not use a flat heading for the SPEC title inside the main list.
@@ -150,7 +150,7 @@ This protocol defines a cross-project development policy so Linear documentation
   - `ENGLISH VERSION`
 - The Spanish version comes first.
 - The English version comes second and must preserve the same meaning, scope, and criteria.
-- This policy must be integrated into the primary documentation documents of the BRIDS project.
+- This policy must be integrated into the primary documentation documents of the Industrial Girls project.
 
 ### Spanish Orthography Policy
 - Spanish documentation must use correct accents and punctuation.

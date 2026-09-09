@@ -1,83 +1,80 @@
 /**
  * @file apps/web/src/app/page.tsx
- * @description Layer 1: Presentation - Starter Landing Page.
- * Showcases Next.js 16 runtime status, 4-layer architecture, and starter cards.
+ * @description Layer 1: Presentation - Industrial Girls Landing Page Root.
+ * Assembles the full Tactile Brutalism landing page with Exhale Music structure:
+ * Header, Drawer, Hero, Events, Records, Residents, Shop, Videos, Community, Newsletter, Floating Sound Bar, and Footer.
  */
 
-import { ThemeToggle } from "@/components/theme/theme-toggle";
-import { Card } from "@/components/ui/card";
-import { getApiBaseUrl } from "@/lib/infrastructure/api-client";
+"use client";
+
+import React, { useState } from "react";
+import { Header } from "@/components/layout/header";
+import { NavigationDrawer } from "@/components/layout/navigation-drawer";
+import { Footer } from "@/components/layout/footer";
+import { HeroSection } from "@/components/landing/hero-section";
+import { EventsSection } from "@/components/landing/events-section";
+import { RecordsSection } from "@/components/landing/records-section";
+import { ResidentsSection } from "@/components/landing/residents-section";
+import { ShopSection } from "@/components/landing/shop-section";
+import { VideosSection } from "@/components/landing/videos-section";
+import { CommunitySection } from "@/components/landing/community-section";
+import { NewsletterSection } from "@/components/landing/newsletter-section";
+import { FloatingSoundBar } from "@/components/landing/floating-sound-bar";
+import { useDrawer } from "@/lib/hooks/use-drawer";
+import { useSoundFx } from "@/lib/hooks/use-sound-fx";
 
 /**
- * Root landing page component.
+ * Root landing page component for Industrial Girls Records.
  *
- * @returns {React.ReactElement} The rendered home page layout.
+ * @returns {React.ReactElement} The fully composed landing page view.
  */
 export default function HomePage(): React.ReactElement {
-  // Step 1: Resolve active API endpoint info from infrastructure layer
-  const apiUrl = getApiBaseUrl();
+  // Step 1: Manage drawer menu state through application hook
+  const { isOpen, toggleDrawer, closeDrawer } = useDrawer();
+
+  // Step 2: Manage global audio and tactile sound interactions
+  const { isSoundEnabled, toggleSound } = useSoundFx();
 
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-6 sm:p-12 md:p-24">
-      {/* Top Header Navigation */}
-      <header className="flex w-full max-w-5xl items-center justify-between border-b border-neutral-800/80 pb-6">
-        <div className="flex items-center gap-3">
-          <div className="h-8 w-8 rounded-lg bg-gradient-to-br from-blue-500 to-indigo-600 shadow-md shadow-blue-500/20" />
-          <h1 className="text-xl font-bold tracking-tight text-white">Industrial Girls</h1>
-        </div>
-        <div className="flex items-center gap-4">
-          <ThemeToggle />
-        </div>
-      </header>
+    <div id="top" className="flex min-h-screen flex-col bg-bg text-neutral-100 selection:bg-raveRed selection:text-black">
+      {/* Top Fixed Header with Gothic Cage Logo & Drawer Trigger */}
+      <Header isDrawerOpen={isOpen} onToggleDrawer={toggleDrawer} />
 
-      {/* Hero Section */}
-      <section className="my-16 flex max-w-3xl flex-col items-center text-center">
-        <div className="mb-4 inline-flex items-center gap-2 rounded-full border border-blue-500/30 bg-blue-500/10 px-3 py-1 text-xs font-medium text-blue-400">
-          <span className="h-2 w-2 rounded-full bg-emerald-400 animate-pulse" />
-          Production Ready
-        </div>
-        <h2 className="text-4xl font-extrabold tracking-tight sm:text-5xl text-neutral-100">
-          Modular Functional Starter
-        </h2>
-        <p className="mt-4 text-base text-neutral-400 sm:text-lg">
-          Powered by Next.js 16 App Router, React 19, Tailwind CSS, and 4-Layer Architecture with
-          Double-Gatekeeper Autonomous Governance.
-        </p>
-      </section>
+      {/* Fullscreen Brutalist Navigation Drawer Overlay */}
+      <NavigationDrawer isOpen={isOpen} onClose={closeDrawer} />
 
-      {/* Feature / Layer Cards */}
-      <div className="grid w-full max-w-5xl grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
-        <Card>
-          <h3 className="text-sm font-semibold text-neutral-200">1. Presentation</h3>
-          <p className="mt-2 text-xs text-neutral-400">
-            UI components & App Router routes strictly decoupled from database and external services.
-          </p>
-        </Card>
-        <Card>
-          <h3 className="text-sm font-semibold text-neutral-200">2. Application</h3>
-          <p className="mt-2 text-xs text-neutral-400">
-            Custom hooks (`useMounted`) and client state management.
-          </p>
-        </Card>
-        <Card>
-          <h3 className="text-sm font-semibold text-neutral-200">3. Domain Pipelines</h3>
-          <p className="mt-2 text-xs text-neutral-400">
-            Pure validation pipelines and business rules.
-          </p>
-        </Card>
-        <Card>
-          <h3 className="text-sm font-semibold text-neutral-200">4. Infrastructure</h3>
-          <p className="mt-2 text-xs text-neutral-400">
-            API client connector targeting:
-            <span className="mt-1 block font-mono text-[10px] text-blue-400 break-all">{apiUrl}</span>
-          </p>
-        </Card>
-      </div>
+      {/* Main Sections Assembly */}
+      <main className="flex-1 w-full">
+        {/* 1. Hero Section */}
+        <HeroSection />
 
-      {/* Footer */}
-      <footer className="mt-16 text-center text-xs text-neutral-500">
-        Industrial Girls Monorepo &bull; Ready for Development
-      </footer>
-    </main>
+        {/* 2. Next Events Section */}
+        <EventsSection />
+
+        {/* 3. Records Catalog Section */}
+        <RecordsSection />
+
+        {/* 4. Resident DJs & Artists Section */}
+        <ResidentsSection />
+
+        {/* 5. Official Merch & Vinyl Shop */}
+        <ShopSection />
+
+        {/* 6. Live Videos & Transmissions */}
+        <VideosSection />
+
+        {/* 7. Community Photo Archive */}
+        <CommunitySection />
+
+        {/* 8. Visual Underground Dispatch / Newsletter Section */}
+        <NewsletterSection />
+      </main>
+
+      {/* Floating Tactical Sound Bar (SOUND [ON/OFF] |||·) */}
+      <FloatingSoundBar isSoundActive={isSoundEnabled} onToggleSound={toggleSound} />
+
+      {/* Industrial Footer */}
+      <Footer />
+    </div>
   );
 }

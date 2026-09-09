@@ -3,7 +3,18 @@ const fsSync = require("node:fs");
 const fs = require("node:fs/promises");
 const path = require("node:path");
 const { execFileSync } = require("node:child_process");
-const { Pool } = require("pg");
+
+function getPgPool() {
+  let pg;
+  try {
+    pg = require("pg");
+  } catch {
+    throw new Error(
+      "The 'pg' package is required for database migrations but is not installed. Run 'pnpm add pg' or unset DATABASE_URL."
+    );
+  }
+  return new pg.Pool({ connectionString: requireDatabaseUrl() });
+}
 
 const MIGRATIONS_DIR = path.resolve(process.cwd(), "apps", "web", "src", "features", "shared", "infrastructure", "db", "migrations");
 const explicitEnvKeys = new Set(Object.keys(process.env));
@@ -193,7 +204,7 @@ function logSkippedUntrackedMigrations(skippedUntracked) {
 }
 
 async function runMigrations() {
-  const pool = new Pool({ connectionString: requireDatabaseUrl() });
+  const pool = getPgPool();
   const client = await pool.connect();
 
   try {
@@ -235,7 +246,7 @@ async function runMigrations() {
 }
 
 async function checkPendingMigrations() {
-  const pool = new Pool({ connectionString: requireDatabaseUrl() });
+  const pool = getPgPool();
   const client = await pool.connect();
 
   try {

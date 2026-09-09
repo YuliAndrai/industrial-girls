@@ -4,7 +4,7 @@ title: Security Quality Policy
 description: Security Quality Policy - migrated from knowledge/
 tags: [governance]
 timestamp: 2026-07-20T04:23:56Z
-resource: https://github.com/jeisonsosablockdev/brids/blob/develop/knowledge/governance/security-quality-policy.md
+resource: https://github.com/jeisonsosablockdev/industrial-girls/blob/develop/knowledge/governance/security-quality-policy.md
 ---
 
 🔴 SECURITY + QUALITY POLICY

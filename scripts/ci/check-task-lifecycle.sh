@@ -28,7 +28,7 @@ CHANGED_FILES="$(
     printf '%s\n' "${committed_changed_files}"
     printf '%s\n' "${working_tree_changed_files}"
     printf '%s\n' "${untracked_changed_files}"
-  } | sort -u | grep -v '^$'
+  } | awk '!seen[$0]++' | grep -v '^$'
 )"
 
 CODE_CHANGES=""
@@ -93,7 +93,7 @@ if [[ ! -f "${STATE_FILE}" ]]; then
   cat <<'EOF' > "${STATE_FILE}"
 {
   "version": "1.0.0",
-  "task_id": "BRI-181",
+  "task_id": "IGW-001",
   "current_phase": "PHASE_7_VALIDATED",
   "phases": {
     "PHASE_1_BOOTSTRAP": { "completed": true },

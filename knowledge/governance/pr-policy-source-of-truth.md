@@ -4,7 +4,7 @@ title: PR Policy Source of Truth
 description: Machine-readable PR governance rules — labels, required sections, thresholds, patterns, and canonical commands
 tags: [governance, pr, policy, labels, validation, ci, human-acceptance]
 timestamp: 2026-06-16T00:00:00Z
-resource: https://github.com/jeisonsosablockdev/brids/blob/develop/docs/governance/pr-policy-source-of-truth.json
+resource: https://github.com/jeisonsosablockdev/industrial-girls/blob/develop/knowledge/governance/pr-policy-source-of-truth.json
 ---
 
 # PR Policy Source of Truth
