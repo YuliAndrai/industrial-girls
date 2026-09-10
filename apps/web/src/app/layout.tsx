@@ -6,6 +6,7 @@
 
 import type { Metadata } from "next";
 import { Providers } from "./providers";
+import { ROOT_JSON_LD_SCHEMA } from "@/lib/infrastructure/seo-schema";
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -21,9 +22,16 @@ export default function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
-  // Step 1: Wrap app contents in HTML shell with dark theme and providers
+  // Step 1: Wrap app contents in HTML shell with dark theme, head metadata/JSON-LD, and providers
   return (
     <html lang="en" className="dark">
+      <head>
+        {/* Step 2: Inject Schema.org JSON-LD graph for global SEO and AI Knowledge Graph authority */}
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(ROOT_JSON_LD_SCHEMA) }}
+        />
+      </head>
       <body className="bg-bg text-neutral-100 antialiased selection:bg-raveRed selection:text-black">
         <Providers>{children}</Providers>
       </body>
