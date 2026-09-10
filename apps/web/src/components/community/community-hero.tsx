@@ -83,7 +83,7 @@ export function CommunityHero({
                 </span>
               </div>
               <p className="font-mono text-xs text-neutral-300 leading-relaxed sm:text-[13px]">
-                Envía la historia del artista que consideres tenemos que subir en este espacio.
+                Envía la historia del proyecto o artista que consideres que deberíamos incluir en este espacio.
               </p>
             </div>
             <Link
