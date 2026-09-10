@@ -2,9 +2,13 @@
 set -euo pipefail
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-ROOT_DIR="$(cd "${SCRIPT_DIR}/../.." && pwd)"
+REPO_ROOT="$(cd "${SCRIPT_DIR}/../.." && pwd)"
+ROOT_DIR="${ROOT_DIR:-$(git rev-parse --show-toplevel 2>/dev/null || pwd)}"
 STATE_FILE="${ROOT_DIR}/.agents/active_task_state.json"
 HOOKS_FILE="${ROOT_DIR}/.agents/hooks.json"
+if [[ ! -f "${HOOKS_FILE}" && -f "${REPO_ROOT}/.agents/hooks.json" ]]; then
+  HOOKS_FILE="${REPO_ROOT}/.agents/hooks.json"
+fi
 
 echo "== Task Lifecycle & Idempotency Check =="
 
@@ -28,7 +32,7 @@ CHANGED_FILES="$(
     printf '%s\n' "${committed_changed_files}"
     printf '%s\n' "${working_tree_changed_files}"
     printf '%s\n' "${untracked_changed_files}"
-  } | awk '!seen[$0]++' | grep -v '^$'
+  } | awk '!seen[$0]++' | grep -v '^$' || true
 )"
 
 CODE_CHANGES=""
@@ -71,7 +75,11 @@ if [[ -n "${CODE_CHANGES}" ]]; then
 fi
 
 # Check dual governing artifact placeholders
-FEATURE_DOCS=($(find "${ROOT_DIR}/knowledge/features" -maxdepth 2 -name "*.md" ! -name "README.md" ! -name "index.md" 2>/dev/null || true))
+FIND_BIN="/usr/bin/find"
+if [[ ! -x "$FIND_BIN" ]]; then
+  FIND_BIN="find"
+fi
+FEATURE_DOCS=($("$FIND_BIN" "${ROOT_DIR}/knowledge/features" -maxdepth 2 -name "*.md" ! -name "README.md" ! -name "index.md" 2>/dev/null || true))
 PLACEHOLDER_COUNT=0
 
 for doc in "${FEATURE_DOCS[@]:-}"; do
@@ -88,26 +96,26 @@ else
   echo "✓ Governing dual artifacts populated with 0 placeholders."
 fi
 
-# Active task state check/init
+# Active task state check
 if [[ ! -f "${STATE_FILE}" ]]; then
-  cat <<'EOF' > "${STATE_FILE}"
-{
-  "version": "1.0.0",
-  "task_id": "IGW-001",
-  "current_phase": "PHASE_7_VALIDATED",
-  "phases": {
-    "PHASE_1_BOOTSTRAP": { "completed": true },
-    "PHASE_2_DOCS_FILLED": { "completed": true },
-    "PHASE_3_ARCHITECT_GATE1": { "completed": true },
-    "PHASE_4_HUMAN_DESIGN_APPROVED": { "completed": true },
-    "PHASE_5_TESTS_RED": { "completed": true },
-    "PHASE_6_CODE_GREEN": { "completed": true },
-    "PHASE_7_VALIDATED": { "completed": true },
-    "PHASE_8_HUMAN_MERGE_APPROVED": { "completed": false }
-  }
-}
-EOF
+  echo "❌ ERROR: active_task_state.json not found at ${STATE_FILE}."
+  exit 1
 fi
+
+node -e '
+  const fs = require("fs");
+  const statePath = process.argv[1];
+  try {
+    const state = JSON.parse(fs.readFileSync(statePath, "utf8"));
+    if (!state || typeof state !== "object" || !state.current_phase || !state.phases) {
+      console.error("❌ ERROR: active_task_state.json is malformed or missing current_phase/phases");
+      process.exit(1);
+    }
+  } catch (e) {
+    console.error("❌ ERROR: active_task_state.json is corrupted: " + e.message);
+    process.exit(1);
+  }
+' "${STATE_FILE}"
 
 echo "✓ Active task state tracked (.agents/active_task_state.json)"
 echo "Task Lifecycle & Idempotency Check Passed."
