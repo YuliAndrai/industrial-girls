@@ -45,7 +45,11 @@ export default function ComunidadPage(): React.ReactElement {
   // Step 3: Filter articles based on active tag if present
   const displayedArticles = activeFilter
     ? articles.filter((art) =>
-        art.tags.some((t) => t.toLowerCase() === activeFilter.replace("#", "").toLowerCase())
+        art.tags.some(
+          (t) =>
+            t.toLowerCase().replace("#", "") ===
+            activeFilter.toLowerCase().replace("#", "")
+        )
       )
     : articles;
 

@@ -7,17 +7,16 @@
 "use client";
 
 import React from "react";
-import Link from "next/link";
 
 /**
  * Filter badge identifiers for community journal topics.
  */
 export const COMMUNITY_THEMATIC_BADGES: string[] = [
-  "#PionerasDelVoltaje",
-  "#CircuitDesign",
-  "#DSP",
-  "#SoftwareDAW",
-  "#SoundDesign",
+  "#MEMORIA&HISTORIA",
+  "#PRODUCTORAS&DJS",
+  "#LIVES&HYBRIDS",
+  "#HARDWARE&SÍNTESIS",
+  "#SOFTWARE&DAW",
 ];
 
 /**
@@ -78,29 +77,9 @@ export function CommunityHero({
           <p>
             Este espacio está dedicado a visibilizar el talento que impulsa la evolución de la cultura electrónica a nivel global.
           </p>
-        </div>
-
-        {/* Step 5b: Artist Open Call Industrial Console Banner */}
-        <div className="mx-auto mt-8 max-w-3xl border border-raveRed/50 bg-neutral-950/90 p-5 text-left shadow-rave sm:p-6">
-          <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
-            <div className="space-y-1.5 flex-1">
-              <div className="flex items-center gap-2">
-                <span className="inline-block h-2 w-2 bg-raveRed animate-pulse" />
-                <span className="font-mono text-[11px] font-bold uppercase tracking-widest text-raveRed">
-                  {"// CONVOCATORIA EDITORIAL & ROSTER //"}
-                </span>
-              </div>
-              <p className="font-mono text-xs text-neutral-300 leading-relaxed sm:text-[13px]">
-                Envía la historia del proyecto o artista que consideres que deberíamos incluir en este espacio.
-              </p>
-            </div>
-            <Link
-              href="/desarrollo-artistico"
-              className="inline-flex shrink-0 items-center justify-center border border-raveRed bg-raveRed/10 px-4 py-2.5 font-mono text-xs font-bold uppercase tracking-wider text-white transition-all hover:bg-raveRed hover:text-black hover:shadow-rave active:translate-y-0.5"
-            >
-              [ ENVIAR PERFIL / PROPUESTA ]
-            </Link>
-          </div>
+          <p>
+            ¿Conoces una artista cuya historia merece ser contada? Envíanos su perfil y ayúdanos a seguir construyendo este archivo de inspiración, conocimiento y comunidad.
+          </p>
         </div>
 
         {/* Step 6: Thematic filter badges */}
