@@ -59,16 +59,16 @@ export function CommunityHero({
 
         {/* Step 4: Display H1 headline */}
         <h1 className="text-3xl font-black uppercase tracking-tight text-white sm:text-5xl md:text-6xl lg:text-7xl">
-          JOURNAL &{" "}
+          NOTICIAS, MEMORIA &{" "}
           <span className="text-raveRed drop-shadow-[0_0_20px_rgba(255,0,0,0.6)]">
-            COMUNIDAD
+            CULTURA
           </span>{" "}
-          DE INGENIERÍA SONORA
+          UNDERGROUND
         </h1>
 
         {/* Step 5: Research editorial deck */}
         <p className="mx-auto mt-6 max-w-3xl font-mono text-xs leading-relaxed text-neutral-300 sm:text-base md:text-lg">
-          Investigación histórica, arquitectura de hardware, desarrollo de software y debate crítico sobre la vanguardia femenina en la música electrónica.
+          Noticias, memoria e historia sobre la participación decisiva de las mujeres en la arquitectura de hardware, desarrollo de software y la fuerza creadora que transformó el sonido global.
         </p>
 
         {/* Step 6: Thematic filter badges */}
