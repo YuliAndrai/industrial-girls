@@ -42,6 +42,11 @@ import {
   type JournalArticle,
   type ArticleComment,
 } from "./infrastructure/community-catalog";
+import {
+  COMMUNITY_HERO_COPY,
+  COMMUNITY_DISCUSSION_COPY,
+  COMMUNITY_CHANNELS_COPY,
+} from "./infrastructure/community-copy";
 
 // Layer 3: Domain / Pipelines Imports
 import {
@@ -879,6 +884,71 @@ describe("Community Journal Module — Phase 5: Behavioral Domain Logic & Catalo
         pageContent,
         "comunidad/page.tsx must render <CommunitySubscription"
       ).toMatch(/<CommunitySubscription\b/);
+    });
+  });
+
+  /* -----------------------------------------------------------------------
+   * 6. Community Copy Dictionary & Hero Invariants
+   * ----------------------------------------------------------------------- */
+  describe("6. Layer 4 Community Copy Dictionary & Hero Invariants", () => {
+    it("should export COMMUNITY_HERO_COPY with exact canonical metadata", () => {
+      // Assert: Top badge invariant
+      expect(COMMUNITY_HERO_COPY.topBadge).toBe("// ARCHIVO EDITORIAL & NOTICIAS // EDICIÓN 01");
+
+      // Assert: Headline structure
+      expect(COMMUNITY_HERO_COPY.headline.prefix).toBe("NOTICIAS, MEMORIA &");
+      expect(COMMUNITY_HERO_COPY.headline.accent).toBe("CULTURA");
+      expect(COMMUNITY_HERO_COPY.headline.suffix).toBe("UNDERGROUND");
+
+      // Assert: Exactly 3 paragraphs
+      expect(COMMUNITY_HERO_COPY.paragraphs).toHaveLength(3);
+
+      // Assert: Exact content of each paragraph
+      expect(COMMUNITY_HERO_COPY.paragraphs[0]).toBe(
+        "Exploramos el impacto histórico y contemporáneo de las mujeres en la música electrónica, la arquitectura de hardware, la ingeniería de software y la innovación sonora."
+      );
+      expect(COMMUNITY_HERO_COPY.paragraphs[1]).toBe(
+        "Mantente al día con las últimas noticias, entrevistas y perfiles de DJs, productoras, artistas live y proyectos híbridos que están transformando el circuito internacional a través de su técnica, creatividad y trayectoria."
+      );
+      expect(COMMUNITY_HERO_COPY.paragraphs[2]).toBe(
+        "Este espacio está dedicado a visibilizar el talento que impulsa la evolución de la cultura electrónica a nivel global."
+      );
+
+      // Assert: 5 canonical thematic badges
+      expect(COMMUNITY_HERO_COPY.thematicBadges).toEqual([
+        "#MEMORIA&HISTORIA",
+        "#PRODUCTORAS&DJS",
+        "#LIVES&HYBRIDS",
+        "#HARDWARE&SÍNTESIS",
+        "#SOFTWARE&DAW",
+      ]);
+    });
+
+    it("should ensure CommunityHero presentation component consumes centralized copy without hardcoded drift", () => {
+      const heroPath = path.resolve(
+        process.cwd(),
+        "apps/web/src/components/community/community-hero.tsx"
+      );
+      const heroSource = fs.readFileSync(heroPath, "utf-8");
+
+      // Assert: CommunityHero imports COMMUNITY_HERO_COPY
+      expect(heroSource).toMatch(/import\s+.*COMMUNITY_HERO_COPY.*from\s+["']@\/lib\/infrastructure\/community-copy["']/);
+
+      // Assert: Renders paragraphs dynamically via .map
+      expect(heroSource).toMatch(/COMMUNITY_HERO_COPY\.paragraphs\.map/);
+
+      // Assert: Uses centralized badges
+      expect(heroSource).toMatch(/COMMUNITY_HERO_COPY\.thematicBadges/);
+    });
+
+    it("should export COMMUNITY_DISCUSSION_COPY and COMMUNITY_CHANNELS_COPY with exact canonical metadata", () => {
+      expect(COMMUNITY_DISCUSSION_COPY.heading).toBe("DEBATE, DÉJANOS TU COMENTARIO.");
+      expect(COMMUNITY_DISCUSSION_COPY.feedbackSubmitted).toBe(
+        "Aporte enviado. Será publicado tras la moderación y verificación editorial."
+      );
+      expect(COMMUNITY_CHANNELS_COPY.badge).toBe(
+        "// RADAR DIRECTO // Alertas de convocatorias, drops de música y eventos en tiempo real."
+      );
     });
   });
 });

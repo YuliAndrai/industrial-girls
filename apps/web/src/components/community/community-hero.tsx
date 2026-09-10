@@ -7,17 +7,13 @@
 "use client";
 
 import React from "react";
+import { COMMUNITY_HERO_COPY } from "@/lib/infrastructure/community-copy";
 
 /**
  * Filter badge identifiers for community journal topics.
+ * Exported for backwards compatibility with existing consumers.
  */
-export const COMMUNITY_THEMATIC_BADGES: string[] = [
-  "#MEMORIA&HISTORIA",
-  "#PRODUCTORAS&DJS",
-  "#LIVES&HYBRIDS",
-  "#HARDWARE&SÍNTESIS",
-  "#SOFTWARE&DAW",
-];
+export const COMMUNITY_THEMATIC_BADGES: readonly string[] = COMMUNITY_HERO_COPY.thematicBadges;
 
 /**
  * Contract props for CommunityHero component.
@@ -40,7 +36,6 @@ export interface CommunityHeroProps {
 export function CommunityHero({
   activeFilter,
   onSelectFilter,
-  articleCount = 5,
 }: CommunityHeroProps = {}): React.ReactElement {
   // Step 1: Render outer hero section with brutalist scanlines and red bottom border
   return (
@@ -53,35 +48,29 @@ export function CommunityHero({
         {/* Step 3: Editorial category tag */}
         <div className="mb-4">
           <span className="border border-raveRed/60 bg-raveRed/10 px-3 py-1 font-mono text-[11px] font-bold uppercase tracking-widest text-raveRed sm:text-xs">
-            {"// ARCHIVO EDITORIAL & NOTICIAS // EDICIÓN 01"}
+            {COMMUNITY_HERO_COPY.topBadge}
           </span>
         </div>
 
         {/* Step 4: Display H1 headline */}
         <h1 className="text-3xl font-black uppercase tracking-tight text-white sm:text-5xl md:text-6xl lg:text-7xl">
-          NOTICIAS, MEMORIA &{" "}
+          {COMMUNITY_HERO_COPY.headline.prefix}{" "}
           <span className="text-raveRed drop-shadow-[0_0_20px_rgba(255,0,0,0.6)]">
-            CULTURA
+            {COMMUNITY_HERO_COPY.headline.accent}
           </span>{" "}
-          UNDERGROUND
+          {COMMUNITY_HERO_COPY.headline.suffix}
         </h1>
 
-        {/* Step 5: Research editorial deck & statement */}
+        {/* Step 5: Research editorial deck & statement from centralized copy dictionary */}
         <div className="mx-auto mt-6 max-w-3xl space-y-3 font-mono text-xs leading-relaxed text-neutral-300 sm:text-sm md:text-base">
-          <p>
-            Exploramos el impacto histórico y contemporáneo de las mujeres en la música electrónica, la arquitectura de hardware, la ingeniería de software y la innovación sonora.
-          </p>
-          <p>
-            Mantente al día con las últimas noticias, entrevistas y perfiles de DJs, productoras, artistas live y proyectos híbridos que están transformando el circuito internacional a través de su técnica, creatividad y trayectoria.
-          </p>
-          <p>
-            Este espacio está dedicado a visibilizar el talento que impulsa la evolución de la cultura electrónica a nivel global.
-          </p>
+          {COMMUNITY_HERO_COPY.paragraphs.map((paragraph, idx) => (
+            <p key={idx}>{paragraph}</p>
+          ))}
         </div>
 
         {/* Step 6: Thematic filter badges */}
         <div className="mt-8 flex flex-wrap items-center justify-center gap-2 sm:gap-3">
-          {COMMUNITY_THEMATIC_BADGES.map((badge) => {
+          {COMMUNITY_HERO_COPY.thematicBadges.map((badge) => {
             const isSelected = activeFilter === badge;
             return (
               <button

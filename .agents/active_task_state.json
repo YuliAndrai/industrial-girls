@@ -1,7 +1,7 @@
 {
   "version": "1.0.0",
   "task_id": "IGW-006",
-  "branch": "fix/jaymusicmachine-IGW-006-community-hero-content",
+  "branch": "refactor/jaymusicmachine-IGW-006-community-copy-hardening",
   "current_phase": "PHASE_8_HUMAN_MERGE_APPROVED",
   "phases": {
     "PHASE_1_BOOTSTRAP": {
