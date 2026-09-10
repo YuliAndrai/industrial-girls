@@ -42,6 +42,8 @@ export interface DiscussionConsoleProps {
   comments?: ArticleComment[];
   /** Optional Telegram community channel/group URL */
   telegramGroupUrl?: string;
+  /** Optional WhatsApp community channel/group URL */
+  whatsappGroupUrl?: string;
   /** Callback triggered on posting contribution */
   onSubmitContribution?: (data: {
     author: string;
@@ -63,6 +65,7 @@ export function DiscussionConsole({
   articleTitle = "Pioneras del Voltaje: De la Música Concreta a la Resonancia Modular",
   comments = [],
   telegramGroupUrl = "#",
+  whatsappGroupUrl = "#",
   onSubmitContribution,
 }: DiscussionConsoleProps = {}): React.ReactElement {
   // Step 1: Initialize local form state for 4 fields
@@ -257,8 +260,11 @@ export function DiscussionConsole({
         )}
       </div>
 
-      {/* Step 8: Direct Telegram Community Channel & Specialized Groups Banner */}
-      <TelegramCommunityBanner telegramGroupUrl={telegramGroupUrl} />
+      {/* Step 8: Direct Telegram & WhatsApp Community Channels Banner */}
+      <TelegramCommunityBanner
+        telegramGroupUrl={telegramGroupUrl}
+        whatsappGroupUrl={whatsappGroupUrl}
+      />
     </section>
   );
 }

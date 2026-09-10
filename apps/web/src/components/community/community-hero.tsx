@@ -72,13 +72,10 @@ export function CommunityHero({
             Exploramos el impacto histórico y contemporáneo de las mujeres en la música electrónica, la arquitectura de hardware, la ingeniería de software y la innovación sonora.
           </p>
           <p>
-            Mantente al día con las últimas noticias, entrevistas y perfiles de DJs, productoras, artistas live y proyectos híbridos que están transformando el circuito internacional a través de su técnica, creatividad y trayectoria.
+            Mantente al día con las últimas noticias, entrevistas y perfiles de DJs, productoras, artistas live y proyectos híbridos que están transformando el circuito internacional con su técnica y visión.
           </p>
           <p>
-            Este espacio está dedicado a visibilizar el talento que impulsa la evolución de la cultura electrónica a nivel global.
-          </p>
-          <p>
-            ¿Conoces una artista cuya historia merece ser contada? Envíanos su perfil y ayúdanos a seguir construyendo este archivo de inspiración, conocimiento y comunidad.
+            Un espacio de memoria, resistencia técnica y sonido underground.
           </p>
         </div>
 

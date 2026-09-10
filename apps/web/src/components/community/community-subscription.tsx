@@ -17,12 +17,16 @@ import { TelegramCommunityBanner } from "./telegram-community-banner";
 export interface CommunitySubscriptionPayload {
   /** Subscriber email address */
   email: string;
-  /** Subscriber alias / full name */
+  /** Subscriber alias / artistic name */
   name: string;
   /** Country of residence */
   country: string;
   /** City of residence */
   city: string;
+  /** Optional social media / music profile link */
+  musicLink?: string;
+  /** Strictly optional phone / WhatsApp contact */
+  phone?: string;
 }
 
 /**
@@ -35,6 +39,8 @@ export interface CommunitySubscriptionProps {
   subtitle?: string;
   /** Optional Telegram community channel/group URL */
   telegramGroupUrl?: string;
+  /** Optional WhatsApp community channel/group URL */
+  whatsappGroupUrl?: string;
   /** Callback invoked on successful community registration */
   onSubscribe?: (payload: CommunitySubscriptionPayload) => void;
 }
@@ -49,11 +55,14 @@ export function CommunitySubscription({
   title = "RED COMUNITARIA INDUSTRIAL GIRLS",
   subtitle = "Recibe invitaciones a conversatorios, convocatorias de producción, drops de artículos y anuncios prioritarios de tu región.",
   telegramGroupUrl = "#",
+  whatsappGroupUrl = "#",
   onSubscribe,
 }: CommunitySubscriptionProps = {}): React.ReactElement {
-  // Step 1: Manage local form state for 4 fields
+  // Step 1: Manage local form state for fields
   const [email, setEmail] = useState("");
   const [name, setName] = useState("");
+  const [musicLink, setMusicLink] = useState("");
+  const [phone, setPhone] = useState("");
   const [country, setCountry] = useState("Colombia");
   const [city, setCity] = useState("");
   const [errors, setErrors] = useState<Record<string, string>>({});
@@ -88,6 +97,8 @@ export function CommunitySubscription({
       name: name.trim(),
       country,
       city: city.trim(),
+      musicLink: musicLink.trim() || undefined,
+      phone: phone.trim() || undefined,
     };
 
     onSubscribe?.(payload);
@@ -101,6 +112,8 @@ export function CommunitySubscription({
   const handleReset = () => {
     setEmail("");
     setName("");
+    setMusicLink("");
+    setPhone("");
     setCountry("Colombia");
     setCity("");
     setErrors({});
@@ -163,10 +176,10 @@ export function CommunitySubscription({
                 {errors.email && <p className="mt-1 text-xs text-raveRed">{errors.email}</p>}
               </div>
 
-              {/* Field 2: Nombre / Alias */}
+              {/* Field 2: Nombre / Alias artístico */}
               <div>
                 <label htmlFor="comm-name" className="block text-xs font-bold uppercase tracking-wider text-white mb-1.5">
-                  Nombre / Alias <span className="text-raveRed">*</span>
+                  Nombre / Alias artístico <span className="text-raveRed">*</span>
                 </label>
                 <input
                   id="comm-name"
@@ -181,7 +194,39 @@ export function CommunitySubscription({
             </div>
 
             <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-              {/* Field 3: País (selector) */}
+              {/* Field 3: Instagram / Redes / Enlace a música */}
+              <div>
+                <label htmlFor="comm-music" className="block text-xs font-bold uppercase tracking-wider text-white mb-1.5">
+                  Instagram / Redes / Enlace a música (SoundCloud/Bandcamp)
+                </label>
+                <input
+                  id="comm-music"
+                  type="text"
+                  value={musicLink}
+                  onChange={(e) => setMusicLink(e.target.value)}
+                  placeholder="Ej. @alias / soundcloud.com/alias"
+                  className="w-full border border-raveBorder bg-panel px-3.5 py-2.5 text-sm text-white placeholder:text-neutral-600 focus:border-raveRed focus:outline-none"
+                />
+              </div>
+
+              {/* Field 4: Teléfono / WhatsApp (Opcional) */}
+              <div>
+                <label htmlFor="comm-phone" className="block text-xs font-bold uppercase tracking-wider text-white mb-1.5">
+                  Teléfono / WhatsApp (Opcional)
+                </label>
+                <input
+                  id="comm-phone"
+                  type="tel"
+                  value={phone}
+                  onChange={(e) => setPhone(e.target.value)}
+                  placeholder="+XX XXX XXXXXXX (Solo para contacto directo o alertas urgentes)"
+                  className="w-full border border-raveBorder bg-panel px-3.5 py-2.5 text-sm text-white placeholder:text-neutral-600 focus:border-raveRed focus:outline-none"
+                />
+              </div>
+            </div>
+
+            <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+              {/* Field 5: País (selector) */}
               <div>
                 <label htmlFor="comm-country" className="block text-xs font-bold uppercase tracking-wider text-white mb-1.5">
                   País <span className="text-raveRed">*</span>
@@ -200,7 +245,7 @@ export function CommunitySubscription({
                 </select>
               </div>
 
-              {/* Field 4: Ciudad */}
+              {/* Field 6: Ciudad */}
               <div>
                 <label htmlFor="comm-city" className="block text-xs font-bold uppercase tracking-wider text-white mb-1.5">
                   Ciudad <span className="text-raveRed">*</span>
@@ -232,8 +277,11 @@ export function CommunitySubscription({
           </form>
         )}
 
-        {/* Step 7: Direct Telegram Community Channel & Specialized Groups Banner */}
-        <TelegramCommunityBanner telegramGroupUrl={telegramGroupUrl} />
+        {/* Step 7: Direct Telegram & WhatsApp Community Channels Banner */}
+        <TelegramCommunityBanner
+          telegramGroupUrl={telegramGroupUrl}
+          whatsappGroupUrl={whatsappGroupUrl}
+        />
       </div>
     </section>
   );
