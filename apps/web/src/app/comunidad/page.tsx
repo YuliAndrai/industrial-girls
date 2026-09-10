@@ -63,6 +63,7 @@ export default function ComunidadPage(): React.ReactElement {
     email: string;
     role: DiscussionParticipantRole;
     content: string;
+    isPublic?: boolean;
   }) => {
     const validation = validateCommentSubmission({
       articleId: currentArticle.slug,
@@ -70,6 +71,7 @@ export default function ComunidadPage(): React.ReactElement {
       email: data.email,
       role: data.role,
       commentText: data.content,
+      isPublic: data.isPublic,
     });
 
     if (!validation.isValid) {
@@ -82,7 +84,8 @@ export default function ComunidadPage(): React.ReactElement {
       data.content,
       data.role,
       undefined,
-      data.email
+      data.email,
+      false // Invariant: visitor comments are placed in moderation (isPublic: false)
     );
     setRefreshKey((k) => k + 1);
   };

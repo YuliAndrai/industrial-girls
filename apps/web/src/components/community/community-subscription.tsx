@@ -9,6 +9,7 @@
 import React, { useState } from "react";
 import { TactileButton } from "@/components/ui/tactile-button";
 import { STANDARD_COUNTRIES } from "@/lib/infrastructure/events-catalog";
+import { TelegramCommunityBanner } from "./telegram-community-banner";
 
 /**
  * Community subscription form input payload.
@@ -32,6 +33,8 @@ export interface CommunitySubscriptionProps {
   title?: string;
   /** Optional explanatory subtitle */
   subtitle?: string;
+  /** Optional Telegram community channel/group URL */
+  telegramGroupUrl?: string;
   /** Callback invoked on successful community registration */
   onSubscribe?: (payload: CommunitySubscriptionPayload) => void;
 }
@@ -45,6 +48,7 @@ export interface CommunitySubscriptionProps {
 export function CommunitySubscription({
   title = "RED COMUNITARIA INDUSTRIAL GIRLS",
   subtitle = "Recibe invitaciones a conversatorios, convocatorias de producción, drops de artículos y anuncios prioritarios de tu región.",
+  telegramGroupUrl = "#",
   onSubscribe,
 }: CommunitySubscriptionProps = {}): React.ReactElement {
   // Step 1: Manage local form state for 4 fields
@@ -227,6 +231,9 @@ export function CommunitySubscription({
             </div>
           </form>
         )}
+
+        {/* Step 7: Direct Telegram Community Channel & Specialized Groups Banner */}
+        <TelegramCommunityBanner telegramGroupUrl={telegramGroupUrl} />
       </div>
     </section>
   );

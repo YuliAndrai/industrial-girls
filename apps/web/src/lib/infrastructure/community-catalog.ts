@@ -25,6 +25,8 @@ export interface ArticleComment {
   email?: string;
   /** Optional parent comment ID for threaded replies */
   parentId?: string;
+  /** Visibility status: true if public in forum feed, false if direct message for editorial team */
+  isPublic?: boolean;
 }
 
 /**
@@ -164,6 +166,7 @@ export const INITIAL_COMMENTS: ArticleComment[] = [
     content: "El trabajo de Eliane Radigue con el ARP 2500 cambió completamente mi forma de entender los drones modulares. Fundamental este rescate.",
     createdAt: "2025-02-12T14:30:00Z",
     role: "Productora / Live Act",
+    isPublic: true,
   },
   {
     id: "comm-01-reply",
@@ -173,6 +176,7 @@ export const INITIAL_COMMENTS: ArticleComment[] = [
     createdAt: "2025-02-13T10:15:00Z",
     role: "Ingeniera de Sonido",
     parentId: "comm-01",
+    isPublic: true,
   },
   {
     id: "comm-02",
@@ -181,6 +185,7 @@ export const INITIAL_COMMENTS: ArticleComment[] = [
     content: "Totalmente de acuerdo con el Buchla 200. La modulación cruzada analógica introduce una riqueza que la cuantización digital aún no alcanza.",
     createdAt: "2025-04-20T09:15:00Z",
     role: "Productora / Live Act",
+    isPublic: true,
   },
   {
     id: "comm-03",
@@ -189,6 +194,16 @@ export const INITIAL_COMMENTS: ArticleComment[] = [
     content: "Las fiestas de almacén en Bogotá son los únicos lugares donde todavía se siente la pureza de la música sin vigilancia corporativa.",
     createdAt: "2025-09-16T22:05:00Z",
     role: "Melómana / Asistente",
+    isPublic: true,
+  },
+  {
+    id: "comm-04-private",
+    articleId: "pioneras-del-voltaje",
+    author: "PROD_DIRECT_DEMO",
+    content: "Aporte directo y confidencial para el equipo editorial de Industrial Girls.",
+    createdAt: "2025-02-14T11:00:00Z",
+    role: "Productora / Live Act",
+    isPublic: false,
   },
 ];
 

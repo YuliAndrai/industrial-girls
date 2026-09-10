@@ -49,6 +49,7 @@ let commentCounter = 0;
  * @param {string} [role] - Participant scene role.
  * @param {string} [parentId] - Optional parent comment ID for threading.
  * @param {string} [email] - Optional email address.
+ * @param {boolean} [isPublic=true] - Visibility status: true for public forum, false for private editorial message.
  * @returns {ArticleComment} The created comment.
  */
 export function addArticleComment(
@@ -57,7 +58,8 @@ export function addArticleComment(
   content: string,
   role?: string,
   parentId?: string,
-  email?: string
+  email?: string,
+  isPublic: boolean = false
 ): ArticleComment {
   // Step 1: Construct new comment entity with collision-free unique ID
   const uniqueId = `comm-${Date.now()}-${++commentCounter}-${Math.random().toString(36).substring(2, 7)}`;
@@ -67,6 +69,7 @@ export function addArticleComment(
     author: author.trim(),
     content: content.trim(),
     createdAt: new Date().toISOString(),
+    isPublic: isPublic === true,
     ...(role ? { role } : {}),
     ...(parentId ? { parentId } : {}),
     ...(email ? { email: email.trim() } : {}),

@@ -53,7 +53,7 @@ export function CommunityHero({
         {/* Step 3: Editorial category tag */}
         <div className="mb-4">
           <span className="border border-raveRed/60 bg-raveRed/10 px-3 py-1 font-mono text-[11px] font-bold uppercase tracking-widest text-raveRed sm:text-xs">
-            {`// ENSAYOS & DEBATE TÉCNICO // ${articleCount} ARTÍCULOS`}
+            {"// ARCHIVO EDITORIAL & NOTICIAS // EDICIÓN 01"}
           </span>
         </div>
 

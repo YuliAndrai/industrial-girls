@@ -34,6 +34,8 @@ export interface CommentSubmissionInput {
   role?: string;
   /** Optional parent comment ID for threading */
   parentId?: string;
+  /** Visibility status: true for public forum comment, false for private editorial message */
+  isPublic?: boolean;
 }
 
 /**

@@ -309,6 +309,27 @@ describe("Community Journal Module — Phase 2a: Structural Verification (IGW-00
         "Expected CommunitySubscription or default export to be defined"
       ).toBeDefined();
     });
+
+    it("should physically exist on disk and export TelegramCommunityBanner (apps/web/src/components/community/telegram-community-banner.tsx)", async () => {
+      // Arrange: Target file path for TelegramCommunityBanner component
+      const filePath = path.resolve(
+        process.cwd(),
+        "apps/web/src/components/community/telegram-community-banner.tsx"
+      );
+
+      // Act: Verify physical existence on disk
+      const fileExists = fs.existsSync(filePath);
+
+      // Assert: File existence verification
+      expect(fileExists, `Presentation component missing at: ${filePath}`).toBe(true);
+
+      // Act & Assert: Verify export contract if file exists
+      const bannerModule = await import("@/components/community/telegram-community-banner");
+      expect(
+        bannerModule.TelegramCommunityBanner || bannerModule.default,
+        "Expected TelegramCommunityBanner or default export to be defined"
+      ).toBeDefined();
+    });
   });
 });
 
@@ -705,6 +726,50 @@ describe("Community Journal Module — Phase 5: Behavioral Domain Logic & Catalo
       expect(storedReply, "Reply comment must be retrievable from state store").toBeDefined();
       expect(storedReply?.role).toBe(replyRole);
       expect(storedReply?.parentId).toBe(replyParentId);
+    });
+
+    it("should support isPublic visibility flag allowing pending moderation comments to be filtered from the public feed", () => {
+      // Arrange: Target article and payload for visitor contribution
+      const targetSlug = JOURNAL_ARTICLES[0]?.slug ?? "pioneras-del-voltaje";
+      const visitorAuthor = "DirectEditorialContact";
+      const visitorContent = "Mensaje confidencial de consulta técnica para el equipo editorial.";
+      const visitorRole = "Ingeniera de Sonido";
+
+      // Act: Add comment with default visitor status (isPublic: false for moderation)
+      const pendingComment = (addArticleComment as any)(
+        targetSlug,
+        visitorAuthor,
+        visitorContent,
+        visitorRole,
+        undefined,
+        "direct@editorial.org"
+      );
+
+      // Assert: Visitor comment records isPublic === false by default
+      expect(pendingComment).toBeDefined();
+      expect(pendingComment.isPublic).toBe(false);
+
+      // Act: Add administratively approved comment with explicit isPublic: true
+      const approvedComment = (addArticleComment as any)(
+        targetSlug,
+        "PublicContributor",
+        "Aporte abierto sobre circuitos analógicos.",
+        "Productora / Live Act",
+        undefined,
+        "approved@community.org",
+        true
+      );
+
+      // Assert: Explicitly approved comment is public
+      expect(approvedComment.isPublic).toBe(true);
+
+      // Act: Simulate feed moderation filtering (only isPublic === true rendered in public forum)
+      const allComments = getCommentsForArticle(targetSlug);
+      const publicFeed = allComments.filter((c) => c.isPublic === true);
+
+      // Assert: Public feed includes approvedComment and excludes pendingComment
+      expect(publicFeed.some((c) => c.id === approvedComment.id)).toBe(true);
+      expect(publicFeed.some((c) => c.id === pendingComment.id)).toBe(false);
     });
   });
 
