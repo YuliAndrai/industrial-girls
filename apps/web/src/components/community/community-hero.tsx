@@ -69,7 +69,7 @@ export function CommunityHero({
 
         {/* Step 5: Research editorial deck */}
         <p className="mx-auto mt-6 max-w-3xl font-mono text-xs leading-relaxed text-neutral-300 sm:text-base md:text-lg">
-          Exploramos el impacto histórico de las mujeres en la arquitectura de hardware, la ingeniería de software y la vanguardia sónica. Próximamente sumaremos perfiles de productoras y selectors que hoy revolucionan el circuito internacional con su técnica y trayectoria.
+          Sumaremos perfiles de productoras, lives, hybrid, que hoy revolucionan el circuito internacional con su técnica, creatividad y trayectoria.
         </p>
 
         {/* Step 5b: Artist Open Call Industrial Console Banner */}
@@ -83,14 +83,14 @@ export function CommunityHero({
                 </span>
               </div>
               <p className="font-mono text-xs text-neutral-300 leading-relaxed sm:text-[13px]">
-                ¿Eres productora o selector y tienes un sonido que desafía la escena? Recibimos propuestas musicales y proyectos de investigación de forma continua.
+                Envía la historia del artista que consideres tenemos que subir en este espacio.
               </p>
             </div>
             <Link
               href="/desarrollo-artistico"
               className="inline-flex shrink-0 items-center justify-center border border-raveRed bg-raveRed/10 px-4 py-2.5 font-mono text-xs font-bold uppercase tracking-wider text-white transition-all hover:bg-raveRed hover:text-black hover:shadow-rave active:translate-y-0.5"
             >
-              [ ENVIAR PROPUESTA ARTÍSTICA ]
+              [ PROPONER ARTISTA ]
             </Link>
           </div>
         </div>
