@@ -67,10 +67,18 @@ export function CommunityHero({
           UNDERGROUND
         </h1>
 
-        {/* Step 5: Research editorial deck */}
-        <p className="mx-auto mt-6 max-w-3xl font-mono text-xs leading-relaxed text-neutral-300 sm:text-base md:text-lg">
-          Sumaremos perfiles de productoras, lives, hybrid, que hoy revolucionan el circuito internacional con su técnica, creatividad y trayectoria.
-        </p>
+        {/* Step 5: Research editorial deck & statement */}
+        <div className="mx-auto mt-6 max-w-3xl space-y-3 font-mono text-xs leading-relaxed text-neutral-300 sm:text-sm md:text-base">
+          <p>
+            Exploramos el impacto histórico y contemporáneo de las mujeres en la música electrónica, la arquitectura de hardware, la ingeniería de software y la innovación sonora.
+          </p>
+          <p>
+            Mantente al día con las últimas noticias, entrevistas y perfiles de DJs, productoras, artistas live y proyectos híbridos que están transformando el circuito internacional a través de su técnica, creatividad y trayectoria.
+          </p>
+          <p>
+            Este espacio está dedicado a visibilizar el talento que impulsa la evolución de la cultura electrónica a nivel global.
+          </p>
+        </div>
 
         {/* Step 5b: Artist Open Call Industrial Console Banner */}
         <div className="mx-auto mt-8 max-w-3xl border border-raveRed/50 bg-neutral-950/90 p-5 text-left shadow-rave sm:p-6">
@@ -90,7 +98,7 @@ export function CommunityHero({
               href="/desarrollo-artistico"
               className="inline-flex shrink-0 items-center justify-center border border-raveRed bg-raveRed/10 px-4 py-2.5 font-mono text-xs font-bold uppercase tracking-wider text-white transition-all hover:bg-raveRed hover:text-black hover:shadow-rave active:translate-y-0.5"
             >
-              [ PROPONER ARTISTA ]
+              [ ENVIAR PERFIL / PROPUESTA ]
             </Link>
           </div>
         </div>
