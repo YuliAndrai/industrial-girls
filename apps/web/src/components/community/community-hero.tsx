@@ -7,6 +7,7 @@
 "use client";
 
 import React from "react";
+import Link from "next/link";
 
 /**
  * Filter badge identifiers for community journal topics.
@@ -68,8 +69,31 @@ export function CommunityHero({
 
         {/* Step 5: Research editorial deck */}
         <p className="mx-auto mt-6 max-w-3xl font-mono text-xs leading-relaxed text-neutral-300 sm:text-base md:text-lg">
-          Noticias, memoria e historia sobre la participación decisiva de las mujeres en la arquitectura de hardware, desarrollo de software y la fuerza creadora que transformó el sonido global.
+          Exploramos el impacto histórico de las mujeres en la arquitectura de hardware, la ingeniería de software y la vanguardia sónica. Próximamente sumaremos perfiles de productoras y selectors que hoy revolucionan el circuito internacional con su técnica y trayectoria.
         </p>
+
+        {/* Step 5b: Artist Open Call Industrial Console Banner */}
+        <div className="mx-auto mt-8 max-w-3xl border border-raveRed/50 bg-neutral-950/90 p-5 text-left shadow-rave sm:p-6">
+          <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+            <div className="space-y-1.5 flex-1">
+              <div className="flex items-center gap-2">
+                <span className="inline-block h-2 w-2 bg-raveRed animate-pulse" />
+                <span className="font-mono text-[11px] font-bold uppercase tracking-widest text-raveRed">
+                  {"// CONVOCATORIA EDITORIAL & ROSTER //"}
+                </span>
+              </div>
+              <p className="font-mono text-xs text-neutral-300 leading-relaxed sm:text-[13px]">
+                ¿Eres productora o selector y tienes un sonido que desafía la escena? Recibimos propuestas musicales y proyectos de investigación de forma continua.
+              </p>
+            </div>
+            <Link
+              href="/desarrollo-artistico"
+              className="inline-flex shrink-0 items-center justify-center border border-raveRed bg-raveRed/10 px-4 py-2.5 font-mono text-xs font-bold uppercase tracking-wider text-white transition-all hover:bg-raveRed hover:text-black hover:shadow-rave active:translate-y-0.5"
+            >
+              [ ENVIAR PROPUESTA ARTÍSTICA ]
+            </Link>
+          </div>
+        </div>
 
         {/* Step 6: Thematic filter badges */}
         <div className="mt-8 flex flex-wrap items-center justify-center gap-2 sm:gap-3">
