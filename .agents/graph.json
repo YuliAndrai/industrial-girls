@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-09-10T03:23:01.658Z",
+  "generatedAt": "2026-09-10T03:39:28.551Z",
   "nodes": [
     {
       "id": "AGENTS.md",
@@ -144,6 +144,18 @@
       "type": "governance",
       "label": "feature-jaymusicmachine-IGW-006-community-journal-page",
       "path": "knowledge\\features\\feature-jaymusicmachine-IGW-006-community-journal-page.md"
+    },
+    {
+      "id": "knowledge\\features\\feature-jaymusicmachine-IGW-007-root-jsonld-schema-implementation.md",
+      "type": "governance",
+      "label": "feature-jaymusicmachine-IGW-007-root-jsonld-schema-implementation",
+      "path": "knowledge\\features\\feature-jaymusicmachine-IGW-007-root-jsonld-schema-implementation.md"
+    },
+    {
+      "id": "knowledge\\features\\feature-jaymusicmachine-IGW-007-root-jsonld-schema.md",
+      "type": "governance",
+      "label": "feature-jaymusicmachine-IGW-007-root-jsonld-schema",
+      "path": "knowledge\\features\\feature-jaymusicmachine-IGW-007-root-jsonld-schema.md"
     },
     {
       "id": "knowledge\\fixes\\fix-jaymusicmachine-IGW-002-rebrand-and-cleanup-implementation.md",

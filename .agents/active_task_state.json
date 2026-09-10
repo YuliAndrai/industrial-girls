@@ -1,7 +1,7 @@
 {
   "version": "1.0.0",
-  "task_id": "IGW-007",
-  "branch": "feature/jaymusicmachine-IGW-007-root-jsonld-schema",
+  "task_id": "IGW-008",
+  "branch": "feature/jaymusicmachine-IGW-008-route-metadata-seo",
   "current_phase": "PHASE_8_HUMAN_MERGE_APPROVED",
   "phases": {
     "PHASE_1_BOOTSTRAP": { "completed": true },

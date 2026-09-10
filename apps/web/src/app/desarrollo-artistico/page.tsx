@@ -1,59 +1,26 @@
 /**
  * @file apps/web/src/app/desarrollo-artistico/page.tsx
- * @description Layer 1: Presentation - Artist Development 360° Agency Route Entrypoint.
- * Assembles the Hero, 4-Pillar Services Grid, Diagnostic Intake Form, Floating Sound Bar, Header, and Footer.
+ * @description Layer 1: Presentation - Artist Development 360° Agency Route Entrypoint (/desarrollo-artistico).
+ * Server Component exporting canonical route metadata and rendering the interactive ArtistDevelopmentView.
  */
-
-"use client";
 
 import React from "react";
-import { Header } from "@/components/layout/header";
-import { NavigationDrawer } from "@/components/layout/navigation-drawer";
-import { Footer } from "@/components/layout/footer";
-import { FloatingSoundBar } from "@/components/landing/floating-sound-bar";
-import { ArtistDevHero } from "@/components/artist-development/artist-dev-hero";
-import { ServicesGrid } from "@/components/artist-development/services-grid";
-import { IntakeDiagnosticForm } from "@/components/artist-development/intake-diagnostic-form";
-import { useDrawer } from "@/lib/hooks/use-drawer";
-import { useSoundFx } from "@/lib/hooks/use-sound-fx";
+import type { Metadata } from "next";
+import { ROUTE_METADATA } from "@/lib/infrastructure/route-metadata";
+import { ArtistDevelopmentView } from "./artist-development-view";
 
 /**
- * Route page view for Artist Development Agency module.
+ * Route-level metadata export for the Artist Development 360° Agency page.
+ * Defines title, description, keywords, Open Graph, and Twitter Cards for search crawlers.
+ */
+export const metadata: Metadata = ROUTE_METADATA.desarrolloArtistico;
+
+/**
+ * Artist development agency server component for Industrial Girls.
  *
- * @returns {React.ReactElement} The composed Artist Development page.
+ * @returns {React.ReactElement} The rendered ArtistDevelopmentView client component.
  */
 export default function ArtistDevelopmentPage(): React.ReactElement {
-  // Step 1: Manage drawer menu state through hook
-  const { isOpen, toggleDrawer, closeDrawer } = useDrawer();
-
-  // Step 2: Manage global audio and tactile sound interactions
-  const { isSoundEnabled, toggleSound } = useSoundFx();
-
-  return (
-    <div className="flex min-h-screen flex-col bg-bg text-neutral-100 selection:bg-raveRed selection:text-black">
-      {/* Top Fixed Header with Gothic Cage Logo & Drawer Trigger */}
-      <Header isDrawerOpen={isOpen} onToggleDrawer={toggleDrawer} />
-
-      {/* Fullscreen Brutalist Navigation Drawer Overlay */}
-      <NavigationDrawer isOpen={isOpen} onClose={closeDrawer} />
-
-      {/* Main Sections Assembly */}
-      <main className="flex-1 w-full">
-        {/* 1. Hero & Value Proposition */}
-        <ArtistDevHero />
-
-        {/* 2. 4-Pillar Modular Services Grid */}
-        <ServicesGrid />
-
-        {/* 3. Intake & Diagnostic Form */}
-        <IntakeDiagnosticForm />
-      </main>
-
-      {/* Floating Tactical Sound Bar */}
-      <FloatingSoundBar isSoundActive={isSoundEnabled} onToggleSound={toggleSound} />
-
-      {/* Industrial Footer */}
-      <Footer />
-    </div>
-  );
+  // Step 1: Render interactive client artist development view
+  return <ArtistDevelopmentView />;
 }
