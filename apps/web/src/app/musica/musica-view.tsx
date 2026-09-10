@@ -169,6 +169,7 @@ export function MusicaView(): React.ReactElement {
                       target="_blank"
                       rel="noopener noreferrer"
                       className="w-full"
+                      aria-label={`Comprar y escuchar ${activeComp.title} en Bandcamp`}
                     >
                       <TactileButton variant="primary" size="sm" className="w-full">
                         <span>[ BANDCAMP STREAM / BUY ]</span>
@@ -179,6 +180,7 @@ export function MusicaView(): React.ReactElement {
                       target="_blank"
                       rel="noopener noreferrer"
                       className="w-full"
+                      aria-label={`Comprar ${activeComp.title} exclusivo en Beatport Pro`}
                     >
                       <TactileButton variant="outline" size="sm" className="w-full">
                         <span>[ BEATPORT PRO EXCLUSIVE ]</span>
@@ -287,6 +289,7 @@ export function MusicaView(): React.ReactElement {
                         target="_blank"
                         rel="noopener noreferrer"
                         className="text-white hover:text-raveRed transition-colors"
+                        aria-label={`Ver videostream de ${pod.artist} (${pod.code}) en YouTube`}
                       >
                         &gt; VER VIDEOSTREAM EN YOUTUBE
                       </a>
@@ -363,8 +366,15 @@ export function MusicaView(): React.ReactElement {
                       {demoDropSpecs.contactEmail}
                     </a>
                   </div>
-                  <a href={"mailto:" + demoDropSpecs.contactEmail}>
-                    <TactileButton variant="primary" size="md">
+                  <a
+                    href={"mailto:" + demoDropSpecs.contactEmail}
+                    aria-label={`Enviar demo musical a ${demoDropSpecs.contactEmail} vía correo electrónico`}
+                  >
+                    <TactileButton
+                      variant="primary"
+                      size="md"
+                      aria-label={`Enviar demo musical a ${demoDropSpecs.contactEmail} vía correo electrónico`}
+                    >
                       <span>[ ENVIAR DEMO VÍA CORREO ]</span>
                     </TactileButton>
                   </a>

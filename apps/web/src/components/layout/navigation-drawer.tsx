@@ -99,6 +99,7 @@ export function NavigationDrawer({ isOpen, onClose }: NavigationDrawerProps): Re
             href="/musica#demo-drop"
             onClick={onClose}
             className="group flex flex-col border border-raveRed/50 bg-raveRed/10 p-4 transition-all hover:border-raveRed hover:bg-raveRed/20 focus:outline-none"
+            aria-label="Ir a reglas de Demo Drop y envío de tracks inéditos"
           >
             <div className="flex items-center gap-2">
               <span className="h-2 w-2 rounded-full bg-raveRed animate-ping" />
@@ -126,6 +127,7 @@ export function NavigationDrawer({ isOpen, onClose }: NavigationDrawerProps): Re
                 target="_blank"
                 rel="noopener noreferrer"
                 className="hover:text-raveRed transition-colors"
+                aria-label="SoundCloud de Industrial Girls"
               >
                 SOUNDCLOUD
               </a>
@@ -134,6 +136,7 @@ export function NavigationDrawer({ isOpen, onClose }: NavigationDrawerProps): Re
                 target="_blank"
                 rel="noopener noreferrer"
                 className="hover:text-raveRed transition-colors"
+                aria-label="Canal de YouTube de Industrial Girls"
               >
                 YOUTUBE
               </a>
@@ -142,6 +145,7 @@ export function NavigationDrawer({ isOpen, onClose }: NavigationDrawerProps): Re
                 target="_blank"
                 rel="noopener noreferrer"
                 className="hover:text-raveRed transition-colors"
+                aria-label="Perfil de Instagram de Industrial Girls"
               >
                 INSTAGRAM
               </a>

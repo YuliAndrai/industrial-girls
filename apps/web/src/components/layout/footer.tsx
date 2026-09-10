@@ -18,8 +18,10 @@ import { MerchWaitlistModal } from "@/components/common/merch-waitlist-modal";
  * @returns {React.ReactElement} The rendered footer layout.
  */
 export function Footer(): React.ReactElement {
+  // Step 1: Manage merch waitlist modal display state
   const [isMerchModalOpen, setIsMerchModalOpen] = useState(false);
 
+  // Step 2: Render brutalist footer with 5 master sections, demo policy, and official frequencies
   return (
     <>
       <footer className="w-full border-t-2 border-raveRed bg-black text-white relative z-10">
@@ -114,6 +116,7 @@ export function Footer(): React.ReactElement {
                   target="_blank"
                   rel="noopener noreferrer"
                   className="hover:text-raveRed transition-colors"
+                  aria-label="Canal oficial de SoundCloud de Industrial Girls"
                 >
                   &bull; SoundCloud // Industrial Girls
                 </a>
@@ -122,6 +125,7 @@ export function Footer(): React.ReactElement {
                   target="_blank"
                   rel="noopener noreferrer"
                   className="hover:text-raveRed transition-colors"
+                  aria-label="Canal oficial de YouTube de Industrial Girls TV"
                 >
                   &bull; YouTube // Industrial Girls TV
                 </a>
@@ -130,6 +134,7 @@ export function Footer(): React.ReactElement {
                   target="_blank"
                   rel="noopener noreferrer"
                   className="hover:text-raveRed transition-colors"
+                  aria-label="Perfil oficial de Instagram de Industrial Girls"
                 >
                   &bull; Instagram // @industrialgirls_ofc
                 </a>
@@ -138,6 +143,7 @@ export function Footer(): React.ReactElement {
                   target="_blank"
                   rel="noopener noreferrer"
                   className="hover:text-raveRed transition-colors"
+                  aria-label="Tienda oficial de Bandcamp de Industrial Girls Wax"
                 >
                   &bull; Bandcamp // Industrial Girls Wax
                 </a>

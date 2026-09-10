@@ -72,6 +72,7 @@ export function FloatingSoundBar({
             : "bg-black/90 text-neutral-400 border-neutral-700 hover:border-white hover:text-white"
         )}
         aria-pressed={isEnabled}
+        aria-label={isEnabled ? "Desactivar efectos de sonido ambientales" : "Activar efectos de sonido ambientales"}
       >
         <span
           className={cn(
