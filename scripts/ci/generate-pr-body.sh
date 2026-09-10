@@ -15,8 +15,13 @@ if [[ -z "${ISSUE_ID}" ]]; then
   ISSUE_ID="$(echo "${BRANCH}" | grep -oE '(IGW|[A-Z]+)-[0-9]+' | head -1 || echo "IGW-001")"
 fi
 
-FEATURE_DOC="$(find "${ROOT_DIR}/knowledge/features" "${ROOT_DIR}/knowledge/fixes" -maxdepth 1 -name "*${ISSUE_ID}*.md" ! -name "*-implementation.md" 2>/dev/null | head -1 | sed "s|${ROOT_DIR}/||" || echo "")"
-RFC_DOC="$(find "${ROOT_DIR}/knowledge/features" "${ROOT_DIR}/knowledge/fixes" -maxdepth 1 -name "*${ISSUE_ID}*-implementation.md" 2>/dev/null | head -1 | sed "s|${ROOT_DIR}/||" || echo "")"
+FIND_BIN="/usr/bin/find"
+if [[ ! -x "$FIND_BIN" ]]; then
+  FIND_BIN="find"
+fi
+
+FEATURE_DOC="$("$FIND_BIN" "${ROOT_DIR}/knowledge/features" "${ROOT_DIR}/knowledge/fixes" -maxdepth 1 -name "*${ISSUE_ID}*.md" ! -name "*-implementation.md" 2>/dev/null | head -1 | sed "s|${ROOT_DIR}/||" || echo "")"
+RFC_DOC="$("$FIND_BIN" "${ROOT_DIR}/knowledge/features" "${ROOT_DIR}/knowledge/fixes" -maxdepth 1 -name "*${ISSUE_ID}*-implementation.md" 2>/dev/null | head -1 | sed "s|${ROOT_DIR}/||" || echo "")"
 
 if [[ -z "${FEATURE_DOC}" ]]; then
   FEATURE_DOC="knowledge/features/feature-jaymusicmachine-IGW-001-landing-page.md"
