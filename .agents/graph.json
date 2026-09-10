@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-09-09T01:59:33.793Z",
+  "generatedAt": "2026-09-10T03:23:01.658Z",
   "nodes": [
     {
       "id": "AGENTS.md",
@@ -108,6 +108,42 @@
       "type": "governance",
       "label": "feature-jaymusicmachine-IGW-003-artist-development",
       "path": "knowledge\\features\\feature-jaymusicmachine-IGW-003-artist-development.md"
+    },
+    {
+      "id": "knowledge\\features\\feature-jaymusicmachine-IGW-004-master-architecture-implementation.md",
+      "type": "governance",
+      "label": "feature-jaymusicmachine-IGW-004-master-architecture-implementation",
+      "path": "knowledge\\features\\feature-jaymusicmachine-IGW-004-master-architecture-implementation.md"
+    },
+    {
+      "id": "knowledge\\features\\feature-jaymusicmachine-IGW-004-master-architecture.md",
+      "type": "governance",
+      "label": "feature-jaymusicmachine-IGW-004-master-architecture",
+      "path": "knowledge\\features\\feature-jaymusicmachine-IGW-004-master-architecture.md"
+    },
+    {
+      "id": "knowledge\\features\\feature-jaymusicmachine-IGW-005-home-brand-statement-implementation.md",
+      "type": "governance",
+      "label": "feature-jaymusicmachine-IGW-005-home-brand-statement-implementation",
+      "path": "knowledge\\features\\feature-jaymusicmachine-IGW-005-home-brand-statement-implementation.md"
+    },
+    {
+      "id": "knowledge\\features\\feature-jaymusicmachine-IGW-005-home-brand-statement.md",
+      "type": "governance",
+      "label": "feature-jaymusicmachine-IGW-005-home-brand-statement",
+      "path": "knowledge\\features\\feature-jaymusicmachine-IGW-005-home-brand-statement.md"
+    },
+    {
+      "id": "knowledge\\features\\feature-jaymusicmachine-IGW-006-community-journal-page-implementation.md",
+      "type": "governance",
+      "label": "feature-jaymusicmachine-IGW-006-community-journal-page-implementation",
+      "path": "knowledge\\features\\feature-jaymusicmachine-IGW-006-community-journal-page-implementation.md"
+    },
+    {
+      "id": "knowledge\\features\\feature-jaymusicmachine-IGW-006-community-journal-page.md",
+      "type": "governance",
+      "label": "feature-jaymusicmachine-IGW-006-community-journal-page",
+      "path": "knowledge\\features\\feature-jaymusicmachine-IGW-006-community-journal-page.md"
     },
     {
       "id": "knowledge\\fixes\\fix-jaymusicmachine-IGW-002-rebrand-and-cleanup-implementation.md",
