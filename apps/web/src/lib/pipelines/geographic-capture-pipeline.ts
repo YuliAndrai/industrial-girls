@@ -66,11 +66,13 @@ export function validateGeographicCapture(
     errors.city = "Indica la ciudad donde resides (mínimo 2 caracteres).";
   }
 
-  // Step 5: Validate Phone (Optional)
+  // Step 5: Validate Phone or Telegram Handle (Optional)
   if (input.phone && input.phone.trim().length > 0) {
+    const trimmedContact = input.phone.trim();
     const phoneRegex = /^[+]?[\d\s\-()]{7,20}$/;
-    if (!phoneRegex.test(input.phone.trim())) {
-      errors.phone = "Ingresa un número telefónico válido o déjalo en blanco.";
+    const telegramRegex = /^@?[a-zA-Z0-9_]{4,32}$/;
+    if (!phoneRegex.test(trimmedContact) && !telegramRegex.test(trimmedContact)) {
+      errors.phone = "Ingresa un número telefónico o usuario de Telegram válido, o déjalo en blanco.";
     }
   }
 

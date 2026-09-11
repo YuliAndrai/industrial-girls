@@ -25,7 +25,12 @@
   - Directly consumes the strongly typed `getEventCalendarStatus()` function from Layer 4 during server/client render.
 
 - **Layer 3: Domain/Pipelines Layer (`apps/web/src/lib/pipelines/geographic-capture-pipeline.ts`)**:
-  - Geographic RSVP lead capture pipeline remains unchanged.
+  - Geographic RSVP lead capture pipeline supports both international phone numbers and `@username` Telegram handles while keeping the field strictly optional.
+
+- **Layer 1 (Presentation - GeographicForm `apps/web/src/components/common/geographic-form.tsx`)**:
+  - Updated phone input label to `"Teléfono móvil / Telegram"`.
+  - Updated placeholder to `"+XX XXX XXXXXXX o @usuario_telegram"`.
+  - Explicit `required={false}` to maintain optionality.
 
 - **Layer 4: Infrastructure Layer (`apps/web/src/lib/infrastructure/events-catalog.ts`)**:
   - Updates `CALENDAR_STATUS.topBadge` to:

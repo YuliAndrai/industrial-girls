@@ -123,6 +123,25 @@ describe("Events Hero & Curated Dates Architecture — TDD Test Suite (@spec IGW
       expect(result.isValid).toBe(false);
       expect(result.errors.phone).toBeDefined();
     });
+
+    it("validates successfully when a valid Telegram handle is supplied in contact field", () => {
+      // Step 1: Prepare payload with valid Telegram handle
+      const input: GeographicCaptureInput = {
+        email: "producer@industrialgirls.com",
+        name: "VALENTINA",
+        country: "Colombia",
+        city: "Medellín",
+        source: "events",
+        phone: "@usuario_telegram",
+      };
+
+      // Step 2: Execute validation pipeline
+      const result = validateGeographicCapture(input);
+
+      // Step 3: Assert valid state without contact errors
+      expect(result.isValid).toBe(true);
+      expect(result.errors.phone).toBeUndefined();
+    });
   });
 
   describe("3. Layer 1 (Presentation): Route View /eventos Semantic & Hero Invariants", () => {
@@ -198,5 +217,27 @@ describe("Events Hero & Curated Dates Architecture — TDD Test Suite (@spec IGW
         "eventos-view.tsx top badge must include responsive wrapping classes (break-words and max-w-full)"
       ).toBe(true);
     });
+
+    it("ensures GeographicForm renders updated Telegram label and placeholder in phone contact field", () => {
+      // Step 1: Read GeographicForm component source file
+      const formPath = path.resolve(
+        __dirname,
+        "../../components/common/geographic-form.tsx"
+      );
+      const content = fs.readFileSync(formPath, "utf8");
+
+      // Step 2: Assert updated label exists verbatim
+      expect(
+        content.includes("Teléfono móvil / Telegram"),
+        "geographic-form.tsx must include 'Teléfono móvil / Telegram' label"
+      ).toBe(true);
+
+      // Step 3: Assert updated placeholder exists verbatim
+      expect(
+        content.includes('placeholder="+XX XXX XXXXXXX o @usuario_telegram"'),
+        "geographic-form.tsx must include '+XX XXX XXXXXXX o @usuario_telegram' placeholder"
+      ).toBe(true);
+    });
   });
 });
+
