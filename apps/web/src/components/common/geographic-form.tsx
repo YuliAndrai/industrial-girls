@@ -20,6 +20,8 @@ import { getStandardCountries } from "@/lib/infrastructure/events-catalog";
 export interface GeographicFormProps {
   /** Source context: 'events' or 'community' */
   source: "events" | "community";
+  /** Optional custom eyebrow badge label */
+  badge?: string;
   /** Title for the form section */
   title: string;
   /** Subtitle context */
@@ -36,17 +38,21 @@ export interface GeographicFormProps {
  */
 export function GeographicForm({
   source,
+  badge,
   title,
   subtitle,
   buttonText,
 }: GeographicFormProps): React.ReactElement {
+  // Step 1: Load standard country options from infrastructure catalog
   const countries = getStandardCountries();
 
+  // Step 2: Initialize reactive form state with source and default territory
   const [formData, setFormData] = useState<GeographicCaptureInput>({
     email: "",
     name: "",
     country: "Colombia",
     city: "",
+    phone: "",
     source,
   });
 
@@ -54,6 +60,7 @@ export function GeographicForm({
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
+  // Step 3: Validate form submission via pure domain validation pipeline
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     const validation = validateGeographicCapture(formData);
@@ -72,12 +79,14 @@ export function GeographicForm({
     }, 500);
   };
 
+  // Step 4: Reset form state to permit secondary territorial submissions
   const handleReset = () => {
     setFormData({
       email: "",
       name: "",
       country: "Colombia",
       city: "",
+      phone: "",
       source,
     });
     setErrors({});
@@ -88,7 +97,7 @@ export function GeographicForm({
     <div className="w-full border border-raveBorder bg-black/90 p-6 sm:p-10 shadow-rave">
       <div className="border-b border-raveBorder/80 pb-4 mb-6">
         <span className="font-mono text-xs uppercase tracking-widest text-raveRed">
-          {"// RADAR GEOGRÁFICO // " + source.toUpperCase()}
+          {badge || ("// RADAR GEOGRÁFICO // " + source.toUpperCase())}
         </span>
         <h3 className="text-2xl sm:text-3xl font-black uppercase tracking-tight text-white mt-1">
           {title}
@@ -195,6 +204,25 @@ export function GeographicForm({
                 <p className="mt-1 font-mono text-xs text-raveRed">{errors.city}</p>
               )}
             </div>
+          </div>
+
+          {/* Optional Phone / Telegram */}
+          <div>
+            <label htmlFor={"phone-" + source} className="block font-mono text-xs font-bold uppercase tracking-wider text-white mb-1.5">
+              Teléfono móvil / Telegram
+            </label>
+            <input
+              id={"phone-" + source}
+              type="text"
+              required={false}
+              value={formData.phone ?? ""}
+              onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
+              placeholder="+XX XXX XXXXXXX o @usuario_telegram"
+              className="w-full border border-raveBorder bg-panel px-3.5 py-2.5 font-mono text-sm text-white placeholder:text-neutral-600 focus:border-raveRed focus:outline-none focus:ring-1 focus:ring-raveRed"
+            />
+            {errors.phone && (
+              <p className="mt-1 font-mono text-xs text-raveRed">{errors.phone}</p>
+            )}
           </div>
 
           <div className="pt-3">

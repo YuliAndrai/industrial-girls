@@ -47,18 +47,16 @@ export function EventosView(): React.ReactElement {
         <section className="relative flex min-h-[50vh] w-full flex-col items-center justify-center overflow-hidden border-b-2 border-raveRed bg-black px-4 py-16 text-center rave-scanlines">
           <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_70%_50%_at_50%_40%,rgba(255,0,0,0.22),transparent_75%)]" />
           <div className="relative z-10 mx-auto max-w-4xl">
-            <span className="border border-raveRed/60 bg-raveRed/10 px-3 py-1 font-mono text-[11px] font-bold uppercase tracking-widest text-raveRed">
-              {"// GIRA GLOBAL // " + calendarStatus.statusLabel}
+            {/* Step 4: Render top eyebrow badge with responsive wrapping and centering */}
+            <span className="inline-block max-w-full break-words border border-raveRed/60 bg-raveRed/10 px-3 py-1 font-mono text-[10px] sm:text-[11px] font-bold uppercase tracking-widest text-raveRed text-center leading-relaxed">
+              {calendarStatus.topBadge}
             </span>
-            <h1 className="mt-4 text-3xl sm:text-5xl md:text-6xl font-black uppercase tracking-tight text-white">
+            <h1 className="mt-4 text-3xl sm:text-5xl md:text-6xl font-black uppercase tracking-tight text-white drop-shadow-[0_0_25px_rgba(255,0,0,0.4)]">
               {calendarStatus.headline}
             </h1>
             <p className="mt-4 font-mono text-xs sm:text-base text-neutral-300 max-w-2xl mx-auto leading-relaxed">
               {calendarStatus.curatorialNote}
             </p>
-            <div className="mt-6 inline-block border border-white/20 bg-panel/80 px-4 py-2 font-mono text-xs uppercase tracking-widest text-raveRed">
-              &bull; {calendarStatus.announcementWindow}
-            </div>
           </div>
         </section>
 
@@ -67,9 +65,10 @@ export function EventosView(): React.ReactElement {
           <div className="mx-auto max-w-3xl">
             <GeographicForm
               source="events"
-              title="RADAR GEOGRÁFICO DE PREVENTAS"
-              subtitle="Registra tu ciudad para recibir las alertas secretas de locación y accesos de preventa 48 horas antes de la apertura al público general."
-              buttonText="[ ACTIVAR RADAR DE EVENTOS EN MI CIUDAD ]"
+              badge="ÚNETE A NUESTRO TELEGRAM // RECIBE NOTICIAS"
+              title="PREVENTAS & ALERTAS POR CIUDAD"
+              subtitle="Notificarme de nuevas fechas y preventas exclusivas en mi ciudad."
+              buttonText="[ RECIBIR NOTICIAS DE EVENTOS EN MI CIUDAD ]"
             />
           </div>
         </section>

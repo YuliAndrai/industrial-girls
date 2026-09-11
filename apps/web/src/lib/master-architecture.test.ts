@@ -117,13 +117,13 @@ describe("Master Architecture (IGW-004) — TDD Test Suite", () => {
   });
 
   describe("2. Events Section Infrastructure (@spec IGW-004-EVENTS)", () => {
-    it("should provide calendar status indicating Season in Preparation", () => {
+    it("should provide calendar status indicating Selective Showcases and Active Season", () => {
       // Step 1: Arrange & Act
       const status = getEventCalendarStatus();
 
       // Step 2: Assert
-      expect(status.headline).toBe("PRÓXIMAS FECHAS — EN PREPARACIÓN");
-      expect(status.statusLabel).toContain("TEMPORADA EN CURADURÍA");
+      expect(status.headline).toBe("SHOWCASES Y ANUNCIOS PRONTO");
+      expect(status.statusLabel).toContain("TEMPORADA ACTIVA");
       expect(status.curatorialNote).toBeTruthy();
       expect(status.announcementWindow).toBeTruthy();
     });
