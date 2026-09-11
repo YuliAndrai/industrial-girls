@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-09-10T04:00:09.918Z",
+  "generatedAt": "2026-09-11T21:29:16.925Z",
   "nodes": [
     {
       "id": "AGENTS.md",
@@ -170,6 +170,18 @@
       "path": "knowledge\\features\\feature-jaymusicmachine-IGW-008-route-metadata-seo.md"
     },
     {
+      "id": "knowledge\\features\\feature-jaymusicmachine-IGW-009-semantic-seo-audit-implementation.md",
+      "type": "governance",
+      "label": "feature-jaymusicmachine-IGW-009-semantic-seo-audit-implementation",
+      "path": "knowledge\\features\\feature-jaymusicmachine-IGW-009-semantic-seo-audit-implementation.md"
+    },
+    {
+      "id": "knowledge\\features\\feature-jaymusicmachine-IGW-009-semantic-seo-audit.md",
+      "type": "governance",
+      "label": "feature-jaymusicmachine-IGW-009-semantic-seo-audit",
+      "path": "knowledge\\features\\feature-jaymusicmachine-IGW-009-semantic-seo-audit.md"
+    },
+    {
       "id": "knowledge\\fixes\\fix-jaymusicmachine-IGW-002-rebrand-and-cleanup-implementation.md",
       "type": "governance",
       "label": "fix-jaymusicmachine-IGW-002-rebrand-and-cleanup-implementation",
@@ -180,6 +192,18 @@
       "type": "governance",
       "label": "fix-jaymusicmachine-IGW-002-rebrand-and-cleanup",
       "path": "knowledge\\fixes\\fix-jaymusicmachine-IGW-002-rebrand-and-cleanup.md"
+    },
+    {
+      "id": "knowledge\\fixes\\fix-jaymusicmachine-IGW-010-events-hero-curated-dates-implementation.md",
+      "type": "governance",
+      "label": "fix-jaymusicmachine-IGW-010-events-hero-curated-dates-implementation",
+      "path": "knowledge\\fixes\\fix-jaymusicmachine-IGW-010-events-hero-curated-dates-implementation.md"
+    },
+    {
+      "id": "knowledge\\fixes\\fix-jaymusicmachine-IGW-010-events-hero-curated-dates.md",
+      "type": "governance",
+      "label": "fix-jaymusicmachine-IGW-010-events-hero-curated-dates",
+      "path": "knowledge\\fixes\\fix-jaymusicmachine-IGW-010-events-hero-curated-dates.md"
     },
     {
       "id": "knowledge\\governance\\clean-code-folder-structure.md",

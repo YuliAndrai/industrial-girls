@@ -65,13 +65,14 @@ export const STANDARD_COUNTRIES: string[] = [
 
 /**
  * Current status of the touring calendar.
+ * Reflects selective curated club sessions and female DJ lineup concept.
  */
 export const CALENDAR_STATUS: EventCalendarStatus = {
-  topBadge: "// SELECTIVE DATES & CLUB SESSIONS //",
-  headline: "SHOWCASES & FECHAS SELECCIONADAS",
+  topBadge: "EVENTS // SELECTIVE DATES & CLUB SESSIONS // CONCEPTO LINE UP DJS MUJERES",
+  headline: "SHOWCASES Y ANUNCIOS PRONTO",
   statusLabel: "TEMPORADA ACTIVA // PRÓXIMAS CIUDADES EN CONFIRMACIÓN",
   statusCallout: "[ TEMPORADA ACTIVA // PRÓXIMAS CIUDADES EN CONFIRMACIÓN ]",
-  curatorialNote: "Conexiones entre cabinas, clubs y residencias underground en desarrollo. Curadurías directas para la pista de baile.",
+  curatorialNote: "Regístrate para acceder a locaciones, alineaciones y preventas prioritarias en tu región.",
   announcementWindow: "TEMPORADA ACTIVA // PRÓXIMAS CIUDADES EN CONFIRMACIÓN",
 };
 

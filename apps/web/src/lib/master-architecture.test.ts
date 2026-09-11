@@ -122,7 +122,7 @@ describe("Master Architecture (IGW-004) — TDD Test Suite", () => {
       const status = getEventCalendarStatus();
 
       // Step 2: Assert
-      expect(status.headline).toBe("SHOWCASES & FECHAS SELECCIONADAS");
+      expect(status.headline).toBe("SHOWCASES Y ANUNCIOS PRONTO");
       expect(status.statusLabel).toContain("TEMPORADA ACTIVA");
       expect(status.curatorialNote).toBeTruthy();
       expect(status.announcementWindow).toBeTruthy();

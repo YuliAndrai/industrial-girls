@@ -8,6 +8,7 @@
  * - Layer 1 (Presentation): Validates single semantic H1 and hero copy bindings on /eventos route view.
  *
  * @spec IGW-010-EVENTS-HERO-CURATED-DATES
+ * @spec IGW-011-EVENTS-HERO-TOP-BADGE
  */
 
 import { describe, it, expect } from "vitest";
@@ -23,21 +24,23 @@ import {
   GeographicCaptureInput,
 } from "../pipelines/geographic-capture-pipeline";
 
-describe("Events Hero & Curated Dates Architecture — TDD Test Suite (@spec IGW-010)", () => {
+describe("Events Hero & Curated Dates Architecture — TDD Test Suite (@spec IGW-010 / IGW-011)", () => {
   describe("1. Layer 4 (Infrastructure): CALENDAR_STATUS Copy Invariants", () => {
     it("exports canonical curated dates copy in CALENDAR_STATUS constant", () => {
       // Step 1: Reference status constant
       const status: EventCalendarStatus = CALENDAR_STATUS;
 
       // Step 2: Verify topBadge invariant
-      expect(status.topBadge).toBe("// SELECTIVE DATES & CLUB SESSIONS //");
+      expect(status.topBadge).toBe(
+        "EVENTS // SELECTIVE DATES & CLUB SESSIONS // CONCEPTO LINE UP DJS MUJERES"
+      );
 
       // Step 3: Verify headline invariant
-      expect(status.headline).toBe("SHOWCASES & FECHAS SELECCIONADAS");
+      expect(status.headline).toBe("SHOWCASES Y ANUNCIOS PRONTO");
 
       // Step 4: Verify curatorialNote invariant
       expect(status.curatorialNote).toBe(
-        "Conexiones entre cabinas, clubs y residencias underground en desarrollo. Curadurías directas para la pista de baile."
+        "Regístrate para acceder a locaciones, alineaciones y preventas prioritarias en tu región."
       );
 
       // Step 5: Verify statusCallout invariant
@@ -51,8 +54,13 @@ describe("Events Hero & Curated Dates Architecture — TDD Test Suite (@spec IGW
       const status: EventCalendarStatus = getEventCalendarStatus();
 
       // Step 2: Assert parity with constant exports
-      expect(status.headline).toBe("SHOWCASES & FECHAS SELECCIONADAS");
-      expect(status.topBadge).toBe("// SELECTIVE DATES & CLUB SESSIONS //");
+      expect(status.headline).toBe("SHOWCASES Y ANUNCIOS PRONTO");
+      expect(status.topBadge).toBe(
+        "EVENTS // SELECTIVE DATES & CLUB SESSIONS // CONCEPTO LINE UP DJS MUJERES"
+      );
+      expect(status.curatorialNote).toBe(
+        "Regístrate para acceder a locaciones, alineaciones y preventas prioritarias en tu región."
+      );
       expect(status.statusCallout).toBe(
         "[ TEMPORADA ACTIVA // PRÓXIMAS CIUDADES EN CONFIRMACIÓN ]"
       );
@@ -140,21 +148,22 @@ describe("Events Hero & Curated Dates Architecture — TDD Test Suite (@spec IGW
 
       // Step 2: Verify hero top badge binds to selective dates copy or property
       const hasTopBadge =
-        content.includes("// SELECTIVE DATES & CLUB SESSIONS //") ||
-        content.includes("calendarStatus.topBadge");
+        content.includes(
+          "EVENTS // SELECTIVE DATES & CLUB SESSIONS // CONCEPTO LINE UP DJS MUJERES"
+        ) || content.includes("calendarStatus.topBadge");
       expect(
         hasTopBadge,
-        "eventos-view.tsx must render '// SELECTIVE DATES & CLUB SESSIONS //' or calendarStatus.topBadge"
+        "eventos-view.tsx must render 'EVENTS // SELECTIVE DATES & CLUB SESSIONS // CONCEPTO LINE UP DJS MUJERES' or calendarStatus.topBadge"
       ).toBe(true);
 
-      // Step 3: Verify status callout badge binds to active season copy or property
+      // Step 3: Verify season callout badge container has been cleanly removed for streamlined layout
       const hasStatusCallout =
         content.includes("[ TEMPORADA ACTIVA // PRÓXIMAS CIUDADES EN CONFIRMACIÓN ]") ||
         content.includes("calendarStatus.statusCallout");
       expect(
         hasStatusCallout,
-        "eventos-view.tsx must render '[ TEMPORADA ACTIVA // PRÓXIMAS CIUDADES EN CONFIRMACIÓN ]' or calendarStatus.statusCallout"
-      ).toBe(true);
+        "eventos-view.tsx must omit the statusCallout container to streamline the hero section"
+      ).toBe(false);
 
       // Step 4: Verify geographic form subtitle communicates selective dates notification
       const hasPresaleSubtitle =
@@ -163,6 +172,20 @@ describe("Events Hero & Curated Dates Architecture — TDD Test Suite (@spec IGW
       expect(
         hasPresaleSubtitle,
         "eventos-view.tsx must configure GeographicForm with curated city notification subtitle"
+      ).toBe(true);
+    });
+
+    it("ensures /eventos view top badge container implements responsive viewport hardening classes", () => {
+      // Step 1: Read view component source file
+      const content = fs.readFileSync(eventosViewPath, "utf8");
+
+      // Step 2: Verify container has responsive text wrapping classes
+      const hasResponsiveBadge =
+        content.includes("break-words") &&
+        content.includes("max-w-full");
+      expect(
+        hasResponsiveBadge,
+        "eventos-view.tsx top badge must include responsive wrapping classes (break-words and max-w-full)"
       ).toBe(true);
     });
   });
