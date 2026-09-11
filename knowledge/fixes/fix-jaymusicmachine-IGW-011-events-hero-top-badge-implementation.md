@@ -40,7 +40,7 @@
 - **SPEC-1**: Events Hero Top Badge, Title & Subtitle Refinement (Branch: `fix/jaymusicmachine-IGW-011-events-hero-top-badge`)
   - Red-Green-Refactor cycle:
     1. **RED (TDD)**: Update assertions in `apps/web/src/lib/infrastructure/events-catalog.test.ts` to expect `"EVENTS // SELECTIVE DATES & CLUB SESSIONS // CONCEPTO LINE UP DJS MUJERES"`, `"SHOWCASES Y ANUNCIOS PRONTO"`, and `"Regístrate para acceder a locaciones, alineaciones y preventas prioritarias en tu región."`. Verify test failure.
-    2. **GREEN (Implementation)**: Update `CALENDAR_STATUS.topBadge`, `CALENDAR_STATUS.headline`, and `CALENDAR_STATUS.curatorialNote` in `events-catalog.ts`, ensure responsive classes in `eventos-view.tsx`, and remove the `statusCallout` container.
+    2. **GREEN (Implementation)**: Update `CALENDAR_STATUS.topBadge`, `CALENDAR_STATUS.headline`, and `CALENDAR_STATUS.curatorialNote` in `events-catalog.ts`, ensure responsive classes in `eventos-view.tsx`, remove the `statusCallout` container, and configure `GeographicForm` with `badge="ÚNETE A NUESTRO TELEGRAM // RECIBE NOTICIAS"` and `title="PREVENTAS & ALERTAS POR CIUDAD"`.
     3. **REFACTOR (Clean Code)**: Clean code review, verify zero lint errors, layer header comments intact.
 
 ## 4. TDD (Test-Driven Development) Strategy
@@ -52,6 +52,7 @@
   - `getEventCalendarStatus().headline` equals `"SHOWCASES Y ANUNCIOS PRONTO"`.
   - `getEventCalendarStatus().curatorialNote` equals `"Regístrate para acceder a locaciones, alineaciones y preventas prioritarias en tu región."`.
   - `eventos-view.tsx` integrates the badge, headline, and subtitle while omitting the season callout badge, preserving the single `<h1>` invariant.
+  - `eventos-view.tsx` configures `GeographicForm` with `badge="ÚNETE A NUESTRO TELEGRAM // RECIBE NOTICIAS"` and `title="PREVENTAS & ALERTAS POR CIUDAD"`.
   - Full architecture test suite (`apps/web/src/lib/master-architecture.test.ts`) passes.
 
 ## 5. Local Definition of Done (DoD)

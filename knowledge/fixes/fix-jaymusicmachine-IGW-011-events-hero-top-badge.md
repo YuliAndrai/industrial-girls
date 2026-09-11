@@ -10,9 +10,10 @@ In `/eventos` (`http://localhost:3001/eventos`), the Hero header requires copy a
    `"Regístrate para acceder a locaciones, alineaciones y preventas prioritarias en tu región."`
    to directly call the audience to register for secret locations, lineups, and priority presale access.
 4. The lower season callout badge (`[ TEMPORADA ACTIVA // PRÓXIMAS CIUDADES EN CONFIRMACIÓN ]`) and its associated red box container and spacing are completely removed to streamline the Hero and provide a clean visual transition into the geographic radar section below.
+5. In the Geographic Radar form on `/eventos`, the top eyebrow badge is updated to `ÚNETE A NUESTRO TELEGRAM // RECIBE NOTICIAS` and the main form title is updated to `PREVENTAS & ALERTAS POR CIUDAD`, maintaining monospace/display typography, tracking, and red brand accents.
 
 ## Why it matters
-The eyebrow badge, headline, and subtitle together establish a concise, high-impact value proposition for `/eventos`. Removing the repetitive season callout badge declutters the Hero section and creates an immediate, natural visual connection with the geographic radar form directly below.
+The eyebrow badge, headline, and subtitle together establish a concise, high-impact value proposition for `/eventos`. Removing the repetitive season callout badge declutters the Hero section, while the refined Telegram callout and presales title on the geographic radar form directly convert visitors into prioritized community subscribers.
 
 ## What outcome is expected
 1. Canonical Layer 4 infrastructure constant `CALENDAR_STATUS.topBadge` in `apps/web/src/lib/infrastructure/events-catalog.ts` is set to:
@@ -22,11 +23,13 @@ The eyebrow badge, headline, and subtitle together establish a concise, high-imp
 3. Canonical Layer 4 infrastructure constant `CALENDAR_STATUS.curatorialNote` in `apps/web/src/lib/infrastructure/events-catalog.ts` is updated to exactly:
    `"Regístrate para acceder a locaciones, alineaciones y preventas prioritarias en tu región."`
 4. Presentation layer `apps/web/src/app/eventos/eventos-view.tsx` completely removes the `statusCallout` container, leaving a clean Hero block (Eyebrow Badge, H1 Headline, Subtitle) that flows naturally into the Geographic Form.
-5. Unit, integration, and architecture test suites in `apps/web/src/lib/infrastructure/events-catalog.test.ts` and `apps/web/src/lib/master-architecture.test.ts` validate these invariants cleanly.
+5. `GeographicForm` (`apps/web/src/components/common/geographic-form.tsx`) supports an optional `badge` prop, configured in `eventos-view.tsx` with:
+   - Eyebrow badge: `"ÚNETE A NUESTRO TELEGRAM // RECIBE NOTICIAS"`
+   - Title: `"PREVENTAS & ALERTAS POR CIUDAD"`
+6. Unit, integration, and architecture test suites in `apps/web/src/lib/infrastructure/events-catalog.test.ts` and `apps/web/src/lib/master-architecture.test.ts` validate these invariants cleanly.
 
 ## What gaps exist today
-- `CALENDAR_STATUS.curatorialNote` in `apps/web/src/lib/infrastructure/events-catalog.ts` contains the previous introductory phrase `"Showcases y fechas pronto."`.
-- Unit test assertions expect the previous curatorial note string.
+- `GeographicForm` in `eventos-view.tsx` currently renders `"RADAR GEOGRÁFICO DE PREVENTAS"` and a hardcoded eyebrow badge.
 
 ## What questions remain open
-None. The text copy for the eyebrow badge, the main title, and the subtitle is explicitly defined by the user.
+None. The text copy for the eyebrow badge, title, subtitle, and form header is explicitly defined by the user.

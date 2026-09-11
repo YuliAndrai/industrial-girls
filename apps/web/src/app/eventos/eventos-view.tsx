@@ -65,7 +65,8 @@ export function EventosView(): React.ReactElement {
           <div className="mx-auto max-w-3xl">
             <GeographicForm
               source="events"
-              title="RADAR GEOGRÁFICO DE PREVENTAS"
+              badge="ÚNETE A NUESTRO TELEGRAM // RECIBE NOTICIAS"
+              title="PREVENTAS & ALERTAS POR CIUDAD"
               subtitle="Notificarme de nuevas fechas y preventas exclusivas en mi ciudad."
               buttonText="[ ACTIVAR RADAR DE EVENTOS EN MI CIUDAD ]"
             />

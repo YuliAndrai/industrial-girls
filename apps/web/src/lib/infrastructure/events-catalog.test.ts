@@ -173,6 +173,16 @@ describe("Events Hero & Curated Dates Architecture — TDD Test Suite (@spec IGW
         hasPresaleSubtitle,
         "eventos-view.tsx must configure GeographicForm with curated city notification subtitle"
       ).toBe(true);
+
+      // Step 5: Verify geographic form has updated Telegram eyebrow badge and presales title
+      expect(
+        content.includes('badge="ÚNETE A NUESTRO TELEGRAM // RECIBE NOTICIAS"'),
+        "eventos-view.tsx must configure GeographicForm with Telegram eyebrow badge"
+      ).toBe(true);
+      expect(
+        content.includes('title="PREVENTAS & ALERTAS POR CIUDAD"'),
+        "eventos-view.tsx must configure GeographicForm with PREVENTAS & ALERTAS POR CIUDAD title"
+      ).toBe(true);
     });
 
     it("ensures /eventos view top badge container implements responsive viewport hardening classes", () => {
