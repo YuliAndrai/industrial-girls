@@ -47,6 +47,7 @@ export function GeographicForm({
     name: "",
     country: "Colombia",
     city: "",
+    phone: "",
     source,
   });
 
@@ -78,6 +79,7 @@ export function GeographicForm({
       name: "",
       country: "Colombia",
       city: "",
+      phone: "",
       source,
     });
     setErrors({});
@@ -195,6 +197,24 @@ export function GeographicForm({
                 <p className="mt-1 font-mono text-xs text-raveRed">{errors.city}</p>
               )}
             </div>
+          </div>
+
+          {/* Optional Phone / WhatsApp */}
+          <div>
+            <label htmlFor={"phone-" + source} className="block font-mono text-xs font-bold uppercase tracking-wider text-white mb-1.5">
+              Teléfono móvil / WhatsApp <span className="text-neutral-500 font-normal">(opcional)</span>
+            </label>
+            <input
+              id={"phone-" + source}
+              type="tel"
+              value={formData.phone ?? ""}
+              onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
+              placeholder="+57 300 123 4567 / +49 151 23456789"
+              className="w-full border border-raveBorder bg-panel px-3.5 py-2.5 font-mono text-sm text-white placeholder:text-neutral-600 focus:border-raveRed focus:outline-none focus:ring-1 focus:ring-raveRed"
+            />
+            {errors.phone && (
+              <p className="mt-1 font-mono text-xs text-raveRed">{errors.phone}</p>
+            )}
           </div>
 
           <div className="pt-3">

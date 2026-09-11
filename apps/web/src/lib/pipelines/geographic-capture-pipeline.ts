@@ -18,6 +18,8 @@ export interface GeographicCaptureInput {
   country: string;
   /** Specific city of residence */
   city: string;
+  /** Optional subscriber mobile / WhatsApp / Telegram contact */
+  phone?: string;
   /** Source of capture ('events' or 'community') */
   source: "events" | "community";
 }
@@ -62,6 +64,14 @@ export function validateGeographicCapture(
   // Step 4: Validate City
   if (!input.city || input.city.trim().length < 2) {
     errors.city = "Indica la ciudad donde resides (mínimo 2 caracteres).";
+  }
+
+  // Step 5: Validate Phone (Optional)
+  if (input.phone && input.phone.trim().length > 0) {
+    const phoneRegex = /^[+]?[\d\s\-()]{7,20}$/;
+    if (!phoneRegex.test(input.phone.trim())) {
+      errors.phone = "Ingresa un número telefónico válido o déjalo en blanco.";
+    }
   }
 
   return {

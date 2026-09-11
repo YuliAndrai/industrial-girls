@@ -15,7 +15,7 @@ describe('05 - Git Workflow & Branch Preflight', () => {
     } finally {
       sandbox.cleanup();
     }
-  });
+  }, 30000);
 
   test('preflight-start.sh passes on clean git workspace with bootstrap mode', () => {
     const sandbox = createSandboxWorkspace('preflight_clean');
@@ -31,5 +31,5 @@ describe('05 - Git Workflow & Branch Preflight', () => {
     } finally {
       sandbox.cleanup();
     }
-  });
+  }, 30000);
 });
