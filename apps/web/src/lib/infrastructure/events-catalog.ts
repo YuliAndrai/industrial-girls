@@ -28,10 +28,14 @@ export interface PastShowcase {
  * Current calendar season state definition.
  */
 export interface EventCalendarStatus {
+  /** Top eyebrow badge label */
+  topBadge: string;
   /** Season headline */
   headline: string;
   /** Status banner label */
   statusLabel: string;
+  /** Status callout secondary badge */
+  statusCallout: string;
   /** Curatorial note */
   curatorialNote: string;
   /** Expected announcement window */
@@ -63,10 +67,12 @@ export const STANDARD_COUNTRIES: string[] = [
  * Current status of the touring calendar.
  */
 export const CALENDAR_STATUS: EventCalendarStatus = {
-  headline: "PRÓXIMAS FECHAS — EN PREPARACIÓN",
-  statusLabel: "TEMPORADA EN CURADURÍA // GIRA 2026-2027",
-  curatorialNote: "Nuestro equipo se encuentra diseñando la nueva serie de noches clandestinas y residencias en almacenes de Europa y América Latina. Las fechas, locaciones secretas y accesos se liberarán primero a quienes se encuentren registrados en el radar geográfico.",
-  announcementWindow: "PRIMER ANUNCIO: Q4 2026",
+  topBadge: "// SELECTIVE DATES & CLUB SESSIONS //",
+  headline: "SHOWCASES & FECHAS SELECCIONADAS",
+  statusLabel: "TEMPORADA ACTIVA // PRÓXIMAS CIUDADES EN CONFIRMACIÓN",
+  statusCallout: "[ TEMPORADA ACTIVA // PRÓXIMAS CIUDADES EN CONFIRMACIÓN ]",
+  curatorialNote: "Conexiones entre cabinas, clubs y residencias underground en desarrollo. Curadurías directas para la pista de baile.",
+  announcementWindow: "TEMPORADA ACTIVA // PRÓXIMAS CIUDADES EN CONFIRMACIÓN",
 };
 
 /**
