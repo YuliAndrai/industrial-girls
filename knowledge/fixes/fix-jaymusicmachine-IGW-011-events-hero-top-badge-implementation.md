@@ -57,7 +57,7 @@
   - `getEventCalendarStatus().headline` equals `"SHOWCASES Y ANUNCIOS PRONTO"`.
   - `getEventCalendarStatus().curatorialNote` equals `"Regístrate para acceder a locaciones, alineaciones y preventas prioritarias en tu región."`.
   - `eventos-view.tsx` integrates the badge, headline, and subtitle while omitting the season callout badge, preserving the single `<h1>` invariant.
-  - `eventos-view.tsx` configures `GeographicForm` with `badge="ÚNETE A NUESTRO TELEGRAM // RECIBE NOTICIAS"` and `title="PREVENTAS & ALERTAS POR CIUDAD"`.
+  - `eventos-view.tsx` configures `GeographicForm` with `badge="ÚNETE A NUESTRO TELEGRAM // RECIBE NOTICIAS"`, `title="PREVENTAS & ALERTAS POR CIUDAD"`, and `buttonText="[ RECIBIR NOTICIAS DE EVENTOS EN MI CIUDAD ]"`.
   - Full architecture test suite (`apps/web/src/lib/master-architecture.test.ts`) passes.
 
 ## 5. Local Definition of Done (DoD)

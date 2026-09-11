@@ -68,7 +68,7 @@ export function EventosView(): React.ReactElement {
               badge="ÚNETE A NUESTRO TELEGRAM // RECIBE NOTICIAS"
               title="PREVENTAS & ALERTAS POR CIUDAD"
               subtitle="Notificarme de nuevas fechas y preventas exclusivas en mi ciudad."
-              buttonText="[ ACTIVAR RADAR DE EVENTOS EN MI CIUDAD ]"
+              buttonText="[ RECIBIR NOTICIAS DE EVENTOS EN MI CIUDAD ]"
             />
           </div>
         </section>

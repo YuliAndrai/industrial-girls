@@ -202,6 +202,12 @@ describe("Events Hero & Curated Dates Architecture — TDD Test Suite (@spec IGW
         content.includes('title="PREVENTAS & ALERTAS POR CIUDAD"'),
         "eventos-view.tsx must configure GeographicForm with PREVENTAS & ALERTAS POR CIUDAD title"
       ).toBe(true);
+
+      // Step 6: Verify geographic form submit button CTA
+      expect(
+        content.includes('buttonText="[ RECIBIR NOTICIAS DE EVENTOS EN MI CIUDAD ]"'),
+        "eventos-view.tsx must configure GeographicForm with [ RECIBIR NOTICIAS DE EVENTOS EN MI CIUDAD ] button text"
+      ).toBe(true);
     });
 
     it("ensures /eventos view top badge container implements responsive viewport hardening classes", () => {
