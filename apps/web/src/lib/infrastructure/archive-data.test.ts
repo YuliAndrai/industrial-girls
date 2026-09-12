@@ -337,15 +337,15 @@ describe("Archive Section - Artists Roster Architecture — TDD Test Suite (@spe
   });
 
   describe("5. Layer 4 (Infrastructure): ARCHIVE_PHOTOS Unique Photo Catalog Invariants", () => {
-    it("validates that ARCHIVE_PHOTOS contains exactly the deduplicated unique items (40)", () => {
+    it("validates that ARCHIVE_PHOTOS contains exactly the deduplicated unique items (37)", () => {
       // Step 1: Verify catalog array exists and has length TOTAL_UNIQUE_PHOTOS
       expect(Array.isArray(ARCHIVE_PHOTOS)).toBe(true);
-      expect(TOTAL_UNIQUE_PHOTOS).toBe(40);
-      expect(ARCHIVE_PHOTOS.length).toBe(40);
+      expect(TOTAL_UNIQUE_PHOTOS).toBe(37);
+      expect(ARCHIVE_PHOTOS.length).toBe(37);
     });
 
     it("ensures every photo satisfies the ArchivePhoto interface contract and sequential paths", () => {
-      // Step 1: Validate entity fields for all 40 unique photo records
+      // Step 1: Validate entity fields for all 37 unique photo records
       ARCHIVE_PHOTOS.forEach((photo: ArchivePhoto, index) => {
         const expectedIndex = String(index + 1).padStart(2, "0");
         expect(photo.id).toBe(`photo-${expectedIndex}`);
@@ -359,7 +359,7 @@ describe("Archive Section - Artists Roster Architecture — TDD Test Suite (@spe
       const photosCopy = getArchivePhotos();
 
       // Step 2: Assert parity and reference independence
-      expect(photosCopy.length).toBe(40);
+      expect(photosCopy.length).toBe(37);
       expect(photosCopy).not.toBe(ARCHIVE_PHOTOS);
     });
 

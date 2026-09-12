@@ -481,13 +481,13 @@ export interface ArchivePhoto {
 
 /**
  * Total count of verified unique photographic visual frames in the archive catalog
- * after automated binary hash deduplication (SHA-256).
+ * after advanced binary hash and visual perceptual deduplication.
  */
-export const TOTAL_UNIQUE_PHOTOS = 40;
+export const TOTAL_UNIQUE_PHOTOS = 37;
 
 // Step 6: Define the immutable unique photo archive catalog
 /**
- * Typed catalog containing the 40 verified unique photographic visual frames recorded across
+ * Typed catalog containing the 37 verified unique photographic visual frames recorded across
  * Industrial Girls raves, club nights, and warehouse showcases.
  */
 export const ARCHIVE_PHOTOS: readonly ArchivePhoto[] = Object.freeze(
