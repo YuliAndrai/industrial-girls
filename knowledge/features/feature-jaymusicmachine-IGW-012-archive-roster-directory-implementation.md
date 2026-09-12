@@ -18,32 +18,46 @@
     - Roster Typographic Directory: Responsive two-column grid (`grid grid-cols-1 lg:grid-cols-2 gap-x-8 gap-y-0 items-start`) partitioning 30 scene artists into two balanced columns of 15, with compact density (`py-2.5 sm:py-3`), index `01`-`30` (`text-white/40`), and compact profile link buttons (`[ SPOTIFY ]`, `[ SOUNDCLOUD ]`, `[ IG ]`, `[ RA ]`, `[ BC ]`) aligned to the right.
     - Single `<h1>` semantic invariant per route.
 - **Layer 2: Application / Consumption Layer**:
-  - Consumes `getArtistsRoster()` from Layer 4 Infrastructure.
+  - Consumes `getArtistsRoster()` and `getMediaArchiveItems()` from Layer 4 Infrastructure.
   - Integrates application state hooks `useDrawer` and `useSoundFx`.
 - **Layer 3: Domain / Pipelines / Services Layer**:
-  - Artist entity contracts and query sorting helpers.
+  - Artist entity contracts and media item categorization/filtering logic.
 - **Layer 4: Infrastructure Layer (`apps/web/src/lib/infrastructure/archive-data.ts`)**:
   - Defines `ArtistProfile` interface (`id`, `name`, `country`, `countryCode`, `links: { spotify?, soundcloud?, residentAdvisor?, instagram?, bandcamp? }`).
   - Exports immutable typed constant `ARTISTS_ROSTER` with 30 scene artists (zero genre/subgenre properties).
   - Exports getter function `getArtistsRoster(): readonly ArtistProfile[]`.
+  - Defines `MediaArchiveItem` interface (`id`, `title`, `date`, `location`, `type: "photo" | "video"`, `mediaUrl`, `caption`, `duration?`, `thumbnailUrl?`).
+  - Exports immutable typed constant `MEDIA_ARCHIVE` containing photographic and audiovisual records from showcases and club sessions.
+  - Exports getter function `getMediaArchiveItems(): readonly MediaArchiveItem[]`.
 
 ## 3. Atomic Slices & Logical Sequence
-- **SPEC-1**: Archive Roster Data & Typographic Directory (Branch: `feature/jaymusicmachine-IGW-012-archive-roster-directory`)
+- **SPEC-1**: Archive Roster Data & Typographic Directory (Branch: `feature/jaymusicmachine-IGW-012-archive-roster-directory`) — Completed & Validated.
+- **SPEC-2**: Media Archive & Registro Audiovisual Gallery (Branch: `feature/jaymusicmachine-IGW-012-archive-roster-directory`)
   - Red-Green-Refactor cycle:
-    1. **RED (TDD)**: Create `apps/web/src/lib/infrastructure/archive-data.test.ts` defining failing assertions for `ARTISTS_ROSTER` structure, 8 scene entities, required properties, and single H1 semantic hierarchy.
-    2. **GREEN (Implementation)**: Scaffold and implement `apps/web/src/lib/infrastructure/archive-data.ts`, update `apps/web/src/app/archivo/page.tsx` and create `apps/web/src/app/archivo/archivo-view.tsx` with all mandatory in-code commentary.
-    3. **REFACTOR (Clean Code)**: Clean code pass, audit zero dead code, execute Gate 2 audit, and verify `pnpm validate` passes 100% in green.
+    1. **RED (TDD)**: Extend `apps/web/src/lib/infrastructure/archive-data.test.ts` with failing assertions for:
+       - `MEDIA_ARCHIVE` dataset and `getMediaArchiveItems()` getter.
+       - Mandatory properties for media entities (`id`, `title`, `date`, `location`, `type`, `mediaUrl`, `caption`).
+       - Presence of both photo and video record types.
+       - Presence of block eyebrow `// REGISTRO & MEMORIA // ARCHIVO AUDIOVISUAL` and semantic H2 `REGISTRO AUDIOVISUAL & SHOWCASES`.
+       - Preservation of single `<h1>` invariant on `/archivo`.
+    2. **GREEN (Implementation)**:
+       - Update `apps/web/src/lib/infrastructure/archive-data.ts` to export `MediaArchiveItem`, `MEDIA_ARCHIVE`, and `getMediaArchiveItems()`.
+       - Update `apps/web/src/app/archivo/archivo-view.tsx` to render the Media Archive section below the 30-artist directory with filter tabs (`[ TODOS ]`, `[ FOTOGRAFÍA ]`, `[ VIDEO ]`), media cards, interactive video player / photo preview modal, responsive grid, and in-code commentary.
+    3. **REFACTOR (Clean Code)**:
+       - Execute clean code audit.
+       - Invoke `architect` subagent for Gate 2 audit.
+       - Verify `pnpm validate` and `pnpm test` pass 100% in green.
 
 ## 4. TDD (Test-Driven Development) Strategy
 ### Unit/Integration Tests (Fase RED)
 - **Test File Path**: `apps/web/src/lib/infrastructure/archive-data.test.ts`
 - **Command**: `pnpm test apps/web/src/lib/infrastructure/archive-data.test.ts`
 - **Assertion Goals**:
-  - `ARTISTS_ROSTER` contains at least 8 artists.
-  - Every entity contains `id`, `name`, `country`, `countryCode`, `subgenre`.
-  - Required artists (Clara Cuvé, Øtta, Parfait, Wallis, Caravel, Somniac One, Lady Maru, Juliana Yamasaki) are present.
+  - `ARTISTS_ROSTER` contains exactly 30 artists without subgenres.
+  - `MEDIA_ARCHIVE` contains at least 3 curated items with photos and videos.
+  - Media items have valid formats and properties.
   - `/archivo` view renders exactly one semantic `<h1>` element.
-  - `/archivo` view contains eyebrow `// HISTORIAL & REGISTRO // ARCHIVO GLOBAL` and subtitle.
+  - `/archivo` view renders the Media Archive block header with semantic `<h2>`.
 
 ## 5. Local Definition of Done (DoD)
 - [ ] La fase actual del tracker de estado es `PHASE_8_HUMAN_MERGE_APPROVED`.

@@ -1,6 +1,6 @@
 /**
  * @file apps/web/src/lib/infrastructure/archive-data.ts
- * @description Layer 4: Infrastructure - Archive Artists Roster Catalog.
+ * @description Layer 4: Infrastructure - Archive Artists Roster & Media Archive Catalog.
  *
  * ARCHITECTURAL LAYER SPECIFICATION:
  * - Layer: Layer 4 (Infrastructure & Data Persistence)
@@ -379,4 +379,89 @@ export const ARTISTS_ROSTER: readonly ArtistProfile[] = [
 export function getArtistsRoster(): readonly ArtistProfile[] {
   // Step 2.1: Return a shallow copy of the immutable catalog to protect source state
   return [...ARTISTS_ROSTER];
+}
+
+/**
+ * Entity contract representing a photographic or audiovisual record in the Industrial Girls media archive.
+ */
+export interface MediaArchiveItem {
+  /** Unique normalized slug or identifier for the media entry */
+  id: string;
+  /** Editorial title describing the event session or capture */
+  title: string;
+  /** ISO date string (YYYY-MM-DD) or human-readable event date */
+  date: string;
+  /** Physical city/country venue location where the session took place */
+  location: string;
+  /** Categorization type: photographic capture or video recording */
+  type: "photo" | "video";
+  /** Direct URL to high-resolution photo asset or video stream */
+  mediaUrl: string;
+  /** Contextual or historical caption describing the session */
+  caption: string;
+  /** Optional formatted duration for video content (e.g. "45:20") */
+  duration?: string;
+  /** Optional thumbnail preview URL for video or grid optimization */
+  thumbnailUrl?: string;
+}
+
+// Step 3: Define the immutable curated media archive dataset
+/**
+ * Typed catalog containing curated audiovisual and photographic records
+ * documenting showcases, warehouse club nights, and boiler sessions.
+ */
+export const MEDIA_ARCHIVE: readonly MediaArchiveItem[] = [
+  {
+    id: "showcase-bogota-2025",
+    title: "Warehouse Session // Bogotá Subterránea",
+    date: "2025-11-14",
+    location: "Bogotá, Colombia",
+    type: "video",
+    mediaUrl: "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
+    caption: "Registro audiovisual multicámara de la sesión en nave industrial con sets de Clara Cuvé y Andhray.",
+    duration: "45:20",
+    thumbnailUrl: "https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?auto=format&fit=crop&q=80&w=1200",
+  },
+  {
+    id: "medellin-tunnel-photo-2025",
+    title: "Registro Analógico // Medellín Tunnel Rave",
+    date: "2025-08-22",
+    location: "Medellín, Colombia",
+    type: "photo",
+    mediaUrl: "https://images.unsplash.com/photo-1574717024653-61fd2cf4d44d?auto=format&fit=crop&q=80&w=1200",
+    caption: "Cobertura fotográfica en 35mm durante la toma del túnel oriental con atmósfera industrial.",
+    thumbnailUrl: "https://images.unsplash.com/photo-1574717024653-61fd2cf4d44d?auto=format&fit=crop&q=80&w=600",
+  },
+  {
+    id: "berlin-tresor-stream-2026",
+    title: "Showcase Berlín // Tresor Vault Showcase",
+    date: "2026-03-05",
+    location: "Berlín, Alemania",
+    type: "video",
+    mediaUrl: "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
+    caption: "Transmisión en directo del showcase debut en Berlín presentando directos modulares de Wallis y Dance Divine.",
+    duration: "1:15:00",
+    thumbnailUrl: "https://images.unsplash.com/photo-1514525253161-7a46d19cd819?auto=format&fit=crop&q=80&w=1200",
+  },
+  {
+    id: "cali-soundclash-photo-2025",
+    title: "Retratos de Cabina // Cali Soundclash",
+    date: "2025-05-18",
+    location: "Cali, Colombia",
+    type: "photo",
+    mediaUrl: "https://images.unsplash.com/photo-1470225620780-dba8ba36b745?auto=format&fit=crop&q=80&w=1200",
+    caption: "Serie fotográfica de cabina y público durante la apertura del circuito sonoro en el Valle.",
+    thumbnailUrl: "https://images.unsplash.com/photo-1470225620780-dba8ba36b745?auto=format&fit=crop&q=80&w=600",
+  },
+] as const;
+
+// Step 4: Export getter function providing read access to the media archive
+/**
+ * Retrieves the complete list of media archive items.
+ *
+ * @returns {readonly MediaArchiveItem[]} An array of media archive entities.
+ */
+export function getMediaArchiveItems(): readonly MediaArchiveItem[] {
+  // Step 4.1: Return a shallow copy of the immutable catalog to protect source state
+  return [...MEDIA_ARCHIVE];
 }

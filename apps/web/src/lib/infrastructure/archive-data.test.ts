@@ -14,6 +14,9 @@ import {
   ARTISTS_ROSTER,
   getArtistsRoster,
   ArtistProfile,
+  MEDIA_ARCHIVE,
+  getMediaArchiveItems,
+  MediaArchiveItem,
 } from "./archive-data";
 
 describe("Archive Section - Artists Roster Architecture — TDD Test Suite (@spec IGW-012)", () => {
@@ -190,6 +193,124 @@ describe("Archive Section - Artists Roster Architecture — TDD Test Suite (@spe
       expect(content.includes("px-2 py-0.5"), "Buttons must have compact px-2 py-0.5 padding").toBe(true);
       expect(content.includes("whitespace-nowrap"), "Buttons must not wrap").toBe(true);
       expect(content.includes("text-white/40"), "Index numbering must have attenuated opacity").toBe(true);
+    });
+  });
+
+  describe("3. Layer 4 (Infrastructure): MEDIA_ARCHIVE Dataset & getMediaArchiveItems() Invariants", () => {
+    it("validates that MEDIA_ARCHIVE contains curated showcase records", () => {
+      // Step 1: Verify catalog array exists and has at least 3 records
+      expect(Array.isArray(MEDIA_ARCHIVE)).toBe(true);
+      expect(MEDIA_ARCHIVE.length).toBeGreaterThanOrEqual(3);
+    });
+
+    it("ensures media entries contain both photo and video record types", () => {
+      // Step 1: Verify presence of photo records
+      const hasPhoto = MEDIA_ARCHIVE.some((item) => item.type === "photo");
+      expect(hasPhoto, "MEDIA_ARCHIVE must include photographic records").toBe(true);
+
+      // Step 2: Verify presence of video records
+      const hasVideo = MEDIA_ARCHIVE.some((item) => item.type === "video");
+      expect(hasVideo, "MEDIA_ARCHIVE must include audiovisual/video records").toBe(true);
+    });
+
+    it("ensures every media entry satisfies the MediaArchiveItem interface contract", () => {
+      // Step 1: Validate entity fields for every record in the media catalog
+      MEDIA_ARCHIVE.forEach((item: MediaArchiveItem) => {
+        expect(item.id).toBeDefined();
+        expect(typeof item.id).toBe("string");
+        expect(item.id.trim().length).toBeGreaterThan(0);
+
+        expect(item.title).toBeDefined();
+        expect(typeof item.title).toBe("string");
+        expect(item.title.trim().length).toBeGreaterThan(0);
+
+        expect(item.date).toBeDefined();
+        expect(typeof item.date).toBe("string");
+        expect(item.date.trim().length).toBeGreaterThan(0);
+
+        expect(item.location).toBeDefined();
+        expect(typeof item.location).toBe("string");
+        expect(item.location.trim().length).toBeGreaterThan(0);
+
+        expect(item.type).toBeDefined();
+        expect(["photo", "video"].includes(item.type)).toBe(true);
+
+        expect(item.mediaUrl).toBeDefined();
+        expect(typeof item.mediaUrl).toBe("string");
+        expect(item.mediaUrl.trim().length).toBeGreaterThan(0);
+
+        expect(item.caption).toBeDefined();
+        expect(typeof item.caption).toBe("string");
+        expect(item.caption.trim().length).toBeGreaterThan(0);
+      });
+    });
+
+    it("ensures getMediaArchiveItems() returns a protected copy of the media catalog", () => {
+      // Step 1: Retrieve media copy via getter
+      const mediaCopy = getMediaArchiveItems();
+
+      // Step 2: Assert parity and reference independence
+      expect(mediaCopy.length).toBe(MEDIA_ARCHIVE.length);
+      expect(mediaCopy).not.toBe(MEDIA_ARCHIVE);
+    });
+  });
+
+  describe("4. Layer 1 (Presentation): Media Archive & Audiovisual Registry Gallery Invariants", () => {
+    const archivoViewPath = path.resolve(
+      __dirname,
+      "../../app/archivo/archivo-view.tsx"
+    );
+
+    it("ensures archivo-view.tsx renders the Media Archive block eyebrow and title as H2", () => {
+      // Step 1: Read view component source file
+      const content = fs.readFileSync(archivoViewPath, "utf8");
+
+      // Step 2: Verify block eyebrow
+      expect(
+        content.includes("// REGISTRO & MEMORIA // ARCHIVO AUDIOVISUAL"),
+        "archivo-view.tsx must render // REGISTRO & MEMORIA // ARCHIVO AUDIOVISUAL eyebrow"
+      ).toBe(true);
+
+      // Step 3: Verify block H2 title
+      expect(
+        content.includes("REGISTRO AUDIOVISUAL & SHOWCASES"),
+        "archivo-view.tsx must render REGISTRO AUDIOVISUAL & SHOWCASES block title"
+      ).toBe(true);
+
+      // Step 4: Verify that the block title is rendered as an H2 (single H1 invariant preserved)
+      expect(
+        /<h2[\s\S]*?REGISTRO AUDIOVISUAL & SHOWCASES[\s\S]*?<\/h2>/.test(content),
+        "REGISTRO AUDIOVISUAL & SHOWCASES must be rendered inside an <h2> tag"
+      ).toBe(true);
+    });
+
+    it("verifies that single H1 invariant remains strictly preserved across the entire route", () => {
+      // Step 1: Read view component source file
+      const content = fs.readFileSync(archivoViewPath, "utf8");
+
+      // Step 2: Count <h1> tags in file
+      const h1Matches = content.match(/<h1[\s>]/g) || [];
+
+      // Step 3: Exactly 1 H1 headline allowed
+      expect(h1Matches.length).toBe(1);
+    });
+
+    it("ensures media filter controls and responsive gallery grid are rendered", () => {
+      // Step 1: Read view component source file
+      const content = fs.readFileSync(archivoViewPath, "utf8");
+
+      // Step 2: Verify filter button controls
+      expect(content.includes("[ TODOS"), "Must render [ TODOS ] filter button").toBe(true);
+      expect(content.includes("[ FOTOGRAFÍA"), "Must render [ FOTOGRAFÍA ] filter button").toBe(true);
+      expect(content.includes("[ VIDEO"), "Must render [ VIDEO ] filter button").toBe(true);
+
+      // Step 3: Verify media grid container
+      expect(
+        content.includes("grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3") ||
+        content.includes("grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6") ||
+        content.includes("grid-cols-1 md:grid-cols-2 lg:grid-cols-3"),
+        "Must render responsive media grid with 1 to 3 columns"
+      ).toBe(true);
     });
   });
 });
