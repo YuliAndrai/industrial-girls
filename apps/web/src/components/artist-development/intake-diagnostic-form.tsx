@@ -12,7 +12,7 @@ import {
   DiagnosticSubmissionInput,
   validateDiagnosticSubmission,
 } from "@/lib/pipelines/intake-diagnostic-pipeline";
-import { getArtistDevPillars } from "@/lib/infrastructure/artist-development-catalog";
+import { getServicesCatalog } from "@/lib/infrastructure/services-data";
 
 /**
  * Diagnostic evaluation intake form component.
@@ -20,7 +20,7 @@ import { getArtistDevPillars } from "@/lib/infrastructure/artist-development-cat
  * @returns {React.ReactElement} Rendered form.
  */
 export function IntakeDiagnosticForm(): React.ReactElement {
-  const pillars = getArtistDevPillars();
+  const services = getServicesCatalog();
 
   const [formData, setFormData] = useState<DiagnosticSubmissionInput>({
     artistName: "",
@@ -197,16 +197,16 @@ export function IntakeDiagnosticForm(): React.ReactElement {
             {/* Field 5: Selected Services Checkboxes */}
             <div>
               <span className="block font-mono text-xs font-bold uppercase tracking-wider text-white mb-3">
-                5. Servicios de Interés (Selecciona los pilares deseados) <span className="text-raveRed">*</span>
+                5. Servicios de Interés (Selecciona los módulos requeridos) <span className="text-raveRed">*</span>
               </span>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                {pillars.map((pillar) => {
-                  const isChecked = formData.selectedServices.includes(pillar.id);
+                {services.map((service) => {
+                  const isChecked = formData.selectedServices.includes(service.id);
                   return (
                     <button
                       type="button"
-                      key={pillar.id}
-                      onClick={() => handleToggleService(pillar.id)}
+                      key={service.id}
+                      onClick={() => handleToggleService(service.id)}
                       className={`flex items-center gap-3 border p-3 text-left transition-all focus:outline-none ${
                         isChecked
                           ? "border-raveRed bg-raveRed/10 text-white"
@@ -222,10 +222,10 @@ export function IntakeDiagnosticForm(): React.ReactElement {
                       </div>
                       <div className="flex flex-col">
                         <span className="font-mono text-xs font-bold uppercase tracking-wider text-white">
-                          {pillar.title}
+                          {service.title}
                         </span>
                         <span className="font-mono text-[10px] text-raveTextMuted">
-                          {pillar.subtitle}
+                          {`/${service.code} // ${service.isPrimary ? "FLAGSHIP" : "ESPECIALIZADO"}`}
                         </span>
                       </div>
                     </button>
