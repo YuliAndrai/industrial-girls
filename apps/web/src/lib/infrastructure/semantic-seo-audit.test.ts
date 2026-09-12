@@ -76,16 +76,28 @@ describe("Semantic HTML & SEO Audit Invariants (IGW-009)", () => {
   });
 
   describe("2. Interactive Controls & Accessibility Aria-Labels", () => {
-    it("verifies Footer official frequencies external links possess descriptive aria-labels", () => {
+    it("verifies Footer official frequencies external links possess descriptive aria-labels and certifies minimal layout", () => {
       // Step 1: Read Footer component
       const footerPath = path.join(webSrcDir, "components/layout/footer.tsx");
       const content = fs.readFileSync(footerPath, "utf-8");
 
-      // Step 2: Assert presence of aria-label for SoundCloud, YouTube, Instagram, Bandcamp
-      expect(content).toMatch(/href="https:\/\/soundcloud\.com"[^>]*aria-label=/);
-      expect(content).toMatch(/href="https:\/\/youtube\.com"[^>]*aria-label=/);
-      expect(content).toMatch(/href="https:\/\/instagram\.com"[^>]*aria-label=/);
-      expect(content).toMatch(/href="https:\/\/bandcamp\.com"[^>]*aria-label=/);
+      // Step 2: Assert presence of aria-label for official social links
+      expect(content).toMatch(/href="https:\/\/soundcloud\.com[^"]*"[^>]*aria-label=/);
+      expect(content).toMatch(/href="https:\/\/www\.beatport\.com[^"]*"[^>]*aria-label=/);
+      expect(content).toMatch(/href="https:\/\/open\.spotify\.com[^"]*"[^>]*aria-label=/);
+      expect(content).toMatch(/href="https:\/\/youtube\.com[^"]*"[^>]*aria-label=/);
+      expect(content).toMatch(/href="https:\/\/instagram\.com[^"]*"[^>]*aria-label=/);
+      expect(content).toMatch(/href="https:\/\/t\.me\/industrialgirls"[^>]*aria-label=/);
+
+      // Step 3: Assert minimal copyright branding
+      expect(content).toContain("© 2026 INDUSTRIAL GIRLS // ALL RIGHTS RESERVED.");
+
+      // Step 4: Certify complete purge of bulky 4-column blocks
+      expect(content).not.toContain("5 SECCIONES MAESTRAS");
+      expect(content).not.toContain("DEMO DROP & MERCH");
+      expect(content).not.toContain("TRANSMITIENDO DESDE BERLÍN & BOGOTÁ");
+      expect(content).not.toContain("industrial-girls-logo-grid.png");
+      expect(content).not.toContain("MerchWaitlistModal");
     });
 
     it("verifies NavigationDrawer social and Demo Drop links possess descriptive aria-labels", () => {
