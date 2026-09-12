@@ -17,6 +17,7 @@ import {
   ARCHIVE_VIDEOS,
   getArchiveVideos,
   ArchiveVideo,
+  ArchiveVideoItem,
   MEDIA_ARCHIVE,
   getMediaArchiveItems,
   TOTAL_UNIQUE_PHOTOS,
@@ -202,47 +203,70 @@ describe("Archive Section - Artists Roster Architecture — TDD Test Suite (@spe
     });
   });
 
-  describe("3. Layer 4 (Infrastructure): ARCHIVE_VIDEOS Real YouTube Registry & getArchiveVideos() Invariants", () => {
-    it("validates that ARCHIVE_VIDEOS contains exactly the 3 real YouTube videos", () => {
-      // Step 1: Verify catalog array exists and has length 3
+  describe("3. Layer 4 (Infrastructure): ARCHIVE_VIDEOS Unified Video Registry & getArchiveVideos() Invariants", () => {
+    it("validates that ARCHIVE_VIDEOS contains exactly 8 unified videos (5 local + 3 YouTube)", () => {
+      // Step 1: Verify catalog array exists and has length 8
       expect(Array.isArray(ARCHIVE_VIDEOS)).toBe(true);
-      expect(ARCHIVE_VIDEOS.length).toBe(3);
+      expect(ARCHIVE_VIDEOS.length).toBe(8);
     });
 
-    it("ensures every video satisfies the ArchiveVideo interface contract with valid YouTube URLs", () => {
-      // Step 1: Validate entity fields for all 3 real YouTube video records
-      ARCHIVE_VIDEOS.forEach((video: ArchiveVideo) => {
+    it("ensures every local video satisfies the ArchiveVideoItem contract and physical files exist on disk", () => {
+      // Step 1: Filter local video items
+      const localVideos = ARCHIVE_VIDEOS.filter((v) => v.type === "local");
+      expect(localVideos.length).toBe(5);
+
+      const videosDir = path.resolve(__dirname, "../../../public/videos/archive");
+
+      // Step 2: Validate fields and physical existence for each local video
+      localVideos.forEach((video: ArchiveVideoItem, index) => {
+        const expectedIndex = String(index + 1).padStart(2, "0");
+        expect(video.id).toBe(`vid-${expectedIndex}`);
+        expect(video.title).toBe(`REGISTRO DE CAMPO // ${expectedIndex}`);
+        expect(video.type).toBe("local");
+        expect(video.src).toBe(`/videos/archive/video-${expectedIndex}.mp4`);
+
+        const filePath = path.join(videosDir, `video-${expectedIndex}.mp4`);
+        expect(fs.existsSync(filePath), `Physical file video-${expectedIndex}.mp4 must exist on disk`).toBe(true);
+      });
+    });
+
+    it("ensures every YouTube video satisfies the ArchiveVideoItem contract with valid URLs and thumbnails", () => {
+      // Step 1: Filter YouTube video items
+      const ytVideos = ARCHIVE_VIDEOS.filter((v) => v.type === "youtube");
+      expect(ytVideos.length).toBe(3);
+
+      // Step 2: Validate entity fields for all 3 real YouTube video records
+      ytVideos.forEach((video: ArchiveVideoItem) => {
         expect(video.id).toBeDefined();
         expect(video.id.startsWith("yt-")).toBe(true);
 
         expect(video.title).toBeDefined();
-        expect(video.title.startsWith("INDUSTRIAL GIRLS //")).toBe(true);
+        expect(video.title.length).toBeGreaterThan(0);
 
-        expect(video.youtubeId).toBeDefined();
-        expect(video.youtubeId.trim().length).toBeGreaterThan(0);
+        expect(video.type).toBe("youtube");
 
-        expect(video.url).toBeDefined();
-        expect(video.url.includes("youtu")).toBe(true);
+        expect(video.src).toBeDefined();
+        expect(video.src.includes("youtube.com") || video.src.includes("youtu.be")).toBe(true);
 
         expect(video.thumbnailUrl).toBeDefined();
-        expect(video.thumbnailUrl.includes("img.youtube.com/vi/")).toBe(true);
+        expect(video.thumbnailUrl?.includes("img.youtube.com/vi/")).toBe(true);
       });
     });
 
     it("verifies the exact 3 real YouTube video IDs are present", () => {
       // Step 1: Verify exact IDs
-      const videoIds = ARCHIVE_VIDEOS.map((v) => v.youtubeId);
+      const videoIds = ARCHIVE_VIDEOS.filter((v) => v.type === "youtube").map((v) => v.youtubeId);
       expect(videoIds).toContain("AXM433YoYzQ");
       expect(videoIds).toContain("hePpvpRLwwc");
       expect(videoIds).toContain("4vaopkiPKhc");
     });
 
-    it("ensures getArchiveVideos() returns a protected copy of the real video catalog", () => {
+    it("ensures getArchiveVideos() returns a protected copy of the unified video catalog", () => {
       // Step 1: Retrieve video copy via getter
       const videoCopy = getArchiveVideos();
 
       // Step 2: Assert parity and reference independence
-      expect(videoCopy.length).toBe(3);
+      expect(videoCopy.length).toBe(8);
       expect(videoCopy).not.toBe(ARCHIVE_VIDEOS);
     });
 
@@ -313,6 +337,11 @@ describe("Archive Section - Artists Roster Architecture — TDD Test Suite (@spe
       // Step 4: Verify direct YouTube link attributes
       expect(content.includes('target="_blank"'), "Video cards must open in new tab").toBe(true);
       expect(content.includes('rel="noopener noreferrer"'), "Video cards must have rel=noopener noreferrer").toBe(true);
+
+      // Step 4.1: Verify local HTML5 video player attributes
+      expect(content.includes("<video"), "Must render native HTML5 <video> player for local videos").toBe(true);
+      expect(content.includes("controls"), "Video player must have controls").toBe(true);
+      expect(content.includes('preload="metadata"'), "Video player must configure preload=metadata").toBe(true);
 
       // Step 5: Verify media grid container
       expect(

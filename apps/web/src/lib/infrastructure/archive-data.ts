@@ -382,64 +382,110 @@ export function getArtistsRoster(): readonly ArtistProfile[] {
 }
 
 /**
- * Entity contract representing a real YouTube video broadcast in the Industrial Girls archive.
+ * Entity contract representing a unified video record in the Industrial Girls archive
+ * (native local HTML5 video or external YouTube stream broadcast).
  */
-export interface ArchiveVideo {
-  /** Unique identifier for the video entry */
-  id: string;
-  /** Editorial title of the live stream or hybrid set */
-  title: string;
-  /** YouTube video ID */
-  youtubeId: string;
-  /** Canonical direct URL to the YouTube video or live broadcast */
-  url: string;
-  /** YouTube thumbnail URL */
-  thumbnailUrl: string;
+export interface ArchiveVideoItem {
+  /** Unique identifier for the video entry (e.g. vid-01 or yt-01) */
+  readonly id: string;
+  /** Editorial title of the live recording, showcase, or hybrid session */
+  readonly title: string;
+  /** Video media type discriminator: 'local' for self-hosted MP4s or 'youtube' for external links */
+  readonly type: "local" | "youtube";
+  /** Resource locator: local absolute path ('/videos/archive/video-XX.mp4') or YouTube URL */
+  readonly src: string;
+  /** Optional or inferred thumbnail image URL */
+  readonly thumbnailUrl?: string;
+  /** Canonical direct URL (alias of src for external YouTube links) */
+  readonly url?: string;
+  /** YouTube video ID (present when type is 'youtube') */
+  readonly youtubeId?: string;
 }
 
-// Step 3: Define the immutable curated real YouTube videos catalog
 /**
- * Typed catalog containing the 3 real YouTube video records documenting
- * live stream sessions, direct broadcasts, and hybrid sets.
+ * Backward-compatible type alias for ArchiveVideo.
  */
-export const ARCHIVE_VIDEOS: readonly ArchiveVideo[] = [
+export type ArchiveVideo = ArchiveVideoItem;
+
+// Step 3: Define the immutable unified archive video catalog (5 local + 3 YouTube)
+/**
+ * Typed catalog containing 8 unified video records documenting live field captures,
+ * direct club broadcasts, and international hybrid showcases.
+ */
+export const ARCHIVE_VIDEOS: readonly ArchiveVideoItem[] = [
+  {
+    id: "vid-01",
+    title: "REGISTRO DE CAMPO // 01",
+    type: "local",
+    src: "/videos/archive/video-01.mp4",
+  },
+  {
+    id: "vid-02",
+    title: "REGISTRO DE CAMPO // 02",
+    type: "local",
+    src: "/videos/archive/video-02.mp4",
+  },
+  {
+    id: "vid-03",
+    title: "REGISTRO DE CAMPO // 03",
+    type: "local",
+    src: "/videos/archive/video-03.mp4",
+  },
+  {
+    id: "vid-04",
+    title: "REGISTRO DE CAMPO // 04",
+    type: "local",
+    src: "/videos/archive/video-04.mp4",
+  },
+  {
+    id: "vid-05",
+    title: "REGISTRO DE CAMPO // 05",
+    type: "local",
+    src: "/videos/archive/video-05.mp4",
+  },
   {
     id: "yt-01",
-    title: "INDUSTRIAL GIRLS // LIVE STREAM SESSION",
+    title: "SOMNIAC ONE // INDUSTRIAL HARDCORE HYBRID LIVE",
+    type: "youtube",
+    src: "https://www.youtube.com/watch?v=AXM433YoYzQ",
+    url: "https://www.youtube.com/watch?v=AXM433YoYzQ",
     youtubeId: "AXM433YoYzQ",
-    url: "https://youtu.be/AXM433YoYzQ",
     thumbnailUrl: "https://img.youtube.com/vi/AXM433YoYzQ/hqdefault.jpg",
   },
   {
     id: "yt-02",
-    title: "INDUSTRIAL GIRLS // TRANSMISIÓN EN DIRECTO",
+    title: "LADY MARU // EBM & ACID INDUSTRIAL HARD SET",
+    type: "youtube",
+    src: "https://www.youtube.com/watch?v=hePpvpRLwwc",
+    url: "https://www.youtube.com/watch?v=hePpvpRLwwc",
     youtubeId: "hePpvpRLwwc",
-    url: "https://www.youtube.com/live/hePpvpRLwwc",
     thumbnailUrl: "https://img.youtube.com/vi/hePpvpRLwwc/hqdefault.jpg",
   },
   {
     id: "yt-03",
-    title: "INDUSTRIAL GIRLS // HYBRID SET ARCHIVE",
+    title: "JULIANA YAMASAKI // TECHNO INDUSTRIAL CLOSING",
+    type: "youtube",
+    src: "https://www.youtube.com/watch?v=4vaopkiPKhc",
+    url: "https://www.youtube.com/watch?v=4vaopkiPKhc",
     youtubeId: "4vaopkiPKhc",
-    url: "https://youtu.be/4vaopkiPKhc",
     thumbnailUrl: "https://img.youtube.com/vi/4vaopkiPKhc/hqdefault.jpg",
   },
 ] as const;
 
 // Step 4: Export getter function providing read access to real archive videos
 /**
- * Retrieves the complete list of real YouTube archive videos.
+ * Retrieves the complete list of unified archive videos (local native + YouTube).
  *
- * @returns {readonly ArchiveVideo[]} An array of archive video entities.
+ * @returns {readonly ArchiveVideoItem[]} An array of archive video entities.
  */
-export function getArchiveVideos(): readonly ArchiveVideo[] {
+export function getArchiveVideos(): readonly ArchiveVideoItem[] {
   // Step 4.1: Return a shallow copy of the immutable catalog to protect source state
   return [...ARCHIVE_VIDEOS];
 }
 
 /**
  * Entity contract representing a photographic or audiovisual record in the Industrial Girls media archive.
- * @deprecated Use ArchiveVideo or ArchivePhoto instead.
+ * @deprecated Use ArchiveVideoItem or ArchivePhoto instead.
  */
 export interface MediaArchiveItem {
   id: string;
@@ -454,17 +500,17 @@ export interface MediaArchiveItem {
 }
 
 /**
- * Curated media archive items mapping real YouTube videos without mock records.
+ * Curated media archive items mapping real YouTube and local videos without mock records.
  */
 export const MEDIA_ARCHIVE: readonly MediaArchiveItem[] = ARCHIVE_VIDEOS.map((v) => ({
   id: v.id,
   title: v.title,
   date: "2026-03-01",
-  location: "YouTube Oficial",
+  location: v.type === "local" ? "Archivo Local" : "YouTube Oficial",
   type: "video" as const,
-  mediaUrl: v.url,
+  mediaUrl: v.src,
   caption: v.title,
-  thumbnailUrl: v.thumbnailUrl,
+  thumbnailUrl: v.thumbnailUrl || "",
 }));
 
 /**
