@@ -119,6 +119,34 @@ Este Pull Request implementa la Feature **${ISSUE_ID}**: Módulo de **Desarrollo
 5. **Suite de Pruebas Unitarias TDD**:
    - Validación de invariantes de catálogo y pipeline en \`apps/web/src/lib/artist-development.test.ts\`.
 EOF
+elif [[ "${BRANCH}" == *"archive"* || "${ISSUE_ID}" == "IGW-012" ]]; then
+cat <<EOF > "${OUTPUT_FILE}"
+## Summary
+Este Pull Request implementa la Feature **${ISSUE_ID}**: **Directorio de Roster de Artistas, Registro Audiovisual y Aceleración GPU en /archivo** para Industrial Girls:
+
+- Feature-Flag Strategy: Implementación modular y desacoplada en arquitectura de 4 capas para Next.js App Router en ruta \`/archivo\`.
+
+### 🚀 Principales Cambios y Componentes:
+1. **Directorio de Artistas (Layer 1)**:
+   - Maquetación en dos columnas equilibradas (\`lg:grid-cols-2\`) para optimizar la densidad visual y mitigar el scroll vertical excesivo.
+   - Título oficial del bloque: \`ARTISTAS EN NUESTROS EVENTOS & LABEL\`.
+   - Roster curado de 30 artistas internacionales consolidadas y emergentes sin etiquetas de género musical.
+   - Botonera táctil compacta para perfiles externos (\`[ SPOTIFY ]\`, \`[ SOUNDCLOUD ]\`, \`[ IG ]\`, \`[ RA ]\`, \`[ BC ]\`).
+2. **Registro Audiovisual & Media Archive (Layer 1)**:
+   - 37 fotogramas únicos indexados secuencialmente (\`photo-01.jpg\` a \`photo-37.jpg\`), eliminando copias duplicadas y redundantes de ráfaga.
+   - Terminal interactiva con telemetría en tiempo real: \`VISOR DE FOTOGRAMAS // 37 CAPTURAS\` y \`[ 01 / 37 ] // VISUAL REEL\`.
+   - Modos de visualización: **Spotlight HUD** (monitor central + filmstrip horizontal) y **Modo Matriz Densa**.
+   - Visor modal HD con controles de teclado (flechas y escape) y tarjeta de showcases de video multicámara.
+3. **Aceleración por GPU y Rendimiento a 60 FPS (Layers 1 & Performance)**:
+   - Aceleración por hardware con \`transform-gpu\` (\`transform: translateZ(0)\`).
+   - Contención de renderizado (\`content-visibility: auto\` y \`contain-intrinsic-size\`) en miniaturas y tarjetas.
+   - Decodificación asíncrona (\`decoding="async"\`) y lazy loading (\`loading="lazy"\`).
+   - Eliminación de filtros pesados \`backdrop-blur-md\` sustituidos por fondos planos oscuros semitransparentes (\`bg-black/95\`).
+   - Contención de desplazamiento (\`overscroll-x-contain\`).
+4. **Infraestructura y TDD (Layers 4 & Tests)**:
+   - Catálogo fuertemente tipado en \`apps/web/src/lib/infrastructure/archive-data.ts\`.
+   - 23/23 tests pasando en verde en \`archive-data.test.ts\` y 183 tests globales del monorepo aprobados.
+EOF
 elif [[ "${BRANCH}" == *"fix"* || "${BRANCH}" == *"bugfix"* || "${ISSUE_ID}" == "IGW-002" ]]; then
 cat <<EOF > "${OUTPUT_FILE}"
 ## Summary

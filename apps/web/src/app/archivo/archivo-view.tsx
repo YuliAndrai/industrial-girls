@@ -506,15 +506,16 @@ export function ArchivoView(): React.ReactElement {
                 {galleryLayoutMode === "spotlight" ? (
                   <div className="flex flex-col gap-4">
                     {/* Main Visual Monitor Frame */}
-                    <div className="relative aspect-[16/9] sm:aspect-[21/9] w-full overflow-hidden bg-black border border-raveBorder group">
+                    <div className="relative aspect-[16/9] sm:aspect-[21/9] w-full overflow-hidden bg-black border border-raveBorder group transform-gpu">
                       <Image
                         src={activePhoto.url}
                         alt={activePhoto.alt}
                         fill
                         sizes="(max-width: 1200px) 100vw, 1200px"
-                        className="object-contain p-2 transition-transform duration-300 group-hover:scale-[1.02]"
+                        className="object-contain p-2 transition-transform duration-300 group-hover:scale-[1.02] transform-gpu group-hover:will-change-transform"
                         unoptimized
                         priority
+                        decoding="async"
                       />
 
                       {/* Scanline CRT overlay */}
@@ -565,7 +566,7 @@ export function ArchivoView(): React.ReactElement {
                         <span className="text-raveRed">DESPLAZA HORIZONTALMENTE &gt;&gt;</span>
                       </div>
 
-                      <div className="flex items-center gap-2 overflow-x-auto pb-2 scrollbar-thin">
+                      <div className="flex items-center gap-2 overflow-x-auto pb-2 scrollbar-thin overscroll-x-contain transform-gpu">
                         {archivePhotos.map((photo, index) => {
                           const isCurrent = index === activePhotoIndex;
                           return (
@@ -573,10 +574,14 @@ export function ArchivoView(): React.ReactElement {
                               key={photo.id}
                               type="button"
                               onClick={() => setActivePhotoIndex(index)}
-                              className={`relative h-14 w-20 sm:h-16 sm:w-24 shrink-0 overflow-hidden border transition-all ${
+                              style={{
+                                contentVisibility: "auto",
+                                containIntrinsicSize: "96px 64px",
+                              }}
+                              className={`relative h-14 w-20 sm:h-16 sm:w-24 shrink-0 overflow-hidden border transition-transform duration-200 transform-gpu hover:will-change-transform ${
                                 isCurrent
                                   ? "border-2 border-raveRed shadow-[0_0_12px_rgba(255,0,0,0.7)] scale-105 z-10"
-                                  : "border-white/15 opacity-60 hover:opacity-100 hover:border-white/50"
+                                  : "border-white/15 opacity-60 hover:opacity-100 hover:border-white/50 hover:scale-105"
                               }`}
                               aria-label={`Ver ${photo.alt}`}
                             >
@@ -586,6 +591,8 @@ export function ArchivoView(): React.ReactElement {
                                 fill
                                 sizes="96px"
                                 className="object-cover"
+                                loading="lazy"
+                                decoding="async"
                                 unoptimized
                               />
                               <span className="absolute bottom-0 right-0 bg-black/85 px-1 font-mono text-[9px] text-white/90">
@@ -599,7 +606,7 @@ export function ArchivoView(): React.ReactElement {
                   </div>
                 ) : (
                   /* Dense Matrix Grid Mode (High-Density View) */
-                  <div className="grid grid-cols-4 sm:grid-cols-6 md:grid-cols-8 lg:grid-cols-10 gap-2 max-h-[460px] overflow-y-auto p-2 scrollbar-thin border border-white/10 bg-black/60">
+                  <div className="grid grid-cols-4 sm:grid-cols-6 md:grid-cols-8 lg:grid-cols-10 gap-2 max-h-[460px] overflow-y-auto p-2 scrollbar-thin border border-white/10 bg-black/60 transform-gpu overscroll-contain">
                     {archivePhotos.map((photo, index) => {
                       const isCurrent = index === activePhotoIndex;
                       return (
@@ -610,10 +617,14 @@ export function ArchivoView(): React.ReactElement {
                             setActivePhotoIndex(index);
                             setModalPhotoIndex(index);
                           }}
-                          className={`group relative aspect-square w-full overflow-hidden border transition-all ${
+                          style={{
+                            contentVisibility: "auto",
+                            containIntrinsicSize: "120px 120px",
+                          }}
+                          className={`group relative aspect-square w-full overflow-hidden border transition-transform duration-200 transform-gpu hover:will-change-transform ${
                             isCurrent
                               ? "border-2 border-raveRed shadow-[0_0_12px_rgba(255,0,0,0.7)] scale-105 z-10"
-                              : "border-white/10 hover:border-raveRed hover:opacity-100 opacity-80"
+                              : "border-white/10 hover:border-raveRed hover:opacity-100 opacity-80 hover:scale-105"
                           }`}
                           aria-label={`Ampliar ${photo.alt}`}
                         >
@@ -622,7 +633,9 @@ export function ArchivoView(): React.ReactElement {
                             alt={photo.alt}
                             fill
                             sizes="120px"
-                            className="object-cover group-hover:scale-110 transition-transform duration-300"
+                            className="object-cover group-hover:scale-110 transition-transform duration-200 transform-gpu"
+                            loading="lazy"
+                            decoding="async"
                             unoptimized
                           />
                           <span className="absolute bottom-0 right-0 bg-black/85 px-1 font-mono text-[9px] text-white/90">
@@ -647,7 +660,11 @@ export function ArchivoView(): React.ReactElement {
                   {videoItems.map((item) => (
                     <article
                       key={item.id}
-                      className="group flex flex-col border border-raveBorder bg-panel/30 transition-all duration-200 hover:border-raveRed hover:bg-black/90 overflow-hidden"
+                      style={{
+                        contentVisibility: "auto",
+                        containIntrinsicSize: "360px 240px",
+                      }}
+                      className="group flex flex-col border border-raveBorder bg-panel/30 transition-all duration-200 hover:border-raveRed hover:bg-black/90 overflow-hidden transform-gpu"
                     >
                       {/* Thumbnail / Media Preview */}
                       <div className="relative aspect-video w-full overflow-hidden bg-black border-b border-raveBorder">
@@ -657,6 +674,8 @@ export function ArchivoView(): React.ReactElement {
                           fill
                           sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                           className="object-cover transition-transform duration-500 group-hover:scale-105"
+                          loading="lazy"
+                          decoding="async"
                           unoptimized
                         />
                         <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent" />
@@ -731,7 +750,7 @@ export function ArchivoView(): React.ReactElement {
           role="dialog"
           aria-modal="true"
           aria-label={archivePhotos[modalPhotoIndex]?.alt || "Fotograma del archivo"}
-          className="fixed inset-0 z-50 flex items-center justify-center bg-black/95 backdrop-blur-md p-2 sm:p-6"
+          className="fixed inset-0 z-50 flex items-center justify-center bg-black/95 p-2 sm:p-6"
           onClick={() => setModalPhotoIndex(null)}
         >
           <div
@@ -766,9 +785,10 @@ export function ArchivoView(): React.ReactElement {
                 alt={archivePhotos[modalPhotoIndex]?.alt || ""}
                 fill
                 sizes="100vw"
-                className="object-contain"
+                className="object-contain transform-gpu"
                 unoptimized
                 priority
+                decoding="async"
               />
 
               {/* Prev / Next Modal Arrows */}
@@ -807,7 +827,7 @@ export function ArchivoView(): React.ReactElement {
           role="dialog"
           aria-modal="true"
           aria-label={selectedMediaModal.title}
-          className="fixed inset-0 z-50 flex items-center justify-center bg-black/90 backdrop-blur-md p-4"
+          className="fixed inset-0 z-50 flex items-center justify-center bg-black/95 p-4"
           onClick={() => setSelectedMediaModal(null)}
         >
           <div

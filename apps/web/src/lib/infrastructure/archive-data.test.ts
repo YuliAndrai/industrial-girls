@@ -334,6 +334,28 @@ describe("Archive Section - Artists Roster Architecture — TDD Test Suite (@spe
       expect(content.includes("REEL DE {archivePhotos.length} FOTOGRAMAS") || content.includes("REEL DE"), "Must render dynamic filmstrip reel").toBe(true);
       expect(content.includes("VISUAL REEL"), "Must render visual reel dynamic telemetry").toBe(true);
     });
+
+    it("ensures archivo-view.tsx implements GPU acceleration, content containment, and async image decoding", () => {
+      // Step 1: Read view component source file
+      const content = fs.readFileSync(archivoViewPath, "utf8");
+
+      // Step 2: Verify GPU acceleration class
+      expect(content.includes("transform-gpu"), "Must include transform-gpu hardware acceleration").toBe(true);
+
+      // Step 3: Verify content containment for smooth scrolling
+      expect(content.includes('contentVisibility: "auto"'), "Must include contentVisibility: auto").toBe(true);
+      expect(content.includes("containIntrinsicSize:"), "Must include containIntrinsicSize for rendering containment").toBe(true);
+
+      // Step 4: Verify async decoding and lazy loading
+      expect(content.includes('decoding="async"'), "Must configure decoding=async on images").toBe(true);
+      expect(content.includes('loading="lazy"'), "Must configure loading=lazy on thumbnail images").toBe(true);
+
+      // Step 5: Verify overscroll containment on horizontal filmstrip
+      expect(content.includes("overscroll-x-contain"), "Must configure overscroll-x-contain").toBe(true);
+
+      // Step 6: Verify heavy backdrop filters are eliminated for 60 FPS performance
+      expect(content.includes("backdrop-blur"), "Must eliminate backdrop-blur to prevent GPU composite lag").toBe(false);
+    });
   });
 
   describe("5. Layer 4 (Infrastructure): ARCHIVE_PHOTOS Unique Photo Catalog Invariants", () => {
