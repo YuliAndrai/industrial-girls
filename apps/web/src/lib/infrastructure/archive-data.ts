@@ -479,13 +479,19 @@ export interface ArchivePhoto {
   alt: string;
 }
 
-// Step 6: Define the immutable 41-photo archive catalog
 /**
- * Typed catalog containing the 41 photographic visual frames recorded across
+ * Total count of verified unique photographic visual frames in the archive catalog
+ * after automated binary hash deduplication (SHA-256).
+ */
+export const TOTAL_UNIQUE_PHOTOS = 40;
+
+// Step 6: Define the immutable unique photo archive catalog
+/**
+ * Typed catalog containing the 40 verified unique photographic visual frames recorded across
  * Industrial Girls raves, club nights, and warehouse showcases.
  */
 export const ARCHIVE_PHOTOS: readonly ArchivePhoto[] = Object.freeze(
-  Array.from({ length: 41 }, (_, i) => {
+  Array.from({ length: TOTAL_UNIQUE_PHOTOS }, (_, i) => {
     const index = String(i + 1).padStart(2, "0");
     return {
       id: `photo-${index}`,
@@ -495,11 +501,11 @@ export const ARCHIVE_PHOTOS: readonly ArchivePhoto[] = Object.freeze(
   })
 );
 
-// Step 7: Export getter function providing read access to the 41 archive photos
+// Step 7: Export getter function providing read access to the archive photos
 /**
- * Retrieves the complete list of 41 archive visual photos.
+ * Retrieves the complete list of unique archive visual photos.
  *
- * @returns {readonly ArchivePhoto[]} An array of 41 archive photo entities.
+ * @returns {readonly ArchivePhoto[]} An array of unique archive photo entities.
  */
 export function getArchivePhotos(): readonly ArchivePhoto[] {
   // Step 7.1: Return a shallow copy of the immutable catalog to protect source state

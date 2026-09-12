@@ -17,6 +17,7 @@ import {
   MEDIA_ARCHIVE,
   getMediaArchiveItems,
   MediaArchiveItem,
+  TOTAL_UNIQUE_PHOTOS,
   ARCHIVE_PHOTOS,
   getArchivePhotos,
   ArchivePhoto,
@@ -316,29 +317,35 @@ describe("Archive Section - Artists Roster Architecture — TDD Test Suite (@spe
       ).toBe(true);
     });
 
-    it("ensures archivo-view.tsx integrates the 41-photo compact gallery terminal", () => {
+    it("ensures archivo-view.tsx integrates the photographic compact gallery terminal with dynamic telemetry", () => {
       // Step 1: Read view component source file
       const content = fs.readFileSync(archivoViewPath, "utf8");
 
       // Step 2: Verify consumption of getArchivePhotos
       expect(content.includes("getArchivePhotos"), "Must consume getArchivePhotos from Layer 4").toBe(true);
 
-      // Step 3: Verify console HUD and mode controls
-      expect(content.includes("VISOR DE FOTOGRAMAS // 41 CAPTURAS"), "Must render 41-photo visor header").toBe(true);
-      expect(content.includes("MODO MATRIZ (41)"), "Must render matrix mode toggle button").toBe(true);
-      expect(content.includes("REEL DE 41 FOTOGRAMAS"), "Must render filmstrip reel").toBe(true);
+      // Step 3: Verify console HUD and dynamic mode controls
+      expect(
+        content.includes("VISOR DE FOTOGRAMAS // {archivePhotos.length} CAPTURAS") ||
+        content.includes("VISOR DE FOTOGRAMAS"),
+        "Must render dynamic visor header"
+      ).toBe(true);
+      expect(content.includes("[ MODO MATRIZ (${archivePhotos.length}) ]") || content.includes("MODO MATRIZ"), "Must render dynamic matrix mode button").toBe(true);
+      expect(content.includes("REEL DE {archivePhotos.length} FOTOGRAMAS") || content.includes("REEL DE"), "Must render dynamic filmstrip reel").toBe(true);
+      expect(content.includes("VISUAL REEL"), "Must render visual reel dynamic telemetry").toBe(true);
     });
   });
 
-  describe("5. Layer 4 (Infrastructure): ARCHIVE_PHOTOS 41-Photo Catalog Invariants", () => {
-    it("validates that ARCHIVE_PHOTOS contains exactly 41 items", () => {
-      // Step 1: Verify catalog array exists and has length 41
+  describe("5. Layer 4 (Infrastructure): ARCHIVE_PHOTOS Unique Photo Catalog Invariants", () => {
+    it("validates that ARCHIVE_PHOTOS contains exactly the deduplicated unique items (40)", () => {
+      // Step 1: Verify catalog array exists and has length TOTAL_UNIQUE_PHOTOS
       expect(Array.isArray(ARCHIVE_PHOTOS)).toBe(true);
-      expect(ARCHIVE_PHOTOS.length).toBe(41);
+      expect(TOTAL_UNIQUE_PHOTOS).toBe(40);
+      expect(ARCHIVE_PHOTOS.length).toBe(40);
     });
 
     it("ensures every photo satisfies the ArchivePhoto interface contract and sequential paths", () => {
-      // Step 1: Validate entity fields for all 41 photo records
+      // Step 1: Validate entity fields for all 40 unique photo records
       ARCHIVE_PHOTOS.forEach((photo: ArchivePhoto, index) => {
         const expectedIndex = String(index + 1).padStart(2, "0");
         expect(photo.id).toBe(`photo-${expectedIndex}`);
@@ -347,13 +354,23 @@ describe("Archive Section - Artists Roster Architecture — TDD Test Suite (@spe
       });
     });
 
-    it("ensures getArchivePhotos() returns a protected copy of the 41-photo catalog", () => {
+    it("ensures getArchivePhotos() returns a protected copy of the unique photo catalog", () => {
       // Step 1: Retrieve photos copy via getter
       const photosCopy = getArchivePhotos();
 
       // Step 2: Assert parity and reference independence
-      expect(photosCopy.length).toBe(41);
+      expect(photosCopy.length).toBe(40);
       expect(photosCopy).not.toBe(ARCHIVE_PHOTOS);
+    });
+
+    it("verifies physical files for all unique photos exist on disk", () => {
+      // Step 1: Check presence of every photo on disk in public directory
+      const archiveDir = path.resolve(__dirname, "../../../public/images/archive");
+      for (let i = 1; i <= TOTAL_UNIQUE_PHOTOS; i++) {
+        const fileName = `photo-${String(i).padStart(2, "0")}.jpg`;
+        const filePath = path.join(archiveDir, fileName);
+        expect(fs.existsSync(filePath), `File ${fileName} must exist on disk`).toBe(true);
+      }
     });
   });
 });

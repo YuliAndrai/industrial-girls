@@ -6,7 +6,7 @@
  * - Layer: Layer 1 (Presentation)
  * - Responsibility: Client Component rendering the interactive artists roster directory with tactical brutalist styling,
  *   monospace typography, balanced two-column responsive density, reactive search filtering, clean interactive profile links,
- *   and a futuristic compact 41-photo archive gallery terminal with Spotlight HUD, horizontal filmstrip, dense matrix view,
+ *   and a futuristic compact photographic archive gallery terminal with Spotlight HUD, horizontal filmstrip, dense matrix view,
  *   and full-screen interactive lightbox modal.
  * - Invariant: Exactly one semantic H1 element per route. Zero raw fetch or database access;
  *   consumes immutable datasets from Layer 4 Infrastructure (archive-data).
@@ -34,7 +34,7 @@ import {
 } from "@/lib/infrastructure/archive-data";
 
 /**
- * Interactive Client Component for the Archive Section, Artists Roster, and 41-Photo Visual Registry.
+ * Interactive Client Component for the Archive Section, Artists Roster, and Photographic Visual Registry.
  *
  * @returns {React.ReactElement} The rendered ArchivoView element.
  */
@@ -70,7 +70,7 @@ export function ArchivoView(): React.ReactElement {
     };
   }, [filteredArtists]);
 
-  // Step 5: Load 41 visual frames and video showcase entries from Layer 4
+  // Step 5: Load visual frames and video showcase entries from Layer 4
   const archivePhotos = useMemo(() => getArchivePhotos(), []);
   const mediaItems = useMemo(() => getMediaArchiveItems(), []);
 
@@ -457,7 +457,7 @@ export function ArchivoView(): React.ReactElement {
               </div>
             </div>
 
-            {/* Step 8.1: Photographic Visual Archive Console (41 Frames) */}
+            {/* Step 8.1: Photographic Visual Archive Console */}
             {(selectedMediaType === "all" || selectedMediaType === "photo") && (
               <div className="mb-12 border border-raveBorder bg-panel/20 p-4 sm:p-6 relative">
                 {/* Console Top Bar */}
@@ -465,10 +465,10 @@ export function ArchivoView(): React.ReactElement {
                   <div className="flex items-center gap-2">
                     <span className="inline-block h-2 w-2 rounded-full bg-raveRed animate-pulse" />
                     <span className="font-bold text-white uppercase tracking-wider">
-                      VISOR DE FOTOGRAMAS // 41 CAPTURAS
+                      VISOR DE FOTOGRAMAS // {archivePhotos.length} CAPTURAS
                     </span>
                     <span className="text-raveRed font-bold">
-                      [ {String(activePhotoIndex + 1).padStart(2, "0")} / 41 ]
+                      [ {String(activePhotoIndex + 1).padStart(2, "0")} / {archivePhotos.length} ] // VISUAL REEL
                     </span>
                   </div>
 
@@ -481,7 +481,7 @@ export function ArchivoView(): React.ReactElement {
                       }
                       className="px-2.5 py-1 border border-raveBorder bg-black text-neutral-300 hover:text-black hover:bg-raveRed hover:border-raveRed transition-all uppercase text-[11px]"
                     >
-                      {galleryLayoutMode === "spotlight" ? "[ MODO MATRIZ (41) ]" : "[ MODO SPOTLIGHT ]"}
+                      {galleryLayoutMode === "spotlight" ? `[ MODO MATRIZ (${archivePhotos.length}) ]` : "[ MODO SPOTLIGHT ]"}
                     </button>
                     <button
                       type="button"
@@ -558,10 +558,10 @@ export function ArchivoView(): React.ReactElement {
                       </button>
                     </div>
 
-                    {/* Filmstrip Reel (Scroller of 41 frames) */}
+                    {/* Filmstrip Reel (Scroller of unique frames) */}
                     <div className="border-t border-raveBorder/40 pt-3">
                       <div className="flex items-center justify-between font-mono text-[10px] text-neutral-400 mb-2">
-                        <span>REEL DE 41 FOTOGRAMAS // SELECCIÓN DIRECTA</span>
+                        <span>REEL DE {archivePhotos.length} FOTOGRAMAS // SELECCIÓN DIRECTA</span>
                         <span className="text-raveRed">DESPLAZA HORIZONTALMENTE &gt;&gt;</span>
                       </div>
 
@@ -725,7 +725,7 @@ export function ArchivoView(): React.ReactElement {
         </section>
       </main>
 
-      {/* Step 9: Interactive 41-Photo Lightbox Modal */}
+      {/* Step 9: Interactive Photo Lightbox Modal */}
       {modalPhotoIndex !== null && (
         <div
           role="dialog"
@@ -742,7 +742,7 @@ export function ArchivoView(): React.ReactElement {
             <div className="flex items-center justify-between border-b border-raveBorder pb-3 mb-4 font-mono text-xs">
               <div className="flex items-center gap-2 text-raveRed font-bold">
                 <span>
-                  {"[ FRAME " + String(modalPhotoIndex + 1).padStart(2, "0") + " / 41 ]"}
+                  {"[ FRAME " + String(modalPhotoIndex + 1).padStart(2, "0") + " / " + archivePhotos.length + " ]"}
                 </span>
                 <span className="text-white/40">&bull;</span>
                 <span className="text-white/70">
