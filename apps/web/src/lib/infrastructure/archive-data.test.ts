@@ -98,6 +98,13 @@ describe("Archive Section - Artists Roster Architecture — TDD Test Suite (@spe
         { id: "elen-payne", name: "ELEN PAYNE", countryCode: "CO" },
         { id: "techsia", name: "TECHSIA", countryCode: "IT" },
         { id: "mmell", name: "MMELL", countryCode: "IT" },
+        { id: "la-penderie-noire", name: "La Penderie Noire", countryCode: "BE" },
+        { id: "laren", name: "Laren", countryCode: "TR" },
+        { id: "debbie", name: "Debbie", countryCode: "IT" },
+        { id: "daniela-fuzz", name: "Daniela Fuzz", countryCode: "CL" },
+        { id: "camila-villegas", name: "Camila Villegas", countryCode: "AR" },
+        { id: "kimmy", name: "Kimmy", countryCode: "CL" },
+        { id: "zaphy", name: "Zaphy", countryCode: "CL" },
         { id: "roma", name: "ROMA", countryCode: "CO" },
         { id: "keith-barrera", name: "KEITH BARRERA", countryCode: "CO" },
         { id: "briela-veneno", name: "BRIELA VENENO", countryCode: "CO" },
@@ -111,6 +118,27 @@ describe("Archive Section - Artists Roster Architecture — TDD Test Suite (@spe
         expect(found).toBeDefined();
         expect(found?.name).toBe(expected.name);
         expect(found?.countryCode).toBe(expected.countryCode);
+      });
+    });
+
+    it("verifies the exact nationality and ISO codes for the updated regional and international artists", () => {
+      // Step 1: Define expected exact records
+      const expectedUpdates = [
+        { id: "la-penderie-noire", country: "Bélgica", countryCode: "BE" },
+        { id: "laren", country: "Turquía", countryCode: "TR" },
+        { id: "debbie", country: "Italia", countryCode: "IT" },
+        { id: "daniela-fuzz", country: "Chile", countryCode: "CL" },
+        { id: "camila-villegas", country: "Argentina", countryCode: "AR" },
+        { id: "kimmy", country: "Chile", countryCode: "CL" },
+        { id: "zaphy", country: "Chile", countryCode: "CL" },
+      ];
+
+      // Step 2: Assert each artist has exact country name and ISO 3166-1 alpha-2 code
+      expectedUpdates.forEach(({ id, country, countryCode }) => {
+        const artist = ARTISTS_ROSTER.find((a) => a.id === id);
+        expect(artist, `Artist ${id} must exist in ARTISTS_ROSTER`).toBeDefined();
+        expect(artist?.country).toBe(country);
+        expect(artist?.countryCode).toBe(countryCode);
       });
     });
 

@@ -158,8 +158,8 @@ export const ARTISTS_ROSTER: readonly ArtistProfile[] = [
   {
     id: "la-penderie-noire",
     name: "La Penderie Noire",
-    country: "Suiza",
-    countryCode: "CH",
+    country: "Bélgica",
+    countryCode: "BE",
     links: {
       soundcloud: "https://soundcloud.com/lapenderienoire",
       instagram: "https://instagram.com/lapenderienoire",
@@ -168,8 +168,8 @@ export const ARTISTS_ROSTER: readonly ArtistProfile[] = [
   {
     id: "laren",
     name: "Laren",
-    country: "Países Bajos",
-    countryCode: "NL",
+    country: "Turquía",
+    countryCode: "TR",
     links: {
       soundcloud: "https://soundcloud.com/laren-music",
       instagram: "https://instagram.com/laren_dj",
@@ -189,8 +189,8 @@ export const ARTISTS_ROSTER: readonly ArtistProfile[] = [
   {
     id: "debbie",
     name: "Debbie",
-    country: "Alemania",
-    countryCode: "DE",
+    country: "Italia",
+    countryCode: "IT",
     links: {
       soundcloud: "https://soundcloud.com/debbie-techno",
       instagram: "https://instagram.com/debbie_dj",
@@ -240,8 +240,8 @@ export const ARTISTS_ROSTER: readonly ArtistProfile[] = [
   {
     id: "daniela-fuzz",
     name: "Daniela Fuzz",
-    country: "Colombia",
-    countryCode: "CO",
+    country: "Chile",
+    countryCode: "CL",
     links: {
       soundcloud: "https://soundcloud.com/daniela_fuzz",
       instagram: "https://instagram.com/daniela_fuzz",
@@ -260,8 +260,8 @@ export const ARTISTS_ROSTER: readonly ArtistProfile[] = [
   {
     id: "camila-villegas",
     name: "Camila Villegas",
-    country: "Colombia",
-    countryCode: "CO",
+    country: "Argentina",
+    countryCode: "AR",
     links: {
       soundcloud: "https://soundcloud.com/camilavillegas",
       instagram: "https://instagram.com/camilavillegas_dj",
@@ -270,8 +270,8 @@ export const ARTISTS_ROSTER: readonly ArtistProfile[] = [
   {
     id: "kimmy",
     name: "Kimmy",
-    country: "Colombia",
-    countryCode: "CO",
+    country: "Chile",
+    countryCode: "CL",
     links: {
       soundcloud: "https://soundcloud.com/kimmy-techno",
       instagram: "https://instagram.com/kimmy_dj",
@@ -280,8 +280,8 @@ export const ARTISTS_ROSTER: readonly ArtistProfile[] = [
   {
     id: "zaphy",
     name: "Zaphy",
-    country: "Colombia",
-    countryCode: "CO",
+    country: "Chile",
+    countryCode: "CL",
     links: {
       soundcloud: "https://soundcloud.com/zaphy-techno",
       instagram: "https://instagram.com/zaphy_dj",
