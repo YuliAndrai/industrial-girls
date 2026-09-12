@@ -6,7 +6,7 @@
  */
 
 /**
- * Contract representing an interactive direct-access card in the Home Bento Command Center.
+ * Contract representing an interactive direct-access card in the Home Command Center.
  */
 export interface HomeHubCard {
   readonly id: string;
@@ -16,6 +16,7 @@ export interface HomeHubCard {
   readonly href: string;
   readonly badge?: string;
   readonly isFlagship?: boolean;
+  readonly isExternal?: boolean;
 }
 
 /**
@@ -27,60 +28,54 @@ export interface HomeSocialLink {
 }
 
 /**
- * Catalog of canonical ecosystem destinations rendered as console buttons in the Bento Grid.
+ * Catalog of canonical ecosystem destinations rendered as console buttons in the Command Center.
  */
 export const HOME_HUB_CARDS: readonly HomeHubCard[] = [
   {
-    id: "hub-release",
+    id: "hub-agency",
     code: "01",
-    title: "RELEASES & VA'S",
-    subtitle: "Catálogo oficial compilado VA 001 - 005 en Beatport y Spotify",
-    href: "/musica#releases",
-    badge: "CATÁLOGO ACTIVO",
-  },
-  {
-    id: "hub-flagship",
-    code: "02",
     title: "CAMPAÑA DE LANZAMIENTO & AGENCIA",
     subtitle: "Estrategia integral de estreno, pitch editorial, registro y desarrollo 360°",
     href: "/desarrollo-artistico#servicios",
-    badge: "SERVICIO INSIGNIA",
+    badge: "FLAGSHIP",
     isFlagship: true,
   },
   {
-    id: "hub-podcasts",
-    code: "03",
-    title: "PODCAST'S SERIES",
-    subtitle: "Sesiones exclusivas curadas de estudio y cabina en SoundCloud y YouTube",
-    href: "/musica#podcasts",
-  },
-  {
-    id: "hub-demo",
-    code: "04",
-    title: "DEMO DROP // ENVIAR TRACKS",
-    subtitle: "Recepción abierta de producciones sin límite de BPM ni género",
-    href: "/musica#demo-drop",
-  },
-  {
     id: "hub-events",
-    code: "05",
-    title: "SHOWCASES & FECHAS SELECCIONADAS",
-    subtitle: "Flyers oficiales de encuentros anteriores y radar de alertas por ciudad",
+    code: "02",
+    title: "EVENTOS",
+    subtitle: "Showcases, carteles anteriores y radar de preventas por ciudad",
     href: "/eventos",
   },
   {
+    id: "hub-music",
+    code: "03",
+    title: "MÚSICA",
+    subtitle: "Catálogo de lanzamientos VA 001 - 005, podcasts y demo drop",
+    href: "/musica",
+  },
+  {
     id: "hub-archive",
-    code: "06",
-    title: "DIRECTORIO ROSTER & VIDEOTECA",
-    subtitle: "30 artistas vinculadas a cabina y registros audiovisuales multicámara",
+    code: "04",
+    title: "ARCHIVO",
+    subtitle: "Directorio de más de 30 artistas, fototeca y registros en video",
     href: "/archivo",
   },
   {
     id: "hub-community",
-    code: "07",
-    title: "NOTICIAS, MEMORIA & MAGAZINE",
-    subtitle: "Investigación editorial de vanguardia, debate técnico y canal directo",
+    code: "05",
+    title: "COMUNIDAD",
+    subtitle: "Magazine editorial, investigación de vanguardia y debate",
     href: "/comunidad",
+  },
+  {
+    id: "hub-telegram",
+    code: "06",
+    title: "GRUPO TELEGRAM",
+    subtitle: "Canal oficial y acceso prioritario a la red directa",
+    href: "https://t.me/industrialgirls",
+    badge: "COMMUNITY",
+    isExternal: true,
   },
 ] as const;
 
