@@ -129,8 +129,8 @@ Este Pull Request implementa la Feature **${ISSUE_ID}**: **Directorio de Roster 
 ### 🚀 Principales Cambios y Componentes:
 1. **Directorio de Artistas (Layer 1)**:
    - Maquetación en dos columnas equilibradas (\`lg:grid-cols-2\`) para optimizar la densidad visual y mitigar el scroll vertical excesivo.
-   - Título oficial del bloque: \`ARTISTAS EN NUESTROS EVENTOS & LABEL\`.
-   - Roster curado de 30 artistas internacionales consolidadas y emergentes sin etiquetas de género musical.
+   - Título oficial del bloque: \`ARTISTAS EN NUESTROS EVENTOS, LABEL & PODCASTS\`.
+   - Roster curado de 44 artistas internacionales y nacionales consolidadas y emergentes sin etiquetas de género musical.
    - Botonera táctil compacta para perfiles externos (\`[ SPOTIFY ]\`, \`[ SOUNDCLOUD ]\`, \`[ IG ]\`, \`[ RA ]\`, \`[ BC ]\`).
 2. **Registro Audiovisual & Media Archive (Layer 1)**:
    - 37 fotogramas únicos indexados secuencialmente (\`photo-01.jpg\` a \`photo-37.jpg\`), eliminando copias duplicadas y redundantes de ráfaga.
@@ -146,7 +146,7 @@ Este Pull Request implementa la Feature **${ISSUE_ID}**: **Directorio de Roster 
    - Contención de desplazamiento (\`overscroll-x-contain\`).
 4. **Infraestructura y TDD (Layers 4 & Tests)**:
    - Catálogo fuertemente tipado en \`apps/web/src/lib/infrastructure/archive-data.ts\`.
-   - 27/27 tests pasando en verde en \`archive-data.test.ts\` y 187 tests unitarios globales del monorepo + 45 harness tests aprobados al 100%.
+   - 28/28 tests pasando en verde en \`archive-data.test.ts\` y 188 tests unitarios globales del monorepo + 45 harness tests aprobados al 100%.
 EOF
 elif [[ "${BRANCH}" == *"fix"* || "${BRANCH}" == *"bugfix"* || "${ISSUE_ID}" == "IGW-002" ]]; then
 cat <<EOF > "${OUTPUT_FILE}"

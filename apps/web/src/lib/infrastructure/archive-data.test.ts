@@ -27,15 +27,15 @@ import {
 } from "./archive-data";
 
 describe("Archive Section - Artists Roster Architecture — TDD Test Suite (@spec IGW-012)", () => {
-  describe("1. Layer 4 (Infrastructure): ARTISTS_ROSTER 30 Artists & Zero-Genre Invariants", () => {
-    it("validates that ARTISTS_ROSTER contains exactly 30 artists", () => {
+  describe("1. Layer 4 (Infrastructure): ARTISTS_ROSTER 44 Artists & Zero-Genre Invariants", () => {
+    it("validates that ARTISTS_ROSTER contains exactly 44 artists", () => {
       // Step 1: Verify catalog array exists and has exact required length
       expect(Array.isArray(ARTISTS_ROSTER)).toBe(true);
-      expect(ARTISTS_ROSTER.length).toBe(30);
+      expect(ARTISTS_ROSTER.length).toBe(44);
     });
 
     it("validates that NO artist element contains the subgenre property", () => {
-      // Step 1: Assert absence of subgenre property across all 30 entities
+      // Step 1: Assert absence of subgenre property across all 44 entities
       ARTISTS_ROSTER.forEach((artist) => {
         expect(artist).not.toHaveProperty("subgenre");
         expect("subgenre" in artist).toBe(false);
@@ -77,7 +77,7 @@ describe("Archive Section - Artists Roster Architecture — TDD Test Suite (@spe
     });
 
     it("verifies prominent international scene artists are present in the catalog", () => {
-      // Step 1: Define key artists across different regions
+      // Step 1: Define key artists across different regions including the expanded roster
       const sampleArtists = [
         { id: "clara-cuve", name: "Clara Cuvé", countryCode: "DE" },
         { id: "otta", name: "Øtta", countryCode: "PT" },
@@ -89,6 +89,20 @@ describe("Archive Section - Artists Roster Architecture — TDD Test Suite (@spe
         { id: "somniac-one", name: "Somniac One", countryCode: "NL" },
         { id: "andhray", name: "Andhray", countryCode: "CO" },
         { id: "juliana-yamasaki", name: "Juliana Yamasaki", countryCode: "BR" },
+        { id: "stinny-stone", name: "Stinny Stone", countryCode: "DE" },
+        { id: "annie", name: "ANNIE", countryCode: "CO" },
+        { id: "dj-hotmail", name: "DJ HOTMAIL", countryCode: "CO" },
+        { id: "killer-queen", name: "KILLER QUEEN", countryCode: "CO" },
+        { id: "sklena", name: "SKLENA", countryCode: "FR" },
+        { id: "node", name: "NØDE", countryCode: "CO" },
+        { id: "elen-payne", name: "ELEN PAYNE", countryCode: "DE" },
+        { id: "techsia", name: "TECHSIA", countryCode: "CO" },
+        { id: "mmell", name: "MMELL", countryCode: "CO" },
+        { id: "roma", name: "ROMA", countryCode: "CO" },
+        { id: "keith-barrera", name: "KEITH BARRERA", countryCode: "CO" },
+        { id: "briela-veneno", name: "BRIELA VENENO", countryCode: "CO" },
+        { id: "sai", name: "SAI", countryCode: "CO" },
+        { id: "sophia", name: "SOPHIA", countryCode: "CO" },
       ];
 
       // Step 2: Assert each sample artist exists in ARTISTS_ROSTER
@@ -105,7 +119,7 @@ describe("Archive Section - Artists Roster Architecture — TDD Test Suite (@spe
       const rosterCopy = getArtistsRoster();
 
       // Step 2: Assert parity and reference independence
-      expect(rosterCopy.length).toBe(30);
+      expect(rosterCopy.length).toBe(44);
       expect(rosterCopy).not.toBe(ARTISTS_ROSTER);
     });
   });
@@ -176,8 +190,8 @@ describe("Archive Section - Artists Roster Architecture — TDD Test Suite (@spe
       ).toBe(true);
 
       expect(
-        content.includes("ARTISTAS EN NUESTROS EVENTOS & LABEL"),
-        "archivo-view.tsx must render ARTISTAS EN NUESTROS EVENTOS & LABEL block title"
+        content.includes("ARTISTAS EN NUESTROS EVENTOS, LABEL & PODCASTS"),
+        "archivo-view.tsx must render ARTISTAS EN NUESTROS EVENTOS, LABEL & PODCASTS block title"
       ).toBe(true);
     });
 
@@ -330,7 +344,7 @@ describe("Archive Section - Artists Roster Architecture — TDD Test Suite (@spe
       const heroIndex = content.indexOf("ROSTER DE ARTISTAS & MEMORIA VISUAL");
       const mediaArchiveIndex = content.indexOf("REGISTRO AUDIOVISUAL & SHOWCASES");
       const videoSectionIndex = content.indexOf("// VIDEOS & REGISTRO MULTICÁMARA EN VIVO");
-      const rosterDirectoryIndex = content.indexOf("ARTISTAS EN NUESTROS EVENTOS & LABEL");
+      const rosterDirectoryIndex = content.indexOf("ARTISTAS EN NUESTROS EVENTOS, LABEL & PODCASTS");
 
       // Step 3: Assert all landmarks are present
       expect(heroIndex).toBeGreaterThan(-1);

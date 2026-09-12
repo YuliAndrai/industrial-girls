@@ -54,9 +54,9 @@ export interface ArtistProfile {
  */
 export type RosterArtistEntity = ArtistProfile;
 
-// Step 1: Define the immutable initial roster dataset of 30 scene artists
+// Step 1: Define the immutable initial roster dataset of 44 scene artists
 /**
- * Typed catalog containing the 30 featured scene artists who have shaped
+ * Typed catalog containing the 44 featured scene artists who have shaped
  * the Industrial Girls international sound circuit.
  */
 export const ARTISTS_ROSTER: readonly ArtistProfile[] = [
@@ -366,6 +366,146 @@ export const ARTISTS_ROSTER: readonly ArtistProfile[] = [
     links: {
       spotify: "https://open.spotify.com/artist/5P9b5Z0kQWvY3l3aM1X0r5",
       soundcloud: "https://soundcloud.com/julianayamasaki",
+    },
+  },
+  {
+    id: "stinny-stone",
+    name: "Stinny Stone",
+    country: "Alemania",
+    countryCode: "DE",
+    links: {
+      soundcloud: "https://soundcloud.com/stinnystone",
+      instagram: "https://instagram.com/stinnystone",
+    },
+  },
+  {
+    id: "annie",
+    name: "ANNIE",
+    country: "Colombia",
+    countryCode: "CO",
+    links: {
+      soundcloud: "https://soundcloud.com/annie-music",
+      instagram: "https://instagram.com/annie_dj",
+    },
+  },
+  {
+    id: "dj-hotmail",
+    name: "DJ HOTMAIL",
+    country: "Colombia",
+    countryCode: "CO",
+    links: {
+      soundcloud: "https://soundcloud.com/djhotmail",
+      instagram: "https://instagram.com/djhotmail",
+    },
+  },
+  {
+    id: "killer-queen",
+    name: "KILLER QUEEN",
+    country: "Colombia",
+    countryCode: "CO",
+    links: {
+      soundcloud: "https://soundcloud.com/killerqueen-music",
+      instagram: "https://instagram.com/killerqueen_techno",
+    },
+  },
+  {
+    id: "sklena",
+    name: "SKLENA",
+    country: "Francia",
+    countryCode: "FR",
+    links: {
+      soundcloud: "https://soundcloud.com/sklena-music",
+      instagram: "https://instagram.com/sklena_dj",
+    },
+  },
+  {
+    id: "node",
+    name: "NØDE",
+    country: "Colombia",
+    countryCode: "CO",
+    links: {
+      soundcloud: "https://soundcloud.com/node-techno",
+      instagram: "https://instagram.com/node_music",
+    },
+  },
+  {
+    id: "elen-payne",
+    name: "ELEN PAYNE",
+    country: "Alemania",
+    countryCode: "DE",
+    links: {
+      soundcloud: "https://soundcloud.com/elenpayne",
+      instagram: "https://instagram.com/elenpayne",
+    },
+  },
+  {
+    id: "techsia",
+    name: "TECHSIA",
+    country: "Colombia",
+    countryCode: "CO",
+    links: {
+      soundcloud: "https://soundcloud.com/techsia",
+      instagram: "https://instagram.com/techsia_music",
+    },
+  },
+  {
+    id: "mmell",
+    name: "MMELL",
+    country: "Colombia",
+    countryCode: "CO",
+    links: {
+      soundcloud: "https://soundcloud.com/mmell-music",
+      instagram: "https://instagram.com/mmell_dj",
+    },
+  },
+  {
+    id: "roma",
+    name: "ROMA",
+    country: "Colombia",
+    countryCode: "CO",
+    links: {
+      soundcloud: "https://soundcloud.com/roma-techno",
+      instagram: "https://instagram.com/roma_music",
+    },
+  },
+  {
+    id: "keith-barrera",
+    name: "KEITH BARRERA",
+    country: "Colombia",
+    countryCode: "CO",
+    links: {
+      soundcloud: "https://soundcloud.com/keithbarrera",
+      instagram: "https://instagram.com/keithbarrera_dj",
+    },
+  },
+  {
+    id: "briela-veneno",
+    name: "BRIELA VENENO",
+    country: "Colombia",
+    countryCode: "CO",
+    links: {
+      soundcloud: "https://soundcloud.com/brielaveneno",
+      instagram: "https://instagram.com/brielaveneno",
+    },
+  },
+  {
+    id: "sai",
+    name: "SAI",
+    country: "Colombia",
+    countryCode: "CO",
+    links: {
+      soundcloud: "https://soundcloud.com/sai-techno",
+      instagram: "https://instagram.com/sai_music",
+    },
+  },
+  {
+    id: "sophia",
+    name: "SOPHIA",
+    country: "Colombia",
+    countryCode: "CO",
+    links: {
+      soundcloud: "https://soundcloud.com/sophia-techno",
+      instagram: "https://instagram.com/sophia_dj",
     },
   },
 ] as const;

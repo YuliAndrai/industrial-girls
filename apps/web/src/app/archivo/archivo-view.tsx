@@ -10,7 +10,7 @@
  *   and full-screen interactive lightbox modal.
  * - Invariant: Exactly one semantic H1 element per route. Zero raw fetch or database access;
  *   consumes immutable datasets from Layer 4 Infrastructure (archive-data).
- * - Invariant: Two-column layout on large viewports (grid-cols-1 lg:grid-cols-2) with 15 artists per column.
+ * - Invariant: Two-column layout on large viewports (grid-cols-1 lg:grid-cols-2) with 22 artists per column (44 total).
  * - Invariant: Zero musical genre or subgenre badges or columns displayed.
  */
 
@@ -61,7 +61,7 @@ export function ArchivoView(): React.ReactElement {
     );
   }, [artists, searchQuery]);
 
-  // Step 4.1: Partition roster into two balanced columns (15 artists each by default)
+  // Step 4.1: Partition roster into two balanced columns (22 artists each by default for 44 total)
   const { column1, column2 } = useMemo(() => {
     const midpoint = Math.ceil(filteredArtists.length / 2);
     return {
@@ -499,7 +499,7 @@ export function ArchivoView(): React.ReactElement {
                   {"// ARCHIVO // EDICIONES PASADAS"}
                 </span>
                 <h2 className="text-2xl sm:text-4xl font-black uppercase tracking-tight text-white mt-1">
-                  ARTISTAS EN NUESTROS EVENTOS & LABEL
+                  ARTISTAS EN NUESTROS EVENTOS, LABEL & PODCASTS
                 </h2>
               </div>
 
