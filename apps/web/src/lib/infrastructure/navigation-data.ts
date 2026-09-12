@@ -66,7 +66,7 @@ export const MAIN_NAV_ITEMS: readonly NavItem[] = [
     note: "CALENDARIO DE GIRAS, ALERTA GEOGRÁFICA & SHOWCASES",
     subSections: [
       { label: "CALENDARIO & SHOWCASES", href: "/eventos#calendario" },
-      { label: "RADAR GEOGRÁFICO // PREVENTAS", href: "/eventos#radar" },
+      { label: "PREVENTAS & ALERTAS POR CIUDAD", href: "/eventos#radar" },
     ],
   },
   // Step 4: Master Route 04 - Archivo (Roster, Galería, Videos)

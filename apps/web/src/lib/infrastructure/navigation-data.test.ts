@@ -65,7 +65,7 @@ describe("Layer 4: Master Navigation Data Catalog Contract", () => {
     expect(eventos?.label).toBe("EVENTOS");
     expect(eventos?.subSections).toEqual([
       { label: "CALENDARIO & SHOWCASES", href: "/eventos#calendario" },
-      { label: "RADAR GEOGRÁFICO // PREVENTAS", href: "/eventos#radar" },
+      { label: "PREVENTAS & ALERTAS POR CIUDAD", href: "/eventos#radar" },
     ]);
   });
 
