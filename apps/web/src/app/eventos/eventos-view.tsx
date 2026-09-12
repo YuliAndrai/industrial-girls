@@ -7,14 +7,12 @@
 "use client";
 
 import React from "react";
-import Link from "next/link";
 import Image from "next/image";
 import { Header } from "@/components/layout/header";
 import { NavigationDrawer } from "@/components/layout/navigation-drawer";
 import { Footer } from "@/components/layout/footer";
 import { FloatingSoundBar } from "@/components/landing/floating-sound-bar";
 import { GeographicForm } from "@/components/common/geographic-form";
-import { TactileButton } from "@/components/ui/tactile-button";
 import { useDrawer } from "@/lib/hooks/use-drawer";
 import { useSoundFx } from "@/lib/hooks/use-sound-fx";
 import { getEventCalendarStatus } from "@/lib/infrastructure/events-catalog";
@@ -42,8 +40,8 @@ export function EventosView(): React.ReactElement {
       <NavigationDrawer isOpen={isOpen} onClose={closeDrawer} />
 
       <main className="flex-1 w-full">
-        {/* Calendar Season Status Hero */}
-        <section id="calendario" className="relative flex min-h-[50vh] w-full flex-col items-center justify-center overflow-hidden border-b-2 border-raveRed bg-black px-4 py-16 text-center rave-scanlines scroll-mt-24">
+        {/* Block 1: Hero Minimalista (Cabecera) */}
+        <section className="relative flex min-h-[45vh] w-full flex-col items-center justify-center overflow-hidden border-b-2 border-raveRed bg-black px-4 py-16 text-center rave-scanlines">
           <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_70%_50%_at_50%_40%,rgba(255,0,0,0.22),transparent_75%)]" />
           <div className="relative z-10 mx-auto max-w-4xl">
             {/* Step 4: Render top eyebrow badge with responsive wrapping and centering */}
@@ -59,39 +57,32 @@ export function EventosView(): React.ReactElement {
           </div>
         </section>
 
-        {/* Geographic Capture Section for Presales */}
+        {/* Block 2: Radar Geográfico (Formulario de Captación - id="radar") */}
         <section id="radar" className="w-full border-b border-raveBorder bg-bg py-16 px-4 sm:px-6 scroll-mt-24">
           <div className="mx-auto max-w-3xl">
             <GeographicForm
               source="events"
-              badge="ÚNETE A NUESTRO TELEGRAM // RECIBE NOTICIAS"
+              badge="// RADAR GEOGRÁFICO // PREVENTAS & ALERTAS"
               title="PREVENTAS & ALERTAS POR CIUDAD"
-              subtitle="Notificarme de nuevas fechas y preventas exclusivas en mi ciudad."
-              buttonText="[ RECIBIR NOTICIAS DE EVENTOS EN MI CIUDAD ]"
+              subtitle="Recibe anuncios de locaciones, alineaciones y preventas prioritarias en tu región."
+              buttonText="[ RECIBIR ALERTAS EN MI CIUDAD ]"
             />
           </div>
         </section>
 
-        {/* Recent Showcases & Visual Flyers */}
-        <section className="w-full border-b border-raveBorder bg-panel/40 py-16 px-4 sm:px-6">
+        {/* Block 3: Últimos Showcases (id="calendario") */}
+        <section id="calendario" className="w-full border-b border-raveBorder bg-panel/40 py-16 px-4 sm:px-6 scroll-mt-24">
           <div className="mx-auto max-w-7xl">
-            <div className="flex flex-col sm:flex-row sm:items-end justify-between border-b-2 border-raveRed pb-4 mb-10 gap-4">
-              <div>
-                <span className="font-mono text-xs uppercase tracking-widest text-raveRed">
-                  {"// MEMORIA HISTÓRICA // ARCHIVO VISUAL"}
-                </span>
-                <h2 className="text-2xl sm:text-4xl font-black uppercase tracking-tight text-white mt-1">
-                  ÚLTIMOS SHOWCASES
-                </h2>
-              </div>
-              <Link href="/archivo" className="focus:outline-none">
-                <TactileButton variant="outline" size="sm">
-                  <span>[ EXPLORAR REGISTRO COMPLETO EN ARCHIVO &rarr; ]</span>
-                </TactileButton>
-              </Link>
+            <div className="border-b-2 border-raveRed pb-4 mb-10">
+              <span className="font-mono text-xs uppercase tracking-widest text-raveRed">
+                {"// MEMORIA HISTÓRICA // ARCHIVO VISUAL"}
+              </span>
+              <h2 className="text-2xl sm:text-4xl font-black uppercase tracking-tight text-white mt-1">
+                ÚLTIMOS SHOWCASES
+              </h2>
             </div>
 
-            {/* Visual Flyers Grid (Cartel Proportion aspect-[3/4]) */}
+            {/* Visual Flyers Grid (Cartel Proportion aspect-[3/4]) - CERO TEXTO SUPERPUESTO */}
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6">
               {recentShowcases.map((showcase) => (
                 <article
