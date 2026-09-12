@@ -8,6 +8,7 @@
 
 import React from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { Header } from "@/components/layout/header";
 import { NavigationDrawer } from "@/components/layout/navigation-drawer";
 import { Footer } from "@/components/layout/footer";
@@ -16,10 +17,8 @@ import { GeographicForm } from "@/components/common/geographic-form";
 import { TactileButton } from "@/components/ui/tactile-button";
 import { useDrawer } from "@/lib/hooks/use-drawer";
 import { useSoundFx } from "@/lib/hooks/use-sound-fx";
-import {
-  getEventCalendarStatus,
-  getPastShowcases,
-} from "@/lib/infrastructure/events-catalog";
+import { getEventCalendarStatus } from "@/lib/infrastructure/events-catalog";
+import { getRecentShowcases } from "@/lib/infrastructure/events-data";
 
 /**
  * Events and touring calendar page view.
@@ -33,9 +32,9 @@ export function EventosView(): React.ReactElement {
   // Step 2: Manage global audio and tactile sound interactions
   const { isSoundEnabled, toggleSound } = useSoundFx();
 
-  // Step 3: Retrieve event calendar status and showcase social proof from infrastructure
+  // Step 3: Retrieve event calendar status and recent showcases from infrastructure
   const calendarStatus = getEventCalendarStatus();
-  const pastShowcases = getPastShowcases();
+  const recentShowcases = getRecentShowcases();
 
   return (
     <div className="flex min-h-screen flex-col bg-bg text-neutral-100 selection:bg-raveRed selection:text-black">
@@ -73,16 +72,16 @@ export function EventosView(): React.ReactElement {
           </div>
         </section>
 
-        {/* Social Proof: Past Showcases History */}
+        {/* Recent Showcases & Visual Flyers */}
         <section className="w-full border-b border-raveBorder bg-panel/40 py-16 px-4 sm:px-6">
           <div className="mx-auto max-w-7xl">
             <div className="flex flex-col sm:flex-row sm:items-end justify-between border-b-2 border-raveRed pb-4 mb-10 gap-4">
               <div>
                 <span className="font-mono text-xs uppercase tracking-widest text-raveRed">
-                  {"// MEMORIA HISTÓRICA // SOCIAL PROOF"}
+                  {"// MEMORIA HISTÓRICA // ARCHIVO VISUAL"}
                 </span>
                 <h2 className="text-2xl sm:text-4xl font-black uppercase tracking-tight text-white mt-1">
-                  HISTORIAL DE SHOWCASES
+                  ÚLTIMOS SHOWCASES
                 </h2>
               </div>
               <Link href="/archivo" className="focus:outline-none">
@@ -92,51 +91,22 @@ export function EventosView(): React.ReactElement {
               </Link>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-              {pastShowcases.map((showcase) => (
-                <div
+            {/* Visual Flyers Grid (Cartel Proportion aspect-[3/4]) */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6">
+              {recentShowcases.map((showcase) => (
+                <article
                   key={showcase.id}
-                  className="border border-raveBorder bg-black p-6 flex flex-col justify-between hover:border-raveRed transition-all"
+                  className="group relative aspect-[3/4] w-full overflow-hidden rounded-sm border border-white/10 bg-black transition-all duration-300 hover:border-raveRed hover:shadow-rave"
                 >
-                  <div>
-                    <span className="font-mono text-xs text-raveRed font-bold">
-                      {showcase.date} &bull; {showcase.location}
-                    </span>
-                    <h3 className="text-xl font-black uppercase text-white mt-1">
-                      {showcase.venue}
-                    </h3>
-                    <p className="mt-2 font-mono text-xs text-neutral-300 leading-relaxed">
-                      {showcase.highlight}
-                    </p>
-
-                    <div className="mt-4 pt-3 border-t border-raveBorder/40">
-                      <span className="font-mono text-[10px] uppercase text-raveTextMuted block mb-1">
-                        LINEUP EJECUTADO:
-                      </span>
-                      <div className="flex flex-wrap gap-1">
-                        {showcase.lineup.map((artist) => (
-                          <span
-                            key={artist}
-                            className="border border-white/10 bg-panel px-2 py-0.5 font-mono text-[10px] text-white"
-                          >
-                            {artist}
-                          </span>
-                        ))}
-                      </div>
-                    </div>
-                  </div>
-
-                  <div className="mt-6 pt-3 border-t border-raveBorder/60 font-mono text-xs">
-                    <a
-                      href={"https://www.youtube.com/watch?v=" + showcase.youtubeVideoId}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="text-white hover:text-raveRed transition-colors"
-                    >
-                      &gt; VER REGISTRO EN YOUTUBE
-                    </a>
-                  </div>
-                </div>
+                  <Image
+                    src={showcase.flyerImage}
+                    alt={showcase.alt}
+                    fill
+                    sizes="(max-width: 640px) 100vw, (max-width: 768px) 50vw, (max-width: 1024px) 33vw, 20vw"
+                    className="object-cover transition-transform duration-500 group-hover:scale-105"
+                  />
+                  <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                </article>
               ))}
             </div>
           </div>
