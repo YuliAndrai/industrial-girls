@@ -78,36 +78,9 @@ export const CALENDAR_STATUS: EventCalendarStatus = {
 
 /**
  * Historical record of past Industrial Girls showcases.
+ * Invariant: Zero mock or unconfirmed dates. Verified historical flyers are maintained in events-data.ts.
  */
-export const PAST_SHOWCASES: PastShowcase[] = [
-  {
-    id: "showcase-001",
-    venue: "Tresor Globus Vault",
-    location: "Berlín, Alemania",
-    date: "2025-05-18",
-    lineup: ["DISTORTA", "CLARA CUVÉ", "HEX99", "WALLIS"],
-    youtubeVideoId: "dQw4w9WgXcQ",
-    highlight: "Capacidad completa en la bóveda subterránea. 7 horas de hard techno continuo a 155 BPM.",
-  },
-  {
-    id: "showcase-002",
-    venue: "Warehouse Almacén 44",
-    location: "Bogotá, Colombia",
-    date: "2025-08-25",
-    lineup: ["VANE", "DISTORTA", "ØTTA", "SOMNIAC ONE"],
-    youtubeVideoId: "dQw4w9WgXcQ",
-    highlight: "Showcase industrial en nave de manufactura abandonada con sistema de sonido Funktion-One calibrado a medida.",
-  },
-  {
-    id: "showcase-003",
-    venue: "Fold Basement",
-    location: "Londres, Reino Unido",
-    date: "2025-11-12",
-    lineup: ["CASSIE RAPTOR", "HEX99", "PARFAIT", "LADY MARU"],
-    youtubeVideoId: "dQw4w9WgXcQ",
-    highlight: "Sesión extendida de 24 horas con escenografía de hierro forjado y visuales estroboscópicos.",
-  },
-];
+export const PAST_SHOWCASES: readonly PastShowcase[] = [];
 
 /**
  * Retrieves the event calendar season status.
@@ -132,9 +105,9 @@ export function getStandardCountries(): string[] {
 /**
  * Retrieves the list of historical showcases.
  *
- * @returns {PastShowcase[]} Showcase records array.
+ * @returns {readonly PastShowcase[]} Showcase records array.
  */
-export function getPastShowcases(): PastShowcase[] {
+export function getPastShowcases(): readonly PastShowcase[] {
   // Step 1: Return past showcases list
   return PAST_SHOWCASES;
 }

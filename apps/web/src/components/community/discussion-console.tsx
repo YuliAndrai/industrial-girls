@@ -76,10 +76,7 @@ export function DiscussionConsole({
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [submittedMessage, setSubmittedMessage] = useState<string | null>(null);
 
-  // Step 2: Render strictly approved public comments in the community feed
-  const publicComments = comments.filter((comment) => comment.isPublic === true);
-
-  // Step 3: Handle form submission (new user contributions enter as isPublic: false for editorial moderation)
+  // Step 2: Handle form submission (new user contributions enter as isPublic: false for editorial moderation)
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     const newErrors: Record<string, string> = {};
@@ -226,41 +223,7 @@ export function DiscussionConsole({
         </div>
       </form>
 
-      {/* Step 7: Threaded discussion feed with public moderation filtering */}
-      <div className="space-y-4">
-        <div className="border-b border-raveBorder pb-2">
-          <span className="text-xs uppercase tracking-widest text-neutral-400">
-            {`// HILO ACTIVO // ${publicComments.length} APORTES REGISTRADOS`}
-          </span>
-        </div>
-
-        {publicComments.length === 0 ? (
-          <div className="border border-dashed border-raveBorder/60 p-6 text-center text-xs text-neutral-500">
-            [ Sé la primera en abrir el debate técnico para este artículo ]
-          </div>
-        ) : (
-          publicComments.map((comment) => (
-            <div key={comment.id} className="border border-raveBorder bg-panel/60 p-4 transition-colors hover:border-raveRed/40">
-              <div className="flex flex-wrap items-center justify-between gap-2 border-b border-raveBorder/40 pb-2 mb-2 text-xs">
-                <div className="flex items-center gap-2">
-                  <span className="text-raveRed font-bold">&gt; {comment.author}</span>
-                  <span className="border border-white/20 bg-black px-1.5 py-0.5 text-[9px] uppercase text-neutral-400">
-                    PARTICIPANTE
-                  </span>
-                </div>
-                <span className="text-[10px] text-neutral-500">
-                  {new Date(comment.createdAt).toLocaleDateString()}
-                </span>
-              </div>
-              <p className="text-xs text-neutral-200 leading-relaxed">
-                {comment.content}
-              </p>
-            </div>
-          ))
-        )}
-      </div>
-
-      {/* Step 8: Direct Telegram & WhatsApp Community Channels Banner */}
+      {/* Step 7: Direct Telegram & WhatsApp Community Channels Banner */}
       <TelegramCommunityBanner
         telegramGroupUrl={telegramGroupUrl}
         whatsappGroupUrl={whatsappGroupUrl}
