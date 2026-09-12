@@ -17,6 +17,8 @@ import {
   getReleaseByCode,
   ReleaseItem,
   TrackItem,
+  getDemoDropSpecs,
+  DEMO_DROP_SPECS,
 } from "./music-data";
 
 describe("Music Releases Catalog & Spotify Integration — TDD Test Suite", () => {
@@ -327,6 +329,24 @@ describe("Music Releases Catalog & Spotify Integration — TDD Test Suite", () =
       expect(content).toContain("[ 01. RELEASES (VA 001 - 005) ]");
       expect(content).toContain("[ 02. PODCASTS (SOUNDCLOUD) ]");
       expect(content).toContain("[ 03. DEMO DROP // ENVIAR ]");
+    });
+  });
+
+  describe("4. Layer 4 & Layer 1: Demo Drop Specifications & Pauta Sonora 02 Contract", () => {
+    it("ensures Demo Drop rule 02 establishes aesthetic freedom and tempo without BPM restrictions", () => {
+      // Step 1: Retrieve specs via accessor
+      const specs = getDemoDropSpecs();
+
+      // Step 2: Validate rule 02 in dataset
+      const expectedRule02 =
+        "Libertad Estética & Tempo: Sin restricciones de BPM ni géneros impuestos. Buscamos identidad autoral, crudeza, vanguardia y diseño sonoro contundente.";
+      expect(specs.rules[1]).toBe(expectedRule02);
+      expect(DEMO_DROP_SPECS.rules[1]).toBe(expectedRule02);
+
+      // Step 3: Ensure legacy BPM restriction text is completely eliminated
+      expect(specs.rules[1]).not.toContain("BPM sugerido");
+      expect(specs.rules[1]).not.toContain("145 a 165 BPM");
+      expect(specs.rules[1]).not.toContain("Schranz");
     });
   });
 });
