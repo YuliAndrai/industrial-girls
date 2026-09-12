@@ -69,39 +69,39 @@ export function MusicaView(): React.ReactElement {
             </p>
 
             {/* Quick Filter Selector Tabs */}
-            <div className="mt-8 flex flex-wrap items-center justify-center gap-2 sm:gap-3">
+            <div className="mt-8 flex flex-wrap items-center justify-center gap-3 sm:gap-4">
               <button
                 type="button"
                 onClick={() => setActiveTab("releases")}
-                className={`border px-4 py-2 font-mono text-xs uppercase font-bold tracking-wider transition-all ${
+                className={`px-6 py-3 sm:px-7 sm:py-3.5 font-mono text-sm sm:text-base uppercase font-bold tracking-wider transition-all duration-200 ${
                   activeTab === "releases"
-                    ? "border-raveRed bg-raveRed text-black"
-                    : "border-raveBorder bg-panel/60 text-white hover:border-white/40"
+                    ? "border border-red-600 bg-red-600 text-white shadow-[0_0_20px_rgba(220,38,38,0.35)]"
+                    : "border border-white/20 bg-black/60 text-white/80 hover:border-white hover:text-white hover:bg-white/5"
                 }`}
               >
-                [ 01. RELEASES (VA 001 - 005) ]
+                [ RELEASES (VA 001 - 005) ]
               </button>
               <button
                 type="button"
                 onClick={() => setActiveTab("podcasts")}
-                className={`border px-4 py-2 font-mono text-xs uppercase font-bold tracking-wider transition-all ${
+                className={`px-6 py-3 sm:px-7 sm:py-3.5 font-mono text-sm sm:text-base uppercase font-bold tracking-wider transition-all duration-200 ${
                   activeTab === "podcasts"
-                    ? "border-raveRed bg-raveRed text-black"
-                    : "border-raveBorder bg-panel/60 text-white hover:border-white/40"
+                    ? "border border-red-600 bg-red-600 text-white shadow-[0_0_20px_rgba(220,38,38,0.35)]"
+                    : "border border-white/20 bg-black/60 text-white/80 hover:border-white hover:text-white hover:bg-white/5"
                 }`}
               >
-                [ 02. PODCASTS (SOUNDCLOUD) ]
+                {"[ PODCAST'S ]"}
               </button>
               <button
                 type="button"
                 onClick={() => setActiveTab("demodrop")}
-                className={`border px-4 py-2 font-mono text-xs uppercase font-bold tracking-wider transition-all ${
+                className={`px-6 py-3 sm:px-7 sm:py-3.5 font-mono text-sm sm:text-base uppercase font-bold tracking-wider transition-all duration-200 ${
                   activeTab === "demodrop"
-                    ? "border-raveRed bg-raveRed text-black"
-                    : "border-raveBorder bg-panel/60 text-white hover:border-white/40"
+                    ? "border border-red-600 bg-red-600 text-white shadow-[0_0_20px_rgba(220,38,38,0.35)]"
+                    : "border border-white/20 bg-black/60 text-white/80 hover:border-white hover:text-white hover:bg-white/5"
                 }`}
               >
-                [ 03. DEMO DROP // ENVIAR ]
+                [ DEMO DROP // ENVIAR ]
               </button>
             </div>
           </div>

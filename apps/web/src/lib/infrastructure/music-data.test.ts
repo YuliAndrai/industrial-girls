@@ -346,10 +346,16 @@ describe("Music Releases Catalog & Spotify Integration — TDD Test Suite", () =
         "Discografía digital, Podcasts y canal directo de recepción para producciones inéditas."
       );
 
-      // Step 4: Validate exact navigation tabs
-      expect(content).toContain("[ 01. RELEASES (VA 001 - 005) ]");
-      expect(content).toContain("[ 02. PODCASTS (SOUNDCLOUD) ]");
-      expect(content).toContain("[ 03. DEMO DROP // ENVIAR ]");
+      // Step 4: Validate exact navigation tabs without numbers
+      expect(content).toContain("[ RELEASES (VA 001 - 005) ]");
+      expect(content).toContain("[ PODCAST'S ]");
+      expect(content).toContain("[ DEMO DROP // ENVIAR ]");
+
+      // Step 5: Validate upgraded visual scale and active/inactive styling
+      expect(content).toContain("px-6 py-3 sm:px-7 sm:py-3.5");
+      expect(content).toContain("text-sm sm:text-base");
+      expect(content).toContain("bg-red-600 text-white shadow-[0_0_20px_rgba(220,38,38,0.35)]");
+      expect(content).toContain("bg-black/60");
     });
   });
 
