@@ -465,3 +465,44 @@ export function getMediaArchiveItems(): readonly MediaArchiveItem[] {
   // Step 4.1: Return a shallow copy of the immutable catalog to protect source state
   return [...MEDIA_ARCHIVE];
 }
+
+// Step 5: Define ArchivePhoto contract for photographic captures
+/**
+ * Entity contract representing a photographic visual frame in the Industrial Girls archive.
+ */
+export interface ArchivePhoto {
+  /** Unique photo identifier (e.g. photo-01) */
+  id: string;
+  /** Public asset URL for the photo */
+  url: string;
+  /** Descriptive alternative text */
+  alt: string;
+}
+
+// Step 6: Define the immutable 41-photo archive catalog
+/**
+ * Typed catalog containing the 41 photographic visual frames recorded across
+ * Industrial Girls raves, club nights, and warehouse showcases.
+ */
+export const ARCHIVE_PHOTOS: readonly ArchivePhoto[] = Object.freeze(
+  Array.from({ length: 41 }, (_, i) => {
+    const index = String(i + 1).padStart(2, "0");
+    return {
+      id: `photo-${index}`,
+      url: `/images/archive/photo-${index}.jpg`,
+      alt: `Industrial Girls Archive Visual Frame ${index}`,
+    };
+  })
+);
+
+// Step 7: Export getter function providing read access to the 41 archive photos
+/**
+ * Retrieves the complete list of 41 archive visual photos.
+ *
+ * @returns {readonly ArchivePhoto[]} An array of 41 archive photo entities.
+ */
+export function getArchivePhotos(): readonly ArchivePhoto[] {
+  // Step 7.1: Return a shallow copy of the immutable catalog to protect source state
+  return [...ARCHIVE_PHOTOS];
+}
+

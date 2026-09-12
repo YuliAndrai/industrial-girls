@@ -17,6 +17,9 @@ import {
   MEDIA_ARCHIVE,
   getMediaArchiveItems,
   MediaArchiveItem,
+  ARCHIVE_PHOTOS,
+  getArchivePhotos,
+  ArchivePhoto,
 } from "./archive-data";
 
 describe("Archive Section - Artists Roster Architecture — TDD Test Suite (@spec IGW-012)", () => {
@@ -312,5 +315,46 @@ describe("Archive Section - Artists Roster Architecture — TDD Test Suite (@spe
         "Must render responsive media grid with 1 to 3 columns"
       ).toBe(true);
     });
+
+    it("ensures archivo-view.tsx integrates the 41-photo compact gallery terminal", () => {
+      // Step 1: Read view component source file
+      const content = fs.readFileSync(archivoViewPath, "utf8");
+
+      // Step 2: Verify consumption of getArchivePhotos
+      expect(content.includes("getArchivePhotos"), "Must consume getArchivePhotos from Layer 4").toBe(true);
+
+      // Step 3: Verify console HUD and mode controls
+      expect(content.includes("VISOR DE FOTOGRAMAS // 41 CAPTURAS"), "Must render 41-photo visor header").toBe(true);
+      expect(content.includes("MODO MATRIZ (41)"), "Must render matrix mode toggle button").toBe(true);
+      expect(content.includes("REEL DE 41 FOTOGRAMAS"), "Must render filmstrip reel").toBe(true);
+    });
+  });
+
+  describe("5. Layer 4 (Infrastructure): ARCHIVE_PHOTOS 41-Photo Catalog Invariants", () => {
+    it("validates that ARCHIVE_PHOTOS contains exactly 41 items", () => {
+      // Step 1: Verify catalog array exists and has length 41
+      expect(Array.isArray(ARCHIVE_PHOTOS)).toBe(true);
+      expect(ARCHIVE_PHOTOS.length).toBe(41);
+    });
+
+    it("ensures every photo satisfies the ArchivePhoto interface contract and sequential paths", () => {
+      // Step 1: Validate entity fields for all 41 photo records
+      ARCHIVE_PHOTOS.forEach((photo: ArchivePhoto, index) => {
+        const expectedIndex = String(index + 1).padStart(2, "0");
+        expect(photo.id).toBe(`photo-${expectedIndex}`);
+        expect(photo.url).toBe(`/images/archive/photo-${expectedIndex}.jpg`);
+        expect(photo.alt).toBe(`Industrial Girls Archive Visual Frame ${expectedIndex}`);
+      });
+    });
+
+    it("ensures getArchivePhotos() returns a protected copy of the 41-photo catalog", () => {
+      // Step 1: Retrieve photos copy via getter
+      const photosCopy = getArchivePhotos();
+
+      // Step 2: Assert parity and reference independence
+      expect(photosCopy.length).toBe(41);
+      expect(photosCopy).not.toBe(ARCHIVE_PHOTOS);
+    });
   });
 });
+

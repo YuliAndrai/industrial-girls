@@ -1,12 +1,13 @@
 /**
  * @file apps/web/src/app/archivo/archivo-view.tsx
- * @description Layer 1: Presentation - Interactive Archive, Artists Roster Directory & Audiovisual Registry View (/archivo).
+ * @description Layer 1: Presentation - Interactive Archive, Artists Roster Directory & Futuristic Audiovisual Gallery (/archivo).
  *
  * ARCHITECTURAL LAYER SPECIFICATION:
  * - Layer: Layer 1 (Presentation)
  * - Responsibility: Client Component rendering the interactive artists roster directory with tactical brutalist styling,
  *   monospace typography, balanced two-column responsive density, reactive search filtering, clean interactive profile links,
- *   and the Media Archive audiovisual gallery with content filtering and modal lightbox / player.
+ *   and a futuristic compact 41-photo archive gallery terminal with Spotlight HUD, horizontal filmstrip, dense matrix view,
+ *   and full-screen interactive lightbox modal.
  * - Invariant: Exactly one semantic H1 element per route. Zero raw fetch or database access;
  *   consumes immutable datasets from Layer 4 Infrastructure (archive-data).
  * - Invariant: Two-column layout on large viewports (grid-cols-1 lg:grid-cols-2) with 15 artists per column.
@@ -15,7 +16,7 @@
 
 "use client";
 
-import React, { useState, useMemo, useEffect } from "react";
+import React, { useState, useMemo, useEffect, useCallback } from "react";
 import Image from "next/image";
 import { Header } from "@/components/layout/header";
 import { NavigationDrawer } from "@/components/layout/navigation-drawer";
@@ -28,10 +29,12 @@ import {
   ArtistProfile,
   getMediaArchiveItems,
   MediaArchiveItem,
+  getArchivePhotos,
+  ArchivePhoto,
 } from "@/lib/infrastructure/archive-data";
 
 /**
- * Interactive Client Component for the Archive Section, Artists Roster, and Media Registry.
+ * Interactive Client Component for the Archive Section, Artists Roster, and 41-Photo Visual Registry.
  *
  * @returns {React.ReactElement} The rendered ArchivoView element.
  */
@@ -67,37 +70,78 @@ export function ArchivoView(): React.ReactElement {
     };
   }, [filteredArtists]);
 
-  // Step 5: Load curated media archive entries from Layer 4 Infrastructure
+  // Step 5: Load 41 visual frames and video showcase entries from Layer 4
+  const archivePhotos = useMemo(() => getArchivePhotos(), []);
   const mediaItems = useMemo(() => getMediaArchiveItems(), []);
 
   // Step 5.1: Reactive filter state for media items ('all' | 'photo' | 'video')
   const [selectedMediaType, setSelectedMediaType] = useState<"all" | "photo" | "video">("all");
 
-  // Step 5.2: State for active media modal lightbox / video player
+  // Step 5.2: State for active photo index in the futuristic spotlight HUD
+  const [activePhotoIndex, setActivePhotoIndex] = useState<number>(0);
+
+  // Step 5.3: Layout mode toggle for photo gallery: 'spotlight' (single monitor + filmstrip) vs 'matrix' (compact dense grid)
+  const [galleryLayoutMode, setGalleryLayoutMode] = useState<"spotlight" | "matrix">("spotlight");
+
+  // Step 5.4: State for full-screen lightbox modal (photos or videos)
+  const [modalPhotoIndex, setModalPhotoIndex] = useState<number | null>(null);
   const [selectedMediaModal, setSelectedMediaModal] = useState<MediaArchiveItem | null>(null);
 
-  // Step 5.3: Filter media items according to selected media type
-  const filteredMediaItems = useMemo(() => {
-    if (selectedMediaType === "all") return mediaItems;
-    return mediaItems.filter((item) => item.type === selectedMediaType);
-  }, [mediaItems, selectedMediaType]);
+  // Step 5.5: Navigation helpers for cycling photos
+  const goToPrevPhoto = useCallback(() => {
+    setActivePhotoIndex((prev) => (prev > 0 ? prev - 1 : archivePhotos.length - 1));
+  }, [archivePhotos.length]);
 
-  // Step 5.4: Count totals for photo and video items for filter buttons
-  const photoCount = useMemo(() => mediaItems.filter((i) => i.type === "photo").length, [mediaItems]);
-  const videoCount = useMemo(() => mediaItems.filter((i) => i.type === "video").length, [mediaItems]);
+  const goToNextPhoto = useCallback(() => {
+    setActivePhotoIndex((prev) => (prev < archivePhotos.length - 1 ? prev + 1 : 0));
+  }, [archivePhotos.length]);
 
-  // Step 5.5: Keyboard ESC listener to close media modal
+  const goToModalPrev = useCallback(() => {
+    setModalPhotoIndex((prev) => {
+      if (prev === null) return 0;
+      return prev > 0 ? prev - 1 : archivePhotos.length - 1;
+    });
+  }, [archivePhotos.length]);
+
+  const goToModalNext = useCallback(() => {
+    setModalPhotoIndex((prev) => {
+      if (prev === null) return 0;
+      return prev < archivePhotos.length - 1 ? prev + 1 : 0;
+    });
+  }, [archivePhotos.length]);
+
+  // Step 5.6: Filter video items for video showcases
+  const videoItems = useMemo(() => {
+    return mediaItems.filter((item) => item.type === "video");
+  }, [mediaItems]);
+
+  // Step 5.7: Keyboard listener for ESC and arrow navigation in modal
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === "Escape") {
         setSelectedMediaModal(null);
+        setModalPhotoIndex(null);
+      } else if (e.key === "ArrowLeft") {
+        if (modalPhotoIndex !== null) {
+          goToModalPrev();
+        } else {
+          goToPrevPhoto();
+        }
+      } else if (e.key === "ArrowRight") {
+        if (modalPhotoIndex !== null) {
+          goToModalNext();
+        } else {
+          goToNextPhoto();
+        }
       }
     };
-    if (selectedMediaModal) {
-      window.addEventListener("keydown", handleKeyDown);
-    }
+
+    window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
-  }, [selectedMediaModal]);
+  }, [modalPhotoIndex, goToModalPrev, goToModalNext, goToPrevPhoto, goToNextPhoto]);
+
+  // Step 5.8: Currently active photo in spotlight HUD
+  const activePhoto = archivePhotos[activePhotoIndex] || archivePhotos[0];
 
   return (
     <div className="flex min-h-screen flex-col bg-bg text-neutral-100 selection:bg-raveRed selection:text-black">
@@ -358,11 +402,11 @@ export function ArchivoView(): React.ReactElement {
           </div>
         </section>
 
-        {/* Step 8: Media Archive & Registro Audiovisual Section */}
+        {/* Step 8: Futuristic Compact Media Archive & Visual Registry Section */}
         <section className="w-full border-b border-raveBorder bg-black py-16 px-4 sm:px-6 relative">
           <div className="mx-auto max-w-7xl">
             {/* Section Header & Filter Tabs */}
-            <div className="flex flex-col sm:flex-row sm:items-end justify-between border-b border-raveBorder pb-4 mb-10 gap-4">
+            <div className="flex flex-col sm:flex-row sm:items-end justify-between border-b border-raveBorder pb-4 mb-8 gap-4">
               <div>
                 <span className="font-mono text-xs uppercase tracking-widest text-raveRed">
                   {"// REGISTRO & MEMORIA // ARCHIVO AUDIOVISUAL"}
@@ -386,7 +430,7 @@ export function ArchivoView(): React.ReactElement {
                       : "border-raveBorder text-neutral-400 hover:text-white hover:border-white/40"
                   }`}
                 >
-                  [ TODOS ({mediaItems.length}) ]
+                  [ TODOS ({archivePhotos.length + videoItems.length}) ]
                 </button>
                 <button
                   type="button"
@@ -397,7 +441,7 @@ export function ArchivoView(): React.ReactElement {
                       : "border-raveBorder text-neutral-400 hover:text-white hover:border-white/40"
                   }`}
                 >
-                  [ FOTOGRAFÍA ({photoCount}) ]
+                  [ FOTOGRAFÍA ({archivePhotos.length}) ]
                 </button>
                 <button
                   type="button"
@@ -408,103 +452,356 @@ export function ArchivoView(): React.ReactElement {
                       : "border-raveBorder text-neutral-400 hover:text-white hover:border-white/40"
                   }`}
                 >
-                  [ VIDEO ({videoCount}) ]
+                  [ VIDEO ({videoItems.length}) ]
                 </button>
               </div>
             </div>
 
-            {/* Media Grid */}
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {filteredMediaItems.map((item) => (
-                <article
-                  key={item.id}
-                  className="group flex flex-col border border-raveBorder bg-panel/30 transition-all duration-200 hover:border-raveRed hover:bg-black/90 overflow-hidden"
-                >
-                  {/* Thumbnail / Media Preview */}
-                  <div className="relative aspect-video w-full overflow-hidden bg-black border-b border-raveBorder">
-                    <Image
-                      src={item.type === "video" && item.thumbnailUrl ? item.thumbnailUrl : item.mediaUrl}
-                      alt={item.title}
-                      fill
-                      sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                      className="object-cover transition-transform duration-500 group-hover:scale-105"
-                      unoptimized
-                    />
-                    <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent" />
+            {/* Step 8.1: Photographic Visual Archive Console (41 Frames) */}
+            {(selectedMediaType === "all" || selectedMediaType === "photo") && (
+              <div className="mb-12 border border-raveBorder bg-panel/20 p-4 sm:p-6 relative">
+                {/* Console Top Bar */}
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between border-b border-raveBorder/60 pb-3 mb-4 gap-3 font-mono text-xs">
+                  <div className="flex items-center gap-2">
+                    <span className="inline-block h-2 w-2 rounded-full bg-raveRed animate-pulse" />
+                    <span className="font-bold text-white uppercase tracking-wider">
+                      VISOR DE FOTOGRAMAS // 41 CAPTURAS
+                    </span>
+                    <span className="text-raveRed font-bold">
+                      [ {String(activePhotoIndex + 1).padStart(2, "0")} / 41 ]
+                    </span>
+                  </div>
 
-                    {/* Top Badges */}
-                    <div className="absolute top-2 left-2 flex items-center gap-1.5 font-mono text-[10px] uppercase tracking-wider z-10">
-                      <span
-                        className={`px-2 py-0.5 font-bold ${
-                          item.type === "video" ? "bg-raveRed text-black" : "bg-white/90 text-black"
-                        }`}
-                      >
-                        {item.type === "video" ? "VIDEO" : "FOTO"}
-                      </span>
-                      <span className="bg-black/80 text-white/80 px-2 py-0.5 border border-white/20">
-                        {item.date}
-                      </span>
-                    </div>
-
-                    {/* Duration Badge for Videos */}
-                    {item.duration && (
-                      <div className="absolute bottom-2 right-2 font-mono text-[10px] bg-black/90 text-raveRed px-2 py-0.5 border border-raveRed/40 z-10">
-                        {item.duration}
-                      </div>
-                    )}
-
-                    {/* Play / Inspect Overlay Trigger Button */}
+                  {/* Mode & Navigation Controls */}
+                  <div className="flex items-center gap-2">
                     <button
                       type="button"
-                      onClick={() => setSelectedMediaModal(item)}
-                      className="absolute inset-0 flex items-center justify-center bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity z-20"
-                      aria-label={
-                        item.type === "video"
-                          ? "Reproducir video de " + item.title
-                          : "Ver fotografía en alta resolución de " + item.title
+                      onClick={() =>
+                        setGalleryLayoutMode((prev) => (prev === "spotlight" ? "matrix" : "spotlight"))
                       }
+                      className="px-2.5 py-1 border border-raveBorder bg-black text-neutral-300 hover:text-black hover:bg-raveRed hover:border-raveRed transition-all uppercase text-[11px]"
                     >
-                      <span className="border border-raveRed bg-black/90 px-3 py-1 font-mono text-xs text-raveRed font-bold uppercase tracking-widest group-hover:scale-105 transition-transform">
-                        {item.type === "video" ? "[ REPRODUCIR VIDEO ▶ ]" : "[ EXPANDIR FOTO ⤢ ]"}
-                      </span>
+                      {galleryLayoutMode === "spotlight" ? "[ MODO MATRIZ (41) ]" : "[ MODO SPOTLIGHT ]"}
+                    </button>
+                    <button
+                      type="button"
+                      onClick={goToPrevPhoto}
+                      className="px-2 py-1 border border-raveBorder bg-black text-neutral-400 hover:text-white hover:border-white/40 uppercase text-[11px]"
+                      aria-label="Fotograma anterior"
+                    >
+                      &lt; PREV
+                    </button>
+                    <button
+                      type="button"
+                      onClick={goToNextPhoto}
+                      className="px-2 py-1 border border-raveBorder bg-black text-neutral-400 hover:text-white hover:border-white/40 uppercase text-[11px]"
+                      aria-label="Fotograma siguiente"
+                    >
+                      NEXT &gt;
                     </button>
                   </div>
+                </div>
 
-                  {/* Card Details */}
-                  <div className="p-4 flex flex-col flex-1 justify-between">
-                    <div>
-                      <div className="flex items-center gap-2 font-mono text-[11px] text-raveRed font-bold mb-1">
-                        <span>{"[ " + item.location.toUpperCase() + " ]"}</span>
+                {/* Spotlight HUD Monitor Mode */}
+                {galleryLayoutMode === "spotlight" ? (
+                  <div className="flex flex-col gap-4">
+                    {/* Main Visual Monitor Frame */}
+                    <div className="relative aspect-[16/9] sm:aspect-[21/9] w-full overflow-hidden bg-black border border-raveBorder group">
+                      <Image
+                        src={activePhoto.url}
+                        alt={activePhoto.alt}
+                        fill
+                        sizes="(max-width: 1200px) 100vw, 1200px"
+                        className="object-contain p-2 transition-transform duration-300 group-hover:scale-[1.02]"
+                        unoptimized
+                        priority
+                      />
+
+                      {/* Scanline CRT overlay */}
+                      <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-black/30" />
+
+                      {/* HUD Top Corner Tags */}
+                      <div className="absolute top-3 left-3 z-10 flex items-center gap-2 font-mono text-[10px] text-white/80 bg-black/80 px-2 py-1 border border-white/10">
+                        <span className="text-raveRed font-bold">FRAME</span>
+                        <span>{activePhoto.id}</span>
                       </div>
-                      <h3 className="text-base font-bold uppercase tracking-tight text-white group-hover:text-raveRed transition-colors">
-                        {item.title}
-                      </h3>
-                      <p className="mt-2 font-mono text-xs text-neutral-400 leading-relaxed">
-                        {item.caption}
-                      </p>
-                    </div>
 
-                    <div className="mt-4 pt-3 border-t border-white/10 flex items-center justify-between font-mono text-[11px]">
+                      <div className="absolute top-3 right-3 z-10 hidden sm:flex items-center gap-2 font-mono text-[10px] text-white/80 bg-black/80 px-2 py-1 border border-white/10">
+                        <span>35MM RAW SCAN // 100% UNCOMPRESSED</span>
+                      </div>
+
+                      {/* Quick prev/next overlay zones */}
                       <button
                         type="button"
-                        onClick={() => setSelectedMediaModal(item)}
-                        className="text-white hover:text-raveRed transition-colors uppercase tracking-wider"
+                        onClick={goToPrevPhoto}
+                        className="absolute left-0 top-0 bottom-0 w-16 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity bg-black/30 hover:bg-black/60 text-white font-mono text-xl z-20"
+                        aria-label="Fotograma anterior"
                       >
-                        {item.type === "video" ? "> VER TRANSMISIÓN" : "> VER CAPTURA HD"}
+                        &#9664;
                       </button>
-                      <span className="text-white/40">
-                        {item.type === "video" ? "MULTICÁMARA" : "35MM / RAW"}
-                      </span>
+                      <button
+                        type="button"
+                        onClick={goToNextPhoto}
+                        className="absolute right-0 top-0 bottom-0 w-16 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity bg-black/30 hover:bg-black/60 text-white font-mono text-xl z-20"
+                        aria-label="Fotograma siguiente"
+                      >
+                        &#9654;
+                      </button>
+
+                      {/* Expand Action Button */}
+                      <button
+                        type="button"
+                        onClick={() => setModalPhotoIndex(activePhotoIndex)}
+                        className="absolute bottom-3 right-3 z-20 font-mono text-xs border border-raveRed bg-black/90 px-3 py-1 text-raveRed font-bold hover:bg-raveRed hover:text-black transition-all uppercase tracking-wider"
+                      >
+                        [ EXPANDIR HD ⤢ ]
+                      </button>
+                    </div>
+
+                    {/* Filmstrip Reel (Scroller of 41 frames) */}
+                    <div className="border-t border-raveBorder/40 pt-3">
+                      <div className="flex items-center justify-between font-mono text-[10px] text-neutral-400 mb-2">
+                        <span>REEL DE 41 FOTOGRAMAS // SELECCIÓN DIRECTA</span>
+                        <span className="text-raveRed">DESPLAZA HORIZONTALMENTE &gt;&gt;</span>
+                      </div>
+
+                      <div className="flex items-center gap-2 overflow-x-auto pb-2 scrollbar-thin">
+                        {archivePhotos.map((photo, index) => {
+                          const isCurrent = index === activePhotoIndex;
+                          return (
+                            <button
+                              key={photo.id}
+                              type="button"
+                              onClick={() => setActivePhotoIndex(index)}
+                              className={`relative h-14 w-20 sm:h-16 sm:w-24 shrink-0 overflow-hidden border transition-all ${
+                                isCurrent
+                                  ? "border-2 border-raveRed shadow-[0_0_12px_rgba(255,0,0,0.7)] scale-105 z-10"
+                                  : "border-white/15 opacity-60 hover:opacity-100 hover:border-white/50"
+                              }`}
+                              aria-label={`Ver ${photo.alt}`}
+                            >
+                              <Image
+                                src={photo.url}
+                                alt={photo.alt}
+                                fill
+                                sizes="96px"
+                                className="object-cover"
+                                unoptimized
+                              />
+                              <span className="absolute bottom-0 right-0 bg-black/85 px-1 font-mono text-[9px] text-white/90">
+                                {String(index + 1).padStart(2, "0")}
+                              </span>
+                            </button>
+                          );
+                        })}
+                      </div>
                     </div>
                   </div>
-                </article>
-              ))}
-            </div>
+                ) : (
+                  /* Dense Matrix Grid Mode (High-Density View) */
+                  <div className="grid grid-cols-4 sm:grid-cols-6 md:grid-cols-8 lg:grid-cols-10 gap-2 max-h-[460px] overflow-y-auto p-2 scrollbar-thin border border-white/10 bg-black/60">
+                    {archivePhotos.map((photo, index) => {
+                      const isCurrent = index === activePhotoIndex;
+                      return (
+                        <button
+                          key={photo.id}
+                          type="button"
+                          onClick={() => {
+                            setActivePhotoIndex(index);
+                            setModalPhotoIndex(index);
+                          }}
+                          className={`group relative aspect-square w-full overflow-hidden border transition-all ${
+                            isCurrent
+                              ? "border-2 border-raveRed shadow-[0_0_12px_rgba(255,0,0,0.7)] scale-105 z-10"
+                              : "border-white/10 hover:border-raveRed hover:opacity-100 opacity-80"
+                          }`}
+                          aria-label={`Ampliar ${photo.alt}`}
+                        >
+                          <Image
+                            src={photo.url}
+                            alt={photo.alt}
+                            fill
+                            sizes="120px"
+                            className="object-cover group-hover:scale-110 transition-transform duration-300"
+                            unoptimized
+                          />
+                          <span className="absolute bottom-0 right-0 bg-black/85 px-1 font-mono text-[9px] text-white/90">
+                            {String(index + 1).padStart(2, "0")}
+                          </span>
+                        </button>
+                      );
+                    })}
+                  </div>
+                )}
+              </div>
+            )}
+
+            {/* Step 8.2: Audiovisual Video Showcases Grid */}
+            {(selectedMediaType === "all" || selectedMediaType === "video") && (
+              <div>
+                <div className="flex items-center gap-2 mb-6 font-mono text-xs text-raveRed font-bold">
+                  <span>{"// SHOWCASES & REGISTRO MULTICÁMARA EN VIVO"}</span>
+                </div>
+
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                  {videoItems.map((item) => (
+                    <article
+                      key={item.id}
+                      className="group flex flex-col border border-raveBorder bg-panel/30 transition-all duration-200 hover:border-raveRed hover:bg-black/90 overflow-hidden"
+                    >
+                      {/* Thumbnail / Media Preview */}
+                      <div className="relative aspect-video w-full overflow-hidden bg-black border-b border-raveBorder">
+                        <Image
+                          src={item.thumbnailUrl || item.mediaUrl}
+                          alt={item.title}
+                          fill
+                          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                          className="object-cover transition-transform duration-500 group-hover:scale-105"
+                          unoptimized
+                        />
+                        <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent" />
+
+                        {/* Top Badges */}
+                        <div className="absolute top-2 left-2 flex items-center gap-1.5 font-mono text-[10px] uppercase tracking-wider z-10">
+                          <span className="px-2 py-0.5 font-bold bg-raveRed text-black">
+                            VIDEO
+                          </span>
+                          <span className="bg-black/80 text-white/80 px-2 py-0.5 border border-white/20">
+                            {item.date}
+                          </span>
+                        </div>
+
+                        {/* Duration Badge for Videos */}
+                        {item.duration && (
+                          <div className="absolute bottom-2 right-2 font-mono text-[10px] bg-black/90 text-raveRed px-2 py-0.5 border border-raveRed/40 z-10">
+                            {item.duration}
+                          </div>
+                        )}
+
+                        {/* Play Overlay Trigger Button */}
+                        <button
+                          type="button"
+                          onClick={() => setSelectedMediaModal(item)}
+                          className="absolute inset-0 flex items-center justify-center bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity z-20"
+                          aria-label={"Reproducir video de " + item.title}
+                        >
+                          <span className="border border-raveRed bg-black/90 px-3 py-1 font-mono text-xs text-raveRed font-bold uppercase tracking-widest group-hover:scale-105 transition-transform">
+                            [ REPRODUCIR VIDEO ▶ ]
+                          </span>
+                        </button>
+                      </div>
+
+                      {/* Card Details */}
+                      <div className="p-4 flex flex-col flex-1 justify-between">
+                        <div>
+                          <div className="flex items-center gap-2 font-mono text-[11px] text-raveRed font-bold mb-1">
+                            <span>{"[ " + item.location.toUpperCase() + " ]"}</span>
+                          </div>
+                          <h3 className="text-base font-bold uppercase tracking-tight text-white group-hover:text-raveRed transition-colors">
+                            {item.title}
+                          </h3>
+                          <p className="mt-2 font-mono text-xs text-neutral-400 leading-relaxed">
+                            {item.caption}
+                          </p>
+                        </div>
+
+                        <div className="mt-4 pt-3 border-t border-white/10 flex items-center justify-between font-mono text-[11px]">
+                          <button
+                            type="button"
+                            onClick={() => setSelectedMediaModal(item)}
+                            className="text-white hover:text-raveRed transition-colors uppercase tracking-wider"
+                          >
+                            &gt; VER TRANSMISIÓN
+                          </button>
+                          <span className="text-white/40">MULTICÁMARA</span>
+                        </div>
+                      </div>
+                    </article>
+                  ))}
+                </div>
+              </div>
+            )}
           </div>
         </section>
       </main>
 
-      {/* Step 9: Interactive Media Lightbox & Video Player Modal */}
+      {/* Step 9: Interactive 41-Photo Lightbox Modal */}
+      {modalPhotoIndex !== null && (
+        <div
+          role="dialog"
+          aria-modal="true"
+          aria-label={archivePhotos[modalPhotoIndex]?.alt || "Fotograma del archivo"}
+          className="fixed inset-0 z-50 flex items-center justify-center bg-black/95 backdrop-blur-md p-2 sm:p-6"
+          onClick={() => setModalPhotoIndex(null)}
+        >
+          <div
+            className="relative w-full max-w-5xl border border-raveBorder bg-panel p-4 sm:p-6 shadow-2xl flex flex-col"
+            onClick={(e) => e.stopPropagation()}
+          >
+            {/* Modal Top Bar */}
+            <div className="flex items-center justify-between border-b border-raveBorder pb-3 mb-4 font-mono text-xs">
+              <div className="flex items-center gap-2 text-raveRed font-bold">
+                <span>
+                  {"[ FRAME " + String(modalPhotoIndex + 1).padStart(2, "0") + " / 41 ]"}
+                </span>
+                <span className="text-white/40">&bull;</span>
+                <span className="text-white/70">
+                  {archivePhotos[modalPhotoIndex]?.id}.jpg
+                </span>
+              </div>
+              <button
+                type="button"
+                onClick={() => setModalPhotoIndex(null)}
+                className="px-2.5 py-1 border border-raveBorder text-neutral-400 hover:text-black hover:bg-raveRed hover:border-raveRed transition-all uppercase"
+                aria-label="Cerrar modal"
+              >
+                [ CERRAR ✕ ]
+              </button>
+            </div>
+
+            {/* Modal Image Display */}
+            <div className="relative aspect-[16/10] sm:aspect-[16/9] w-full max-h-[70vh] bg-black border border-raveBorder overflow-hidden">
+              <Image
+                src={archivePhotos[modalPhotoIndex]?.url || ""}
+                alt={archivePhotos[modalPhotoIndex]?.alt || ""}
+                fill
+                sizes="100vw"
+                className="object-contain"
+                unoptimized
+                priority
+              />
+
+              {/* Prev / Next Modal Arrows */}
+              <button
+                type="button"
+                onClick={goToModalPrev}
+                className="absolute left-2 top-1/2 -translate-y-1/2 z-20 border border-raveBorder bg-black/80 px-3 py-2 text-white font-mono hover:bg-raveRed hover:text-black transition-all"
+                aria-label="Fotograma anterior"
+              >
+                &#9664;
+              </button>
+              <button
+                type="button"
+                onClick={goToModalNext}
+                className="absolute right-2 top-1/2 -translate-y-1/2 z-20 border border-raveBorder bg-black/80 px-3 py-2 text-white font-mono hover:bg-raveRed hover:text-black transition-all"
+                aria-label="Fotograma siguiente"
+              >
+                &#9654;
+              </button>
+            </div>
+
+            {/* Modal Footer */}
+            <div className="mt-4 pt-3 border-t border-raveBorder flex flex-col sm:flex-row sm:items-center justify-between font-mono text-xs text-neutral-400 gap-2">
+              <p>{archivePhotos[modalPhotoIndex]?.alt}</p>
+              <span className="text-raveRed uppercase tracking-wider text-[11px]">
+                USA LAS FLECHAS &#8592; / &#8594; O TECLA ESC
+              </span>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Step 10: Interactive Video Player Modal */}
       {selectedMediaModal && (
         <div
           role="dialog"
@@ -536,35 +833,22 @@ export function ArchivoView(): React.ReactElement {
               </button>
             </div>
 
-            {/* Modal Media Body */}
-            {selectedMediaModal.type === "video" ? (
-              <div className="relative aspect-video w-full bg-black border border-raveBorder overflow-hidden">
-                <iframe
-                  src={
-                    selectedMediaModal.mediaUrl.includes("watch?v=")
-                      ? "https://www.youtube-nocookie.com/embed/" +
-                        selectedMediaModal.mediaUrl.split("watch?v=")[1] +
-                        "?autoplay=1"
-                      : selectedMediaModal.mediaUrl
-                  }
-                  title={selectedMediaModal.title}
-                  className="h-full w-full border-0"
-                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                  allowFullScreen
-                />
-              </div>
-            ) : (
-              <div className="relative aspect-video w-full flex items-center justify-center bg-black border border-raveBorder overflow-hidden">
-                <Image
-                  src={selectedMediaModal.mediaUrl}
-                  alt={selectedMediaModal.title}
-                  fill
-                  sizes="100vw"
-                  className="object-contain"
-                  unoptimized
-                />
-              </div>
-            )}
+            {/* Modal Video Embed */}
+            <div className="relative aspect-video w-full bg-black border border-raveBorder overflow-hidden">
+              <iframe
+                src={
+                  selectedMediaModal.mediaUrl.includes("watch?v=")
+                    ? "https://www.youtube-nocookie.com/embed/" +
+                      selectedMediaModal.mediaUrl.split("watch?v=")[1] +
+                      "?autoplay=1"
+                    : selectedMediaModal.mediaUrl
+                }
+                title={selectedMediaModal.title}
+                className="h-full w-full border-0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowFullScreen
+              />
+            </div>
 
             {/* Modal Footer Caption */}
             <div className="mt-4 pt-3 border-t border-raveBorder">

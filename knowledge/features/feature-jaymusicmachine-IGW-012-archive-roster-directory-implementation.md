@@ -29,6 +29,8 @@
   - Defines `MediaArchiveItem` interface (`id`, `title`, `date`, `location`, `type: "photo" | "video"`, `mediaUrl`, `caption`, `duration?`, `thumbnailUrl?`).
   - Exports immutable typed constant `MEDIA_ARCHIVE` containing photographic and audiovisual records from showcases and club sessions.
   - Exports getter function `getMediaArchiveItems(): readonly MediaArchiveItem[]`.
+  - Defines `ArchivePhoto` interface (`id`, `url`, `alt`) and immutable catalog `ARCHIVE_PHOTOS` with exactly 41 indexed visual frames (`photo-01` to `photo-41`).
+  - Exports getter function `getArchivePhotos(): readonly ArchivePhoto[]`.
 
 ## 3. Atomic Slices & Logical Sequence
 - **SPEC-1**: Archive Roster Data & Typographic Directory (Branch: `feature/jaymusicmachine-IGW-012-archive-roster-directory`) — Completed & Validated.
