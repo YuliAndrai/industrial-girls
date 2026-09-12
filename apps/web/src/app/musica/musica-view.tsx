@@ -158,15 +158,24 @@ export function MusicaView(): React.ReactElement {
                           {release.title}
                         </h3>
                       </div>
-                      <div className="pt-2">
+                      <div className="flex flex-wrap items-center gap-2 mt-4">
                         <a
                           href={release.spotifyUrl}
                           target="_blank"
                           rel="noopener noreferrer"
-                          aria-label={`Escuchar ${release.catalogNumber} ${release.title} en Spotify`}
+                          aria-label={`Escuchar ${release.title} en Spotify`}
                           className="inline-flex items-center gap-2 px-3 py-1.5 text-xs font-mono uppercase border border-red-500 text-white hover:bg-red-500/20 transition-colors"
                         >
-                          ESCUCHAR EN SPOTIFY
+                          ESCUCHAR EN SPOTIFY ↗
+                        </a>
+                        <a
+                          href={release.beatportUrl}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          aria-label={`Comprar ${release.title} en Beatport`}
+                          className="inline-flex items-center gap-2 px-3 py-1.5 text-xs font-mono uppercase border border-white/20 text-white/80 hover:border-white hover:text-white transition-colors"
+                        >
+                          COMPRAR EN BEATPORT ↗
                         </a>
                       </div>
                     </div>
@@ -201,7 +210,7 @@ export function MusicaView(): React.ReactElement {
                       </div>
 
                       <div className="mt-8 border-t border-raveBorder/60 pt-4 font-mono text-xs text-neutral-400 flex items-center justify-between">
-                        <span>FORMATO: VINIL 12&quot; 180G + DIGITAL LOSSLESS</span>
+                        <span>FORMATO: DIGITAL LOSSLESS</span>
                         <span className="text-raveRed font-bold">145-165 BPM</span>
                       </div>
                     </div>

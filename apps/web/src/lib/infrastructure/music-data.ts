@@ -52,6 +52,8 @@ export interface ReleaseItem {
   coverImage: string;
   /** Official Spotify search endpoint URL */
   spotifyUrl: string;
+  /** Official Beatport search endpoint URL for compilation purchase */
+  beatportUrl: string;
   /** Curated tracklist items */
   tracklist: readonly TrackItem[];
   /** Backward-compatible alias for catalogNumber */
@@ -75,6 +77,7 @@ export const RELEASES_CATALOG: readonly ReleaseItem[] = [
     year: "2024",
     coverImage: "/images/releases/va-005.jpg",
     spotifyUrl: "https://open.spotify.com/search/INDUSTRIAL%20GIRLS%20VA%20005",
+    beatportUrl: "https://www.beatport.com/search?q=INDUSTRIAL+GIRLS+VA+005",
     tracklist: [
       {
         artist: "ÆTERIS",
@@ -120,6 +123,7 @@ export const RELEASES_CATALOG: readonly ReleaseItem[] = [
     year: "2023",
     coverImage: "/images/releases/va-004.jpg",
     spotifyUrl: "https://open.spotify.com/search/INDUSTRIAL%20GIRLS%20VA%20004",
+    beatportUrl: "https://www.beatport.com/search?q=INDUSTRIAL+GIRLS+VA+004",
     tracklist: [
       {
         artist: "Ayako Mori",
@@ -170,6 +174,7 @@ export const RELEASES_CATALOG: readonly ReleaseItem[] = [
     year: "2023",
     coverImage: "/images/releases/va-003.jpg",
     spotifyUrl: "https://open.spotify.com/search/INDUSTRIAL%20GIRLS%20VA%20003",
+    beatportUrl: "https://www.beatport.com/search?q=INDUSTRIAL+GIRLS+VA+003",
     tracklist: [
       {
         artist: "Jean Terechkova",
@@ -225,6 +230,7 @@ export const RELEASES_CATALOG: readonly ReleaseItem[] = [
     year: "2022",
     coverImage: "/images/releases/va-002.jpg",
     spotifyUrl: "https://open.spotify.com/search/INDUSTRIAL%20GIRLS%20VA%20002",
+    beatportUrl: "https://www.beatport.com/search?q=INDUSTRIAL+GIRLS+VA+002",
     tracklist: [
       {
         artist: "Daniela Fuzz",
@@ -265,6 +271,7 @@ export const RELEASES_CATALOG: readonly ReleaseItem[] = [
     year: "2021",
     coverImage: "/images/releases/va-001.jpg",
     spotifyUrl: "https://open.spotify.com/search/INDUSTRIAL%20GIRLS%20VA%20001",
+    beatportUrl: "https://www.beatport.com/search?q=INDUSTRIAL+GIRLS+VA+001",
     tracklist: [
       {
         artist: "Juliana Yamasaki",

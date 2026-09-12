@@ -100,6 +100,12 @@ describe("Music Releases Catalog & Spotify Integration — TDD Test Suite", () =
         expect(release.spotifyUrl).toBeDefined();
         expect(typeof release.spotifyUrl).toBe("string");
 
+        expect(release.beatportUrl).toBeDefined();
+        expect(typeof release.beatportUrl).toBe("string");
+        expect(release.beatportUrl.startsWith("https://www.beatport.com/search?q=")).toBe(true);
+        expect(release.beatportUrl).not.toContain("[");
+        expect(release.beatportUrl).not.toContain("]");
+
         expect(Array.isArray(release.tracklist)).toBe(true);
         expect(release.tracklist.length).toBeGreaterThan(0);
       });
@@ -150,6 +156,47 @@ describe("Music Releases Catalog & Spotify Integration — TDD Test Suite", () =
         expect(release.spotifyUrl).not.toContain("]");
         expect(release.spotifyUrl.startsWith("https://open.spotify.com/search/")).toBe(true);
       });
+    });
+
+    it("validates exact Beatport search buy URLs for all 5 compilations", () => {
+      // Step 1: Expected official Beatport search endpoints for each VA release
+      const expectedBeatportUrls: Record<string, string> = {
+        "IGVA005": "https://www.beatport.com/search?q=INDUSTRIAL+GIRLS+VA+005",
+        "IGVA004": "https://www.beatport.com/search?q=INDUSTRIAL+GIRLS+VA+004",
+        "IGVA003": "https://www.beatport.com/search?q=INDUSTRIAL+GIRLS+VA+003",
+        "IGVA002": "https://www.beatport.com/search?q=INDUSTRIAL+GIRLS+VA+002",
+        "IGVA001": "https://www.beatport.com/search?q=INDUSTRIAL+GIRLS+VA+001",
+      };
+
+      // Step 2: Validate each Beatport URL format
+      const releases = getReleasesCatalog();
+      releases.forEach((release) => {
+        const expected = expectedBeatportUrls[release.catalogNumber];
+        expect(release.beatportUrl).toBe(expected);
+
+        // Invariant: Pure string without markdown brackets [ ] or ( )
+        expect(release.beatportUrl).not.toContain("[");
+        expect(release.beatportUrl).not.toContain("]");
+        expect(release.beatportUrl.startsWith("https://www.beatport.com/search?q=")).toBe(true);
+      });
+    });
+
+    it("ensures neither RELEASES_CATALOG nor /musica view contains any mention of vinyl / vinil", () => {
+      // Step 1: Check RELEASES_CATALOG serialization
+      expect(JSON.stringify(RELEASES_CATALOG)).not.toMatch(/vinil/i);
+
+      // Step 2: Check /musica view source code
+      const viewPath = path.resolve(
+        process.cwd(),
+        "apps",
+        "web",
+        "src",
+        "app",
+        "musica",
+        "musica-view.tsx"
+      );
+      const content = fs.readFileSync(viewPath, "utf-8");
+      expect(content).not.toMatch(/vinil/i);
     });
 
     it("ensures each release has valid tracklist items conforming to TrackItem with valid spotifyUrl", () => {
@@ -206,8 +253,8 @@ describe("Music Releases Catalog & Spotify Integration — TDD Test Suite", () =
     });
   });
 
-  describe("2. Layer 1 (Presentation): Spotify Redirection & Streaming Button Contract", () => {
-    it("validates button specification requirements (target='_blank', rel='noopener noreferrer')", () => {
+  describe("2. Layer 1 (Presentation): Streaming & Buy Action Buttons Contract", () => {
+    it("validates button specification requirements for Spotify and Beatport (target='_blank', rel='noopener noreferrer')", () => {
       // Step 1: Model test representation of the required button contract
       const testRelease: ReleaseItem = {
         id: "igva-005",
@@ -216,6 +263,7 @@ describe("Music Releases Catalog & Spotify Integration — TDD Test Suite", () =
         year: "2024",
         coverImage: "/images/releases/va-005.jpg",
         spotifyUrl: "https://open.spotify.com/search/INDUSTRIAL%20GIRLS%20VA%20005",
+        beatportUrl: "https://www.beatport.com/search?q=INDUSTRIAL+GIRLS+VA+005",
         tracklist: [
           {
             artist: "ÆTERIS",
@@ -225,16 +273,31 @@ describe("Music Releases Catalog & Spotify Integration — TDD Test Suite", () =
         ],
       };
 
-      // Step 2: Assert expected redirection attributes
-      const expectedHref = testRelease.spotifyUrl;
-      const expectedTarget = "_blank";
-      const expectedRel = "noopener noreferrer";
-      const expectedLabel = "ESCUCHAR EN SPOTIFY";
+      // Step 2: Assert Spotify redirection attributes
+      expect(testRelease.spotifyUrl).toBe("https://open.spotify.com/search/INDUSTRIAL%20GIRLS%20VA%20005");
+      expect(testRelease.beatportUrl).toBe("https://www.beatport.com/search?q=INDUSTRIAL+GIRLS+VA+005");
+    });
 
-      expect(expectedHref).toBe("https://open.spotify.com/search/INDUSTRIAL%20GIRLS%20VA%20005");
-      expect(expectedTarget).toBe("_blank");
-      expect(expectedRel).toBe("noopener noreferrer");
-      expect(expectedLabel).toBe("ESCUCHAR EN SPOTIFY");
+    it("ensures /musica view renders both ESCUCHAR EN SPOTIFY ↗ and COMPRAR EN BEATPORT ↗ buttons", () => {
+      // Step 1: Read view component source file
+      const viewPath = path.resolve(
+        process.cwd(),
+        "apps",
+        "web",
+        "src",
+        "app",
+        "musica",
+        "musica-view.tsx"
+      );
+      const content = fs.readFileSync(viewPath, "utf-8");
+
+      // Step 2: Validate presence of action buttons with arrows
+      expect(content).toContain("ESCUCHAR EN SPOTIFY ↗");
+      expect(content).toContain("COMPRAR EN BEATPORT ↗");
+
+      // Step 3: Validate Beatport anchor attributes
+      expect(content).toContain("href={release.beatportUrl}");
+      expect(content).toContain("aria-label={`Comprar ${release.title} en Beatport`}");
     });
   });
 
