@@ -128,7 +128,7 @@ export function MusicaView(): React.ReactElement {
                     href={`#${release.id}`}
                     className="border border-raveBorder bg-panel/60 text-neutral-300 hover:border-raveRed hover:text-white px-3 py-1.5 font-mono text-xs font-bold uppercase transition-all"
                   >
-                    {release.catalogCode}
+                    {release.catalogNumber}
                   </a>
                 ))}
               </div>
@@ -146,7 +146,7 @@ export function MusicaView(): React.ReactElement {
                       <div className="relative aspect-square w-full overflow-hidden border-2 border-raveRed bg-black">
                         <Image
                           src={release.coverImage}
-                          alt={`${release.catalogCode} - ${release.title}`}
+                          alt={`${release.catalogNumber} - ${release.title}`}
                           fill
                           sizes="(max-width: 768px) 100vw, 400px"
                           className="object-cover p-2"
@@ -154,8 +154,8 @@ export function MusicaView(): React.ReactElement {
                         />
                       </div>
                       <div>
-                        <span className="font-mono text-xs text-raveRed font-bold">
-                          {release.catalogCode} {"//"} {release.releaseDate}
+                        <span className="font-mono text-xs text-raveRed font-bold tracking-wider">
+                          {`[ ${release.catalogNumber} // ${release.year} ]`}
                         </span>
                         <h3 className="text-xl sm:text-2xl font-black uppercase text-white mt-1">
                           {release.title}
@@ -166,7 +166,7 @@ export function MusicaView(): React.ReactElement {
                           href={release.spotifyUrl}
                           target="_blank"
                           rel="noopener noreferrer"
-                          aria-label={`Escuchar ${release.catalogCode} ${release.title} en Spotify`}
+                          aria-label={`Escuchar ${release.catalogNumber} ${release.title} en Spotify`}
                           className="inline-flex items-center gap-2 px-3 py-1.5 text-xs font-mono uppercase border border-red-500 text-white hover:bg-red-500/20 transition-colors"
                         >
                           ESCUCHAR EN SPOTIFY
@@ -179,25 +179,26 @@ export function MusicaView(): React.ReactElement {
                       <div>
                         <div className="border-b border-raveBorder pb-2 mb-4 flex items-center justify-between font-mono text-xs text-raveTextMuted">
                           <span># TRACKLIST OFICIAL</span>
-                          <span>DURACIÓN</span>
+                          <span>DETALLE</span>
                         </div>
-                        <div className="divide-y divide-raveBorder/40">
-                          {release.tracks.map((track) => (
-                            <div
-                              key={track.position}
-                              className="py-3 flex items-center justify-between font-mono hover:bg-white/5 px-2 transition-colors"
+                        <div className="space-y-1 mt-3">
+                          {release.tracklist.map((track, idx) => (
+                            <a
+                              key={`${track.artist}-${track.title}-${idx}`}
+                              href={track.spotifyUrl}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              aria-label={`Escuchar ${track.artist} - ${track.title} en Spotify`}
+                              className="group flex items-center justify-between text-xs font-mono py-1.5 px-2 rounded hover:bg-white/5 transition-colors"
                             >
-                              <div className="flex items-center gap-3">
-                                <span className="text-xs font-bold text-raveRed">{track.position}</span>
-                                <div>
-                                  <span className="text-sm font-bold text-white block">{track.artist}</span>
-                                  <span className="text-xs text-neutral-400">{track.title}</span>
-                                </div>
-                              </div>
-                              {track.duration && (
-                                <span className="text-xs text-neutral-400">{track.duration}</span>
-                              )}
-                            </div>
+                              <span className="text-white/70 group-hover:text-white transition-colors">
+                                <span className="text-red-500 mr-2">[{String(idx + 1).padStart(2, '0')}]</span>
+                                {track.artist} — {track.title}
+                              </span>
+                              <span className="text-[10px] text-white/30 group-hover:text-red-500 uppercase transition-colors">
+                                ESCUCHAR ↗
+                              </span>
+                            </a>
                           ))}
                         </div>
                       </div>

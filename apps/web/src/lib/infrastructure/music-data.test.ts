@@ -1,4 +1,4 @@
-﻿/**
+/**
  * @file apps/web/src/lib/infrastructure/music-data.test.ts
  * @description Layer 4 / Tests: Master TDD test suite for Music Catalog & Spotify Streaming Links.
  *
@@ -31,16 +31,37 @@ describe("Music Releases Catalog & Spotify Integration — TDD Test Suite", () =
       expect(RELEASES_CATALOG.length).toBe(5);
     });
 
-    it("verifies that releases are ordered chronologically descending (VA 005 to VA 001)", () => {
+    it("verifies that releases are ordered chronologically descending (IGVA005 to IGVA001)", () => {
       // Step 1: Retrieve catalog
       const releases = getReleasesCatalog();
 
-      // Step 2: Assert descending order by catalogCode
-      expect(releases[0]?.catalogCode).toBe("VA 005");
-      expect(releases[1]?.catalogCode).toBe("VA 004");
-      expect(releases[2]?.catalogCode).toBe("VA 003");
-      expect(releases[3]?.catalogCode).toBe("VA 002");
-      expect(releases[4]?.catalogCode).toBe("VA 001");
+      // Step 2: Assert descending order by catalogNumber
+      expect(releases[0]?.catalogNumber).toBe("IGVA005");
+      expect(releases[1]?.catalogNumber).toBe("IGVA004");
+      expect(releases[2]?.catalogNumber).toBe("IGVA003");
+      expect(releases[3]?.catalogNumber).toBe("IGVA002");
+      expect(releases[4]?.catalogNumber).toBe("IGVA001");
+    });
+
+    it("verifies that all 5 releases have exact title 'INDUSTRIAL GIRLS VA 00X' and year property", () => {
+      // Step 1: Retrieve catalog
+      const releases = getReleasesCatalog();
+
+      // Step 2: Expected metadata mapping
+      const expectedMeta = [
+        { catalogNumber: "IGVA005", title: "INDUSTRIAL GIRLS VA 005", year: "2024" },
+        { catalogNumber: "IGVA004", title: "INDUSTRIAL GIRLS VA 004", year: "2023" },
+        { catalogNumber: "IGVA003", title: "INDUSTRIAL GIRLS VA 003", year: "2023" },
+        { catalogNumber: "IGVA002", title: "INDUSTRIAL GIRLS VA 002", year: "2022" },
+        { catalogNumber: "IGVA001", title: "INDUSTRIAL GIRLS VA 001", year: "2021" },
+      ];
+
+      // Step 3: Assert exact match
+      expectedMeta.forEach((expected, idx) => {
+        expect(releases[idx]?.catalogNumber).toBe(expected.catalogNumber);
+        expect(releases[idx]?.title).toBe(expected.title);
+        expect(releases[idx]?.year).toBe(expected.year);
+      });
     });
 
     it("ensures every release satisfies ReleaseItem contract with non-empty fields", () => {
@@ -50,19 +71,27 @@ describe("Music Releases Catalog & Spotify Integration — TDD Test Suite", () =
       releases.forEach((release: ReleaseItem) => {
         expect(release.id).toBeDefined();
         expect(typeof release.id).toBe("string");
-        expect(release.id.trim().length).toBeGreaterThan(0);
+        expect(release.id).toMatch(/^igva-00[1-5]$/);
 
-        expect(release.catalogCode).toBeDefined();
-        expect(typeof release.catalogCode).toBe("string");
-        expect(release.catalogCode).toMatch(/^VA 00[1-5]$/);
+        expect(release.catalogNumber).toBeDefined();
+        expect(typeof release.catalogNumber).toBe("string");
+        expect(release.catalogNumber).toMatch(/^IGVA00[1-5]$/);
+
+        if (release.catalogCode !== undefined) {
+          expect(typeof release.catalogCode).toBe("string");
+        }
 
         expect(release.title).toBeDefined();
         expect(typeof release.title).toBe("string");
-        expect(release.title.trim().length).toBeGreaterThan(0);
+        expect(release.title).toMatch(/^INDUSTRIAL GIRLS VA 00[1-5]$/);
 
-        expect(release.releaseDate).toBeDefined();
-        expect(typeof release.releaseDate).toBe("string");
-        expect(release.releaseDate.trim().length).toBeGreaterThan(0);
+        expect(release.year).toBeDefined();
+        expect(typeof release.year).toBe("string");
+        expect(release.year).toMatch(/^202[1-4]$/);
+
+        if (release.releaseDate !== undefined) {
+          expect(typeof release.releaseDate).toBe("string");
+        }
 
         expect(release.coverImage).toBeDefined();
         expect(typeof release.coverImage).toBe("string");
@@ -71,8 +100,8 @@ describe("Music Releases Catalog & Spotify Integration — TDD Test Suite", () =
         expect(release.spotifyUrl).toBeDefined();
         expect(typeof release.spotifyUrl).toBe("string");
 
-        expect(Array.isArray(release.tracks)).toBe(true);
-        expect(release.tracks.length).toBeGreaterThan(0);
+        expect(Array.isArray(release.tracklist)).toBe(true);
+        expect(release.tracklist.length).toBeGreaterThan(0);
       });
     });
 
@@ -103,17 +132,17 @@ describe("Music Releases Catalog & Spotify Integration — TDD Test Suite", () =
     it("validates exact Spotify search URLs without markdown format brackets", () => {
       // Step 1: Expected official Spotify search endpoints for each VA release
       const expectedUrls: Record<string, string> = {
-        "VA 005": "https://open.spotify.com/search/INDUSTRIAL%20GIRLS%20VA%20005",
-        "VA 004": "https://open.spotify.com/search/INDUSTRIAL%20GIRLS%20VA%20004",
-        "VA 003": "https://open.spotify.com/search/INDUSTRIAL%20GIRLS%20VA%20003",
-        "VA 002": "https://open.spotify.com/search/INDUSTRIAL%20GIRLS%20VA%20002",
-        "VA 001": "https://open.spotify.com/search/INDUSTRIAL%20GIRLS%20VA%20001",
+        "IGVA005": "https://open.spotify.com/search/INDUSTRIAL%20GIRLS%20VA%20005",
+        "IGVA004": "https://open.spotify.com/search/INDUSTRIAL%20GIRLS%20VA%20004",
+        "IGVA003": "https://open.spotify.com/search/INDUSTRIAL%20GIRLS%20VA%20003",
+        "IGVA002": "https://open.spotify.com/search/INDUSTRIAL%20GIRLS%20VA%20002",
+        "IGVA001": "https://open.spotify.com/search/INDUSTRIAL%20GIRLS%20VA%20001",
       };
 
       // Step 2: Validate each URL format
       const releases = getReleasesCatalog();
       releases.forEach((release) => {
-        const expected = expectedUrls[release.catalogCode];
+        const expected = expectedUrls[release.catalogNumber];
         expect(release.spotifyUrl).toBe(expected);
 
         // Invariant: Pure string without markdown brackets [ ] or ( )
@@ -123,14 +152,11 @@ describe("Music Releases Catalog & Spotify Integration — TDD Test Suite", () =
       });
     });
 
-    it("ensures each release has valid tracklist items conforming to TrackItem", () => {
-      // Step 1: Verify each track item
+    it("ensures each release has valid tracklist items conforming to TrackItem with valid spotifyUrl", () => {
+      // Step 1: Verify each track item in tracklist
       const releases = getReleasesCatalog();
       releases.forEach((release) => {
-        release.tracks.forEach((track: TrackItem) => {
-          expect(track.position).toBeDefined();
-          expect(typeof track.position).toBe("string");
-
+        release.tracklist.forEach((track: TrackItem) => {
           expect(track.artist).toBeDefined();
           expect(typeof track.artist).toBe("string");
           expect(track.artist.trim().length).toBeGreaterThan(0);
@@ -139,6 +165,16 @@ describe("Music Releases Catalog & Spotify Integration — TDD Test Suite", () =
           expect(typeof track.title).toBe("string");
           expect(track.title.trim().length).toBeGreaterThan(0);
 
+          expect(track.spotifyUrl).toBeDefined();
+          expect(typeof track.spotifyUrl).toBe("string");
+          expect(track.spotifyUrl.startsWith("https://open.spotify.com/search/")).toBe(true);
+          expect(track.spotifyUrl).not.toContain("[");
+          expect(track.spotifyUrl).not.toContain("]");
+
+          if (track.position) {
+            expect(typeof track.position).toBe("string");
+          }
+
           if (track.duration) {
             expect(typeof track.duration).toBe("string");
           }
@@ -146,18 +182,25 @@ describe("Music Releases Catalog & Spotify Integration — TDD Test Suite", () =
       });
     });
 
-    it("retrieves a specific release by catalog code or id using getReleaseByCode", () => {
-      // Step 1: Query by catalog code
-      const va005 = getReleaseByCode("VA 005");
+    it("retrieves a specific release by catalog number, code, or id using getReleaseByCode", () => {
+      // Step 1: Query by catalog number
+      const va005 = getReleaseByCode("IGVA005");
       expect(va005).toBeDefined();
-      expect(va005?.title).toBe("MANIFIESTO SONORO");
+      expect(va005?.catalogNumber).toBe("IGVA005");
+      expect(va005?.title).toBe("INDUSTRIAL GIRLS VA 005");
 
       // Step 2: Query by id
-      const va001 = getReleaseByCode("va-001");
+      const va001 = getReleaseByCode("igva-001");
       expect(va001).toBeDefined();
-      expect(va001?.title).toBe("SUBTERRÁNEA CORP VOL. 1");
+      expect(va001?.catalogNumber).toBe("IGVA001");
+      expect(va001?.title).toBe("INDUSTRIAL GIRLS VA 001");
 
-      // Step 3: Query nonexistent code returns undefined
+      // Step 3: Query by alternative code format (VA 005)
+      const va005Alt = getReleaseByCode("VA 005");
+      expect(va005Alt).toBeDefined();
+      expect(va005Alt?.catalogNumber).toBe("IGVA005");
+
+      // Step 4: Query nonexistent code returns undefined
       const nonexistent = getReleaseByCode("VA 999");
       expect(nonexistent).toBeUndefined();
     });
@@ -167,14 +210,18 @@ describe("Music Releases Catalog & Spotify Integration — TDD Test Suite", () =
     it("validates button specification requirements (target='_blank', rel='noopener noreferrer')", () => {
       // Step 1: Model test representation of the required button contract
       const testRelease: ReleaseItem = {
-        id: "va-005",
-        catalogCode: "VA 005",
-        title: "MANIFIESTO SONORO",
-        releaseDate: "2026",
+        id: "igva-005",
+        catalogNumber: "IGVA005",
+        title: "INDUSTRIAL GIRLS VA 005",
+        year: "2024",
         coverImage: "/images/releases/va-005.jpg",
         spotifyUrl: "https://open.spotify.com/search/INDUSTRIAL%20GIRLS%20VA%20005",
-        tracks: [
-          { position: "01", artist: "PAULA TEMPLE", title: "Gegen Attack", duration: "06:40" },
+        tracklist: [
+          {
+            artist: "ÆTERIS",
+            title: "Psycho Moves",
+            spotifyUrl: "https://open.spotify.com/search/%C3%86TERIS%20Psycho%20Moves",
+          },
         ],
       };
 
