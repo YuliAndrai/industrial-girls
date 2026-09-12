@@ -21,9 +21,12 @@ import {
   ReleaseItem,
 } from "@/lib/infrastructure/music-data";
 import {
-  getPodcasts,
   getDemoDropSpecs,
 } from "@/lib/infrastructure/music-catalog";
+import {
+  getPodcastsCatalog,
+  PodcastEpisode,
+} from "@/lib/infrastructure/podcast-data";
 
 /**
  * Music catalog and audio archive route page.
@@ -39,7 +42,7 @@ export function MusicaView(): React.ReactElement {
 
   // Step 3: Retrieve catalog datasets from infrastructure layer
   const releases = getReleasesCatalog();
-  const podcasts = getPodcasts();
+  const podcasts = getPodcastsCatalog();
   const demoDropSpecs = getDemoDropSpecs();
 
   // Step 4: Maintain active tab filter
@@ -223,75 +226,81 @@ export function MusicaView(): React.ReactElement {
 
         {/* 2. Subsection Podcasts (IG MIX 001 - 004) */}
         {activeTab === "podcasts" && (
-          <section className="w-full border-b border-raveBorder bg-bg py-16 px-4 sm:px-6">
+          <section id="podcasts" className="w-full border-b border-raveBorder bg-bg py-16 px-4 sm:px-6">
             <div className="mx-auto max-w-7xl">
               <div className="border-b-2 border-raveRed pb-4 mb-10">
                 <span className="font-mono text-xs uppercase tracking-widest text-raveRed">
-                  {"// SESIONES OFICIALES DE CLUB"}
+                  {"// SOURCED AUDIO & CURATED SETS // PODCAST SERIES"}
                 </span>
                 <h2 className="text-2xl sm:text-4xl font-black uppercase tracking-tight text-white mt-1">
-                  SERIE DE PODCASTS // IG MIX
+                  INDUSTRIAL GIRLS PODCAST
                 </h2>
+                <p className="mt-3 font-mono text-xs sm:text-sm text-neutral-300 max-w-3xl leading-relaxed">
+                  Sesiones de estudio y directos exclusivos que exploran la crudeza y el tempo acelerado de nuestra comunidad.
+                </p>
               </div>
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                {podcasts.map((pod) => (
-                  <div
-                    key={pod.id}
+                {podcasts.map((episode) => (
+                  <article
+                    key={episode.id}
                     className="border border-raveBorder bg-panel/60 p-6 flex flex-col justify-between hover:border-raveRed transition-all"
                   >
                     <div>
-                      <div className="flex items-center justify-between border-b border-raveBorder pb-3 mb-4 font-mono text-xs">
-                        <span className="font-bold text-raveRed">{pod.code}</span>
-                        <span className="text-neutral-400">{pod.date} &bull; {pod.duration}</span>
-                      </div>
-                      <h3 className="text-xl sm:text-2xl font-black uppercase text-white">
-                        {pod.artist}
-                      </h3>
-                      <p className="font-mono text-xs text-raveTextMuted mt-1">
-                        BASE: {pod.origin}
-                      </p>
-
-                      {/* Highlights */}
-                      <div className="flex flex-wrap gap-1.5 mt-3 mb-5">
-                        {pod.trackHighlights.map((tag) => (
-                          <span
-                            key={tag}
-                            className="border border-white/10 bg-black px-2 py-0.5 font-mono text-[10px] text-neutral-300"
-                          >
-                            &bull; {tag}
-                          </span>
-                        ))}
-                      </div>
-
-                      {/* SoundCloud Player Embed */}
-                      <div className="border border-raveBorder overflow-hidden bg-black mb-4">
-                        <iframe
-                          width="100%"
-                          height="120"
-                          scrolling="no"
-                          frameBorder="no"
-                          allow="autoplay"
-                          src={pod.soundCloudEmbedUrl}
-                          title={pod.code + " SoundCloud"}
+                      {/* Cover Image */}
+                      <div className="group relative aspect-video w-full overflow-hidden border border-white/10 bg-black mb-4">
+                        <Image
+                          src={episode.coverImage}
+                          alt={episode.title}
+                          fill
+                          sizes="(max-width: 768px) 100vw, 600px"
+                          className="object-cover transition-transform duration-300 group-hover:scale-105 group-hover:contrast-125"
                         />
                       </div>
+
+                      {/* Metadata Badge */}
+                      <div className="flex items-center justify-between border-b border-raveBorder pb-2 mb-3 font-mono text-xs">
+                        <span className="font-mono text-xs text-raveRed font-bold tracking-wider">
+                          {`[ IG MIX ${episode.seriesNumber} ]`}
+                        </span>
+                      </div>
+
+                      {/* Artist Name & Title */}
+                      <h3 className="text-xl sm:text-2xl font-black uppercase text-white">
+                        {episode.artist}
+                      </h3>
+                      <p className="font-mono text-xs text-neutral-300 mt-1">
+                        {episode.title}
+                      </p>
                     </div>
 
-                    {/* Action Links */}
-                    <div className="pt-3 border-t border-raveBorder/40 flex items-center justify-between font-mono text-xs">
+                    {/* Action Buttons: SoundCloud Primary, YouTube Secondary */}
+                    <div className="flex flex-wrap items-center gap-2 mt-4 pt-3 border-t border-raveBorder/40">
+                      {/* BOTÓN PRIMARIO SOUNDCLOUD */}
                       <a
-                        href={"https://www.youtube.com/watch?v=" + pod.youtubeEmbedId}
+                        href={episode.soundcloudUrl}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="text-white hover:text-raveRed transition-colors"
-                        aria-label={`Ver videostream de ${pod.artist} (${pod.code}) en YouTube`}
+                        aria-label={`Escuchar sesión de ${episode.artist} en SoundCloud`}
+                        className="inline-flex items-center gap-2 px-3 py-1.5 text-xs font-mono uppercase bg-red-600/90 text-white hover:bg-red-500 border border-red-500 transition-colors"
                       >
-                        &gt; VER VIDEOSTREAM EN YOUTUBE
+                        <span>ESCUCHAR EN SOUNDCLOUD</span>
+                        <span>↗</span>
                       </a>
-                      <span className="text-raveRed font-bold">155+ BPM</span>
+
+                      {/* BOTÓN SECUNDARIO YOUTUBE */}
+                      <a
+                        href={episode.youtubeUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        aria-label={`Ver sesión de ${episode.artist} en YouTube`}
+                        className="inline-flex items-center gap-2 px-2.5 py-1.5 text-xs font-mono uppercase border border-white/20 text-white/70 hover:border-white hover:text-white transition-colors"
+                      >
+                        <span>VER EN YOUTUBE</span>
+                        <span>↗</span>
+                      </a>
                     </div>
-                  </div>
+                  </article>
                 ))}
               </div>
             </div>
