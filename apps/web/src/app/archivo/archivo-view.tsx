@@ -652,68 +652,32 @@ export function ArchivoView(): React.ReactElement {
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                   {archiveVideos.map((video) =>
                     video.type === "local" ? (
-                      /* Native Local HTML5 Video Player Card */
+                      /* Native Local HTML5 Video Player: ONLY player, zero text/labels */
                       <div
                         key={video.id}
-                        style={{
-                          contentVisibility: "auto",
-                          containIntrinsicSize: "360px 240px",
-                        }}
-                        className="group flex flex-col border border-raveBorder bg-panel/30 transition-all duration-200 hover:border-raveRed hover:bg-black/90 overflow-hidden transform-gpu"
+                        className="relative aspect-video bg-black border border-white/10 overflow-hidden"
                       >
-                        {/* Video Player Container */}
-                        <div className="relative aspect-video w-full bg-black border-b border-raveBorder overflow-hidden">
-                          <video
-                            controls
-                            preload="metadata"
-                            className="w-full aspect-video rounded-xs border border-white/10 bg-black object-cover"
-                            src={video.src}
-                          >
-                            <track kind="captions" />
-                            Tu navegador no soporta reproducción de video HTML5.
-                          </video>
-                          {/* Top Badges */}
-                          <div className="pointer-events-none absolute top-2 left-2 flex items-center gap-1.5 font-mono text-[10px] uppercase tracking-wider z-10">
-                            <span className="px-2 py-0.5 font-bold bg-white/20 text-white border border-white/20">
-                              LOCAL // MP4
-                            </span>
-                          </div>
-                        </div>
-
-                        {/* Card Details: Título monospace limpio en la parte inferior */}
-                        <div className="p-4 flex flex-col flex-1 justify-between">
-                          <h3 className="font-mono text-sm font-bold uppercase tracking-tight text-white transition-colors">
-                            {video.title}
-                          </h3>
-
-                          <div className="mt-4 pt-3 border-t border-white/10 flex items-center justify-between font-mono text-[11px]">
-                            <span className="text-white/70 uppercase tracking-wider">
-                              &gt; REPRODUCTOR LOCAL
-                            </span>
-                            <span className="text-white/40">REGISTRO DE CAMPO</span>
-                          </div>
-                        </div>
+                        <video
+                          src={video.src}
+                          controls
+                          preload="metadata"
+                          className="w-full h-full object-cover"
+                        />
                       </div>
                     ) : (
-                      /* External YouTube Video Showcase Card */
-                      <a
-                        key={video.id}
-                        href={video.src}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        style={{
-                          contentVisibility: "auto",
-                          containIntrinsicSize: "360px 240px",
-                        }}
-                        className="group flex flex-col border border-raveBorder bg-panel/30 transition-all duration-200 hover:border-raveRed hover:bg-black/90 overflow-hidden transform-gpu"
-                        aria-label={"Abrir en YouTube: " + video.title}
-                      >
-                        {/* Thumbnail / Media Preview */}
-                        <div className="relative aspect-video w-full overflow-hidden bg-black border-b border-raveBorder">
+                      /* External YouTube Video Showcase Card: thumbnail + exclusive title link below */
+                      <div key={video.id} className="flex flex-col">
+                        <a
+                          href={video.src}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="group relative aspect-video w-full overflow-hidden bg-black border border-white/10"
+                          aria-label={video.title || "Video de YouTube"}
+                        >
                           {video.thumbnailUrl && (
                             <Image
                               src={video.thumbnailUrl}
-                              alt={video.title}
+                              alt={video.title || "Video de YouTube"}
                               fill
                               sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                               className="object-cover transition-transform duration-500 group-hover:scale-105"
@@ -723,36 +687,23 @@ export function ArchivoView(): React.ReactElement {
                             />
                           )}
                           <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent" />
-
-                          {/* Top Badges */}
-                          <div className="absolute top-2 left-2 flex items-center gap-1.5 font-mono text-[10px] uppercase tracking-wider z-10">
-                            <span className="px-2 py-0.5 font-bold bg-raveRed text-black">
-                              YOUTUBE
-                            </span>
-                          </div>
-
-                          {/* Play Overlay Trigger Button / Icon */}
                           <div className="absolute inset-0 flex items-center justify-center bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity z-20">
                             <span className="border border-raveRed bg-black/90 px-3 py-1 font-mono text-xs text-raveRed font-bold uppercase tracking-widest group-hover:scale-105 transition-transform flex items-center gap-1.5">
                               <span className="text-raveRed">▶</span> REPRODUCIR EN YOUTUBE ↗
                             </span>
                           </div>
-                        </div>
-
-                        {/* Card Details: Título monospace limpio en la parte inferior */}
-                        <div className="p-4 flex flex-col flex-1 justify-between">
-                          <h3 className="font-mono text-sm font-bold uppercase tracking-tight text-white group-hover:text-raveRed transition-colors">
+                        </a>
+                        <a
+                          href={video.src}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="block mt-2"
+                        >
+                          <h3 className="text-xs uppercase font-mono text-white/90 tracking-wider hover:text-raveRed transition-colors">
                             {video.title}
                           </h3>
-
-                          <div className="mt-4 pt-3 border-t border-white/10 flex items-center justify-between font-mono text-[11px]">
-                            <span className="text-white hover:text-raveRed transition-colors uppercase tracking-wider">
-                              &gt; ABRIR EN YOUTUBE
-                            </span>
-                            <span className="text-white/40">TRANSMISIÓN</span>
-                          </div>
-                        </div>
-                      </a>
+                        </a>
+                      </div>
                     )
                   )}
                 </div>

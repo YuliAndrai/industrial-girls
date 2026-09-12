@@ -210,43 +210,52 @@ describe("Archive Section - Artists Roster Architecture — TDD Test Suite (@spe
       expect(ARCHIVE_VIDEOS.length).toBe(8);
     });
 
-    it("ensures every local video satisfies the ArchiveVideoItem contract and physical files exist on disk", () => {
+    it("ensures every local video satisfies the ArchiveVideoItem contract (no title/text) and physical files exist on disk", () => {
       // Step 1: Filter local video items
       const localVideos = ARCHIVE_VIDEOS.filter((v) => v.type === "local");
       expect(localVideos.length).toBe(5);
 
       const videosDir = path.resolve(__dirname, "../../../public/videos/archive");
 
-      // Step 2: Validate fields and physical existence for each local video
+      // Step 2: Validate fields, absence of title, and physical existence for each local video
       localVideos.forEach((video: ArchiveVideoItem, index) => {
         const expectedIndex = String(index + 1).padStart(2, "0");
         expect(video.id).toBe(`vid-${expectedIndex}`);
-        expect(video.title).toBe(`REGISTRO DE CAMPO // ${expectedIndex}`);
         expect(video.type).toBe("local");
         expect(video.src).toBe(`/videos/archive/video-${expectedIndex}.mp4`);
+
+        // Assert strictly zero title or label on local videos
+        expect(video.title).toBeUndefined();
+        expect("title" in video).toBe(false);
 
         const filePath = path.join(videosDir, `video-${expectedIndex}.mp4`);
         expect(fs.existsSync(filePath), `Physical file video-${expectedIndex}.mp4 must exist on disk`).toBe(true);
       });
     });
 
-    it("ensures every YouTube video satisfies the ArchiveVideoItem contract with valid URLs and thumbnails", () => {
+    it("ensures every YouTube video satisfies the ArchiveVideoItem contract with exact user titles, URLs and thumbnails", () => {
       // Step 1: Filter YouTube video items
       const ytVideos = ARCHIVE_VIDEOS.filter((v) => v.type === "youtube");
       expect(ytVideos.length).toBe(3);
 
-      // Step 2: Validate entity fields for all 3 real YouTube video records
+      const expectedTitles: Record<string, string> = {
+        "yt-01": "IVKA & HAZEL - ANTISISTEMA X INDUSTRIAL GIRLS (BOGOTÁ)",
+        "yt-02": "Industrial Girls - Juliana Yamasaki",
+        "yt-03": "INDUSTRIAL GIRLS - 4TO ANIVERSARIO 02 DIC 2023",
+      };
+
+      // Step 2: Validate entity fields and exact literal titles for all 3 real YouTube video records
       ytVideos.forEach((video: ArchiveVideoItem) => {
         expect(video.id).toBeDefined();
         expect(video.id.startsWith("yt-")).toBe(true);
 
         expect(video.title).toBeDefined();
-        expect(video.title.length).toBeGreaterThan(0);
+        expect(video.title).toBe(expectedTitles[video.id]);
 
         expect(video.type).toBe("youtube");
 
         expect(video.src).toBeDefined();
-        expect(video.src.includes("youtube.com") || video.src.includes("youtu.be")).toBe(true);
+        expect(video.src.includes("youtu")).toBe(true);
 
         expect(video.thumbnailUrl).toBeDefined();
         expect(video.thumbnailUrl?.includes("img.youtube.com/vi/")).toBe(true);
@@ -273,8 +282,10 @@ describe("Archive Section - Artists Roster Architecture — TDD Test Suite (@spe
     it("ensures zero mock showcase records exist in the video registry", () => {
       // Step 1: Assert absence of fake mock titles
       ARCHIVE_VIDEOS.forEach((video) => {
-        expect(video.title).not.toContain("Warehouse Session // Bogotá Subterránea");
-        expect(video.title).not.toContain("Showcase Berlín // Tresor Vault Showcase");
+        if (video.title) {
+          expect(video.title).not.toContain("Warehouse Session // Bogotá Subterránea");
+          expect(video.title).not.toContain("Showcase Berlín // Tresor Vault Showcase");
+        }
       });
     });
   });
@@ -350,6 +361,20 @@ describe("Archive Section - Artists Roster Architecture — TDD Test Suite (@spe
         content.includes("grid-cols-1 md:grid-cols-2 lg:grid-cols-3"),
         "Must render responsive media grid with 1 to 3 columns"
       ).toBe(true);
+    });
+
+    it("ensures local videos render exclusively the video player and YouTube cards render clean title links", () => {
+      // Step 1: Read view component source file
+      const content = fs.readFileSync(archivoViewPath, "utf8");
+
+      // Step 2: Verify local video player container has zero extra text or badges
+      expect(content.includes("LOCAL // MP4")).toBe(false);
+      expect(content.includes("> REPRODUCTOR LOCAL")).toBe(false);
+      expect(content.includes("REGISTRO DE CAMPO")).toBe(false);
+      expect(content.includes("TRANSMISIÓN")).toBe(false);
+
+      // Step 3: Verify YouTube title link structure
+      expect(content.includes('<h3 className="text-xs uppercase font-mono text-white/90 tracking-wider')).toBe(true);
     });
 
     it("ensures archivo-view.tsx integrates the photographic compact gallery terminal with dynamic telemetry", () => {

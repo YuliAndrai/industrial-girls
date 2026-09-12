@@ -386,19 +386,12 @@ export function getArtistsRoster(): readonly ArtistProfile[] {
  * (native local HTML5 video or external YouTube stream broadcast).
  */
 export interface ArchiveVideoItem {
-  /** Unique identifier for the video entry (e.g. vid-01 or yt-01) */
   readonly id: string;
-  /** Editorial title of the live recording, showcase, or hybrid session */
-  readonly title: string;
-  /** Video media type discriminator: 'local' for self-hosted MP4s or 'youtube' for external links */
   readonly type: "local" | "youtube";
-  /** Resource locator: local absolute path ('/videos/archive/video-XX.mp4') or YouTube URL */
   readonly src: string;
-  /** Optional or inferred thumbnail image URL */
+  readonly title?: string;
   readonly thumbnailUrl?: string;
-  /** Canonical direct URL (alias of src for external YouTube links) */
   readonly url?: string;
-  /** YouTube video ID (present when type is 'youtube') */
   readonly youtubeId?: string;
 }
 
@@ -413,60 +406,38 @@ export type ArchiveVideo = ArchiveVideoItem;
  * direct club broadcasts, and international hybrid showcases.
  */
 export const ARCHIVE_VIDEOS: readonly ArchiveVideoItem[] = [
-  {
-    id: "vid-01",
-    title: "REGISTRO DE CAMPO // 01",
-    type: "local",
-    src: "/videos/archive/video-01.mp4",
-  },
-  {
-    id: "vid-02",
-    title: "REGISTRO DE CAMPO // 02",
-    type: "local",
-    src: "/videos/archive/video-02.mp4",
-  },
-  {
-    id: "vid-03",
-    title: "REGISTRO DE CAMPO // 03",
-    type: "local",
-    src: "/videos/archive/video-03.mp4",
-  },
-  {
-    id: "vid-04",
-    title: "REGISTRO DE CAMPO // 04",
-    type: "local",
-    src: "/videos/archive/video-04.mp4",
-  },
-  {
-    id: "vid-05",
-    title: "REGISTRO DE CAMPO // 05",
-    type: "local",
-    src: "/videos/archive/video-05.mp4",
-  },
+  // 5 Videos Locales: SIN TÍTULO, SIN TEXTO, SOLO REPRODUCTOR
+  { id: "vid-01", type: "local", src: "/videos/archive/video-01.mp4" },
+  { id: "vid-02", type: "local", src: "/videos/archive/video-02.mp4" },
+  { id: "vid-03", type: "local", src: "/videos/archive/video-03.mp4" },
+  { id: "vid-04", type: "local", src: "/videos/archive/video-04.mp4" },
+  { id: "vid-05", type: "local", src: "/videos/archive/video-05.mp4" },
+
+  // 3 Videos YouTube: Títulos literales provistos por el usuario
   {
     id: "yt-01",
-    title: "SOMNIAC ONE // INDUSTRIAL HARDCORE HYBRID LIVE",
     type: "youtube",
-    src: "https://www.youtube.com/watch?v=AXM433YoYzQ",
-    url: "https://www.youtube.com/watch?v=AXM433YoYzQ",
+    title: "IVKA & HAZEL - ANTISISTEMA X INDUSTRIAL GIRLS (BOGOTÁ)",
+    src: "https://youtu.be/AXM433YoYzQ",
+    url: "https://youtu.be/AXM433YoYzQ",
     youtubeId: "AXM433YoYzQ",
     thumbnailUrl: "https://img.youtube.com/vi/AXM433YoYzQ/hqdefault.jpg",
   },
   {
     id: "yt-02",
-    title: "LADY MARU // EBM & ACID INDUSTRIAL HARD SET",
     type: "youtube",
-    src: "https://www.youtube.com/watch?v=hePpvpRLwwc",
-    url: "https://www.youtube.com/watch?v=hePpvpRLwwc",
+    title: "Industrial Girls - Juliana Yamasaki",
+    src: "https://www.youtube.com/live/hePpvpRLwwc",
+    url: "https://www.youtube.com/live/hePpvpRLwwc",
     youtubeId: "hePpvpRLwwc",
     thumbnailUrl: "https://img.youtube.com/vi/hePpvpRLwwc/hqdefault.jpg",
   },
   {
     id: "yt-03",
-    title: "JULIANA YAMASAKI // TECHNO INDUSTRIAL CLOSING",
     type: "youtube",
-    src: "https://www.youtube.com/watch?v=4vaopkiPKhc",
-    url: "https://www.youtube.com/watch?v=4vaopkiPKhc",
+    title: "INDUSTRIAL GIRLS - 4TO ANIVERSARIO 02 DIC 2023",
+    src: "https://youtu.be/4vaopkiPKhc",
+    url: "https://youtu.be/4vaopkiPKhc",
     youtubeId: "4vaopkiPKhc",
     thumbnailUrl: "https://img.youtube.com/vi/4vaopkiPKhc/hqdefault.jpg",
   },
@@ -504,12 +475,12 @@ export interface MediaArchiveItem {
  */
 export const MEDIA_ARCHIVE: readonly MediaArchiveItem[] = ARCHIVE_VIDEOS.map((v) => ({
   id: v.id,
-  title: v.title,
+  title: v.title || v.id,
   date: "2026-03-01",
   location: v.type === "local" ? "Archivo Local" : "YouTube Oficial",
   type: "video" as const,
   mediaUrl: v.src,
-  caption: v.title,
+  caption: v.title || v.id,
   thumbnailUrl: v.thumbnailUrl || "",
 }));
 
