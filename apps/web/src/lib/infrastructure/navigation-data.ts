@@ -49,13 +49,13 @@ export const MAIN_NAV_ITEMS: readonly NavItem[] = [
       { label: "DEMO DROP // ENVIAR", href: "/musica#demo-drop" },
     ],
   },
-  // Step 2: Master Route 02 - Desarrollo Artístico (Servicios 360°, Diagnóstico)
+  // Step 2: Master Route 02 - Desarrollo Artístico (Catálogo de Servicios, Diagnóstico)
   {
     label: "DESARROLLO ARTÍSTICO",
     href: "/desarrollo-artistico",
     note: "AGENCIA 360° // INFRAESTRUCTURA & GESTIÓN",
     subSections: [
-      { label: "PILARES & SERVICIOS 360°", href: "/desarrollo-artistico#servicios" },
+      { label: "CATÁLOGO DE SERVICIOS", href: "/desarrollo-artistico#servicios" },
       { label: "SOLICITAR DIAGNÓSTICO", href: "/desarrollo-artistico#diagnostico" },
     ],
   },

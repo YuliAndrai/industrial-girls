@@ -53,7 +53,7 @@ describe("Layer 4: Master Navigation Data Catalog Contract", () => {
     expect(dev).toBeDefined();
     expect(dev?.label).toBe("DESARROLLO ARTÍSTICO");
     expect(dev?.subSections).toEqual([
-      { label: "PILARES & SERVICIOS 360°", href: "/desarrollo-artistico#servicios" },
+      { label: "CATÁLOGO DE SERVICIOS", href: "/desarrollo-artistico#servicios" },
       { label: "SOLICITAR DIAGNÓSTICO", href: "/desarrollo-artistico#diagnostico" },
     ]);
   });
