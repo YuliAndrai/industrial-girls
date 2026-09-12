@@ -134,7 +134,8 @@ Este Pull Request implementa la Feature **${ISSUE_ID}**: **Directorio de Roster 
    - Botonera táctil compacta para perfiles externos (\`[ SPOTIFY ]\`, \`[ SOUNDCLOUD ]\`, \`[ IG ]\`, \`[ RA ]\`, \`[ BC ]\`).
 2. **Registro Audiovisual & Media Archive (Layer 1)**:
    - 37 fotogramas únicos indexados secuencialmente (\`photo-01.jpg\` a \`photo-37.jpg\`), eliminando copias duplicadas y redundantes de ráfaga.
-   - Terminal interactiva con telemetría en tiempo real: \`VISOR DE FOTOGRAMAS // 37 CAPTURAS\` y \`[ 01 / 37 ] // VISUAL REEL\`.
+   - Videoteca unificada de 7 elementos: 4 videos locales nativos (\`video-01.mp4\` a \`video-04.mp4\` con posters, fragmento \`#t=0.001\`, controles oscuros y cero texto redundante) y 3 videos reales de YouTube con títulos oficiales.
+   - Terminal interactiva con telemetría en tiempo real: \`VISOR DE FOTOGRAMAS // 37 CAPTURAS\`, \`[ 01 / 37 ] // VISUAL REEL\`, y pestañas dinámicas \`[ TODOS (44) ]\` y \`[ VIDEO (7) ]\`.
    - Modos de visualización: **Spotlight HUD** (monitor central + filmstrip horizontal) y **Modo Matriz Densa**.
    - Visor modal HD con controles de teclado (flechas y escape) y tarjeta de showcases de video multicámara.
 3. **Aceleración por GPU y Rendimiento a 60 FPS (Layers 1 & Performance)**:
@@ -145,7 +146,7 @@ Este Pull Request implementa la Feature **${ISSUE_ID}**: **Directorio de Roster 
    - Contención de desplazamiento (\`overscroll-x-contain\`).
 4. **Infraestructura y TDD (Layers 4 & Tests)**:
    - Catálogo fuertemente tipado en \`apps/web/src/lib/infrastructure/archive-data.ts\`.
-   - 23/23 tests pasando en verde en \`archive-data.test.ts\` y 183 tests globales del monorepo aprobados.
+   - 27/27 tests pasando en verde en \`archive-data.test.ts\` y 187 tests unitarios globales del monorepo + 45 harness tests aprobados al 100%.
 EOF
 elif [[ "${BRANCH}" == *"fix"* || "${BRANCH}" == *"bugfix"* || "${ISSUE_ID}" == "IGW-002" ]]; then
 cat <<EOF > "${OUTPUT_FILE}"
