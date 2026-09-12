@@ -270,5 +270,31 @@ describe("Home Page Minimalist Hero & Bento Command Center Suite", () => {
       // Should not contain active JSX rendering of BrandStatementSection
       expect(content).not.toMatch(new RegExp("<BrandStatementSection\\s*\/>"));
     });
+
+    it("certifies complete purge of all 7 legacy mock sections and imports from HomeView", () => {
+      // Step 1: Read home view component
+      const content = fs.readFileSync(homeViewFilePath, "utf-8");
+
+      // Step 2: Assert no imports of mock components
+      expect(content).not.toContain("EventsSection");
+      expect(content).not.toContain("RecordsSection");
+      expect(content).not.toContain("ResidentsSection");
+      expect(content).not.toContain("ShopSection");
+      expect(content).not.toContain("VideosSection");
+      expect(content).not.toContain("CommunitySection");
+      expect(content).not.toContain("NewsletterSection");
+
+      // Step 3: Assert no JSX rendering of mock components
+      expect(content).not.toMatch(/<EventsSection/);
+      expect(content).not.toMatch(/<RecordsSection/);
+      expect(content).not.toMatch(/<ResidentsSection/);
+      expect(content).not.toMatch(/<ShopSection/);
+      expect(content).not.toMatch(/<VideosSection/);
+      expect(content).not.toMatch(/<CommunitySection/);
+      expect(content).not.toMatch(/<NewsletterSection/);
+
+      // Step 4: Assert exclusive rendering of HeroSection in main
+      expect(content).toMatch(/<main[^>]*>[\s\S]*?<HeroSection \/>[\s\S]*?<\/main>/);
+    });
   });
 });

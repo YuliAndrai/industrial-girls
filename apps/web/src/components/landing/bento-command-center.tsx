@@ -28,7 +28,7 @@ export function BentoCommandCenter(): React.ReactElement {
     <section
       id="command-center"
       aria-label="Consola de comando y accesos directos de Industrial Girls"
-      className="w-full max-w-xl mx-auto px-4 py-4"
+      className="w-full max-w-xl mx-auto px-4 py-6"
     >
       {/* Step 2: Render Vertical Stacked Linktree-Style Button List */}
       <div className="space-y-3">
