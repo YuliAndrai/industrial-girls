@@ -3,7 +3,7 @@
  * @description Layer 4 / Tests: Master TDD test suite for Archive Section - Artists Roster Architecture (@spec IGW-012).
  *
  * ARCHITECTURAL BOUNDARY & TEST TARGETS:
- * - Layer 4 (Infrastructure & Data): Validates ARTISTS_ROSTER data integrity, type contracts, and getter functions.
+ * - Layer 4 (Infrastructure & Data): Validates ARTISTS_ROSTER exact 30 artists, absence of subgenre, type contracts, and getter functions.
  * - Layer 1 (Presentation): Validates semantic HTML invariants (single <h1>) and hero copy contracts on /archivo.
  */
 
@@ -13,20 +13,28 @@ import path from "path";
 import {
   ARTISTS_ROSTER,
   getArtistsRoster,
-  RosterArtistEntity,
+  ArtistProfile,
 } from "./archive-data";
 
 describe("Archive Section - Artists Roster Architecture — TDD Test Suite (@spec IGW-012)", () => {
-  describe("1. Layer 4 (Infrastructure): ARTISTS_ROSTER Data & Contract Invariants", () => {
-    it("exports ARTISTS_ROSTER with at least 8 artists", () => {
-      // Step 1: Verify catalog array exists and meets minimum required volume
+  describe("1. Layer 4 (Infrastructure): ARTISTS_ROSTER 30 Artists & Zero-Genre Invariants", () => {
+    it("validates that ARTISTS_ROSTER contains exactly 30 artists", () => {
+      // Step 1: Verify catalog array exists and has exact required length
       expect(Array.isArray(ARTISTS_ROSTER)).toBe(true);
-      expect(ARTISTS_ROSTER.length).toBeGreaterThanOrEqual(8);
+      expect(ARTISTS_ROSTER.length).toBe(30);
     });
 
-    it("ensures every artist entity satisfies RosterArtistEntity contract", () => {
+    it("validates that NO artist element contains the subgenre property", () => {
+      // Step 1: Assert absence of subgenre property across all 30 entities
+      ARTISTS_ROSTER.forEach((artist) => {
+        expect(artist).not.toHaveProperty("subgenre");
+        expect("subgenre" in artist).toBe(false);
+      });
+    });
+
+    it("ensures every artist entity satisfies ArtistProfile contract with valid links", () => {
       // Step 1: Validate entity fields for every record in the catalog
-      ARTISTS_ROSTER.forEach((artist: RosterArtistEntity) => {
+      ARTISTS_ROSTER.forEach((artist: ArtistProfile) => {
         expect(artist.id).toBeDefined();
         expect(typeof artist.id).toBe("string");
         expect(artist.id.trim().length).toBeGreaterThan(0);
@@ -43,33 +51,42 @@ describe("Archive Section - Artists Roster Architecture — TDD Test Suite (@spe
         expect(typeof artist.countryCode).toBe("string");
         expect(artist.countryCode.length).toBe(2);
 
-        expect(artist.subgenre).toBeDefined();
-        expect(typeof artist.subgenre).toBe("string");
-        expect(artist.subgenre.trim().length).toBeGreaterThan(0);
+        expect(artist.links).toBeDefined();
+        expect(typeof artist.links).toBe("object");
+
+        // Validate that at least one direct profile link is provided
+        const hasAtLeastOneLink = Boolean(
+          artist.links.spotify ||
+          artist.links.soundcloud ||
+          artist.links.residentAdvisor ||
+          artist.links.instagram ||
+          artist.links.bandcamp
+        );
+        expect(hasAtLeastOneLink).toBe(true);
       });
     });
 
-    it("verifies all 8 required scene artists are present with valid metadata", () => {
-      // Step 1: Define expected scene artists and their country codes
-      const expectedArtists = [
-        { name: "Clara Cuvé", countryCode: "DE", country: "Alemania" },
-        { name: "Øtta", countryCode: "PT", country: "Portugal" },
-        { name: "Parfait", countryCode: "FR", country: "Francia" },
-        { name: "Wallis", countryCode: "DE", country: "Alemania" },
-        { name: "Caravel", countryCode: "FR", country: "Francia" },
-        { name: "Somniac One", countryCode: "NL", country: "Países Bajos" },
-        { name: "Lady Maru", countryCode: "IT", country: "Italia" },
-        { name: "Juliana Yamasaki", countryCode: "BR", country: "Brasil" },
+    it("verifies prominent international scene artists are present in the catalog", () => {
+      // Step 1: Define key artists across different regions
+      const sampleArtists = [
+        { id: "clara-cuve", name: "Clara Cuvé", countryCode: "DE" },
+        { id: "otta", name: "Øtta", countryCode: "PT" },
+        { id: "parfait", name: "Parfait", countryCode: "FR" },
+        { id: "lessss", name: "Lessss", countryCode: "FR" },
+        { id: "wallis", name: "Wallis", countryCode: "DE" },
+        { id: "ayako-mori", name: "Ayako Mori", countryCode: "JP" },
+        { id: "lady-maru", name: "Lady Maru", countryCode: "IT" },
+        { id: "somniac-one", name: "Somniac One", countryCode: "NL" },
+        { id: "andhray", name: "Andhray", countryCode: "CO" },
+        { id: "juliana-yamasaki", name: "Juliana Yamasaki", countryCode: "BR" },
       ];
 
-      // Step 2: Assert each expected artist exists in ARTISTS_ROSTER
-      expectedArtists.forEach((expected) => {
-        const found = ARTISTS_ROSTER.find(
-          (a) => a.name.toLowerCase() === expected.name.toLowerCase()
-        );
+      // Step 2: Assert each sample artist exists in ARTISTS_ROSTER
+      sampleArtists.forEach((expected) => {
+        const found = ARTISTS_ROSTER.find((a) => a.id === expected.id);
         expect(found).toBeDefined();
+        expect(found?.name).toBe(expected.name);
         expect(found?.countryCode).toBe(expected.countryCode);
-        expect(found?.country).toBe(expected.country);
       });
     });
 
@@ -78,7 +95,7 @@ describe("Archive Section - Artists Roster Architecture — TDD Test Suite (@spe
       const rosterCopy = getArtistsRoster();
 
       // Step 2: Assert parity and reference independence
-      expect(rosterCopy.length).toBe(ARTISTS_ROSTER.length);
+      expect(rosterCopy.length).toBe(30);
       expect(rosterCopy).not.toBe(ARTISTS_ROSTER);
     });
   });
@@ -127,6 +144,15 @@ describe("Archive Section - Artists Roster Architecture — TDD Test Suite (@spe
         ),
         "archivo-view.tsx must render curated subtitle"
       ).toBe(true);
+    });
+
+    it("verifies that archivo-view.tsx has zero rendering of genres or subgenres", () => {
+      // Step 1: Read view component source file
+      const content = fs.readFileSync(archivoViewPath, "utf8");
+
+      // Step 2: Ensure subgenre property access does not exist in rendering logic
+      expect(content.includes("artist.subgenre")).toBe(false);
+      expect(content.includes("a.subgenre")).toBe(false);
     });
   });
 });

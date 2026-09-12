@@ -5,9 +5,10 @@
  * ARCHITECTURAL LAYER SPECIFICATION:
  * - Layer: Layer 1 (Presentation)
  * - Responsibility: Client Component rendering the interactive artists roster directory with tactical brutalist styling,
- *   monospace typography, reactive search filtering, and subtle red glow micro-interactions.
+ *   monospace typography, reactive search filtering, and clean interactive profile links.
  * - Invariant: Exactly one semantic H1 element per route. Zero raw fetch or database access;
  *   consumes immutable datasets from Layer 4 Infrastructure (archive-data).
+ * - Invariant: Zero musical genre or subgenre badges or columns displayed.
  */
 
 "use client";
@@ -21,30 +22,8 @@ import { useDrawer } from "@/lib/hooks/use-drawer";
 import { useSoundFx } from "@/lib/hooks/use-sound-fx";
 import {
   getArtistsRoster,
-  RosterArtistEntity,
+  ArtistProfile,
 } from "@/lib/infrastructure/archive-data";
-
-/**
- * Maps an ISO 3166-1 alpha-2 country code to its corresponding national flag emoji.
- *
- * @param {string} code - Two-letter country code.
- * @returns {string} Emoji flag character or territorial globe symbol.
- */
-function getCountryFlag(code: string): string {
-  const flags: Record<string, string> = {
-    DE: "🇩🇪",
-    PT: "🇵🇹",
-    FR: "🇫🇷",
-    NL: "🇳🇱",
-    IT: "🇮🇹",
-    BR: "🇧🇷",
-    CO: "🇨🇴",
-    ES: "🇪🇸",
-    GB: "🇬🇧",
-    US: "🇺🇸",
-  };
-  return flags[code.toUpperCase()] || "🌐";
-}
 
 /**
  * Interactive Client Component for the Archive Section and Artists Roster.
@@ -62,7 +41,7 @@ export function ArchivoView(): React.ReactElement {
   // Step 3: Reactive state for client-side search query filtering
   const [searchQuery, setSearchQuery] = useState("");
 
-  // Step 4: Filter artists roster based on name, country, or sonic subgenre
+  // Step 4: Filter artists roster based on name, country, or country code
   const filteredArtists = useMemo(() => {
     const query = searchQuery.trim().toLowerCase();
     if (!query) return artists;
@@ -70,8 +49,7 @@ export function ArchivoView(): React.ReactElement {
       (a) =>
         a.name.toLowerCase().includes(query) ||
         a.country.toLowerCase().includes(query) ||
-        a.countryCode.toLowerCase().includes(query) ||
-        a.subgenre.toLowerCase().includes(query)
+        a.countryCode.toLowerCase().includes(query)
     );
   }, [artists, searchQuery]);
 
@@ -124,87 +102,95 @@ export function ArchivoView(): React.ReactElement {
               {/* Search Filter Input */}
               <div className="w-full sm:w-80">
                 <label htmlFor="artist-search" className="sr-only">
-                  Buscar artista, país o estilo
+                  Buscar artista o país
                 </label>
                 <input
                   id="artist-search"
                   type="text"
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  placeholder="Buscar por alias, país o subgénero..."
+                  placeholder="Buscar por alias o país..."
                   className="w-full border border-raveBorder bg-panel px-4 py-2.5 font-mono text-xs text-white placeholder:text-neutral-600 focus:border-raveRed focus:outline-none focus:ring-1 focus:ring-raveRed"
                 />
               </div>
             </div>
 
-            {/* Typographic High-Impact Cards Grid */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
-              {filteredArtists.map((artist: RosterArtistEntity) => (
+            {/* Tactical Brutalism Roster Directory Rows */}
+            <div className="flex flex-col divide-y divide-raveBorder border border-raveBorder bg-panel/30">
+              {filteredArtists.map((artist: ArtistProfile, index: number) => (
                 <article
                   key={artist.id}
-                  className="group relative border border-raveBorder bg-panel/60 p-6 transition-all duration-300 hover:border-raveRed hover:shadow-[0_0_25px_rgba(255,0,0,0.25)] hover:bg-black/95 flex flex-col justify-between"
+                  className="group relative flex flex-col md:flex-row md:items-center justify-between p-4 sm:px-6 transition-all duration-200 hover:bg-black/90 hover:border-l-4 hover:border-l-raveRed"
                 >
-                  {/* Subtle Red Scanline / Corner Accent */}
-                  <div className="pointer-events-none absolute top-0 right-0 h-4 w-4 border-t-2 border-r-2 border-transparent group-hover:border-raveRed transition-colors" />
-
-                  <div>
-                    {/* Country Code & Flag Indicator */}
-                    <div className="flex items-center justify-between border-b border-raveBorder/50 pb-3 mb-4">
-                      <span className="font-mono text-xs text-raveRed uppercase font-bold tracking-wider flex items-center gap-1.5">
-                        <span aria-hidden="true">{getCountryFlag(artist.countryCode)}</span>
-                        <span>{"[" + artist.countryCode + "]"}</span>
-                      </span>
-                      <span className="font-mono text-[11px] text-neutral-400 uppercase">
-                        {artist.country}
-                      </span>
-                    </div>
-
-                    {/* Artist Display Name */}
-                    <h3 className="text-xl sm:text-2xl font-black uppercase tracking-tight text-white group-hover:text-raveRed group-hover:drop-shadow-[0_0_10px_rgba(255,0,0,0.5)] transition-colors">
+                  {/* Left Column: Index, Artist Name & Country Code */}
+                  <div className="flex items-center gap-3 sm:gap-4">
+                    <span className="font-mono text-xs text-neutral-500 w-8 shrink-0">
+                      {String(index + 1).padStart(2, "0")}
+                    </span>
+                    <h3 className="text-base sm:text-lg font-black uppercase tracking-tight text-white group-hover:text-raveRed group-hover:drop-shadow-[0_0_10px_rgba(255,0,0,0.5)] transition-colors">
                       {artist.name}
                     </h3>
-
-                    {/* Sonic Subgenre */}
-                    <div className="mt-3 font-mono text-xs text-neutral-300 flex items-center gap-2">
-                      <span className="text-raveRed font-bold" aria-hidden="true">{"//"}</span>
-                      <span className="text-neutral-200">{artist.subgenre}</span>
-                    </div>
+                    <span className="font-mono text-xs font-bold text-raveRed tracking-wider">
+                      {"[" + artist.countryCode + "]"}
+                    </span>
                   </div>
 
-                  {/* Optional Direct Social / Profile Links */}
-                  {artist.socialLinks && (
-                    <div className="mt-6 pt-3 border-t border-raveBorder/40 flex items-center gap-3 font-mono text-[11px]">
-                      {artist.socialLinks.soundcloud && (
+                  {/* Right Column: Interactive Profile Link Buttons */}
+                  {artist.links && (
+                    <div className="mt-3 md:mt-0 flex flex-wrap items-center gap-2 sm:gap-3 font-mono text-[11px]">
+                      {artist.links.spotify && (
                         <a
-                          href={artist.socialLinks.soundcloud}
+                          href={artist.links.spotify}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="text-neutral-400 hover:text-raveRed transition-colors uppercase tracking-wider"
-                          aria-label={`SoundCloud de ${artist.name}`}
+                          className="px-2.5 py-1 border border-raveBorder/60 text-neutral-400 hover:text-black hover:bg-raveRed hover:border-raveRed transition-all uppercase tracking-wider"
+                          aria-label={"Spotify de " + artist.name}
                         >
-                          [ SC ]
+                          [ SPOTIFY ]
                         </a>
                       )}
-                      {artist.socialLinks.ra && (
+                      {artist.links.soundcloud && (
                         <a
-                          href={artist.socialLinks.ra}
+                          href={artist.links.soundcloud}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="text-neutral-400 hover:text-raveRed transition-colors uppercase tracking-wider"
-                          aria-label={`Resident Advisor de ${artist.name}`}
+                          className="px-2.5 py-1 border border-raveBorder/60 text-neutral-400 hover:text-black hover:bg-raveRed hover:border-raveRed transition-all uppercase tracking-wider"
+                          aria-label={"SoundCloud de " + artist.name}
+                        >
+                          [ SOUNDCLOUD ]
+                        </a>
+                      )}
+                      {artist.links.instagram && (
+                        <a
+                          href={artist.links.instagram}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="px-2.5 py-1 border border-raveBorder/60 text-neutral-400 hover:text-black hover:bg-raveRed hover:border-raveRed transition-all uppercase tracking-wider"
+                          aria-label={"Instagram de " + artist.name}
+                        >
+                          [ IG ]
+                        </a>
+                      )}
+                      {artist.links.residentAdvisor && (
+                        <a
+                          href={artist.links.residentAdvisor}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="px-2.5 py-1 border border-raveBorder/60 text-neutral-400 hover:text-black hover:bg-raveRed hover:border-raveRed transition-all uppercase tracking-wider"
+                          aria-label={"Resident Advisor de " + artist.name}
                         >
                           [ RA ]
                         </a>
                       )}
-                      {artist.socialLinks.instagram && (
+                      {artist.links.bandcamp && (
                         <a
-                          href={artist.socialLinks.instagram}
+                          href={artist.links.bandcamp}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="text-neutral-400 hover:text-raveRed transition-colors uppercase tracking-wider"
-                          aria-label={`Instagram de ${artist.name}`}
+                          className="px-2.5 py-1 border border-raveBorder/60 text-neutral-400 hover:text-black hover:bg-raveRed hover:border-raveRed transition-all uppercase tracking-wider"
+                          aria-label={"Bandcamp de " + artist.name}
                         >
-                          [ IG ]
+                          [ BC ]
                         </a>
                       )}
                     </div>
