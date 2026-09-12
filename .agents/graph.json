@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-09-11T21:29:16.925Z",
+  "generatedAt": "2026-09-11T23:43:30.978Z",
   "nodes": [
     {
       "id": "AGENTS.md",
@@ -204,6 +204,18 @@
       "type": "governance",
       "label": "fix-jaymusicmachine-IGW-010-events-hero-curated-dates",
       "path": "knowledge\\fixes\\fix-jaymusicmachine-IGW-010-events-hero-curated-dates.md"
+    },
+    {
+      "id": "knowledge\\fixes\\fix-jaymusicmachine-IGW-011-events-hero-top-badge-implementation.md",
+      "type": "governance",
+      "label": "fix-jaymusicmachine-IGW-011-events-hero-top-badge-implementation",
+      "path": "knowledge\\fixes\\fix-jaymusicmachine-IGW-011-events-hero-top-badge-implementation.md"
+    },
+    {
+      "id": "knowledge\\fixes\\fix-jaymusicmachine-IGW-011-events-hero-top-badge.md",
+      "type": "governance",
+      "label": "fix-jaymusicmachine-IGW-011-events-hero-top-badge",
+      "path": "knowledge\\fixes\\fix-jaymusicmachine-IGW-011-events-hero-top-badge.md"
     },
     {
       "id": "knowledge\\governance\\clean-code-folder-structure.md",

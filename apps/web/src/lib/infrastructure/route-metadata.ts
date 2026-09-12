@@ -20,7 +20,8 @@ export type AppRouteKey =
   | "musica"
   | "desarrolloArtistico"
   | "eventos"
-  | "comunidad";
+  | "comunidad"
+  | "archivo";
 
 /**
  * Route metadata mapping contract ensuring complete coverage of all platform sections.
@@ -232,4 +233,44 @@ export const ROUTE_METADATA: RouteMetadataMap = {
       images: [DEFAULT_OG_IMAGE],
     },
   },
+
+  // Step 6: Configure Archive & Artists Roster route metadata (/archivo)
+  archivo: {
+    title: "ROSTER DE ARTISTAS & MEMORIA VISUAL | INDUSTRIAL GIRLS",
+    description:
+      "Registro de DJs, productoras y directos que han formado parte del circuito sonoro de Industrial Girls.",
+    keywords: [
+      "Roster de Artistas",
+      "DJs Mujeres",
+      "Female Techno DJs",
+      "Directorio Industrial Girls",
+      "Hard Techno Roster",
+      "Industrial Rave Artists",
+    ],
+    openGraph: {
+      title: "ROSTER DE ARTISTAS & MEMORIA VISUAL | INDUSTRIAL GIRLS",
+      description:
+        "Registro de DJs, productoras y directos que han formado parte del circuito sonoro de Industrial Girls.",
+      url: `${SITE_URL}/archivo`,
+      siteName: "Industrial Girls",
+      locale: "es_ES",
+      type: "website",
+      images: [
+        {
+          url: DEFAULT_OG_IMAGE,
+          width: 1200,
+          height: 630,
+          alt: "Industrial Girls - Roster de Artistas & Memoria Visual",
+        },
+      ],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: "ROSTER DE ARTISTAS & MEMORIA VISUAL | INDUSTRIAL GIRLS",
+      description:
+        "Registro de DJs, productoras y directos que han formado parte del circuito sonoro de Industrial Girls.",
+      images: [DEFAULT_OG_IMAGE],
+    },
+  },
 };
+
