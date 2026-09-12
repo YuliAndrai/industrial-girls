@@ -159,6 +159,28 @@ describe("Community Journal Module — Phase 2a: Structural Verification (IGW-00
       expect(typeof getArticleBySlug, "getArticleBySlug must be a function").toBe("function");
       expect(typeof getArticleComments, "getArticleComments must be a function").toBe("function");
     });
+
+    it("should certify that INITIAL_COMMENTS is completely purged of mock comments and fabricated testimonials", () => {
+      // Step 1: Invariant check - No fake or simulated user comments exist in catalog
+      expect(INITIAL_COMMENTS).toHaveLength(0);
+
+      // Step 2: Querying comments for any article returns an empty collection
+      JOURNAL_ARTICLES.forEach((article) => {
+        const comments = getArticleComments(article.slug);
+        expect(comments).toHaveLength(0);
+      });
+
+      // Step 3: Verify zero fabricated user handles exist in community catalog source
+      const catalogSource = fs.readFileSync(
+        path.resolve(process.cwd(), "apps/web/src/lib/infrastructure/community-catalog.ts"),
+        "utf-8"
+      );
+      expect(catalogSource).not.toMatch(/VANE_LIVE/);
+      expect(catalogSource).not.toMatch(/ModularKicks/);
+      expect(catalogSource).not.toMatch(/AUDIO_ING_BOG/);
+      expect(catalogSource).not.toMatch(/BogotaUnderground/);
+      expect(catalogSource).not.toMatch(/PROD_DIRECT_DEMO/);
+    });
   });
 
   describe("Layer 3: Domain / Pipelines — community-comment-pipeline.ts", () => {
@@ -884,6 +906,27 @@ describe("Community Journal Module — Phase 5: Behavioral Domain Logic & Catalo
         pageContent,
         "comunidad/page.tsx must render <CommunitySubscription"
       ).toMatch(/<CommunitySubscription\b/);
+    });
+
+    it("should ensure DiscussionConsole renders clean debate box and has purged mock comment feeds", () => {
+      // Arrange: Resolve absolute path to DiscussionConsole presentation component
+      const consolePath = path.resolve(
+        process.cwd(),
+        "apps/web/src/components/community/discussion-console.tsx"
+      );
+
+      // Act: Read component source
+      const consoleSource = fs.readFileSync(consolePath, "utf-8");
+
+      // Assert: Verify debate box heading is present
+      expect(consoleSource).toContain("DEBATE, DÉJANOS TU COMENTARIO.");
+
+      // Assert: Verify mock comments feed and fabricated thread elements have been completely purged
+      expect(consoleSource).not.toContain("// HILO ACTIVO //");
+      expect(consoleSource).not.toContain("COMENTARIOS REGISTRADOS");
+      expect(consoleSource).not.toContain("VANE_LIVE");
+      expect(consoleSource).not.toContain("ModularKicks");
+      expect(consoleSource).not.toContain("AUDIO_ING_BOG");
     });
   });
 

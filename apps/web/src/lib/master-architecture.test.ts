@@ -122,7 +122,7 @@ describe("Master Architecture (IGW-004) — TDD Test Suite", () => {
       const status = getEventCalendarStatus();
 
       // Step 2: Assert
-      expect(status.headline).toBe("SHOWCASES Y ANUNCIOS PRONTO");
+      expect(status.headline).toBe("SHOWCASES & FECHAS SELECCIONADAS");
       expect(status.statusLabel).toContain("TEMPORADA ACTIVA");
       expect(status.curatorialNote).toBeTruthy();
       expect(status.announcementWindow).toBeTruthy();
@@ -141,18 +141,13 @@ describe("Master Architecture (IGW-004) — TDD Test Suite", () => {
       expect(countries).toContain("España");
     });
 
-    it("should contain past showcase history entries with video embed identifiers", () => {
+    it("should provide past showcases collection purged of mock unconfirmed entries", () => {
       // Step 1: Arrange & Act
       const showcases = getPastShowcases();
 
-      // Step 2: Assert
-      expect(showcases.length).toBeGreaterThanOrEqual(3);
-      showcases.forEach((showcase) => {
-        expect(showcase.venue).toBeTruthy();
-        expect(showcase.location).toBeTruthy();
-        expect(showcase.youtubeVideoId).toBeTruthy();
-        expect(showcase.lineup.length).toBeGreaterThan(0);
-      });
+      // Step 2: Assert collection is an array with zero mock entries
+      expect(Array.isArray(showcases)).toBe(true);
+      expect(showcases.length).toBe(0);
     });
   });
 
@@ -265,11 +260,11 @@ describe("Master Architecture (IGW-004) — TDD Test Suite", () => {
       expect(nonExistent).toBeUndefined();
     });
 
-    it("should retrieve initial comments linked to articles", () => {
-      // Step 1: Query comments
+    it("should verify comments collection is purged of fabricated mock testimonials", () => {
+      // Step 1: Query comments for article
       const comments = getArticleComments("pioneras-del-voltaje");
-      expect(comments.length).toBeGreaterThan(0);
-      expect(comments[0].author).toBe("VANE_LIVE");
+      expect(Array.isArray(comments)).toBe(true);
+      expect(comments.length).toBe(0);
     });
   });
 

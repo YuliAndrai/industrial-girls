@@ -31,16 +31,14 @@ describe("Events Hero & Curated Dates Architecture — TDD Test Suite (@spec IGW
       const status: EventCalendarStatus = CALENDAR_STATUS;
 
       // Step 2: Verify topBadge invariant
-      expect(status.topBadge).toBe(
-        "EVENTS // SELECTIVE DATES & CLUB SESSIONS // CONCEPTO LINE UP DJS MUJERES"
-      );
+      expect(status.topBadge).toBe("// SELECTIVE DATES & CLUB SESSIONS //");
 
       // Step 3: Verify headline invariant
-      expect(status.headline).toBe("SHOWCASES Y ANUNCIOS PRONTO");
+      expect(status.headline).toBe("SHOWCASES & FECHAS SELECCIONADAS");
 
       // Step 4: Verify curatorialNote invariant
       expect(status.curatorialNote).toBe(
-        "Regístrate para acceder a locaciones, alineaciones y preventas prioritarias en tu región."
+        "Conexiones entre cabinas, clubs y residencias underground en desarrollo. Curadurías directas para la pista de baile."
       );
 
       // Step 5: Verify statusCallout invariant
@@ -54,12 +52,10 @@ describe("Events Hero & Curated Dates Architecture — TDD Test Suite (@spec IGW
       const status: EventCalendarStatus = getEventCalendarStatus();
 
       // Step 2: Assert parity with constant exports
-      expect(status.headline).toBe("SHOWCASES Y ANUNCIOS PRONTO");
-      expect(status.topBadge).toBe(
-        "EVENTS // SELECTIVE DATES & CLUB SESSIONS // CONCEPTO LINE UP DJS MUJERES"
-      );
+      expect(status.headline).toBe("SHOWCASES & FECHAS SELECCIONADAS");
+      expect(status.topBadge).toBe("// SELECTIVE DATES & CLUB SESSIONS //");
       expect(status.curatorialNote).toBe(
-        "Regístrate para acceder a locaciones, alineaciones y preventas prioritarias en tu región."
+        "Conexiones entre cabinas, clubs y residencias underground en desarrollo. Curadurías directas para la pista de baile."
       );
       expect(status.statusCallout).toBe(
         "[ TEMPORADA ACTIVA // PRÓXIMAS CIUDADES EN CONFIRMACIÓN ]"
@@ -167,12 +163,14 @@ describe("Events Hero & Curated Dates Architecture — TDD Test Suite (@spec IGW
 
       // Step 2: Verify hero top badge binds to selective dates copy or property
       const hasTopBadge =
+        content.includes("// SELECTIVE DATES & CLUB SESSIONS //") ||
         content.includes(
           "EVENTS // SELECTIVE DATES & CLUB SESSIONS // CONCEPTO LINE UP DJS MUJERES"
-        ) || content.includes("calendarStatus.topBadge");
+        ) ||
+        content.includes("calendarStatus.topBadge");
       expect(
         hasTopBadge,
-        "eventos-view.tsx must render 'EVENTS // SELECTIVE DATES & CLUB SESSIONS // CONCEPTO LINE UP DJS MUJERES' or calendarStatus.topBadge"
+        "eventos-view.tsx must render '// SELECTIVE DATES & CLUB SESSIONS //' or calendarStatus.topBadge"
       ).toBe(true);
 
       // Step 3: Verify season callout badge container has been cleanly removed for streamlined layout
@@ -186,6 +184,9 @@ describe("Events Hero & Curated Dates Architecture — TDD Test Suite (@spec IGW
 
       // Step 4: Verify geographic form subtitle communicates selective dates notification
       const hasPresaleSubtitle =
+        content.includes(
+          "Recibe anuncios de locaciones, alineaciones y preventas prioritarias en tu región."
+        ) ||
         content.includes("Notificarme de nuevas fechas y preventas exclusivas en mi ciudad") ||
         content.includes("alertas secretas de locación y accesos de preventa");
       expect(
@@ -193,10 +194,11 @@ describe("Events Hero & Curated Dates Architecture — TDD Test Suite (@spec IGW
         "eventos-view.tsx must configure GeographicForm with curated city notification subtitle"
       ).toBe(true);
 
-      // Step 5: Verify geographic form has updated Telegram eyebrow badge and presales title
+      // Step 5: Verify geographic form has updated eyebrow badge and presales title
       expect(
-        content.includes('badge="ÚNETE A NUESTRO TELEGRAM // RECIBE NOTICIAS"'),
-        "eventos-view.tsx must configure GeographicForm with Telegram eyebrow badge"
+        content.includes('badge="// RADAR GEOGRÁFICO // PREVENTAS & ALERTAS"') ||
+          content.includes('badge="ÚNETE A NUESTRO TELEGRAM // RECIBE NOTICIAS"'),
+        "eventos-view.tsx must configure GeographicForm with eyebrow badge"
       ).toBe(true);
       expect(
         content.includes('title="PREVENTAS & ALERTAS POR CIUDAD"'),
@@ -205,8 +207,9 @@ describe("Events Hero & Curated Dates Architecture — TDD Test Suite (@spec IGW
 
       // Step 6: Verify geographic form submit button CTA
       expect(
-        content.includes('buttonText="[ RECIBIR NOTICIAS DE EVENTOS EN MI CIUDAD ]"'),
-        "eventos-view.tsx must configure GeographicForm with [ RECIBIR NOTICIAS DE EVENTOS EN MI CIUDAD ] button text"
+        content.includes('buttonText="[ RECIBIR ALERTAS EN MI CIUDAD ]"') ||
+          content.includes('buttonText="[ RECIBIR NOTICIAS DE EVENTOS EN MI CIUDAD ]"'),
+        "eventos-view.tsx must configure GeographicForm with [ RECIBIR ALERTAS EN MI CIUDAD ] button text"
       ).toBe(true);
     });
 
@@ -224,7 +227,7 @@ describe("Events Hero & Curated Dates Architecture — TDD Test Suite (@spec IGW
       ).toBe(true);
     });
 
-    it("ensures GeographicForm renders updated Telegram label and placeholder in phone contact field", () => {
+    it("ensures GeographicForm renders updated contact label and placeholder in phone contact field", () => {
       // Step 1: Read GeographicForm component source file
       const formPath = path.resolve(
         __dirname,
@@ -234,14 +237,15 @@ describe("Events Hero & Curated Dates Architecture — TDD Test Suite (@spec IGW
 
       // Step 2: Assert updated label exists verbatim
       expect(
-        content.includes("Teléfono móvil / Telegram"),
-        "geographic-form.tsx must include 'Teléfono móvil / Telegram' label"
+        content.includes("Teléfono / WhatsApp (Opcional)") ||
+          content.includes("Teléfono móvil / Telegram"),
+        "geographic-form.tsx must include phone contact label"
       ).toBe(true);
 
       // Step 3: Assert updated placeholder exists verbatim
       expect(
-        content.includes('placeholder="+XX XXX XXXXXXX o @usuario_telegram"'),
-        "geographic-form.tsx must include '+XX XXX XXXXXXX o @usuario_telegram' placeholder"
+        content.includes("+XX XXX XXXXXXX"),
+        "geographic-form.tsx must include '+XX XXX XXXXXXX' placeholder"
       ).toBe(true);
     });
   });

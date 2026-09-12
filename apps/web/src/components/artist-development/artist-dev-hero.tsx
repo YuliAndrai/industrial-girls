@@ -59,7 +59,7 @@ export function ArtistDevHero(): React.ReactElement {
 
         {/* Step 5: Primary CTAs */}
         <div className="mt-10 flex flex-col gap-4 sm:flex-row sm:items-center">
-          <Link href="#diagnostico" className="focus:outline-none">
+          <Link href="#diagnostico" className="focus:outline-none" aria-label="Solicitar diagnóstico de desarrollo artístico">
             <TactileButton variant="primary" size="lg">
               <span className="flex items-center gap-2">
                 <span>[ SOLICITAR DIAGNÓSTICO ]</span>
@@ -68,10 +68,10 @@ export function ArtistDevHero(): React.ReactElement {
             </TactileButton>
           </Link>
 
-          <Link href="#servicios" className="focus:outline-none">
+          <Link href="#servicios" className="focus:outline-none" aria-label="Explorar catálogo de servicios de desarrollo artístico">
             <TactileButton variant="outline" size="lg">
               <span className="flex items-center gap-2">
-                <span>[ EXPLORAR 4 PILARES ]</span>
+                <span>[ CATÁLOGO DE SERVICIOS ]</span>
                 <span className="text-xs">&rarr;</span>
               </span>
             </TactileButton>

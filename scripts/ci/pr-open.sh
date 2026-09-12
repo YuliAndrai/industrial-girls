@@ -144,9 +144,9 @@ bash ./scripts/ci/pr-metadata-lint.sh \
   --policy-file "$POLICY_FILE"
 
 if [[ "$SIZE_EXEMPT" == "1" ]]; then
-  LINEAR_AUTOSTATUS=0 SIZE_EXEMPT=1 pnpm pr:ready --base "$BASE_REF" --policy-file "$POLICY_FILE" --validate-mode "$VALIDATE_MODE"
+  LINEAR_AUTOSTATUS=0 SIZE_EXEMPT=1 pnpm pr:ready --base "$BASE_REF" --policy-file "$POLICY_FILE" --validate-mode "$VALIDATE_MODE" --size-exempt 1
 else
-  LINEAR_AUTOSTATUS=0 pnpm pr:ready --base "$BASE_REF" --policy-file "$POLICY_FILE" --validate-mode "$VALIDATE_MODE"
+  LINEAR_AUTOSTATUS=0 pnpm pr:ready --base "$BASE_REF" --policy-file "$POLICY_FILE" --validate-mode "$VALIDATE_MODE" --size-exempt 0
 fi
 
 git push -u origin "$CURRENT_BRANCH"

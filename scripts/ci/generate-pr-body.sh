@@ -119,6 +119,35 @@ Este Pull Request implementa la Feature **${ISSUE_ID}**: Módulo de **Desarrollo
 5. **Suite de Pruebas Unitarias TDD**:
    - Validación de invariantes de catálogo y pipeline en \`apps/web/src/lib/artist-development.test.ts\`.
 EOF
+elif [[ "${BRANCH}" == *"archive"* || "${ISSUE_ID}" == "IGW-012" ]]; then
+cat <<EOF > "${OUTPUT_FILE}"
+## Summary
+Este Pull Request implementa la Feature **${ISSUE_ID}**: **Directorio de Roster de Artistas, Registro Audiovisual y Aceleración GPU en /archivo** para Industrial Girls:
+
+- Feature-Flag Strategy: Implementación modular y desacoplada en arquitectura de 4 capas para Next.js App Router en ruta \`/archivo\`.
+
+### 🚀 Principales Cambios y Componentes:
+1. **Directorio de Artistas (Layer 1)**:
+   - Maquetación en dos columnas equilibradas (\`lg:grid-cols-2\`) para optimizar la densidad visual y mitigar el scroll vertical excesivo.
+   - Título oficial del bloque: \`ARTISTAS EN NUESTROS EVENTOS, LABEL & PODCASTS\`.
+   - Roster curado de 44 artistas internacionales y nacionales consolidadas y emergentes sin etiquetas de género musical.
+   - Botonera táctil compacta para perfiles externos (\`[ SPOTIFY ]\`, \`[ SOUNDCLOUD ]\`, \`[ IG ]\`, \`[ RA ]\`, \`[ BC ]\`).
+2. **Registro Audiovisual & Media Archive (Layer 1)**:
+   - 37 fotogramas únicos indexados secuencialmente (\`photo-01.jpg\` a \`photo-37.jpg\`), eliminando copias duplicadas y redundantes de ráfaga.
+   - Videoteca unificada de 7 elementos: 4 videos locales nativos (\`video-01.mp4\` a \`video-04.mp4\` con posters, fragmento \`#t=0.001\`, controles oscuros y cero texto redundante) y 3 videos reales de YouTube con títulos oficiales.
+   - Terminal interactiva con telemetría en tiempo real: \`VISOR DE FOTOGRAMAS // 37 CAPTURAS\`, \`[ 01 / 37 ] // VISUAL REEL\`, y pestañas dinámicas \`[ TODOS (44) ]\` y \`[ VIDEO (7) ]\`.
+   - Modos de visualización: **Spotlight HUD** (monitor central + filmstrip horizontal) y **Modo Matriz Densa**.
+   - Visor modal HD con controles de teclado (flechas y escape) y tarjeta de showcases de video multicámara.
+3. **Aceleración por GPU y Rendimiento a 60 FPS (Layers 1 & Performance)**:
+   - Aceleración por hardware con \`transform-gpu\` (\`transform: translateZ(0)\`).
+   - Contención de renderizado (\`content-visibility: auto\` y \`contain-intrinsic-size\`) en miniaturas y tarjetas.
+   - Decodificación asíncrona (\`decoding="async"\`) y lazy loading (\`loading="lazy"\`).
+   - Eliminación de filtros pesados \`backdrop-blur-md\` sustituidos por fondos planos oscuros semitransparentes (\`bg-black/95\`).
+   - Contención de desplazamiento (\`overscroll-x-contain\`).
+4. **Infraestructura y TDD (Layers 4 & Tests)**:
+   - Catálogo fuertemente tipado en \`apps/web/src/lib/infrastructure/archive-data.ts\`.
+   - 28/28 tests pasando en verde en \`archive-data.test.ts\` y 188 tests unitarios globales del monorepo + 45 harness tests aprobados al 100%.
+EOF
 elif [[ "${BRANCH}" == *"fix"* || "${BRANCH}" == *"bugfix"* || "${ISSUE_ID}" == "IGW-002" ]]; then
 cat <<EOF > "${OUTPUT_FILE}"
 ## Summary

@@ -7,19 +7,16 @@
 "use client";
 
 import React from "react";
-import Link from "next/link";
+import Image from "next/image";
 import { Header } from "@/components/layout/header";
 import { NavigationDrawer } from "@/components/layout/navigation-drawer";
 import { Footer } from "@/components/layout/footer";
 import { FloatingSoundBar } from "@/components/landing/floating-sound-bar";
 import { GeographicForm } from "@/components/common/geographic-form";
-import { TactileButton } from "@/components/ui/tactile-button";
 import { useDrawer } from "@/lib/hooks/use-drawer";
 import { useSoundFx } from "@/lib/hooks/use-sound-fx";
-import {
-  getEventCalendarStatus,
-  getPastShowcases,
-} from "@/lib/infrastructure/events-catalog";
+import { getEventCalendarStatus } from "@/lib/infrastructure/events-catalog";
+import { getRecentShowcases } from "@/lib/infrastructure/events-data";
 
 /**
  * Events and touring calendar page view.
@@ -33,9 +30,9 @@ export function EventosView(): React.ReactElement {
   // Step 2: Manage global audio and tactile sound interactions
   const { isSoundEnabled, toggleSound } = useSoundFx();
 
-  // Step 3: Retrieve event calendar status and showcase social proof from infrastructure
+  // Step 3: Retrieve event calendar status and recent showcases from infrastructure
   const calendarStatus = getEventCalendarStatus();
-  const pastShowcases = getPastShowcases();
+  const recentShowcases = getRecentShowcases();
 
   return (
     <div className="flex min-h-screen flex-col bg-bg text-neutral-100 selection:bg-raveRed selection:text-black">
@@ -43,8 +40,8 @@ export function EventosView(): React.ReactElement {
       <NavigationDrawer isOpen={isOpen} onClose={closeDrawer} />
 
       <main className="flex-1 w-full">
-        {/* Calendar Season Status Hero */}
-        <section className="relative flex min-h-[50vh] w-full flex-col items-center justify-center overflow-hidden border-b-2 border-raveRed bg-black px-4 py-16 text-center rave-scanlines">
+        {/* Block 1: Hero Minimalista (Cabecera) */}
+        <section className="relative flex min-h-[45vh] w-full flex-col items-center justify-center overflow-hidden border-b-2 border-raveRed bg-black px-4 py-16 text-center rave-scanlines">
           <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_70%_50%_at_50%_40%,rgba(255,0,0,0.22),transparent_75%)]" />
           <div className="relative z-10 mx-auto max-w-4xl">
             {/* Step 4: Render top eyebrow badge with responsive wrapping and centering */}
@@ -60,83 +57,47 @@ export function EventosView(): React.ReactElement {
           </div>
         </section>
 
-        {/* Geographic Capture Section for Presales */}
-        <section className="w-full border-b border-raveBorder bg-bg py-16 px-4 sm:px-6">
+        {/* Block 2: Radar Geográfico (Formulario de Captación - id="radar") */}
+        <section id="radar" className="w-full border-b border-raveBorder bg-bg py-16 px-4 sm:px-6 scroll-mt-24">
           <div className="mx-auto max-w-3xl">
             <GeographicForm
               source="events"
-              badge="ÚNETE A NUESTRO TELEGRAM // RECIBE NOTICIAS"
+              badge="// RADAR GEOGRÁFICO // PREVENTAS & ALERTAS"
               title="PREVENTAS & ALERTAS POR CIUDAD"
-              subtitle="Notificarme de nuevas fechas y preventas exclusivas en mi ciudad."
-              buttonText="[ RECIBIR NOTICIAS DE EVENTOS EN MI CIUDAD ]"
+              subtitle="Recibe anuncios de locaciones, alineaciones y preventas prioritarias en tu región."
+              buttonText="[ RECIBIR ALERTAS EN MI CIUDAD ]"
             />
           </div>
         </section>
 
-        {/* Social Proof: Past Showcases History */}
-        <section className="w-full border-b border-raveBorder bg-panel/40 py-16 px-4 sm:px-6">
+        {/* Block 3: Últimos Showcases (id="calendario") */}
+        <section id="calendario" className="w-full border-b border-raveBorder bg-panel/40 py-16 px-4 sm:px-6 scroll-mt-24">
           <div className="mx-auto max-w-7xl">
-            <div className="flex flex-col sm:flex-row sm:items-end justify-between border-b-2 border-raveRed pb-4 mb-10 gap-4">
-              <div>
-                <span className="font-mono text-xs uppercase tracking-widest text-raveRed">
-                  {"// MEMORIA HISTÓRICA // SOCIAL PROOF"}
-                </span>
-                <h2 className="text-2xl sm:text-4xl font-black uppercase tracking-tight text-white mt-1">
-                  HISTORIAL DE SHOWCASES
-                </h2>
-              </div>
-              <Link href="/archivo" className="focus:outline-none">
-                <TactileButton variant="outline" size="sm">
-                  <span>[ EXPLORAR REGISTRO COMPLETO EN ARCHIVO &rarr; ]</span>
-                </TactileButton>
-              </Link>
+            <div className="border-b-2 border-raveRed pb-4 mb-10">
+              <span className="font-mono text-xs uppercase tracking-widest text-raveRed">
+                {"// MEMORIA HISTÓRICA // ARCHIVO VISUAL"}
+              </span>
+              <h2 className="text-2xl sm:text-4xl font-black uppercase tracking-tight text-white mt-1">
+                ÚLTIMOS SHOWCASES
+              </h2>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-              {pastShowcases.map((showcase) => (
-                <div
+            {/* Visual Flyers Grid (Cartel Proportion aspect-[3/4]) - CERO TEXTO SUPERPUESTO */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6">
+              {recentShowcases.map((showcase) => (
+                <article
                   key={showcase.id}
-                  className="border border-raveBorder bg-black p-6 flex flex-col justify-between hover:border-raveRed transition-all"
+                  className="group relative aspect-[3/4] w-full overflow-hidden rounded-sm border border-white/10 bg-black transition-all duration-300 hover:border-raveRed hover:shadow-rave"
                 >
-                  <div>
-                    <span className="font-mono text-xs text-raveRed font-bold">
-                      {showcase.date} &bull; {showcase.location}
-                    </span>
-                    <h3 className="text-xl font-black uppercase text-white mt-1">
-                      {showcase.venue}
-                    </h3>
-                    <p className="mt-2 font-mono text-xs text-neutral-300 leading-relaxed">
-                      {showcase.highlight}
-                    </p>
-
-                    <div className="mt-4 pt-3 border-t border-raveBorder/40">
-                      <span className="font-mono text-[10px] uppercase text-raveTextMuted block mb-1">
-                        LINEUP EJECUTADO:
-                      </span>
-                      <div className="flex flex-wrap gap-1">
-                        {showcase.lineup.map((artist) => (
-                          <span
-                            key={artist}
-                            className="border border-white/10 bg-panel px-2 py-0.5 font-mono text-[10px] text-white"
-                          >
-                            {artist}
-                          </span>
-                        ))}
-                      </div>
-                    </div>
-                  </div>
-
-                  <div className="mt-6 pt-3 border-t border-raveBorder/60 font-mono text-xs">
-                    <a
-                      href={"https://www.youtube.com/watch?v=" + showcase.youtubeVideoId}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="text-white hover:text-raveRed transition-colors"
-                    >
-                      &gt; VER REGISTRO EN YOUTUBE
-                    </a>
-                  </div>
-                </div>
+                  <Image
+                    src={showcase.flyerImage}
+                    alt={showcase.alt}
+                    fill
+                    sizes="(max-width: 640px) 100vw, (max-width: 768px) 50vw, (max-width: 1024px) 33vw, 20vw"
+                    className="object-cover transition-transform duration-500 group-hover:scale-105"
+                  />
+                  <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                </article>
               ))}
             </div>
           </div>

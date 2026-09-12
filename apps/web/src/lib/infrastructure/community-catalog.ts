@@ -156,56 +156,11 @@ export const JOURNAL_ARTICLES: JournalArticle[] = [
 ];
 
 /**
- * Initial reader discussion comments with roles and threading.
+ * Baseline initial comments collection.
+ * Invariant: Zero mock comments or fabricated user testimonials.
+ * Real participant comments are received dynamically via the debate console under editorial moderation.
  */
-export const INITIAL_COMMENTS: ArticleComment[] = [
-  {
-    id: "comm-01",
-    articleId: "pioneras-del-voltaje",
-    author: "VANE_LIVE",
-    content: "El trabajo de Eliane Radigue con el ARP 2500 cambió completamente mi forma de entender los drones modulares. Fundamental este rescate.",
-    createdAt: "2025-02-12T14:30:00Z",
-    role: "Productora / Live Act",
-    isPublic: true,
-  },
-  {
-    id: "comm-01-reply",
-    articleId: "pioneras-del-voltaje",
-    author: "AUDIO_ING_BOG",
-    content: "La retroalimentación en matrices de pines es un arte perdido; hoy pocos plugins logran emular esa micro-inestabilidad térmica.",
-    createdAt: "2025-02-13T10:15:00Z",
-    role: "Ingeniera de Sonido",
-    parentId: "comm-01",
-    isPublic: true,
-  },
-  {
-    id: "comm-02",
-    articleId: "huella-de-silicio-chips-circuitos",
-    author: "ModularKicks",
-    content: "Totalmente de acuerdo con el Buchla 200. La modulación cruzada analógica introduce una riqueza que la cuantización digital aún no alcanza.",
-    createdAt: "2025-04-20T09:15:00Z",
-    role: "Productora / Live Act",
-    isPublic: true,
-  },
-  {
-    id: "comm-03",
-    articleId: "arquitectura-hard-techno-distorsion-armonica",
-    author: "BogotaUnderground",
-    content: "Las fiestas de almacén en Bogotá son los únicos lugares donde todavía se siente la pureza de la música sin vigilancia corporativa.",
-    createdAt: "2025-09-16T22:05:00Z",
-    role: "Melómana / Asistente",
-    isPublic: true,
-  },
-  {
-    id: "comm-04-private",
-    articleId: "pioneras-del-voltaje",
-    author: "PROD_DIRECT_DEMO",
-    content: "Aporte directo y confidencial para el equipo editorial de Industrial Girls.",
-    createdAt: "2025-02-14T11:00:00Z",
-    role: "Productora / Live Act",
-    isPublic: false,
-  },
-];
+export const INITIAL_COMMENTS: ArticleComment[] = [];
 
 /**
  * Retrieves all journal articles.

@@ -1,177 +1,93 @@
 /**
  * @file apps/web/src/components/layout/footer.tsx
- * @description Layer 1: Presentation - Brutalist Underground Footer.
- * Aligned with the 5 master routes, official socials (SoundCloud, YouTube, Instagram),
- * and interactive "Merch (Coming Soon)" waitlist modal trigger.
+ * @description Layer 1: Presentation - Minimal Industrial Footer.
+ * Ultra-streamlined technical single-row footer bar displaying copyright
+ * and compact official social channels.
  */
 
-"use client";
-
-import React, { useState } from "react";
-import Link from "next/link";
-import Image from "next/image";
-import { MerchWaitlistModal } from "@/components/common/merch-waitlist-modal";
+import React from "react";
 
 /**
- * Footer component providing label manifesto, 5 master section links, socials, and Merch waitlist.
+ * Minimal technical footer bar for Industrial Girls.
  *
- * @returns {React.ReactElement} The rendered footer layout.
+ * @returns {React.ReactElement} The rendered minimal footer.
  */
 export function Footer(): React.ReactElement {
-  // Step 1: Manage merch waitlist modal display state
-  const [isMerchModalOpen, setIsMerchModalOpen] = useState(false);
-
-  // Step 2: Render brutalist footer with 5 master sections, demo policy, and official frequencies
+  // Step 1: Render minimalist technical single-row bar
   return (
-    <>
-      <footer className="w-full border-t-2 border-raveRed bg-black text-white relative z-10">
-        {/* Top Banner with Slogan */}
-        <div className="border-b border-raveBorder bg-panel/60 py-3 px-4 sm:px-6">
-          <div className="mx-auto flex max-w-7xl items-center justify-between font-mono text-[11px] uppercase tracking-widest text-raveTextMuted">
-            <span>{"// INDUSTRIAL GIRLS RECORDINGS • EST. 2026"}</span>
-            <span className="hidden sm:inline">NO WEAK KICKS &bull; PURE UNDERGROUND SOUND</span>
-          </div>
+    <footer className="w-full border-t border-white/10 bg-black py-6 px-4">
+      <div className="max-w-5xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4 text-xs font-mono text-neutral-500">
+        {/* Left: Copyright text */}
+        <div>
+          <span>© 2026 INDUSTRIAL GIRLS // ALL RIGHTS RESERVED.</span>
         </div>
 
-        <div className="mx-auto max-w-7xl px-4 pt-12 pb-28 sm:px-6 sm:pt-16 sm:pb-32">
-          <div className="grid grid-cols-1 gap-10 sm:grid-cols-2 lg:grid-cols-4">
-            {/* Column 1: Brand & Logo */}
-            <div className="flex flex-col gap-4">
-              <div className="relative h-14 w-24 overflow-hidden rounded-sm border border-raveRed/50 bg-black">
-                <Image
-                  src="/assets/images/industrial-girls-logo-grid.png"
-                  alt="Industrial Girls Recordings"
-                  fill
-                  sizes="96px"
-                  className="object-contain p-1"
-                />
-              </div>
-              <p className="font-mono text-xs leading-relaxed text-raveTextMuted">
-                Plataforma de infraestructura cultural y sonora dedicada al hard techno industrial, la cultura de almacén y la vanguardia electrónica.
-              </p>
-              <div className="flex items-center gap-2 font-mono text-[10px] text-raveRed">
-                <span className="h-1.5 w-1.5 rounded-full bg-raveRed animate-pulse" />
-                TRANSMITIENDO DESDE BERLÍN & BOGOTÁ
-              </div>
-            </div>
-
-            {/* Column 2: 5 Master Sections */}
-            <div className="flex flex-col gap-3">
-              <h4 className="font-mono text-xs font-bold uppercase tracking-widest text-raveRed">
-                [ 5 SECCIONES MAESTRAS ]
-              </h4>
-              <nav className="flex flex-col gap-2 font-mono text-xs text-neutral-300">
-                <Link href="/musica" className="hover:text-raveRed transition-colors">
-                  &gt; 01. Música (Releases & Podcasts)
-                </Link>
-                <Link href="/desarrollo-artistico" className="hover:text-raveRed transition-colors">
-                  &gt; 02. Desarrollo Artístico (Agencia 360°)
-                </Link>
-                <Link href="/eventos" className="hover:text-raveRed transition-colors">
-                  &gt; 03. Eventos & Showcases
-                </Link>
-                <Link href="/archivo" className="hover:text-raveRed transition-colors">
-                  &gt; 04. Archivo & Roster
-                </Link>
-                <Link href="/comunidad" className="hover:text-raveRed transition-colors">
-                  &gt; 05. Comunidad & Journal
-                </Link>
-              </nav>
-            </div>
-
-            {/* Column 3: Demo Policy & Merch Waitlist Action */}
-            <div className="flex flex-col gap-3">
-              <h4 className="font-mono text-xs font-bold uppercase tracking-widest text-raveRed">
-                [ DEMO DROP & MERCH ]
-              </h4>
-              <p className="font-mono text-xs text-raveTextMuted">
-                Recepción de pistas terminadas (145-165 BPM) vía SoundCloud privado o Dropbox.
-              </p>
-              <Link
-                href="/musica#demo-drop"
-                className="font-mono text-xs font-bold text-white hover:text-raveRed underline decoration-raveRed underline-offset-4 transition-colors"
-              >
-                &gt; IR A REGLAS DE DEMO DROP
-              </Link>
-              <div className="pt-2">
-                <button
-                  type="button"
-                  onClick={() => setIsMerchModalOpen(true)}
-                  className="border border-white/30 bg-panel px-3 py-1.5 font-mono text-xs text-white hover:border-raveRed hover:text-raveRed transition-all text-left w-full"
-                >
-                  <span className="text-raveRed font-bold mr-1">&bull;</span>
-                  Merch (Coming Soon) &rarr;
-                </button>
-              </div>
-            </div>
-
-            {/* Column 4: Official Frequencies */}
-            <div className="flex flex-col gap-3">
-              <h4 className="font-mono text-xs font-bold uppercase tracking-widest text-raveRed">
-                [ FRECUENCIAS OFICIALES ]
-              </h4>
-              <div className="flex flex-col gap-2 font-mono text-xs text-neutral-300">
-                <a
-                  href="https://soundcloud.com"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="hover:text-raveRed transition-colors"
-                  aria-label="Canal oficial de SoundCloud de Industrial Girls"
-                >
-                  &bull; SoundCloud // Industrial Girls
-                </a>
-                <a
-                  href="https://youtube.com"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="hover:text-raveRed transition-colors"
-                  aria-label="Canal oficial de YouTube de Industrial Girls TV"
-                >
-                  &bull; YouTube // Industrial Girls TV
-                </a>
-                <a
-                  href="https://instagram.com"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="hover:text-raveRed transition-colors"
-                  aria-label="Perfil oficial de Instagram de Industrial Girls"
-                >
-                  &bull; Instagram // @industrialgirls_ofc
-                </a>
-                <a
-                  href="https://bandcamp.com"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="hover:text-raveRed transition-colors"
-                  aria-label="Tienda oficial de Bandcamp de Industrial Girls Wax"
-                >
-                  &bull; Bandcamp // Industrial Girls Wax
-                </a>
-              </div>
-            </div>
-          </div>
-
-          {/* Bottom Legal Bar */}
-          <div className="mt-12 flex flex-col items-center justify-between border-t border-raveBorder/80 pt-6 sm:flex-row gap-4">
-            <p className="font-mono text-[11px] text-neutral-500">
-              &copy; 2026 Industrial Girls Records. All rights reserved. Tactile Brutalism Edition.
-            </p>
-            <div className="flex items-center gap-6 font-mono text-[11px] text-neutral-500">
-              <span className="hover:text-raveRed cursor-pointer">PRIVACY POLICY</span>
-              <span>&bull;</span>
-              <span className="hover:text-raveRed cursor-pointer">TERMS OF SERVICE</span>
-              <span>&bull;</span>
-              <span className="text-raveRed font-bold">ALL UNDERGROUND FREQUENCIES</span>
-            </div>
-          </div>
-        </div>
-      </footer>
-
-      {/* Merch Waitlist Modal */}
-      <MerchWaitlistModal
-        isOpen={isMerchModalOpen}
-        onClose={() => setIsMerchModalOpen(false)}
-      />
-    </>
+        {/* Right: Compact official networks in line */}
+        <nav
+          aria-label="Redes oficiales de Industrial Girls"
+          className="flex flex-wrap items-center justify-center gap-2 sm:gap-3 text-neutral-400"
+        >
+          <a
+            href="https://soundcloud.com/industrial_girls"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="SoundCloud oficial de Industrial Girls"
+            className="hover:text-white transition-colors"
+          >
+            [ SOUNDCLOUD ]
+          </a>
+          <span className="text-neutral-700">&bull;</span>
+          <a
+            href="https://www.beatport.com/es/label/industrial-girls/106032"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Beatport oficial de Industrial Girls"
+            className="hover:text-white transition-colors"
+          >
+            [ BEATPORT ]
+          </a>
+          <span className="text-neutral-700">&bull;</span>
+          <a
+            href="https://open.spotify.com"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Spotify oficial de Industrial Girls"
+            className="hover:text-white transition-colors"
+          >
+            [ SPOTIFY ]
+          </a>
+          <span className="text-neutral-700">&bull;</span>
+          <a
+            href="https://youtube.com"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="YouTube oficial de Industrial Girls"
+            className="hover:text-white transition-colors"
+          >
+            [ YOUTUBE ]
+          </a>
+          <span className="text-neutral-700">&bull;</span>
+          <a
+            href="https://instagram.com"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Instagram oficial de Industrial Girls"
+            className="hover:text-white transition-colors"
+          >
+            [ INSTAGRAM ]
+          </a>
+          <span className="text-neutral-700">&bull;</span>
+          <a
+            href="https://t.me/industrialgirls"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Telegram oficial de Industrial Girls"
+            className="hover:text-white transition-colors"
+          >
+            [ TELEGRAM ]
+          </a>
+        </nav>
+      </div>
+    </footer>
   );
 }

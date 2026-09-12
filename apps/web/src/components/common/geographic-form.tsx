@@ -209,7 +209,7 @@ export function GeographicForm({
           {/* Optional Phone / Telegram */}
           <div>
             <label htmlFor={"phone-" + source} className="block font-mono text-xs font-bold uppercase tracking-wider text-white mb-1.5">
-              Teléfono móvil / Telegram
+              Teléfono / WhatsApp (Opcional)
             </label>
             <input
               id={"phone-" + source}
@@ -217,7 +217,7 @@ export function GeographicForm({
               required={false}
               value={formData.phone ?? ""}
               onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-              placeholder="+XX XXX XXXXXXX o @usuario_telegram"
+              placeholder="+XX XXX XXXXXXX o WhatsApp / Telegram"
               className="w-full border border-raveBorder bg-panel px-3.5 py-2.5 font-mono text-sm text-white placeholder:text-neutral-600 focus:border-raveRed focus:outline-none focus:ring-1 focus:ring-raveRed"
             />
             {errors.phone && (

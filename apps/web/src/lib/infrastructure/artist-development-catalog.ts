@@ -63,9 +63,9 @@ export const ARTIST_DEV_PILLARS: ServicePillar[] = [
     subtitle: "CALIDAD DE CLUB Y DIRECCIÓN MUSICAL",
     services: [
       {
-        id: "ghost-production",
-        title: "Ghost Production",
-        description: "Producción musical avanzada en géneros de club sin cesión de derechos / ghost production a medida.",
+        id: "sound-production",
+        title: "Producción & Sound Design",
+        description: "Producción musical avanzada en géneros de club y diseño sonoro a medida.",
       },
       {
         id: "mastering-tracks",

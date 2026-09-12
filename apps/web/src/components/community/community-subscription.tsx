@@ -122,7 +122,7 @@ export function CommunitySubscription({
 
   // Step 3: Render brutalist container shell
   return (
-    <section className="w-full border-t border-raveBorder bg-bg py-16 px-4 sm:px-6">
+    <section id="red" className="w-full border-t border-raveBorder bg-bg py-16 px-4 sm:px-6 scroll-mt-24">
       <div className="mx-auto max-w-3xl border border-raveBorder bg-black p-6 font-mono shadow-rave sm:p-10">
         {/* Step 4: Header section */}
         <div className="border-b border-raveBorder pb-4 mb-6">
