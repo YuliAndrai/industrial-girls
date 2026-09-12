@@ -44,7 +44,7 @@ export function EventosView(): React.ReactElement {
 
       <main className="flex-1 w-full">
         {/* Calendar Season Status Hero */}
-        <section className="relative flex min-h-[50vh] w-full flex-col items-center justify-center overflow-hidden border-b-2 border-raveRed bg-black px-4 py-16 text-center rave-scanlines">
+        <section id="calendario" className="relative flex min-h-[50vh] w-full flex-col items-center justify-center overflow-hidden border-b-2 border-raveRed bg-black px-4 py-16 text-center rave-scanlines scroll-mt-24">
           <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_70%_50%_at_50%_40%,rgba(255,0,0,0.22),transparent_75%)]" />
           <div className="relative z-10 mx-auto max-w-4xl">
             {/* Step 4: Render top eyebrow badge with responsive wrapping and centering */}
@@ -61,7 +61,7 @@ export function EventosView(): React.ReactElement {
         </section>
 
         {/* Geographic Capture Section for Presales */}
-        <section className="w-full border-b border-raveBorder bg-bg py-16 px-4 sm:px-6">
+        <section id="radar" className="w-full border-b border-raveBorder bg-bg py-16 px-4 sm:px-6 scroll-mt-24">
           <div className="mx-auto max-w-3xl">
             <GeographicForm
               source="events"

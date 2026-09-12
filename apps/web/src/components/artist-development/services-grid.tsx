@@ -18,7 +18,7 @@ export function ServicesGrid(): React.ReactElement {
   const pillars = getArtistDevPillars();
 
   return (
-    <section id="servicios" className="w-full border-b border-raveBorder bg-bg py-16 sm:py-24 px-4 sm:px-6 relative">
+    <section id="servicios" className="w-full border-b border-raveBorder bg-bg py-16 sm:py-24 px-4 sm:px-6 relative scroll-mt-24">
       <div className="mx-auto max-w-7xl">
         {/* Section Header */}
         <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between border-b-2 border-raveRed pb-6 mb-12 gap-4">

@@ -6,7 +6,7 @@
 
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { Header } from "@/components/layout/header";
@@ -47,6 +47,24 @@ export function MusicaView(): React.ReactElement {
 
   // Step 4: Maintain active tab filter
   const [activeTab, setActiveTab] = useState<"releases" | "podcasts" | "demodrop">("releases");
+
+  // Step 4.1: Synchronize active tab filter with URL hash for deep-link navigation
+  useEffect(() => {
+    const handleHash = () => {
+      const hash = window.location.hash.toLowerCase();
+      if (hash === "#releases") {
+        setActiveTab("releases");
+      } else if (hash === "#podcasts") {
+        setActiveTab("podcasts");
+      } else if (hash === "#demo-drop" || hash === "#demodrop") {
+        setActiveTab("demodrop");
+      }
+    };
+
+    handleHash();
+    window.addEventListener("hashchange", handleHash);
+    return () => window.removeEventListener("hashchange", handleHash);
+  }, []);
 
   // Step 5: Maintain demo submission feedback state (standby for API integration)
   const [demoFeedback, setDemoFeedback] = useState<string | null>(null);
@@ -117,7 +135,7 @@ export function MusicaView(): React.ReactElement {
 
         {/* 1. Subsection Releases (VA 005 - VA 001) */}
         {activeTab === "releases" && (
-          <section className="w-full border-b border-raveBorder bg-bg py-16 px-4 sm:px-6">
+          <section id="releases" className="w-full border-b border-raveBorder bg-bg py-16 px-4 sm:px-6 scroll-mt-24">
             <div className="mx-auto max-w-7xl">
               <div className="border-b-2 border-raveRed pb-4 mb-10">
                 <span className="font-mono text-xs uppercase tracking-widest text-raveRed">
@@ -234,7 +252,7 @@ export function MusicaView(): React.ReactElement {
 
         {/* 2. Subsection Podcasts (IG MIX 001 - 004) */}
         {activeTab === "podcasts" && (
-          <section id="podcasts" className="w-full border-b border-raveBorder bg-bg py-16 px-4 sm:px-6">
+          <section id="podcasts" className="w-full border-b border-raveBorder bg-bg py-16 px-4 sm:px-6 scroll-mt-24">
             <div className="mx-auto max-w-7xl">
               <div className="border-b-2 border-raveRed pb-4 mb-10">
                 <span className="font-mono text-xs uppercase tracking-widest text-raveRed">
@@ -317,7 +335,7 @@ export function MusicaView(): React.ReactElement {
         )}
 
         {/* 3. Subsection Demo Drop */}
-        <section id="demo-drop" className="w-full border-b border-raveBorder bg-panel/40 py-16 px-4 sm:px-6">
+        <section id="demo-drop" className="w-full border-b border-raveBorder bg-panel/40 py-16 px-4 sm:px-6 scroll-mt-24">
           <div className="mx-auto max-w-4xl">
             <div className="border-2 border-raveRed bg-black p-6 sm:p-10 shadow-rave">
               <div className="border-b border-raveBorder pb-4 mb-6">

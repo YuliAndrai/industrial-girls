@@ -87,7 +87,7 @@ export function IntakeDiagnosticForm(): React.ReactElement {
   };
 
   return (
-    <section id="diagnostico" className="w-full border-b border-raveBorder bg-panel/40 py-16 sm:py-24 px-4 sm:px-6 relative">
+    <section id="diagnostico" className="w-full border-b border-raveBorder bg-panel/40 py-16 sm:py-24 px-4 sm:px-6 relative scroll-mt-24">
       <div className="mx-auto max-w-4xl">
         {/* Section Header */}
         <div className="border-b-2 border-raveRed pb-6 mb-10 text-center">
