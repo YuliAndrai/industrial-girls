@@ -1,7 +1,7 @@
 /**
  * @file apps/web/src/app/desarrollo-artistico/artist-development-view.tsx
  * @description Layer 1: Presentation - Artist Development 360° Agency Route Entrypoint.
- * Assembles the Hero, 4-Pillar Services Grid, Diagnostic Intake Form, Floating Sound Bar, Header, and Footer.
+ * Assembles the Hero, Technical Services Console Grid, Diagnostic Intake Form, Floating Sound Bar, Header, and Footer.
  */
 
 "use client";
@@ -42,7 +42,7 @@ export function ArtistDevelopmentView(): React.ReactElement {
         {/* 1. Hero & Value Proposition */}
         <ArtistDevHero />
 
-        {/* 2. 4-Pillar Modular Services Grid */}
+        {/* 2. Technical Services Console Grid */}
         <ServicesGrid />
 
         {/* 3. Intake & Diagnostic Form */}

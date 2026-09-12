@@ -225,7 +225,7 @@ export function ArchivoView(): React.ReactElement {
 
             {/* Step 7.1: Photographic Visual Archive Console (Bloque Galería de Fotos) */}
             {(selectedMediaType === "all" || selectedMediaType === "photo") && (
-              <div className="mb-12 border border-raveBorder bg-panel/20 p-4 sm:p-6 relative">
+              <div id="galeria" className="mb-12 border border-raveBorder bg-panel/20 p-4 sm:p-6 relative scroll-mt-24">
                 {/* Console Top Bar */}
                 <div className="flex flex-col sm:flex-row sm:items-center justify-between border-b border-raveBorder/60 pb-3 mb-4 gap-3 font-mono text-xs">
                   <div className="flex items-center gap-2">
@@ -417,7 +417,7 @@ export function ArchivoView(): React.ReactElement {
 
             {/* Step 7.2: Audiovisual Video Showcases Grid (Bloque Videos & Registro Multicámara) */}
             {(selectedMediaType === "all" || selectedMediaType === "video") && (
-              <div>
+              <div id="videos" className="scroll-mt-24">
                 <div className="flex items-center gap-2 mb-6 font-mono text-xs text-raveRed font-bold">
                   <span>{"// VIDEOS & REGISTRO MULTICÁMARA EN VIVO"}</span>
                 </div>
@@ -490,7 +490,7 @@ export function ArchivoView(): React.ReactElement {
         </section>
 
         {/* Step 8: Typographic Artists Roster Directory (Tercer Bloque - Directorio de Artistas) */}
-        <section className="w-full border-b border-raveBorder bg-bg py-16 px-4 sm:px-6">
+        <section id="roster" className="w-full border-b border-raveBorder bg-bg py-16 px-4 sm:px-6 scroll-mt-24">
           <div className="mx-auto max-w-7xl">
             {/* Directory Header & Search Bar */}
             <div className="flex flex-col sm:flex-row sm:items-end justify-between border-b border-raveBorder pb-4 mb-10 gap-4">

@@ -109,7 +109,7 @@ export function ComunidadView(): React.ReactElement {
         />
 
         {/* Step 7: Editorial Articles Interactive Grid */}
-        <section className="w-full border-b border-raveBorder bg-bg py-16 px-4 sm:px-6">
+        <section id="journal" className="w-full border-b border-raveBorder bg-bg py-16 px-4 sm:px-6 scroll-mt-24">
           <div className="mx-auto max-w-7xl">
             <div className="border-b-2 border-raveRed pb-4 mb-8">
               <span className="font-mono text-xs uppercase tracking-widest text-raveRed">
@@ -130,7 +130,7 @@ export function ComunidadView(): React.ReactElement {
                   isSelected={article.slug === currentArticle?.slug}
                   onSelectArticle={(slug) => {
                     setSelectedArticleSlug(slug);
-                    const el = document.getElementById("foro-tecnico");
+                    const el = document.getElementById("foro") || document.getElementById("foro-tecnico");
                     if (el) el.scrollIntoView({ behavior: "smooth" });
                   }}
                 />
@@ -140,7 +140,8 @@ export function ComunidadView(): React.ReactElement {
         </section>
 
         {/* Step 8: Active Reading Container & Tactical Discussion Console */}
-        <section id="foro-tecnico" className="w-full border-b border-raveBorder bg-black py-16 px-4 sm:px-6">
+        <section id="foro" className="w-full border-b border-raveBorder bg-black py-16 px-4 sm:px-6 scroll-mt-24">
+          <span id="foro-tecnico" className="sr-only" />
           <div className="mx-auto max-w-5xl space-y-12">
             {/* Active Article Full Reader */}
             {currentArticle && (
