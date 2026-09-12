@@ -92,10 +92,10 @@ export function ArchivoView(): React.ReactElement {
             <div className="flex flex-col sm:flex-row sm:items-end justify-between border-b border-raveBorder pb-4 mb-10 gap-4">
               <div>
                 <span className="font-mono text-xs uppercase tracking-widest text-raveRed">
-                  {"// DIRECTORIO ACTIVO // " + filteredArtists.length + " ARTISTAS REGISTRADAS"}
+                  {"// ARCHIVO // EDICIONES PASADAS"}
                 </span>
                 <h2 className="text-2xl sm:text-4xl font-black uppercase tracking-tight text-white mt-1">
-                  ÍNDICE DEL ROSTER
+                  ARTISTAS EN NUESTROS EVENTOS
                 </h2>
               </div>
 

@@ -154,5 +154,21 @@ describe("Archive Section - Artists Roster Architecture — TDD Test Suite (@spe
       expect(content.includes("artist.subgenre")).toBe(false);
       expect(content.includes("a.subgenre")).toBe(false);
     });
+
+    it("ensures the artists roster block header renders the updated eyebrow and title", () => {
+      // Step 1: Read view component source file
+      const content = fs.readFileSync(archivoViewPath, "utf8");
+
+      // Step 2: Verify block eyebrow and block title
+      expect(
+        content.includes("// ARCHIVO // EDICIONES PASADAS"),
+        "archivo-view.tsx must render // ARCHIVO // EDICIONES PASADAS block eyebrow"
+      ).toBe(true);
+
+      expect(
+        content.includes("ARTISTAS EN NUESTROS EVENTOS"),
+        "archivo-view.tsx must render ARTISTAS EN NUESTROS EVENTOS block title"
+      ).toBe(true);
+    });
   });
 });
