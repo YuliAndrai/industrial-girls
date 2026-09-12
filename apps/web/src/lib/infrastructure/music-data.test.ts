@@ -347,7 +347,7 @@ describe("Music Releases Catalog & Spotify Integration — TDD Test Suite", () =
       );
 
       // Step 4: Validate exact navigation tabs without numbers
-      expect(content).toContain("[ RELEASES (VA 001 - 005) ]");
+      expect(content).toContain("[ RELEASES & VA'S ]");
       expect(content).toContain("[ PODCAST'S ]");
       expect(content).toContain("[ DEMO DROP // ENVIAR ]");
 

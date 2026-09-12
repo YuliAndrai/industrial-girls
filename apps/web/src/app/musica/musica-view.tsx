@@ -87,7 +87,7 @@ export function MusicaView(): React.ReactElement {
                     : "border border-white/20 bg-black/60 text-white/80 hover:border-white hover:text-white hover:bg-white/5"
                 }`}
               >
-                [ RELEASES (VA 001 - 005) ]
+                {"[ RELEASES & VA'S ]"}
               </button>
               <button
                 type="button"
