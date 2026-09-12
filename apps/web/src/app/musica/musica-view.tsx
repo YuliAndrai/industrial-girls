@@ -58,14 +58,11 @@ export function MusicaView(): React.ReactElement {
             <span className="border border-raveRed/60 bg-raveRed/10 px-3 py-1 font-mono text-[11px] font-bold uppercase tracking-widest text-raveRed">
               {"// CATÁLOGO DISCOGRÁFICO // BOVEDA SONORA"}
             </span>
-            <h1 className="mt-4 text-3xl sm:text-5xl md:text-6xl font-black uppercase tracking-tight text-white">
-              CATÁLOGO SONORO & <br />
-              <span className="text-raveRed drop-shadow-[0_0_20px_rgba(255,0,0,0.6)]">
-                ARCHIVO DE AUDIO
-              </span>
+            <h1 className="mt-4 text-4xl sm:text-6xl md:text-7xl font-black uppercase tracking-tight text-white">
+              LABEL
             </h1>
             <p className="mt-4 font-mono text-xs sm:text-base text-neutral-300 max-w-2xl mx-auto leading-relaxed">
-              Discografía en vinilo y digital, sesiones de club en podcast y canal directo de recepción para producciones inéditas.
+              Discografía digital, Podcasts y canal directo de recepción para producciones inéditas.
             </p>
 
             {/* Quick Filter Selector Tabs */}
@@ -90,7 +87,7 @@ export function MusicaView(): React.ReactElement {
                     : "border-raveBorder bg-panel/60 text-white hover:border-white/40"
                 }`}
               >
-                [ 02. PODCASTS (IG MIX) ]
+                [ 02. PODCASTS (SOUNDCLOUD) ]
               </button>
               <button
                 type="button"

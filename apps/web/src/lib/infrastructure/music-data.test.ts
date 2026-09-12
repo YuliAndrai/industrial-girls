@@ -237,4 +237,33 @@ describe("Music Releases Catalog & Spotify Integration — TDD Test Suite", () =
       expect(expectedLabel).toBe("ESCUCHAR EN SPOTIFY");
     });
   });
+
+  describe("3. Layer 1 (Presentation): Hero Title, Brand Statement & Subsections Navigation Contract", () => {
+    it("ensures /musica view contains exact Hero Title 'LABEL', editorial statement and navigation tabs", () => {
+      // Step 1: Read view component source file
+      const viewPath = path.resolve(
+        process.cwd(),
+        "apps",
+        "web",
+        "src",
+        "app",
+        "musica",
+        "musica-view.tsx"
+      );
+      const content = fs.readFileSync(viewPath, "utf-8");
+
+      // Step 2: Validate exact Hero title
+      expect(content).toMatch(/<h1[^>]*>[\s\n]*LABEL[\s\n]*<\/h1>/);
+
+      // Step 3: Validate exact editorial statement
+      expect(content).toContain(
+        "Discografía digital, Podcasts y canal directo de recepción para producciones inéditas."
+      );
+
+      // Step 4: Validate exact navigation tabs
+      expect(content).toContain("[ 01. RELEASES (VA 001 - 005) ]");
+      expect(content).toContain("[ 02. PODCASTS (SOUNDCLOUD) ]");
+      expect(content).toContain("[ 03. DEMO DROP // ENVIAR ]");
+    });
+  });
 });
