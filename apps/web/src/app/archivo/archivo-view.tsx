@@ -105,7 +105,7 @@ export function ArchivoView(): React.ReactElement {
                   {"// ARCHIVO // EDICIONES PASADAS"}
                 </span>
                 <h2 className="text-2xl sm:text-4xl font-black uppercase tracking-tight text-white mt-1">
-                  ARTISTAS EN NUESTROS EVENTOS
+                  ARTISTAS EN NUESTROS EVENTOS & LABEL
                 </h2>
               </div>
 

@@ -166,8 +166,8 @@ describe("Archive Section - Artists Roster Architecture — TDD Test Suite (@spe
       ).toBe(true);
 
       expect(
-        content.includes("ARTISTAS EN NUESTROS EVENTOS"),
-        "archivo-view.tsx must render ARTISTAS EN NUESTROS EVENTOS block title"
+        content.includes("ARTISTAS EN NUESTROS EVENTOS & LABEL"),
+        "archivo-view.tsx must render ARTISTAS EN NUESTROS EVENTOS & LABEL block title"
       ).toBe(true);
     });
 
