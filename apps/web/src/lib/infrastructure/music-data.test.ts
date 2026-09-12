@@ -102,11 +102,14 @@ describe("Music Releases Catalog & Spotify Integration — TDD Test Suite", () =
         expect(release.spotifyUrl).toBeDefined();
         expect(typeof release.spotifyUrl).toBe("string");
 
-        expect(release.beatportUrl).toBeDefined();
-        expect(typeof release.beatportUrl).toBe("string");
-        expect(release.beatportUrl.startsWith("https://www.beatport.com/search?q=")).toBe(true);
-        expect(release.beatportUrl).not.toContain("[");
-        expect(release.beatportUrl).not.toContain("]");
+        expect(release.buyUrl).toBeDefined();
+        expect(typeof release.buyUrl).toBe("string");
+        expect(release.buyUrl.startsWith("https://")).toBe(true);
+        expect(release.buyUrl).not.toContain("[");
+        expect(release.buyUrl).not.toContain("]");
+
+        expect(release.buyLabel).toBeDefined();
+        expect(["BANDCAMP", "BEATPORT"]).toContain(release.buyLabel);
 
         expect(Array.isArray(release.tracklist)).toBe(true);
         expect(release.tracklist.length).toBeGreaterThan(0);
@@ -160,26 +163,42 @@ describe("Music Releases Catalog & Spotify Integration — TDD Test Suite", () =
       });
     });
 
-    it("validates exact Beatport search buy URLs for all 5 compilations", () => {
-      // Step 1: Expected official Beatport search endpoints for each VA release
-      const expectedBeatportUrls: Record<string, string> = {
-        "IGVA005": "https://www.beatport.com/search?q=INDUSTRIAL+GIRLS+VA+005",
-        "IGVA004": "https://www.beatport.com/search?q=INDUSTRIAL+GIRLS+VA+004",
-        "IGVA003": "https://www.beatport.com/search?q=INDUSTRIAL+GIRLS+VA+003",
-        "IGVA002": "https://www.beatport.com/search?q=INDUSTRIAL+GIRLS+VA+002",
-        "IGVA001": "https://www.beatport.com/search?q=INDUSTRIAL+GIRLS+VA+001",
+    it("validates exact official buy URLs and dynamic buy labels (Bandcamp / Beatport) for all 5 compilations", () => {
+      // Step 1: Expected official buy endpoints and labels for each VA release
+      const expectedBuyConfig: Record<string, { buyUrl: string; buyLabel: "BANDCAMP" | "BEATPORT" }> = {
+        "IGVA005": {
+          buyUrl: "https://www.beatport.com/es/label/industrial-girls/106032",
+          buyLabel: "BEATPORT",
+        },
+        "IGVA004": {
+          buyUrl: "https://industrialgirls.bandcamp.com/album/industrial-girls-004",
+          buyLabel: "BANDCAMP",
+        },
+        "IGVA003": {
+          buyUrl: "https://www.beatport.com/es/release/industrial-girls-va-003/3953660",
+          buyLabel: "BEATPORT",
+        },
+        "IGVA002": {
+          buyUrl: "https://www.beatport.com/es/release/industrial-girls-002/4716681",
+          buyLabel: "BEATPORT",
+        },
+        "IGVA001": {
+          buyUrl: "https://www.beatport.com/es/release/industrial-girls-001/3916941",
+          buyLabel: "BEATPORT",
+        },
       };
 
-      // Step 2: Validate each Beatport URL format
+      // Step 2: Validate each buy URL and label
       const releases = getReleasesCatalog();
       releases.forEach((release) => {
-        const expected = expectedBeatportUrls[release.catalogNumber];
-        expect(release.beatportUrl).toBe(expected);
+        const expected = expectedBuyConfig[release.catalogNumber];
+        expect(release.buyUrl).toBe(expected.buyUrl);
+        expect(release.buyLabel).toBe(expected.buyLabel);
 
         // Invariant: Pure string without markdown brackets [ ] or ( )
-        expect(release.beatportUrl).not.toContain("[");
-        expect(release.beatportUrl).not.toContain("]");
-        expect(release.beatportUrl.startsWith("https://www.beatport.com/search?q=")).toBe(true);
+        expect(release.buyUrl).not.toContain("[");
+        expect(release.buyUrl).not.toContain("]");
+        expect(release.buyUrl.startsWith("https://")).toBe(true);
       });
     });
 
@@ -265,7 +284,8 @@ describe("Music Releases Catalog & Spotify Integration — TDD Test Suite", () =
         year: "2024",
         coverImage: "/images/releases/va-005.jpg",
         spotifyUrl: "https://open.spotify.com/search/INDUSTRIAL%20GIRLS%20VA%20005",
-        beatportUrl: "https://www.beatport.com/search?q=INDUSTRIAL+GIRLS+VA+005",
+        buyUrl: "https://www.beatport.com/es/label/industrial-girls/106032",
+        buyLabel: "BEATPORT",
         tracklist: [
           {
             artist: "ÆTERIS",
@@ -275,12 +295,13 @@ describe("Music Releases Catalog & Spotify Integration — TDD Test Suite", () =
         ],
       };
 
-      // Step 2: Assert Spotify redirection attributes
+      // Step 2: Assert Spotify and Buy redirection attributes
       expect(testRelease.spotifyUrl).toBe("https://open.spotify.com/search/INDUSTRIAL%20GIRLS%20VA%20005");
-      expect(testRelease.beatportUrl).toBe("https://www.beatport.com/search?q=INDUSTRIAL+GIRLS+VA+005");
+      expect(testRelease.buyUrl).toBe("https://www.beatport.com/es/label/industrial-girls/106032");
+      expect(testRelease.buyLabel).toBe("BEATPORT");
     });
 
-    it("ensures /musica view renders both ESCUCHAR EN SPOTIFY ↗ and COMPRAR EN BEATPORT ↗ buttons", () => {
+    it("ensures /musica view renders both ESCUCHAR EN SPOTIFY ↗ and dynamic COMPRAR EN {release.buyLabel} ↗ buttons", () => {
       // Step 1: Read view component source file
       const viewPath = path.resolve(
         process.cwd(),
@@ -293,13 +314,13 @@ describe("Music Releases Catalog & Spotify Integration — TDD Test Suite", () =
       );
       const content = fs.readFileSync(viewPath, "utf-8");
 
-      // Step 2: Validate presence of action buttons with arrows
+      // Step 2: Validate presence of action buttons with arrows and dynamic label
       expect(content).toContain("ESCUCHAR EN SPOTIFY ↗");
-      expect(content).toContain("COMPRAR EN BEATPORT ↗");
+      expect(content).toContain("COMPRAR EN {release.buyLabel} ↗");
 
-      // Step 3: Validate Beatport anchor attributes
-      expect(content).toContain("href={release.beatportUrl}");
-      expect(content).toContain("aria-label={`Comprar ${release.title} en Beatport`}");
+      // Step 3: Validate Buy anchor attributes
+      expect(content).toContain("href={release.buyUrl}");
+      expect(content).toContain("aria-label={`Comprar ${release.title} en ${release.buyLabel}`}");
     });
   });
 

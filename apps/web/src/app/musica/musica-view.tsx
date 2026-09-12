@@ -169,13 +169,13 @@ export function MusicaView(): React.ReactElement {
                           ESCUCHAR EN SPOTIFY ↗
                         </a>
                         <a
-                          href={release.beatportUrl}
+                          href={release.buyUrl}
                           target="_blank"
                           rel="noopener noreferrer"
-                          aria-label={`Comprar ${release.title} en Beatport`}
+                          aria-label={`Comprar ${release.title} en ${release.buyLabel}`}
                           className="inline-flex items-center gap-2 px-3 py-1.5 text-xs font-mono uppercase border border-white/20 text-white/80 hover:border-white hover:text-white transition-colors"
                         >
-                          COMPRAR EN BEATPORT ↗
+                          COMPRAR EN {release.buyLabel} ↗
                         </a>
                       </div>
                     </div>

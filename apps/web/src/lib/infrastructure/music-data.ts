@@ -52,8 +52,10 @@ export interface ReleaseItem {
   coverImage: string;
   /** Official Spotify search endpoint URL */
   spotifyUrl: string;
-  /** Official Beatport search endpoint URL for compilation purchase */
-  beatportUrl: string;
+  /** Direct official buy URL (Bandcamp or Beatport) */
+  buyUrl: string;
+  /** Dynamic label designating the purchase platform */
+  buyLabel: "BANDCAMP" | "BEATPORT";
   /** Curated tracklist items */
   tracklist: readonly TrackItem[];
   /** Backward-compatible alias for catalogNumber */
@@ -62,6 +64,8 @@ export interface ReleaseItem {
   releaseDate?: string;
   /** Backward-compatible alias for tracklist */
   tracks?: readonly TrackItem[];
+  /** Backward-compatible alias for Beatport purchase link */
+  beatportUrl?: string;
 }
 
 // Step 1: Define the immutable dataset of official VA compilation releases (VA 005 to VA 001 descending)
@@ -77,7 +81,9 @@ export const RELEASES_CATALOG: readonly ReleaseItem[] = [
     year: "2024",
     coverImage: "/images/releases/va-005.jpg",
     spotifyUrl: "https://open.spotify.com/search/INDUSTRIAL%20GIRLS%20VA%20005",
-    beatportUrl: "https://www.beatport.com/search?q=INDUSTRIAL+GIRLS+VA+005",
+    buyUrl: "https://www.beatport.com/es/label/industrial-girls/106032",
+    buyLabel: "BEATPORT",
+    beatportUrl: "https://www.beatport.com/es/label/industrial-girls/106032",
     tracklist: [
       {
         artist: "ÆTERIS",
@@ -123,7 +129,9 @@ export const RELEASES_CATALOG: readonly ReleaseItem[] = [
     year: "2023",
     coverImage: "/images/releases/va-004.jpg",
     spotifyUrl: "https://open.spotify.com/search/INDUSTRIAL%20GIRLS%20VA%20004",
-    beatportUrl: "https://www.beatport.com/search?q=INDUSTRIAL+GIRLS+VA+004",
+    buyUrl: "https://industrialgirls.bandcamp.com/album/industrial-girls-004",
+    buyLabel: "BANDCAMP",
+    beatportUrl: "https://industrialgirls.bandcamp.com/album/industrial-girls-004",
     tracklist: [
       {
         artist: "Ayako Mori",
@@ -174,7 +182,9 @@ export const RELEASES_CATALOG: readonly ReleaseItem[] = [
     year: "2023",
     coverImage: "/images/releases/va-003.jpg",
     spotifyUrl: "https://open.spotify.com/search/INDUSTRIAL%20GIRLS%20VA%20003",
-    beatportUrl: "https://www.beatport.com/search?q=INDUSTRIAL+GIRLS+VA+003",
+    buyUrl: "https://www.beatport.com/es/release/industrial-girls-va-003/3953660",
+    buyLabel: "BEATPORT",
+    beatportUrl: "https://www.beatport.com/es/release/industrial-girls-va-003/3953660",
     tracklist: [
       {
         artist: "Jean Terechkova",
@@ -230,7 +240,9 @@ export const RELEASES_CATALOG: readonly ReleaseItem[] = [
     year: "2022",
     coverImage: "/images/releases/va-002.jpg",
     spotifyUrl: "https://open.spotify.com/search/INDUSTRIAL%20GIRLS%20VA%20002",
-    beatportUrl: "https://www.beatport.com/search?q=INDUSTRIAL+GIRLS+VA+002",
+    buyUrl: "https://www.beatport.com/es/release/industrial-girls-002/4716681",
+    buyLabel: "BEATPORT",
+    beatportUrl: "https://www.beatport.com/es/release/industrial-girls-002/4716681",
     tracklist: [
       {
         artist: "Daniela Fuzz",
@@ -271,7 +283,9 @@ export const RELEASES_CATALOG: readonly ReleaseItem[] = [
     year: "2021",
     coverImage: "/images/releases/va-001.jpg",
     spotifyUrl: "https://open.spotify.com/search/INDUSTRIAL%20GIRLS%20VA%20001",
-    beatportUrl: "https://www.beatport.com/search?q=INDUSTRIAL+GIRLS+VA+001",
+    buyUrl: "https://www.beatport.com/es/release/industrial-girls-001/3916941",
+    buyLabel: "BEATPORT",
+    beatportUrl: "https://www.beatport.com/es/release/industrial-girls-001/3916941",
     tracklist: [
       {
         artist: "Juliana Yamasaki",
