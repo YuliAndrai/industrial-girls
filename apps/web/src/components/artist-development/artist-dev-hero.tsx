@@ -68,10 +68,10 @@ export function ArtistDevHero(): React.ReactElement {
             </TactileButton>
           </Link>
 
-          <Link href="#servicios" className="focus:outline-none" aria-label="Explorar servicios 360° de desarrollo artístico">
+          <Link href="#servicios" className="focus:outline-none" aria-label="Explorar catálogo de servicios de desarrollo artístico">
             <TactileButton variant="outline" size="lg">
               <span className="flex items-center gap-2">
-                <span>[ SERVICIOS 360° ]</span>
+                <span>[ CATÁLOGO DE SERVICIOS ]</span>
                 <span className="text-xs">&rarr;</span>
               </span>
             </TactileButton>

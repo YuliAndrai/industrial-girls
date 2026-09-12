@@ -124,9 +124,9 @@ describe("Artist Development Module — Unit Test Suite", () => {
       expect(content).toContain('href="#diagnostico"');
       expect(content).toContain("[ SOLICITAR DIAGNÓSTICO ]");
 
-      // Step 3: Assert secondary button [ SERVICIOS 360° ] anchors to #servicios
+      // Step 3: Assert secondary button [ CATÁLOGO DE SERVICIOS ] anchors to #servicios
       expect(content).toContain('href="#servicios"');
-      expect(content).toContain("[ SERVICIOS 360° ]");
+      expect(content).toContain("[ CATÁLOGO DE SERVICIOS ]");
 
       // Step 4: Assert legacy "[ EXPLORAR 4 PILARES ]" text is completely purged
       expect(content).not.toContain("[ EXPLORAR 4 PILARES ]");
