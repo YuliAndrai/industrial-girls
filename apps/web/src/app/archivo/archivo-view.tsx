@@ -5,9 +5,10 @@
  * ARCHITECTURAL LAYER SPECIFICATION:
  * - Layer: Layer 1 (Presentation)
  * - Responsibility: Client Component rendering the interactive artists roster directory with tactical brutalist styling,
- *   monospace typography, reactive search filtering, and clean interactive profile links.
+ *   monospace typography, balanced two-column responsive density, reactive search filtering, and clean interactive profile links.
  * - Invariant: Exactly one semantic H1 element per route. Zero raw fetch or database access;
  *   consumes immutable datasets from Layer 4 Infrastructure (archive-data).
+ * - Invariant: Two-column layout on large viewports (grid-cols-1 lg:grid-cols-2) with 15 artists per column.
  * - Invariant: Zero musical genre or subgenre badges or columns displayed.
  */
 
@@ -52,6 +53,15 @@ export function ArchivoView(): React.ReactElement {
         a.countryCode.toLowerCase().includes(query)
     );
   }, [artists, searchQuery]);
+
+  // Step 4.1: Partition roster into two balanced columns (15 artists each by default)
+  const { column1, column2 } = useMemo(() => {
+    const midpoint = Math.ceil(filteredArtists.length / 2);
+    return {
+      column1: filteredArtists.slice(0, midpoint),
+      column2: filteredArtists.slice(midpoint),
+    };
+  }, [filteredArtists]);
 
   return (
     <div className="flex min-h-screen flex-col bg-bg text-neutral-100 selection:bg-raveRed selection:text-black">
@@ -115,88 +125,183 @@ export function ArchivoView(): React.ReactElement {
               </div>
             </div>
 
-            {/* Tactical Brutalism Roster Directory Rows */}
-            <div className="flex flex-col divide-y divide-white/10 border border-raveBorder bg-panel/30">
-              {filteredArtists.map((artist: ArtistProfile, index: number) => (
-                <article
-                  key={artist.id}
-                  className="group relative flex flex-col md:flex-row md:items-center justify-between py-3.5 px-4 sm:px-6 min-h-[52px] transition-all duration-200 hover:bg-black/90 hover:border-l-4 hover:border-l-raveRed"
-                >
-                  {/* Left Column: Index, Artist Name & Country Code */}
-                  <div className="flex items-center gap-3 sm:gap-4">
-                    <span className="font-mono text-xs text-white/40 w-8 shrink-0">
-                      {String(index + 1).padStart(2, "0")}
-                    </span>
-                    <h3 className="text-base sm:text-lg font-bold uppercase tracking-tight text-white group-hover:text-raveRed group-hover:drop-shadow-[0_0_10px_rgba(255,0,0,0.5)] transition-colors">
-                      {artist.name}
-                    </h3>
-                    <span className="ml-2 font-mono text-xs font-bold text-raveRed tracking-wider">
-                      {"[" + artist.countryCode + "]"}
-                    </span>
-                  </div>
+            {/* Step 6.1: Two-Column Responsive Grid Layout */}
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-x-8 gap-y-0 items-start">
+              {/* Column 1: Primary / Established International Artists */}
+              <div className="flex flex-col divide-y divide-white/10 border border-raveBorder bg-panel/30 mb-8 lg:mb-0">
+                {column1.map((artist, colIndex) => {
+                  const overallIndex = artists.findIndex((a) => a.id === artist.id);
+                  const displayIndex = overallIndex !== -1 ? overallIndex : colIndex;
+                  return (
+                    <article
+                      key={artist.id}
+                      className="group relative flex flex-col sm:flex-row sm:items-center justify-between py-2.5 sm:py-3 px-3.5 sm:px-4 border-b border-white/10 transition-all duration-200 hover:bg-black/90 hover:border-l-4 hover:border-l-raveRed"
+                    >
+                      {/* Left: Index, Name & Country Code */}
+                      <div className="flex items-center gap-2.5 sm:gap-3 min-w-0">
+                        <span className="font-mono text-xs text-white/40 w-6 shrink-0">
+                          {String(displayIndex + 1).padStart(2, "0")}
+                        </span>
+                        <h3 className="text-sm sm:text-base font-bold uppercase tracking-tight text-white group-hover:text-raveRed group-hover:drop-shadow-[0_0_10px_rgba(255,0,0,0.5)] transition-colors truncate">
+                          {artist.name}
+                        </h3>
+                        <span className="ml-1.5 font-mono text-[11px] font-bold text-raveRed tracking-wider shrink-0">
+                          {"[" + artist.countryCode + "]"}
+                        </span>
+                      </div>
 
-                  {/* Right Column: Interactive Profile Link Buttons */}
-                  {artist.links && (
-                    <div className="mt-2 md:mt-0 md:ml-auto flex flex-wrap items-center gap-2 font-mono text-[11px]">
-                      {artist.links.spotify && (
-                        <a
-                          href={artist.links.spotify}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="px-2.5 py-1 border border-raveBorder/60 text-neutral-400 hover:text-black hover:bg-raveRed hover:border-raveRed transition-all uppercase tracking-wider"
-                          aria-label={"Spotify de " + artist.name}
-                        >
-                          [ SPOTIFY ]
-                        </a>
+                      {/* Right: Compact profile link buttons */}
+                      {artist.links && (
+                        <div className="mt-2 sm:mt-0 sm:ml-auto flex flex-wrap items-center gap-1.5 font-mono text-[10px] shrink-0">
+                          {artist.links.spotify && (
+                            <a
+                              href={artist.links.spotify}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="px-2 py-0.5 border border-raveBorder/60 text-neutral-400 hover:text-black hover:bg-raveRed hover:border-raveRed transition-all uppercase tracking-wider whitespace-nowrap"
+                              aria-label={"Spotify de " + artist.name}
+                            >
+                              [ SPOTIFY ]
+                            </a>
+                          )}
+                          {artist.links.soundcloud && (
+                            <a
+                              href={artist.links.soundcloud}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="px-2 py-0.5 border border-raveBorder/60 text-neutral-400 hover:text-black hover:bg-raveRed hover:border-raveRed transition-all uppercase tracking-wider whitespace-nowrap"
+                              aria-label={"SoundCloud de " + artist.name}
+                            >
+                              [ SOUNDCLOUD ]
+                            </a>
+                          )}
+                          {artist.links.instagram && (
+                            <a
+                              href={artist.links.instagram}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="px-2 py-0.5 border border-raveBorder/60 text-neutral-400 hover:text-black hover:bg-raveRed hover:border-raveRed transition-all uppercase tracking-wider whitespace-nowrap"
+                              aria-label={"Instagram de " + artist.name}
+                            >
+                              [ IG ]
+                            </a>
+                          )}
+                          {artist.links.residentAdvisor && (
+                            <a
+                              href={artist.links.residentAdvisor}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="px-2 py-0.5 border border-raveBorder/60 text-neutral-400 hover:text-black hover:bg-raveRed hover:border-raveRed transition-all uppercase tracking-wider whitespace-nowrap"
+                              aria-label={"Resident Advisor de " + artist.name}
+                            >
+                              [ RA ]
+                            </a>
+                          )}
+                          {artist.links.bandcamp && (
+                            <a
+                              href={artist.links.bandcamp}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="px-2 py-0.5 border border-raveBorder/60 text-neutral-400 hover:text-black hover:bg-raveRed hover:border-raveRed transition-all uppercase tracking-wider whitespace-nowrap"
+                              aria-label={"Bandcamp de " + artist.name}
+                            >
+                              [ BC ]
+                            </a>
+                          )}
+                        </div>
                       )}
-                      {artist.links.soundcloud && (
-                        <a
-                          href={artist.links.soundcloud}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="px-2.5 py-1 border border-raveBorder/60 text-neutral-400 hover:text-black hover:bg-raveRed hover:border-raveRed transition-all uppercase tracking-wider"
-                          aria-label={"SoundCloud de " + artist.name}
-                        >
-                          [ SOUNDCLOUD ]
-                        </a>
+                    </article>
+                  );
+                })}
+              </div>
+
+              {/* Column 2: Circuit / Emerging & Regional Artists */}
+              <div className="flex flex-col divide-y divide-white/10 border border-raveBorder bg-panel/30">
+                {column2.map((artist, colIndex) => {
+                  const overallIndex = artists.findIndex((a) => a.id === artist.id);
+                  const displayIndex = overallIndex !== -1 ? overallIndex : column1.length + colIndex;
+                  return (
+                    <article
+                      key={artist.id}
+                      className="group relative flex flex-col sm:flex-row sm:items-center justify-between py-2.5 sm:py-3 px-3.5 sm:px-4 border-b border-white/10 transition-all duration-200 hover:bg-black/90 hover:border-l-4 hover:border-l-raveRed"
+                    >
+                      {/* Left: Index, Name & Country Code */}
+                      <div className="flex items-center gap-2.5 sm:gap-3 min-w-0">
+                        <span className="font-mono text-xs text-white/40 w-6 shrink-0">
+                          {String(displayIndex + 1).padStart(2, "0")}
+                        </span>
+                        <h3 className="text-sm sm:text-base font-bold uppercase tracking-tight text-white group-hover:text-raveRed group-hover:drop-shadow-[0_0_10px_rgba(255,0,0,0.5)] transition-colors truncate">
+                          {artist.name}
+                        </h3>
+                        <span className="ml-1.5 font-mono text-[11px] font-bold text-raveRed tracking-wider shrink-0">
+                          {"[" + artist.countryCode + "]"}
+                        </span>
+                      </div>
+
+                      {/* Right: Compact profile link buttons */}
+                      {artist.links && (
+                        <div className="mt-2 sm:mt-0 sm:ml-auto flex flex-wrap items-center gap-1.5 font-mono text-[10px] shrink-0">
+                          {artist.links.spotify && (
+                            <a
+                              href={artist.links.spotify}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="px-2 py-0.5 border border-raveBorder/60 text-neutral-400 hover:text-black hover:bg-raveRed hover:border-raveRed transition-all uppercase tracking-wider whitespace-nowrap"
+                              aria-label={"Spotify de " + artist.name}
+                            >
+                              [ SPOTIFY ]
+                            </a>
+                          )}
+                          {artist.links.soundcloud && (
+                            <a
+                              href={artist.links.soundcloud}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="px-2 py-0.5 border border-raveBorder/60 text-neutral-400 hover:text-black hover:bg-raveRed hover:border-raveRed transition-all uppercase tracking-wider whitespace-nowrap"
+                              aria-label={"SoundCloud de " + artist.name}
+                            >
+                              [ SOUNDCLOUD ]
+                            </a>
+                          )}
+                          {artist.links.instagram && (
+                            <a
+                              href={artist.links.instagram}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="px-2 py-0.5 border border-raveBorder/60 text-neutral-400 hover:text-black hover:bg-raveRed hover:border-raveRed transition-all uppercase tracking-wider whitespace-nowrap"
+                              aria-label={"Instagram de " + artist.name}
+                            >
+                              [ IG ]
+                            </a>
+                          )}
+                          {artist.links.residentAdvisor && (
+                            <a
+                              href={artist.links.residentAdvisor}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="px-2 py-0.5 border border-raveBorder/60 text-neutral-400 hover:text-black hover:bg-raveRed hover:border-raveRed transition-all uppercase tracking-wider whitespace-nowrap"
+                              aria-label={"Resident Advisor de " + artist.name}
+                            >
+                              [ RA ]
+                            </a>
+                          )}
+                          {artist.links.bandcamp && (
+                            <a
+                              href={artist.links.bandcamp}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="px-2 py-0.5 border border-raveBorder/60 text-neutral-400 hover:text-black hover:bg-raveRed hover:border-raveRed transition-all uppercase tracking-wider whitespace-nowrap"
+                              aria-label={"Bandcamp de " + artist.name}
+                            >
+                              [ BC ]
+                            </a>
+                          )}
+                        </div>
                       )}
-                      {artist.links.instagram && (
-                        <a
-                          href={artist.links.instagram}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="px-2.5 py-1 border border-raveBorder/60 text-neutral-400 hover:text-black hover:bg-raveRed hover:border-raveRed transition-all uppercase tracking-wider"
-                          aria-label={"Instagram de " + artist.name}
-                        >
-                          [ IG ]
-                        </a>
-                      )}
-                      {artist.links.residentAdvisor && (
-                        <a
-                          href={artist.links.residentAdvisor}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="px-2.5 py-1 border border-raveBorder/60 text-neutral-400 hover:text-black hover:bg-raveRed hover:border-raveRed transition-all uppercase tracking-wider"
-                          aria-label={"Resident Advisor de " + artist.name}
-                        >
-                          [ RA ]
-                        </a>
-                      )}
-                      {artist.links.bandcamp && (
-                        <a
-                          href={artist.links.bandcamp}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="px-2.5 py-1 border border-raveBorder/60 text-neutral-400 hover:text-black hover:bg-raveRed hover:border-raveRed transition-all uppercase tracking-wider"
-                          aria-label={"Bandcamp de " + artist.name}
-                        >
-                          [ BC ]
-                        </a>
-                      )}
-                    </div>
-                  )}
-                </article>
-              ))}
+                    </article>
+                  );
+                })}
+              </div>
             </div>
 
             {/* Empty Search Feedback */}
