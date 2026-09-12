@@ -27,8 +27,8 @@ import { useSoundFx } from "@/lib/hooks/use-sound-fx";
 import {
   getArtistsRoster,
   ArtistProfile,
-  getMediaArchiveItems,
-  MediaArchiveItem,
+  getArchiveVideos,
+  ArchiveVideo,
   getArchivePhotos,
   ArchivePhoto,
 } from "@/lib/infrastructure/archive-data";
@@ -70,9 +70,9 @@ export function ArchivoView(): React.ReactElement {
     };
   }, [filteredArtists]);
 
-  // Step 5: Load visual frames and video showcase entries from Layer 4
+  // Step 5: Load visual frames and real YouTube videos from Layer 4
   const archivePhotos = useMemo(() => getArchivePhotos(), []);
-  const mediaItems = useMemo(() => getMediaArchiveItems(), []);
+  const archiveVideos = useMemo(() => getArchiveVideos(), []);
 
   // Step 5.1: Reactive filter state for media items ('all' | 'photo' | 'video')
   const [selectedMediaType, setSelectedMediaType] = useState<"all" | "photo" | "video">("all");
@@ -83,9 +83,8 @@ export function ArchivoView(): React.ReactElement {
   // Step 5.3: Layout mode toggle for photo gallery: 'spotlight' (single monitor + filmstrip) vs 'matrix' (compact dense grid)
   const [galleryLayoutMode, setGalleryLayoutMode] = useState<"spotlight" | "matrix">("spotlight");
 
-  // Step 5.4: State for full-screen lightbox modal (photos or videos)
+  // Step 5.4: State for full-screen photo lightbox modal
   const [modalPhotoIndex, setModalPhotoIndex] = useState<number | null>(null);
-  const [selectedMediaModal, setSelectedMediaModal] = useState<MediaArchiveItem | null>(null);
 
   // Step 5.5: Navigation helpers for cycling photos
   const goToPrevPhoto = useCallback(() => {
@@ -110,16 +109,10 @@ export function ArchivoView(): React.ReactElement {
     });
   }, [archivePhotos.length]);
 
-  // Step 5.6: Filter video items for video showcases
-  const videoItems = useMemo(() => {
-    return mediaItems.filter((item) => item.type === "video");
-  }, [mediaItems]);
-
-  // Step 5.7: Keyboard listener for ESC and arrow navigation in modal
+  // Step 5.6: Keyboard listener for ESC and arrow navigation in modal
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === "Escape") {
-        setSelectedMediaModal(null);
         setModalPhotoIndex(null);
       } else if (e.key === "ArrowLeft") {
         if (modalPhotoIndex !== null) {
@@ -430,7 +423,7 @@ export function ArchivoView(): React.ReactElement {
                       : "border-raveBorder text-neutral-400 hover:text-white hover:border-white/40"
                   }`}
                 >
-                  [ TODOS ({archivePhotos.length + videoItems.length}) ]
+                  [ TODOS ({archivePhotos.length + archiveVideos.length}) ]
                 </button>
                 <button
                   type="button"
@@ -452,7 +445,7 @@ export function ArchivoView(): React.ReactElement {
                       : "border-raveBorder text-neutral-400 hover:text-white hover:border-white/40"
                   }`}
                 >
-                  [ VIDEO ({videoItems.length}) ]
+                  [ VIDEO ({archiveVideos.length}) ]
                 </button>
               </div>
             </div>
@@ -653,24 +646,28 @@ export function ArchivoView(): React.ReactElement {
             {(selectedMediaType === "all" || selectedMediaType === "video") && (
               <div>
                 <div className="flex items-center gap-2 mb-6 font-mono text-xs text-raveRed font-bold">
-                  <span>{"// SHOWCASES & REGISTRO MULTICÁMARA EN VIVO"}</span>
+                  <span>{"// VIDEOS & REGISTRO MULTICÁMARA EN VIVO"}</span>
                 </div>
 
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                  {videoItems.map((item) => (
-                    <article
-                      key={item.id}
+                  {archiveVideos.map((video) => (
+                    <a
+                      key={video.id}
+                      href={video.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
                       style={{
                         contentVisibility: "auto",
                         containIntrinsicSize: "360px 240px",
                       }}
                       className="group flex flex-col border border-raveBorder bg-panel/30 transition-all duration-200 hover:border-raveRed hover:bg-black/90 overflow-hidden transform-gpu"
+                      aria-label={"Abrir en YouTube: " + video.title}
                     >
                       {/* Thumbnail / Media Preview */}
                       <div className="relative aspect-video w-full overflow-hidden bg-black border-b border-raveBorder">
                         <Image
-                          src={item.thumbnailUrl || item.mediaUrl}
-                          alt={item.title}
+                          src={video.thumbnailUrl}
+                          alt={video.title}
                           fill
                           sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                           className="object-cover transition-transform duration-500 group-hover:scale-105"
@@ -683,59 +680,32 @@ export function ArchivoView(): React.ReactElement {
                         {/* Top Badges */}
                         <div className="absolute top-2 left-2 flex items-center gap-1.5 font-mono text-[10px] uppercase tracking-wider z-10">
                           <span className="px-2 py-0.5 font-bold bg-raveRed text-black">
-                            VIDEO
-                          </span>
-                          <span className="bg-black/80 text-white/80 px-2 py-0.5 border border-white/20">
-                            {item.date}
+                            YOUTUBE
                           </span>
                         </div>
 
-                        {/* Duration Badge for Videos */}
-                        {item.duration && (
-                          <div className="absolute bottom-2 right-2 font-mono text-[10px] bg-black/90 text-raveRed px-2 py-0.5 border border-raveRed/40 z-10">
-                            {item.duration}
-                          </div>
-                        )}
-
-                        {/* Play Overlay Trigger Button */}
-                        <button
-                          type="button"
-                          onClick={() => setSelectedMediaModal(item)}
-                          className="absolute inset-0 flex items-center justify-center bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity z-20"
-                          aria-label={"Reproducir video de " + item.title}
-                        >
-                          <span className="border border-raveRed bg-black/90 px-3 py-1 font-mono text-xs text-raveRed font-bold uppercase tracking-widest group-hover:scale-105 transition-transform">
-                            [ REPRODUCIR VIDEO ▶ ]
+                        {/* Play Overlay Trigger Button / Icon */}
+                        <div className="absolute inset-0 flex items-center justify-center bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity z-20">
+                          <span className="border border-raveRed bg-black/90 px-3 py-1 font-mono text-xs text-raveRed font-bold uppercase tracking-widest group-hover:scale-105 transition-transform flex items-center gap-1.5">
+                            <span className="text-raveRed">▶</span> REPRODUCIR EN YOUTUBE ↗
                           </span>
-                        </button>
+                        </div>
                       </div>
 
-                      {/* Card Details */}
+                      {/* Card Details: Título monospace limpio en la parte inferior, sin etiquetas inventadas de fechas, ciudades o artistas */}
                       <div className="p-4 flex flex-col flex-1 justify-between">
-                        <div>
-                          <div className="flex items-center gap-2 font-mono text-[11px] text-raveRed font-bold mb-1">
-                            <span>{"[ " + item.location.toUpperCase() + " ]"}</span>
-                          </div>
-                          <h3 className="text-base font-bold uppercase tracking-tight text-white group-hover:text-raveRed transition-colors">
-                            {item.title}
-                          </h3>
-                          <p className="mt-2 font-mono text-xs text-neutral-400 leading-relaxed">
-                            {item.caption}
-                          </p>
-                        </div>
+                        <h3 className="font-mono text-sm font-bold uppercase tracking-tight text-white group-hover:text-raveRed transition-colors">
+                          {video.title}
+                        </h3>
 
                         <div className="mt-4 pt-3 border-t border-white/10 flex items-center justify-between font-mono text-[11px]">
-                          <button
-                            type="button"
-                            onClick={() => setSelectedMediaModal(item)}
-                            className="text-white hover:text-raveRed transition-colors uppercase tracking-wider"
-                          >
-                            &gt; VER TRANSMISIÓN
-                          </button>
-                          <span className="text-white/40">MULTICÁMARA</span>
+                          <span className="text-white hover:text-raveRed transition-colors uppercase tracking-wider">
+                            &gt; ABRIR EN YOUTUBE
+                          </span>
+                          <span className="text-white/40">TRANSMISIÓN</span>
                         </div>
                       </div>
-                    </article>
+                    </a>
                   ))}
                 </div>
               </div>
@@ -816,68 +786,6 @@ export function ArchivoView(): React.ReactElement {
               <span className="text-raveRed uppercase tracking-wider text-[11px]">
                 USA LAS FLECHAS &#8592; / &#8594; O TECLA ESC
               </span>
-            </div>
-          </div>
-        </div>
-      )}
-
-      {/* Step 10: Interactive Video Player Modal */}
-      {selectedMediaModal && (
-        <div
-          role="dialog"
-          aria-modal="true"
-          aria-label={selectedMediaModal.title}
-          className="fixed inset-0 z-50 flex items-center justify-center bg-black/95 p-4"
-          onClick={() => setSelectedMediaModal(null)}
-        >
-          <div
-            className="relative w-full max-w-4xl border border-raveBorder bg-panel p-4 sm:p-6 shadow-2xl"
-            onClick={(e) => e.stopPropagation()}
-          >
-            {/* Modal Top Bar */}
-            <div className="flex items-center justify-between border-b border-raveBorder pb-3 mb-4 font-mono text-xs">
-              <div className="flex items-center gap-2 text-raveRed">
-                <span className="font-bold">
-                  {"[ " + selectedMediaModal.location.toUpperCase() + " ]"}
-                </span>
-                <span className="text-white/40">&bull;</span>
-                <span className="text-white/70">{selectedMediaModal.date}</span>
-              </div>
-              <button
-                type="button"
-                onClick={() => setSelectedMediaModal(null)}
-                className="px-2 py-0.5 border border-raveBorder text-neutral-400 hover:text-black hover:bg-raveRed hover:border-raveRed transition-all uppercase"
-                aria-label="Cerrar modal"
-              >
-                [ CERRAR ✕ ]
-              </button>
-            </div>
-
-            {/* Modal Video Embed */}
-            <div className="relative aspect-video w-full bg-black border border-raveBorder overflow-hidden">
-              <iframe
-                src={
-                  selectedMediaModal.mediaUrl.includes("watch?v=")
-                    ? "https://www.youtube-nocookie.com/embed/" +
-                      selectedMediaModal.mediaUrl.split("watch?v=")[1] +
-                      "?autoplay=1"
-                    : selectedMediaModal.mediaUrl
-                }
-                title={selectedMediaModal.title}
-                className="h-full w-full border-0"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                allowFullScreen
-              />
-            </div>
-
-            {/* Modal Footer Caption */}
-            <div className="mt-4 pt-3 border-t border-raveBorder">
-              <h3 className="text-lg font-bold uppercase tracking-tight text-white">
-                {selectedMediaModal.title}
-              </h3>
-              <p className="mt-1 font-mono text-xs text-neutral-400">
-                {selectedMediaModal.caption}
-              </p>
             </div>
           </div>
         </div>

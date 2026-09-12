@@ -14,9 +14,11 @@ import {
   ARTISTS_ROSTER,
   getArtistsRoster,
   ArtistProfile,
+  ARCHIVE_VIDEOS,
+  getArchiveVideos,
+  ArchiveVideo,
   MEDIA_ARCHIVE,
   getMediaArchiveItems,
-  MediaArchiveItem,
   TOTAL_UNIQUE_PHOTOS,
   ARCHIVE_PHOTOS,
   getArchivePhotos,
@@ -200,62 +202,56 @@ describe("Archive Section - Artists Roster Architecture — TDD Test Suite (@spe
     });
   });
 
-  describe("3. Layer 4 (Infrastructure): MEDIA_ARCHIVE Dataset & getMediaArchiveItems() Invariants", () => {
-    it("validates that MEDIA_ARCHIVE contains curated showcase records", () => {
-      // Step 1: Verify catalog array exists and has at least 3 records
-      expect(Array.isArray(MEDIA_ARCHIVE)).toBe(true);
-      expect(MEDIA_ARCHIVE.length).toBeGreaterThanOrEqual(3);
+  describe("3. Layer 4 (Infrastructure): ARCHIVE_VIDEOS Real YouTube Registry & getArchiveVideos() Invariants", () => {
+    it("validates that ARCHIVE_VIDEOS contains exactly the 3 real YouTube videos", () => {
+      // Step 1: Verify catalog array exists and has length 3
+      expect(Array.isArray(ARCHIVE_VIDEOS)).toBe(true);
+      expect(ARCHIVE_VIDEOS.length).toBe(3);
     });
 
-    it("ensures media entries contain both photo and video record types", () => {
-      // Step 1: Verify presence of photo records
-      const hasPhoto = MEDIA_ARCHIVE.some((item) => item.type === "photo");
-      expect(hasPhoto, "MEDIA_ARCHIVE must include photographic records").toBe(true);
+    it("ensures every video satisfies the ArchiveVideo interface contract with valid YouTube URLs", () => {
+      // Step 1: Validate entity fields for all 3 real YouTube video records
+      ARCHIVE_VIDEOS.forEach((video: ArchiveVideo) => {
+        expect(video.id).toBeDefined();
+        expect(video.id.startsWith("yt-")).toBe(true);
 
-      // Step 2: Verify presence of video records
-      const hasVideo = MEDIA_ARCHIVE.some((item) => item.type === "video");
-      expect(hasVideo, "MEDIA_ARCHIVE must include audiovisual/video records").toBe(true);
-    });
+        expect(video.title).toBeDefined();
+        expect(video.title.startsWith("INDUSTRIAL GIRLS //")).toBe(true);
 
-    it("ensures every media entry satisfies the MediaArchiveItem interface contract", () => {
-      // Step 1: Validate entity fields for every record in the media catalog
-      MEDIA_ARCHIVE.forEach((item: MediaArchiveItem) => {
-        expect(item.id).toBeDefined();
-        expect(typeof item.id).toBe("string");
-        expect(item.id.trim().length).toBeGreaterThan(0);
+        expect(video.youtubeId).toBeDefined();
+        expect(video.youtubeId.trim().length).toBeGreaterThan(0);
 
-        expect(item.title).toBeDefined();
-        expect(typeof item.title).toBe("string");
-        expect(item.title.trim().length).toBeGreaterThan(0);
+        expect(video.url).toBeDefined();
+        expect(video.url.includes("youtu")).toBe(true);
 
-        expect(item.date).toBeDefined();
-        expect(typeof item.date).toBe("string");
-        expect(item.date.trim().length).toBeGreaterThan(0);
-
-        expect(item.location).toBeDefined();
-        expect(typeof item.location).toBe("string");
-        expect(item.location.trim().length).toBeGreaterThan(0);
-
-        expect(item.type).toBeDefined();
-        expect(["photo", "video"].includes(item.type)).toBe(true);
-
-        expect(item.mediaUrl).toBeDefined();
-        expect(typeof item.mediaUrl).toBe("string");
-        expect(item.mediaUrl.trim().length).toBeGreaterThan(0);
-
-        expect(item.caption).toBeDefined();
-        expect(typeof item.caption).toBe("string");
-        expect(item.caption.trim().length).toBeGreaterThan(0);
+        expect(video.thumbnailUrl).toBeDefined();
+        expect(video.thumbnailUrl.includes("img.youtube.com/vi/")).toBe(true);
       });
     });
 
-    it("ensures getMediaArchiveItems() returns a protected copy of the media catalog", () => {
-      // Step 1: Retrieve media copy via getter
-      const mediaCopy = getMediaArchiveItems();
+    it("verifies the exact 3 real YouTube video IDs are present", () => {
+      // Step 1: Verify exact IDs
+      const videoIds = ARCHIVE_VIDEOS.map((v) => v.youtubeId);
+      expect(videoIds).toContain("AXM433YoYzQ");
+      expect(videoIds).toContain("hePpvpRLwwc");
+      expect(videoIds).toContain("4vaopkiPKhc");
+    });
+
+    it("ensures getArchiveVideos() returns a protected copy of the real video catalog", () => {
+      // Step 1: Retrieve video copy via getter
+      const videoCopy = getArchiveVideos();
 
       // Step 2: Assert parity and reference independence
-      expect(mediaCopy.length).toBe(MEDIA_ARCHIVE.length);
-      expect(mediaCopy).not.toBe(MEDIA_ARCHIVE);
+      expect(videoCopy.length).toBe(3);
+      expect(videoCopy).not.toBe(ARCHIVE_VIDEOS);
+    });
+
+    it("ensures zero mock showcase records exist in the video registry", () => {
+      // Step 1: Assert absence of fake mock titles
+      ARCHIVE_VIDEOS.forEach((video) => {
+        expect(video.title).not.toContain("Warehouse Session // Bogotá Subterránea");
+        expect(video.title).not.toContain("Showcase Berlín // Tresor Vault Showcase");
+      });
     });
   });
 
@@ -299,7 +295,7 @@ describe("Archive Section - Artists Roster Architecture — TDD Test Suite (@spe
       expect(h1Matches.length).toBe(1);
     });
 
-    it("ensures media filter controls and responsive gallery grid are rendered", () => {
+    it("ensures media filter controls, video subheader and responsive gallery grid are rendered", () => {
       // Step 1: Read view component source file
       const content = fs.readFileSync(archivoViewPath, "utf8");
 
@@ -308,7 +304,17 @@ describe("Archive Section - Artists Roster Architecture — TDD Test Suite (@spe
       expect(content.includes("[ FOTOGRAFÍA"), "Must render [ FOTOGRAFÍA ] filter button").toBe(true);
       expect(content.includes("[ VIDEO"), "Must render [ VIDEO ] filter button").toBe(true);
 
-      // Step 3: Verify media grid container
+      // Step 3: Verify video subheader copy
+      expect(
+        content.includes("VIDEOS & REGISTRO MULTICÁMARA EN VIVO"),
+        "Must render VIDEOS & REGISTRO MULTICÁMARA EN VIVO subheader"
+      ).toBe(true);
+
+      // Step 4: Verify direct YouTube link attributes
+      expect(content.includes('target="_blank"'), "Video cards must open in new tab").toBe(true);
+      expect(content.includes('rel="noopener noreferrer"'), "Video cards must have rel=noopener noreferrer").toBe(true);
+
+      // Step 5: Verify media grid container
       expect(
         content.includes("grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3") ||
         content.includes("grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6") ||

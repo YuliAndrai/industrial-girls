@@ -382,87 +382,97 @@ export function getArtistsRoster(): readonly ArtistProfile[] {
 }
 
 /**
- * Entity contract representing a photographic or audiovisual record in the Industrial Girls media archive.
+ * Entity contract representing a real YouTube video broadcast in the Industrial Girls archive.
  */
-export interface MediaArchiveItem {
-  /** Unique normalized slug or identifier for the media entry */
+export interface ArchiveVideo {
+  /** Unique identifier for the video entry */
   id: string;
-  /** Editorial title describing the event session or capture */
+  /** Editorial title of the live stream or hybrid set */
   title: string;
-  /** ISO date string (YYYY-MM-DD) or human-readable event date */
-  date: string;
-  /** Physical city/country venue location where the session took place */
-  location: string;
-  /** Categorization type: photographic capture or video recording */
-  type: "photo" | "video";
-  /** Direct URL to high-resolution photo asset or video stream */
-  mediaUrl: string;
-  /** Contextual or historical caption describing the session */
-  caption: string;
-  /** Optional formatted duration for video content (e.g. "45:20") */
-  duration?: string;
-  /** Optional thumbnail preview URL for video or grid optimization */
-  thumbnailUrl?: string;
+  /** YouTube video ID */
+  youtubeId: string;
+  /** Canonical direct URL to the YouTube video or live broadcast */
+  url: string;
+  /** YouTube thumbnail URL */
+  thumbnailUrl: string;
 }
 
-// Step 3: Define the immutable curated media archive dataset
+// Step 3: Define the immutable curated real YouTube videos catalog
 /**
- * Typed catalog containing curated audiovisual and photographic records
- * documenting showcases, warehouse club nights, and boiler sessions.
+ * Typed catalog containing the 3 real YouTube video records documenting
+ * live stream sessions, direct broadcasts, and hybrid sets.
  */
-export const MEDIA_ARCHIVE: readonly MediaArchiveItem[] = [
+export const ARCHIVE_VIDEOS: readonly ArchiveVideo[] = [
   {
-    id: "showcase-bogota-2025",
-    title: "Warehouse Session // Bogotá Subterránea",
-    date: "2025-11-14",
-    location: "Bogotá, Colombia",
-    type: "video",
-    mediaUrl: "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
-    caption: "Registro audiovisual multicámara de la sesión en nave industrial con sets de Clara Cuvé y Andhray.",
-    duration: "45:20",
-    thumbnailUrl: "https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?auto=format&fit=crop&q=80&w=1200",
+    id: "yt-01",
+    title: "INDUSTRIAL GIRLS // LIVE STREAM SESSION",
+    youtubeId: "AXM433YoYzQ",
+    url: "https://youtu.be/AXM433YoYzQ",
+    thumbnailUrl: "https://img.youtube.com/vi/AXM433YoYzQ/hqdefault.jpg",
   },
   {
-    id: "medellin-tunnel-photo-2025",
-    title: "Registro Analógico // Medellín Tunnel Rave",
-    date: "2025-08-22",
-    location: "Medellín, Colombia",
-    type: "photo",
-    mediaUrl: "https://images.unsplash.com/photo-1574717024653-61fd2cf4d44d?auto=format&fit=crop&q=80&w=1200",
-    caption: "Cobertura fotográfica en 35mm durante la toma del túnel oriental con atmósfera industrial.",
-    thumbnailUrl: "https://images.unsplash.com/photo-1574717024653-61fd2cf4d44d?auto=format&fit=crop&q=80&w=600",
+    id: "yt-02",
+    title: "INDUSTRIAL GIRLS // TRANSMISIÓN EN DIRECTO",
+    youtubeId: "hePpvpRLwwc",
+    url: "https://www.youtube.com/live/hePpvpRLwwc",
+    thumbnailUrl: "https://img.youtube.com/vi/hePpvpRLwwc/hqdefault.jpg",
   },
   {
-    id: "berlin-tresor-stream-2026",
-    title: "Showcase Berlín // Tresor Vault Showcase",
-    date: "2026-03-05",
-    location: "Berlín, Alemania",
-    type: "video",
-    mediaUrl: "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
-    caption: "Transmisión en directo del showcase debut en Berlín presentando directos modulares de Wallis y Dance Divine.",
-    duration: "1:15:00",
-    thumbnailUrl: "https://images.unsplash.com/photo-1514525253161-7a46d19cd819?auto=format&fit=crop&q=80&w=1200",
-  },
-  {
-    id: "cali-soundclash-photo-2025",
-    title: "Retratos de Cabina // Cali Soundclash",
-    date: "2025-05-18",
-    location: "Cali, Colombia",
-    type: "photo",
-    mediaUrl: "https://images.unsplash.com/photo-1470225620780-dba8ba36b745?auto=format&fit=crop&q=80&w=1200",
-    caption: "Serie fotográfica de cabina y público durante la apertura del circuito sonoro en el Valle.",
-    thumbnailUrl: "https://images.unsplash.com/photo-1470225620780-dba8ba36b745?auto=format&fit=crop&q=80&w=600",
+    id: "yt-03",
+    title: "INDUSTRIAL GIRLS // HYBRID SET ARCHIVE",
+    youtubeId: "4vaopkiPKhc",
+    url: "https://youtu.be/4vaopkiPKhc",
+    thumbnailUrl: "https://img.youtube.com/vi/4vaopkiPKhc/hqdefault.jpg",
   },
 ] as const;
 
-// Step 4: Export getter function providing read access to the media archive
+// Step 4: Export getter function providing read access to real archive videos
 /**
- * Retrieves the complete list of media archive items.
+ * Retrieves the complete list of real YouTube archive videos.
+ *
+ * @returns {readonly ArchiveVideo[]} An array of archive video entities.
+ */
+export function getArchiveVideos(): readonly ArchiveVideo[] {
+  // Step 4.1: Return a shallow copy of the immutable catalog to protect source state
+  return [...ARCHIVE_VIDEOS];
+}
+
+/**
+ * Entity contract representing a photographic or audiovisual record in the Industrial Girls media archive.
+ * @deprecated Use ArchiveVideo or ArchivePhoto instead.
+ */
+export interface MediaArchiveItem {
+  id: string;
+  title: string;
+  date: string;
+  location: string;
+  type: "photo" | "video";
+  mediaUrl: string;
+  caption: string;
+  duration?: string;
+  thumbnailUrl?: string;
+}
+
+/**
+ * Curated media archive items mapping real YouTube videos without mock records.
+ */
+export const MEDIA_ARCHIVE: readonly MediaArchiveItem[] = ARCHIVE_VIDEOS.map((v) => ({
+  id: v.id,
+  title: v.title,
+  date: "2026-03-01",
+  location: "YouTube Oficial",
+  type: "video" as const,
+  mediaUrl: v.url,
+  caption: v.title,
+  thumbnailUrl: v.thumbnailUrl,
+}));
+
+/**
+ * Retrieves the list of media archive items.
  *
  * @returns {readonly MediaArchiveItem[]} An array of media archive entities.
  */
 export function getMediaArchiveItems(): readonly MediaArchiveItem[] {
-  // Step 4.1: Return a shallow copy of the immutable catalog to protect source state
   return [...MEDIA_ARCHIVE];
 }
 
