@@ -381,8 +381,8 @@ export const ARTISTS_ROSTER: readonly ArtistProfile[] = [
   {
     id: "annie",
     name: "ANNIE",
-    country: "Colombia",
-    countryCode: "CO",
+    country: "Italia",
+    countryCode: "IT",
     links: {
       soundcloud: "https://soundcloud.com/annie-music",
       instagram: "https://instagram.com/annie_dj",
@@ -391,8 +391,8 @@ export const ARTISTS_ROSTER: readonly ArtistProfile[] = [
   {
     id: "dj-hotmail",
     name: "DJ HOTMAIL",
-    country: "Colombia",
-    countryCode: "CO",
+    country: "Turquía",
+    countryCode: "TR",
     links: {
       soundcloud: "https://soundcloud.com/djhotmail",
       instagram: "https://instagram.com/djhotmail",
@@ -401,8 +401,8 @@ export const ARTISTS_ROSTER: readonly ArtistProfile[] = [
   {
     id: "killer-queen",
     name: "KILLER QUEEN",
-    country: "Colombia",
-    countryCode: "CO",
+    country: "Italia",
+    countryCode: "IT",
     links: {
       soundcloud: "https://soundcloud.com/killerqueen-music",
       instagram: "https://instagram.com/killerqueen_techno",
@@ -421,8 +421,8 @@ export const ARTISTS_ROSTER: readonly ArtistProfile[] = [
   {
     id: "node",
     name: "NØDE",
-    country: "Colombia",
-    countryCode: "CO",
+    country: "Italia",
+    countryCode: "IT",
     links: {
       soundcloud: "https://soundcloud.com/node-techno",
       instagram: "https://instagram.com/node_music",
@@ -431,8 +431,8 @@ export const ARTISTS_ROSTER: readonly ArtistProfile[] = [
   {
     id: "elen-payne",
     name: "ELEN PAYNE",
-    country: "Alemania",
-    countryCode: "DE",
+    country: "Colombia",
+    countryCode: "CO",
     links: {
       soundcloud: "https://soundcloud.com/elenpayne",
       instagram: "https://instagram.com/elenpayne",
@@ -441,8 +441,8 @@ export const ARTISTS_ROSTER: readonly ArtistProfile[] = [
   {
     id: "techsia",
     name: "TECHSIA",
-    country: "Colombia",
-    countryCode: "CO",
+    country: "Italia",
+    countryCode: "IT",
     links: {
       soundcloud: "https://soundcloud.com/techsia",
       instagram: "https://instagram.com/techsia_music",
@@ -451,8 +451,8 @@ export const ARTISTS_ROSTER: readonly ArtistProfile[] = [
   {
     id: "mmell",
     name: "MMELL",
-    country: "Colombia",
-    countryCode: "CO",
+    country: "Italia",
+    countryCode: "IT",
     links: {
       soundcloud: "https://soundcloud.com/mmell-music",
       instagram: "https://instagram.com/mmell_dj",
