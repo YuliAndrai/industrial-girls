@@ -111,6 +111,47 @@ describe("Podcast Series (IG MIX 001 - 004) — TDD Test Suite", () => {
       });
     });
 
+    it("validates that all 4 podcast cover image files are in MaxRes HD quality (1280x720)", () => {
+      // Step 1: Helper to extract JPEG dimensions from SOF markers
+      function getJpegDimensions(filePath: string): { width: number; height: number } | null {
+        const buf = fs.readFileSync(filePath);
+        let i = 2;
+        while (i < buf.length) {
+          if (buf[i] !== 0xff) return null;
+          const marker = buf[i + 1];
+          i += 2;
+          if (marker === 0xc0 || marker === 0xc2) {
+            const h = buf.readUInt16BE(i + 3);
+            const w = buf.readUInt16BE(i + 5);
+            return { width: w, height: h };
+          }
+          const len = buf.readUInt16BE(i);
+          i += len;
+        }
+        return null;
+      }
+
+      // Step 2: Validate each file dimensions
+      const publicPodcastsDir = path.resolve(
+        process.cwd(),
+        "apps",
+        "web",
+        "public",
+        "images",
+        "podcasts"
+      );
+      const podcasts = getPodcastsCatalog();
+      podcasts.forEach((episode) => {
+        const filename = path.basename(episode.coverImage);
+        const fullDiskPath = path.join(publicPodcastsDir, filename);
+        const dimensions = getJpegDimensions(fullDiskPath);
+
+        expect(dimensions).not.toBeNull();
+        expect(dimensions?.width).toBe(1280);
+        expect(dimensions?.height).toBe(720);
+      });
+    });
+
     it("retrieves a specific podcast episode by series number or id using getPodcastBySeries", () => {
       // Step 1: Query by 3-digit series number
       const mix004 = getPodcastBySeries("004");
@@ -182,6 +223,25 @@ describe("Podcast Series (IG MIX 001 - 004) — TDD Test Suite", () => {
 
       // Step 4: Validate metadata badge format
       expect(content).toContain("[ IG MIX");
+    });
+
+    it("ensures /musica view renders podcast covers with aspect-video, object-cover, and HD quality", () => {
+      // Step 1: Read view component source file
+      const viewPath = path.resolve(
+        process.cwd(),
+        "apps",
+        "web",
+        "src",
+        "app",
+        "musica",
+        "musica-view.tsx"
+      );
+      const content = fs.readFileSync(viewPath, "utf-8");
+
+      // Step 2: Validate aspect-video container, object-cover, and quality calibration
+      expect(content).toContain("aspect-video");
+      expect(content).toContain("object-cover");
+      expect(content).toContain("quality={90}");
     });
   });
 });

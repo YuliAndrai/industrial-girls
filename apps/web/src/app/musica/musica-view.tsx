@@ -247,13 +247,14 @@ export function MusicaView(): React.ReactElement {
                     className="border border-raveBorder bg-panel/60 p-6 flex flex-col justify-between hover:border-raveRed transition-all"
                   >
                     <div>
-                      {/* Cover Image */}
+                      {/* Cover Image (16:9 MaxRes HD) */}
                       <div className="group relative aspect-video w-full overflow-hidden border border-white/10 bg-black mb-4">
                         <Image
                           src={episode.coverImage}
                           alt={episode.title}
                           fill
-                          sizes="(max-width: 768px) 100vw, 600px"
+                          sizes="(max-width: 768px) 100vw, (max-width: 1280px) 50vw, 640px"
+                          quality={90}
                           className="object-cover transition-transform duration-300 group-hover:scale-105 group-hover:contrast-125"
                         />
                       </div>
