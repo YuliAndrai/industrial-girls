@@ -9,30 +9,23 @@
 
 ## 2. Solution Overview & 4-Layer Architecture
 - **Layer 1: Presentation Layer (`apps/web/src/app/archivo/page.tsx` & `apps/web/src/app/archivo/archivo-view.tsx`)**:
-  - `page.tsx`: Server Component configuring route metadata (`ROSTER DE ARTISTAS & MEMORIA VISUAL | INDUSTRIAL GIRLS`).
+  - `page.tsx`: Server Component configuring route metadata (`ARCHIVO // ROSTER DE ARTISTAS & MEMORIA VISUAL - INDUSTRIAL GIRLS`).
   - `archivo-view.tsx`: Client Component rendering:
     - Eyebrow: `// HISTORIAL & REGISTRO // ARCHIVO GLOBAL`
     - Main title H1: `ROSTER DE ARTISTAS & MEMORIA VISUAL`
     - Subtitle: `"Registro de DJs, productoras y directos que han formado parte del circuito sonoro de Industrial Girls."`
-    - Roster Typographic Directory: High-impact monospace/display grid with subtle red glow hover micro-interactions revealing country code, flag emoji, and sonic subgenre.
+    - Encabezado de bloque: `// ARCHIVO // EDICIONES PASADAS` y `ARTISTAS EN NUESTROS EVENTOS & LABEL`.
+    - Roster Typographic Directory: Responsive two-column grid (`grid grid-cols-1 lg:grid-cols-2 gap-x-8 gap-y-0 items-start`) partitioning 30 scene artists into two balanced columns of 15, with compact density (`py-2.5 sm:py-3`), index `01`-`30` (`text-white/40`), and compact profile link buttons (`[ SPOTIFY ]`, `[ SOUNDCLOUD ]`, `[ IG ]`, `[ RA ]`, `[ BC ]`) aligned to the right.
     - Single `<h1>` semantic invariant per route.
 - **Layer 2: Application / Consumption Layer**:
-  - Consumes `getArtistsRoster()` and `getMediaArchiveItems()` from Layer 4 Infrastructure.
+  - Consumes `getArtistsRoster()` from Layer 4 Infrastructure.
   - Integrates application state hooks `useDrawer` and `useSoundFx`.
 - **Layer 3: Domain / Pipelines / Services Layer**:
   - Artist entity contracts and query sorting helpers.
 - **Layer 4: Infrastructure Layer (`apps/web/src/lib/infrastructure/archive-data.ts`)**:
-  - Defines `RosterArtistEntity` interface (`id`, `name`, `country`, `countryCode`, `subgenre`, `socialLinks?: { soundcloud?: string; ra?: string; instagram?: string }`).
-  - Exports immutable typed constant `ARTISTS_ROSTER` with initial 8 artists:
-    1. Clara Cuvé (Alemania // DE // Fast & Hard Techno)
-    2. Øtta (Portugal // PT // Hard Techno & Industrial)
-    3. Parfait (Francia // FR // Industrial Groove)
-    4. Wallis (Alemania // DE // Modular Live & Industrial)
-    5. Caravel (Francia // FR // Dark Industrial)
-    6. Somniac One (Países Bajos // NL // Industrial Hardcore)
-    7. Lady Maru (Italia // IT // Acid Techno & EBM)
-    8. Juliana Yamasaki (Brasil // BR // Hard Techno)
-  - Exports getter function `getArtistsRoster(): RosterArtistEntity[]`.
+  - Defines `ArtistProfile` interface (`id`, `name`, `country`, `countryCode`, `links: { spotify?, soundcloud?, residentAdvisor?, instagram?, bandcamp? }`).
+  - Exports immutable typed constant `ARTISTS_ROSTER` with 30 scene artists (zero genre/subgenre properties).
+  - Exports getter function `getArtistsRoster(): readonly ArtistProfile[]`.
 
 ## 3. Atomic Slices & Logical Sequence
 - **SPEC-1**: Archive Roster Data & Typographic Directory (Branch: `feature/jaymusicmachine-IGW-012-archive-roster-directory`)
