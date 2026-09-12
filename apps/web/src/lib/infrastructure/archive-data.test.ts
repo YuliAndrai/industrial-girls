@@ -42,7 +42,7 @@ describe("Archive Section - Artists Roster Architecture — TDD Test Suite (@spe
       });
     });
 
-    it("ensures every artist entity satisfies ArtistProfile contract with valid links", () => {
+    it("ensures every artist entity satisfies ArtistProfile contract without links property", () => {
       // Step 1: Validate entity fields for every record in the catalog
       ARTISTS_ROSTER.forEach((artist: ArtistProfile) => {
         expect(artist.id).toBeDefined();
@@ -61,18 +61,9 @@ describe("Archive Section - Artists Roster Architecture — TDD Test Suite (@spe
         expect(typeof artist.countryCode).toBe("string");
         expect(artist.countryCode.length).toBe(2);
 
-        expect(artist.links).toBeDefined();
-        expect(typeof artist.links).toBe("object");
-
-        // Validate that at least one direct profile link is provided
-        const hasAtLeastOneLink = Boolean(
-          artist.links.spotify ||
-          artist.links.soundcloud ||
-          artist.links.residentAdvisor ||
-          artist.links.instagram ||
-          artist.links.bandcamp
-        );
-        expect(hasAtLeastOneLink).toBe(true);
+        // Validate that links property is strictly absent from all roster records
+        expect(artist).not.toHaveProperty("links");
+        expect("links" in artist).toBe(false);
       });
     });
 
@@ -237,36 +228,24 @@ describe("Archive Section - Artists Roster Architecture — TDD Test Suite (@spe
       expect(content.includes("py-2.5 sm:py-3"), "Rows must apply compact py-2.5 sm:py-3 vertical padding").toBe(true);
       expect(content.includes("border-b border-white/10"), "Rows must apply border-b border-white/10").toBe(true);
 
-      // Step 4: Verify button compact padding, nowrap, and alignment
-      expect(content.includes("sm:ml-auto"), "Profile links must be aligned to the right").toBe(true);
-      expect(content.includes("px-2 py-0.5"), "Buttons must have compact px-2 py-0.5 padding").toBe(true);
-      expect(content.includes("whitespace-nowrap"), "Buttons must not wrap").toBe(true);
+      // Step 4: Verify attenuated index numbering
       expect(content.includes("text-white/40"), "Index numbering must have attenuated opacity").toBe(true);
     });
 
-    it("ensures profile link buttons use native external links with industrial hover styling and clean labels", () => {
+    it("ensures roster directory has purged all external link buttons from the UI", () => {
       // Step 1: Read view component source file
       const content = fs.readFileSync(archivoViewPath, "utf8");
 
-      // Step 2: Verify clean labels without brackets
+      // Step 2: Verify zero rendering of links or button elements in roster directory
+      expect(content.includes("artist.links")).toBe(false);
+      expect(content.includes(">SPOTIFY<")).toBe(false);
+      expect(content.includes(">SOUNDCLOUD<")).toBe(false);
+      expect(content.includes(">IG<")).toBe(false);
+      expect(content.includes(">RA<")).toBe(false);
+      expect(content.includes(">BC<")).toBe(false);
       expect(content.includes("[ SPOTIFY ]")).toBe(false);
       expect(content.includes("[ SOUNDCLOUD ]")).toBe(false);
-      expect(content.includes("[ IG ]")).toBe(false);
-      expect(content.includes("[ RA ]")).toBe(false);
-      expect(content.includes("[ BC ]")).toBe(false);
-      expect(/SPOTIFY\s*<\/a>/.test(content)).toBe(true);
-      expect(/SOUNDCLOUD\s*<\/a>/.test(content)).toBe(true);
-      expect(/IG\s*<\/a>/.test(content)).toBe(true);
-      expect(/RA\s*<\/a>/.test(content)).toBe(true);
-      expect(/BC\s*<\/a>/.test(content)).toBe(true);
-
-      // Step 3: Verify target="_blank" and rel="noopener noreferrer" for safe redirection
-      expect(content.includes('target="_blank"')).toBe(true);
-      expect(content.includes('rel="noopener noreferrer"')).toBe(true);
-
-      // Step 4: Verify industrial red hover style
-      expect(content.includes("border-white/20 text-white/80 hover:border-red-500 hover:text-red-500")).toBe(true);
-      expect(content.includes("mt-2 sm:mt-0 sm:ml-auto flex flex-wrap items-center gap-2")).toBe(true);
+      expect(content.includes("border-white/20 text-white/80 hover:border-red-500")).toBe(false);
     });
   });
 

@@ -39,14 +39,6 @@ export interface ArtistProfile {
   country: string;
   /** ISO 3166-1 alpha-2 country code for flag emoji and visual tags */
   countryCode: string;
-  /** Direct streaming and platform links */
-  links: {
-    spotify?: string;
-    soundcloud?: string;
-    residentAdvisor?: string;
-    instagram?: string;
-    bandcamp?: string;
-  };
 }
 
 /**
@@ -65,448 +57,264 @@ export const ARTISTS_ROSTER: readonly ArtistProfile[] = [
     name: "Clara Cuvé",
     country: "Alemania",
     countryCode: "DE",
-    links: {
-      spotify: "https://open.spotify.com/artist/7zCekb37x85Y2qWlF5K8Vf",
-      soundcloud: "https://soundcloud.com/claracuve",
-      instagram: "https://instagram.com/claracuve",
-    },
   },
   {
     id: "otta",
     name: "Øtta",
     country: "Portugal",
     countryCode: "PT",
-    links: {
-      spotify: "https://open.spotify.com/artist/06iGz5q4qWpZ3p90E49p1n",
-      soundcloud: "https://soundcloud.com/otta-music",
-      instagram: "https://instagram.com/otta_techno",
-    },
   },
   {
     id: "parfait",
     name: "Parfait",
     country: "Francia",
     countryCode: "FR",
-    links: {
-      soundcloud: "https://soundcloud.com/parfait-music",
-      residentAdvisor: "https://ra.co/dj/parfait",
-      instagram: "https://instagram.com/parfait_dj",
-    },
   },
   {
     id: "lessss",
     name: "Lessss",
     country: "Francia",
     countryCode: "FR",
-    links: {
-      spotify: "https://open.spotify.com/artist/1GjK6rX12K2v12Vb1X9p8n",
-      soundcloud: "https://soundcloud.com/lessss-music",
-      instagram: "https://instagram.com/lessss_dj",
-    },
   },
   {
     id: "wallis",
     name: "Wallis",
     country: "Alemania",
     countryCode: "DE",
-    links: {
-      spotify: "https://open.spotify.com/artist/4X9z6R3QjWvY5l3aM1X0r9",
-      soundcloud: "https://soundcloud.com/wallis-music",
-    },
   },
   {
     id: "ayako-mori",
     name: "Ayako Mori",
     country: "Japón",
     countryCode: "JP",
-    links: {
-      spotify: "https://open.spotify.com/artist/5X8z6R3QjWvY5l3aM1X0r9",
-      soundcloud: "https://soundcloud.com/ayako-mori",
-      instagram: "https://instagram.com/ayakomori_official",
-    },
   },
   {
     id: "lady-maru",
     name: "Lady Maru",
     country: "Italia",
     countryCode: "IT",
-    links: {
-      spotify: "https://open.spotify.com/artist/3K9b5Z0kQWvY3l3aM1X0r6",
-      soundcloud: "https://soundcloud.com/ladymaru",
-    },
   },
   {
     id: "jean-terechkova",
     name: "Jean Terechkova",
     country: "Francia",
     countryCode: "FR",
-    links: {
-      soundcloud: "https://soundcloud.com/jean-terechkova",
-      instagram: "https://instagram.com/jean_terechkova",
-    },
   },
   {
     id: "somniac-one",
     name: "Somniac One",
     country: "Países Bajos",
     countryCode: "NL",
-    links: {
-      spotify: "https://open.spotify.com/artist/2Z9b5Z0kQWvY3l3aM1X0r7",
-      soundcloud: "https://soundcloud.com/somniacone",
-    },
   },
   {
     id: "la-penderie-noire",
     name: "La Penderie Noire",
     country: "Bélgica",
     countryCode: "BE",
-    links: {
-      soundcloud: "https://soundcloud.com/lapenderienoire",
-      instagram: "https://instagram.com/lapenderienoire",
-    },
   },
   {
     id: "laren",
     name: "Laren",
     country: "Turquía",
     countryCode: "TR",
-    links: {
-      soundcloud: "https://soundcloud.com/laren-music",
-      instagram: "https://instagram.com/laren_dj",
-    },
   },
   {
     id: "caravel",
     name: "Caravel",
     country: "Francia",
     countryCode: "FR",
-    links: {
-      spotify: "https://open.spotify.com/artist/1Q6b5Z0kQWvY3l3aM1X0r8",
-      soundcloud: "https://soundcloud.com/caravel-music",
-      instagram: "https://instagram.com/caravel_music",
-    },
   },
   {
     id: "debbie",
     name: "Debbie",
     country: "Italia",
     countryCode: "IT",
-    links: {
-      soundcloud: "https://soundcloud.com/debbie-techno",
-      instagram: "https://instagram.com/debbie_dj",
-    },
   },
   {
     id: "vinka-wydro",
     name: "Vinka Wydro",
     country: "Francia",
     countryCode: "FR",
-    links: {
-      soundcloud: "https://soundcloud.com/vinka-wydro",
-      instagram: "https://instagram.com/vinkawydro",
-    },
   },
   {
     id: "dance-divine",
     name: "Dance Divine",
     country: "Francia / Bélgica",
     countryCode: "FR",
-    links: {
-      soundcloud: "https://soundcloud.com/dancedivine",
-      bandcamp: "https://dancedivine.bandcamp.com",
-      instagram: "https://instagram.com/dancedivine_live",
-    },
   },
   {
     id: "andhray",
     name: "Andhray",
     country: "Colombia",
     countryCode: "CO",
-    links: {
-      soundcloud: "https://soundcloud.com/andhray",
-      instagram: "https://instagram.com/andhray_dj",
-    },
   },
   {
     id: "paula-velez",
     name: "Paula Vélez",
     country: "Colombia",
     countryCode: "CO",
-    links: {
-      soundcloud: "https://soundcloud.com/paulavelez",
-      instagram: "https://instagram.com/paulavelez_dj",
-    },
   },
   {
     id: "daniela-fuzz",
     name: "Daniela Fuzz",
     country: "Chile",
     countryCode: "CL",
-    links: {
-      soundcloud: "https://soundcloud.com/daniela_fuzz",
-      instagram: "https://instagram.com/daniela_fuzz",
-    },
   },
   {
     id: "sunny-k",
     name: "Sunny K",
     country: "Colombia",
     countryCode: "CO",
-    links: {
-      soundcloud: "https://soundcloud.com/sunnyk-music",
-      instagram: "https://instagram.com/sunnyk_dj",
-    },
   },
   {
     id: "camila-villegas",
     name: "Camila Villegas",
     country: "Argentina",
     countryCode: "AR",
-    links: {
-      soundcloud: "https://soundcloud.com/camilavillegas",
-      instagram: "https://instagram.com/camilavillegas_dj",
-    },
   },
   {
     id: "kimmy",
     name: "Kimmy",
     country: "Chile",
     countryCode: "CL",
-    links: {
-      soundcloud: "https://soundcloud.com/kimmy-techno",
-      instagram: "https://instagram.com/kimmy_dj",
-    },
   },
   {
     id: "zaphy",
     name: "Zaphy",
     country: "Chile",
     countryCode: "CL",
-    links: {
-      soundcloud: "https://soundcloud.com/zaphy-techno",
-      instagram: "https://instagram.com/zaphy_dj",
-    },
   },
   {
     id: "anjylyk",
     name: "Anjylyk",
     country: "Colombia",
     countryCode: "CO",
-    links: {
-      soundcloud: "https://soundcloud.com/anjylyk",
-      instagram: "https://instagram.com/anjylyk_dj",
-    },
   },
   {
     id: "masicaya",
     name: "Masicaya",
     country: "Colombia",
     countryCode: "CO",
-    links: {
-      soundcloud: "https://soundcloud.com/masicaya",
-      instagram: "https://instagram.com/masicaya_live",
-    },
   },
   {
     id: "kamra",
     name: "Kamra",
     country: "Colombia",
     countryCode: "CO",
-    links: {
-      soundcloud: "https://soundcloud.com/kamra-techno",
-      instagram: "https://instagram.com/kamra_dj",
-    },
   },
   {
     id: "lea-node",
     name: "Lea Node",
     country: "Colombia",
     countryCode: "CO",
-    links: {
-      soundcloud: "https://soundcloud.com/leanode",
-      instagram: "https://instagram.com/leanode_live",
-    },
   },
   {
     id: "hidalgo",
     name: "Hidalgo",
     country: "Colombia",
     countryCode: "CO",
-    links: {
-      soundcloud: "https://soundcloud.com/hidalgo-techno",
-      instagram: "https://instagram.com/hidalgo_dj",
-    },
   },
   {
     id: "celeste-betancur",
     name: "Celeste Betancur",
     country: "Colombia",
     countryCode: "CO",
-    links: {
-      soundcloud: "https://soundcloud.com/celestebetancur",
-      instagram: "https://instagram.com/celestebetancur_live",
-    },
   },
   {
     id: "isabelle-beaucamp",
     name: "Isabelle Beaucamp",
     country: "Alemania",
     countryCode: "DE",
-    links: {
-      spotify: "https://open.spotify.com/artist/3K9b5Z0kQWvY3l3aM1X0r9",
-      soundcloud: "https://soundcloud.com/isabellebeaucamp",
-      instagram: "https://instagram.com/isabellebeaucamp",
-    },
   },
   {
     id: "juliana-yamasaki",
     name: "Juliana Yamasaki",
     country: "Brasil",
     countryCode: "BR",
-    links: {
-      spotify: "https://open.spotify.com/artist/5P9b5Z0kQWvY3l3aM1X0r5",
-      soundcloud: "https://soundcloud.com/julianayamasaki",
-    },
   },
   {
     id: "stinny-stone",
     name: "Stinny Stone",
     country: "Alemania",
     countryCode: "DE",
-    links: {
-      soundcloud: "https://soundcloud.com/stinnystone",
-      instagram: "https://instagram.com/stinnystone",
-    },
   },
   {
     id: "annie",
     name: "ANNIE",
     country: "Italia",
     countryCode: "IT",
-    links: {
-      soundcloud: "https://soundcloud.com/annie-music",
-      instagram: "https://instagram.com/annie_dj",
-    },
   },
   {
     id: "dj-hotmail",
     name: "DJ HOTMAIL",
     country: "Turquía",
     countryCode: "TR",
-    links: {
-      soundcloud: "https://soundcloud.com/djhotmail",
-      instagram: "https://instagram.com/djhotmail",
-    },
   },
   {
     id: "killer-queen",
     name: "KILLER QUEEN",
     country: "Italia",
     countryCode: "IT",
-    links: {
-      soundcloud: "https://soundcloud.com/killerqueen-music",
-      instagram: "https://instagram.com/killerqueen_techno",
-    },
   },
   {
     id: "sklena",
     name: "SKLENA",
     country: "Francia",
     countryCode: "FR",
-    links: {
-      soundcloud: "https://soundcloud.com/sklena-music",
-      instagram: "https://instagram.com/sklena_dj",
-    },
   },
   {
     id: "node",
     name: "NØDE",
     country: "Italia",
     countryCode: "IT",
-    links: {
-      soundcloud: "https://soundcloud.com/node-techno",
-      instagram: "https://instagram.com/node_music",
-    },
   },
   {
     id: "elen-payne",
     name: "ELEN PAYNE",
     country: "Colombia",
     countryCode: "CO",
-    links: {
-      soundcloud: "https://soundcloud.com/elenpayne",
-      instagram: "https://instagram.com/elenpayne",
-    },
   },
   {
     id: "techsia",
     name: "TECHSIA",
     country: "Italia",
     countryCode: "IT",
-    links: {
-      soundcloud: "https://soundcloud.com/techsia",
-      instagram: "https://instagram.com/techsia_music",
-    },
   },
   {
     id: "mmell",
     name: "MMELL",
     country: "Italia",
     countryCode: "IT",
-    links: {
-      soundcloud: "https://soundcloud.com/mmell-music",
-      instagram: "https://instagram.com/mmell_dj",
-    },
   },
   {
     id: "roma",
     name: "ROMA",
     country: "Colombia",
     countryCode: "CO",
-    links: {
-      soundcloud: "https://soundcloud.com/roma-techno",
-      instagram: "https://instagram.com/roma_music",
-    },
   },
   {
     id: "keith-barrera",
     name: "KEITH BARRERA",
     country: "Colombia",
     countryCode: "CO",
-    links: {
-      soundcloud: "https://soundcloud.com/keithbarrera",
-      instagram: "https://instagram.com/keithbarrera_dj",
-    },
   },
   {
     id: "briela-veneno",
     name: "BRIELA VENENO",
     country: "Colombia",
     countryCode: "CO",
-    links: {
-      soundcloud: "https://soundcloud.com/brielaveneno",
-      instagram: "https://instagram.com/brielaveneno",
-    },
   },
   {
     id: "sai",
     name: "SAI",
     country: "Colombia",
     countryCode: "CO",
-    links: {
-      soundcloud: "https://soundcloud.com/sai-techno",
-      instagram: "https://instagram.com/sai_music",
-    },
   },
   {
     id: "sophia",
     name: "SOPHIA",
     country: "Colombia",
     countryCode: "CO",
-    links: {
-      soundcloud: "https://soundcloud.com/sophia-techno",
-      instagram: "https://instagram.com/sophia_dj",
-    },
   },
 ] as const;
 
