@@ -400,18 +400,17 @@ export interface ArchiveVideoItem {
  */
 export type ArchiveVideo = ArchiveVideoItem;
 
-// Step 3: Define the immutable unified archive video catalog (5 local + 3 YouTube)
+// Step 3: Define the immutable unified archive video catalog (4 local + 3 YouTube)
 /**
- * Typed catalog containing 8 unified video records documenting live field captures,
+ * Typed catalog containing 7 unified video records documenting live field captures,
  * direct club broadcasts, and international hybrid showcases.
  */
 export const ARCHIVE_VIDEOS: readonly ArchiveVideoItem[] = [
-  // 5 Videos Locales: SIN TÍTULO, SIN TEXTO, SOLO REPRODUCTOR
+  // 4 Videos Locales restantes (CERO TEXTOS, CERO NOMBRES)
   { id: "vid-01", type: "local", src: "/videos/archive/video-01.mp4" },
   { id: "vid-02", type: "local", src: "/videos/archive/video-02.mp4" },
   { id: "vid-03", type: "local", src: "/videos/archive/video-03.mp4" },
   { id: "vid-04", type: "local", src: "/videos/archive/video-04.mp4" },
-  { id: "vid-05", type: "local", src: "/videos/archive/video-05.mp4" },
 
   // 3 Videos YouTube: Títulos literales provistos por el usuario
   {

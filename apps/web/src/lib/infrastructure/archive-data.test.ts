@@ -204,16 +204,16 @@ describe("Archive Section - Artists Roster Architecture — TDD Test Suite (@spe
   });
 
   describe("3. Layer 4 (Infrastructure): ARCHIVE_VIDEOS Unified Video Registry & getArchiveVideos() Invariants", () => {
-    it("validates that ARCHIVE_VIDEOS contains exactly 8 unified videos (5 local + 3 YouTube)", () => {
-      // Step 1: Verify catalog array exists and has length 8
+    it("validates that ARCHIVE_VIDEOS contains exactly 7 unified videos (4 local + 3 YouTube)", () => {
+      // Step 1: Verify catalog array exists and has length 7
       expect(Array.isArray(ARCHIVE_VIDEOS)).toBe(true);
-      expect(ARCHIVE_VIDEOS.length).toBe(8);
+      expect(ARCHIVE_VIDEOS.length).toBe(7);
     });
 
     it("ensures every local video satisfies the ArchiveVideoItem contract (no title/text) and physical files exist on disk", () => {
       // Step 1: Filter local video items
       const localVideos = ARCHIVE_VIDEOS.filter((v) => v.type === "local");
-      expect(localVideos.length).toBe(5);
+      expect(localVideos.length).toBe(4);
 
       const videosDir = path.resolve(__dirname, "../../../public/videos/archive");
 
@@ -231,6 +231,9 @@ describe("Archive Section - Artists Roster Architecture — TDD Test Suite (@spe
         const filePath = path.join(videosDir, `video-${expectedIndex}.mp4`);
         expect(fs.existsSync(filePath), `Physical file video-${expectedIndex}.mp4 must exist on disk`).toBe(true);
       });
+
+      // Assert purged 5th video no longer exists on disk
+      expect(fs.existsSync(path.join(videosDir, "video-05.mp4"))).toBe(false);
     });
 
     it("ensures every YouTube video satisfies the ArchiveVideoItem contract with exact user titles, URLs and thumbnails", () => {
@@ -275,7 +278,7 @@ describe("Archive Section - Artists Roster Architecture — TDD Test Suite (@spe
       const videoCopy = getArchiveVideos();
 
       // Step 2: Assert parity and reference independence
-      expect(videoCopy.length).toBe(8);
+      expect(videoCopy.length).toBe(7);
       expect(videoCopy).not.toBe(ARCHIVE_VIDEOS);
     });
 
@@ -388,13 +391,14 @@ describe("Archive Section - Artists Roster Architecture — TDD Test Suite (@spe
       expect(content.includes("colorScheme:"), "Video element must configure dark color-scheme").toBe(true);
       expect(content.includes("poster="), "Video element must configure poster attribute").toBe(true);
 
-      // Step 3: Verify poster files exist on disk for all 5 local videos
+      // Step 3: Verify poster files exist on disk for all 4 local videos
       const videosDir = path.resolve(__dirname, "../../../public/videos/archive");
-      for (let i = 1; i <= 5; i++) {
+      for (let i = 1; i <= 4; i++) {
         const posterFile = `video-${String(i).padStart(2, "0")}-poster.jpg`;
         const posterPath = path.join(videosDir, posterFile);
         expect(fs.existsSync(posterPath), `Poster file ${posterFile} must exist on disk`).toBe(true);
       }
+      expect(fs.existsSync(path.join(videosDir, "video-05-poster.jpg"))).toBe(false);
     });
 
     it("ensures archivo-view.tsx integrates the photographic compact gallery terminal with dynamic telemetry", () => {
