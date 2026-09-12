@@ -17,7 +17,10 @@ import { TactileButton } from "@/components/ui/tactile-button";
 import { useDrawer } from "@/lib/hooks/use-drawer";
 import { useSoundFx } from "@/lib/hooks/use-sound-fx";
 import {
-  getCompilations,
+  getReleasesCatalog,
+  ReleaseItem,
+} from "@/lib/infrastructure/music-data";
+import {
   getPodcasts,
   getDemoDropSpecs,
 } from "@/lib/infrastructure/music-catalog";
@@ -35,16 +38,12 @@ export function MusicaView(): React.ReactElement {
   const { isSoundEnabled, toggleSound } = useSoundFx();
 
   // Step 3: Retrieve catalog datasets from infrastructure layer
-  const compilations = getCompilations();
+  const releases = getReleasesCatalog();
   const podcasts = getPodcasts();
   const demoDropSpecs = getDemoDropSpecs();
 
-  // Step 4: Maintain active tab filter and selected compilation state
+  // Step 4: Maintain active tab filter
   const [activeTab, setActiveTab] = useState<"releases" | "podcasts" | "demodrop">("releases");
-  const [selectedCompId, setSelectedCompId] = useState<string>("va-001");
-
-  // Step 5: Resolve current featured compilation entity
-  const activeComp = compilations.find((c) => c.id === selectedCompId) || compilations[0];
 
   return (
     <div className="flex min-h-screen flex-col bg-bg text-neutral-100 selection:bg-raveRed selection:text-black">
@@ -108,7 +107,7 @@ export function MusicaView(): React.ReactElement {
           </div>
         </section>
 
-        {/* 1. Subsection Releases (VA 001 - VA 005) */}
+        {/* 1. Subsection Releases (VA 005 - VA 001) */}
         {activeTab === "releases" && (
           <section className="w-full border-b border-raveBorder bg-bg py-16 px-4 sm:px-6">
             <div className="mx-auto max-w-7xl">
@@ -121,105 +120,95 @@ export function MusicaView(): React.ReactElement {
                 </h2>
               </div>
 
-              {/* Selector Pills for Compilations */}
-              <div className="flex flex-wrap gap-2 mb-8">
-                {compilations.map((comp) => (
-                  <button
-                    key={comp.id}
-                    type="button"
-                    onClick={() => setSelectedCompId(comp.id)}
-                    className={`border px-3 py-1.5 font-mono text-xs font-bold uppercase transition-all ${
-                      comp.id === activeComp.id
-                        ? "border-raveRed bg-raveRed/10 text-white"
-                        : "border-raveBorder bg-panel/60 text-neutral-400 hover:border-white/30"
-                    }`}
+              {/* Quick Jump Selector for Compilations */}
+              <div className="flex flex-wrap gap-2 mb-10">
+                {releases.map((release) => (
+                  <a
+                    key={release.id}
+                    href={`#${release.id}`}
+                    className="border border-raveBorder bg-panel/60 text-neutral-300 hover:border-raveRed hover:text-white px-3 py-1.5 font-mono text-xs font-bold uppercase transition-all"
                   >
-                    {comp.catalogCode}
-                  </button>
+                    {release.catalogCode}
+                  </a>
                 ))}
               </div>
 
-              {/* Featured Active Compilation View */}
-              <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 border border-raveBorder bg-panel/40 p-6 sm:p-10">
-                {/* Cover Art and Direct Action */}
-                <div className="lg:col-span-4 flex flex-col gap-4">
-                  <div className="relative aspect-square w-full overflow-hidden border-2 border-raveRed bg-black">
-                    <Image
-                      src={activeComp.coverImage}
-                      alt={activeComp.title}
-                      fill
-                      sizes="(max-width: 768px) 100vw, 400px"
-                      className="object-cover p-2"
-                    />
-                  </div>
-                  <div>
-                    <span className="font-mono text-xs text-raveRed font-bold">
-                      {activeComp.catalogCode} {"//"} {activeComp.year}
-                    </span>
-                    <h3 className="text-xl sm:text-2xl font-black uppercase text-white mt-1">
-                      {activeComp.title}
-                    </h3>
-                    <p className="font-mono text-xs text-raveTextMuted mt-1">
-                      {activeComp.subtitle}
-                    </p>
-                  </div>
-                  <div className="flex flex-col gap-2 pt-2">
-                    <a
-                      href={activeComp.links.bandcamp}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="w-full"
-                      aria-label={`Comprar y escuchar ${activeComp.title} en Bandcamp`}
-                    >
-                      <TactileButton variant="primary" size="sm" className="w-full">
-                        <span>[ BANDCAMP STREAM / BUY ]</span>
-                      </TactileButton>
-                    </a>
-                    <a
-                      href={activeComp.links.beatport}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="w-full"
-                      aria-label={`Comprar ${activeComp.title} exclusivo en Beatport Pro`}
-                    >
-                      <TactileButton variant="outline" size="sm" className="w-full">
-                        <span>[ BEATPORT PRO EXCLUSIVE ]</span>
-                      </TactileButton>
-                    </a>
-                  </div>
-                </div>
-
-                {/* Tracklist Table */}
-                <div className="lg:col-span-8 flex flex-col justify-between">
-                  <div>
-                    <div className="border-b border-raveBorder pb-2 mb-4 flex items-center justify-between font-mono text-xs text-raveTextMuted">
-                      <span># TRACKLIST OFICIAL</span>
-                      <span>DURACIÓN</span>
-                    </div>
-                    <div className="divide-y divide-raveBorder/40">
-                      {activeComp.tracks.map((track) => (
-                        <div
-                          key={track.position}
-                          className="py-3 flex items-center justify-between font-mono hover:bg-white/5 px-2 transition-colors"
+              {/* Compilations List Descending (VA 005 to VA 001) */}
+              <div className="space-y-12">
+                {releases.map((release, index) => (
+                  <article
+                    key={release.id}
+                    id={release.id}
+                    className="grid grid-cols-1 lg:grid-cols-12 gap-8 border border-raveBorder bg-panel/40 p-6 sm:p-10 hover:border-white/20 transition-all scroll-mt-24"
+                  >
+                    {/* Left Column: Square Cover Art (1:1) and Spotify Button */}
+                    <div className="lg:col-span-4 flex flex-col gap-4">
+                      <div className="relative aspect-square w-full overflow-hidden border-2 border-raveRed bg-black">
+                        <Image
+                          src={release.coverImage}
+                          alt={`${release.catalogCode} - ${release.title}`}
+                          fill
+                          sizes="(max-width: 768px) 100vw, 400px"
+                          className="object-cover p-2"
+                          priority={index === 0}
+                        />
+                      </div>
+                      <div>
+                        <span className="font-mono text-xs text-raveRed font-bold">
+                          {release.catalogCode} {"//"} {release.releaseDate}
+                        </span>
+                        <h3 className="text-xl sm:text-2xl font-black uppercase text-white mt-1">
+                          {release.title}
+                        </h3>
+                      </div>
+                      <div className="pt-2">
+                        <a
+                          href={release.spotifyUrl}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          aria-label={`Escuchar ${release.catalogCode} ${release.title} en Spotify`}
+                          className="inline-flex items-center gap-2 px-3 py-1.5 text-xs font-mono uppercase border border-red-500 text-white hover:bg-red-500/20 transition-colors"
                         >
-                          <div className="flex items-center gap-3">
-                            <span className="text-xs font-bold text-raveRed">{track.position}</span>
-                            <div>
-                              <span className="text-sm font-bold text-white block">{track.artist}</span>
-                              <span className="text-xs text-neutral-400">{track.title}</span>
-                            </div>
-                          </div>
-                          <span className="text-xs text-neutral-400">{track.duration}</span>
-                        </div>
-                      ))}
+                          ESCUCHAR EN SPOTIFY
+                        </a>
+                      </div>
                     </div>
-                  </div>
 
-                  <div className="mt-8 border-t border-raveBorder/60 pt-4 font-mono text-xs text-neutral-400 flex items-center justify-between">
-                    <span>FORMATO: VINIL 12&quot; 180G + DIGITAL LOSSLESS</span>
-                    <span className="text-raveRed font-bold">145-160 BPM</span>
-                  </div>
-                </div>
+                    {/* Right Column: Monospace Tracklist */}
+                    <div className="lg:col-span-8 flex flex-col justify-between">
+                      <div>
+                        <div className="border-b border-raveBorder pb-2 mb-4 flex items-center justify-between font-mono text-xs text-raveTextMuted">
+                          <span># TRACKLIST OFICIAL</span>
+                          <span>DURACIÓN</span>
+                        </div>
+                        <div className="divide-y divide-raveBorder/40">
+                          {release.tracks.map((track) => (
+                            <div
+                              key={track.position}
+                              className="py-3 flex items-center justify-between font-mono hover:bg-white/5 px-2 transition-colors"
+                            >
+                              <div className="flex items-center gap-3">
+                                <span className="text-xs font-bold text-raveRed">{track.position}</span>
+                                <div>
+                                  <span className="text-sm font-bold text-white block">{track.artist}</span>
+                                  <span className="text-xs text-neutral-400">{track.title}</span>
+                                </div>
+                              </div>
+                              {track.duration && (
+                                <span className="text-xs text-neutral-400">{track.duration}</span>
+                              )}
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+
+                      <div className="mt-8 border-t border-raveBorder/60 pt-4 font-mono text-xs text-neutral-400 flex items-center justify-between">
+                        <span>FORMATO: VINIL 12&quot; 180G + DIGITAL LOSSLESS</span>
+                        <span className="text-raveRed font-bold">145-165 BPM</span>
+                      </div>
+                    </div>
+                  </article>
+                ))}
               </div>
             </div>
           </section>
