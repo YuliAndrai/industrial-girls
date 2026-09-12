@@ -225,7 +225,7 @@ describe("Podcast Series (IG MIX 001 - 004) — TDD Test Suite", () => {
       expect(content).toContain("[ IG MIX");
     });
 
-    it("ensures /musica view renders podcast covers with aspect-video, object-cover, and HD quality", () => {
+    it("ensures /musica view renders podcast covers with aspect-video, object-cover, and HD quality calibration", () => {
       // Step 1: Read view component source file
       const viewPath = path.resolve(
         process.cwd(),
@@ -238,9 +238,16 @@ describe("Podcast Series (IG MIX 001 - 004) — TDD Test Suite", () => {
       );
       const content = fs.readFileSync(viewPath, "utf-8");
 
-      // Step 2: Validate aspect-video container, object-cover, and quality calibration
+      // Step 2: Validate container geometry and visual overflow containment
       expect(content).toContain("aspect-video");
+      expect(content).toContain("overflow-hidden");
+
+      // Step 3: Validate image calibration and contrast/scale treatment
       expect(content).toContain("object-cover");
+      expect(content).toContain("object-center");
+      expect(content).toContain("contrast-[1.05]");
+      expect(content).toContain("brightness-95");
+      expect(content).toContain("group-hover:scale-[1.02]");
       expect(content).toContain("quality={90}");
     });
   });

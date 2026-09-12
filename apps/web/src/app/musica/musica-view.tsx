@@ -255,7 +255,7 @@ export function MusicaView(): React.ReactElement {
                           fill
                           sizes="(max-width: 768px) 100vw, (max-width: 1280px) 50vw, 640px"
                           quality={90}
-                          className="object-cover transition-transform duration-300 group-hover:scale-105 group-hover:contrast-125"
+                          className="w-full h-full object-cover object-center contrast-[1.05] brightness-95 group-hover:brightness-105 group-hover:scale-[1.02] transition-all duration-300"
                         />
                       </div>
 
