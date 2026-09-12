@@ -322,6 +322,28 @@ describe("Archive Section - Artists Roster Architecture — TDD Test Suite (@spe
       ).toBe(true);
     });
 
+    it("ensures sections are rendered in exact vertical sequence: Hero -> Media Archive -> Artists Roster", () => {
+      // Step 1: Read view component source file
+      const content = fs.readFileSync(archivoViewPath, "utf8");
+
+      // Step 2: Extract indices of key section landmarks
+      const heroIndex = content.indexOf("ROSTER DE ARTISTAS & MEMORIA VISUAL");
+      const mediaArchiveIndex = content.indexOf("REGISTRO AUDIOVISUAL & SHOWCASES");
+      const videoSectionIndex = content.indexOf("// VIDEOS & REGISTRO MULTICÁMARA EN VIVO");
+      const rosterDirectoryIndex = content.indexOf("ARTISTAS EN NUESTROS EVENTOS & LABEL");
+
+      // Step 3: Assert all landmarks are present
+      expect(heroIndex).toBeGreaterThan(-1);
+      expect(mediaArchiveIndex).toBeGreaterThan(-1);
+      expect(videoSectionIndex).toBeGreaterThan(-1);
+      expect(rosterDirectoryIndex).toBeGreaterThan(-1);
+
+      // Step 4: Enforce vertical hierarchical order
+      expect(heroIndex < mediaArchiveIndex).toBe(true);
+      expect(mediaArchiveIndex < videoSectionIndex).toBe(true);
+      expect(videoSectionIndex < rosterDirectoryIndex).toBe(true);
+    });
+
     it("verifies that single H1 invariant remains strictly preserved across the entire route", () => {
       // Step 1: Read view component source file
       const content = fs.readFileSync(archivoViewPath, "utf8");
