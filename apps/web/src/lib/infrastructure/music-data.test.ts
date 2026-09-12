@@ -375,5 +375,28 @@ describe("Music Releases Catalog & Spotify Integration — TDD Test Suite", () =
       expect(specs.rules[1]).not.toContain("145 a 165 BPM");
       expect(specs.rules[1]).not.toContain("Schranz");
     });
+
+    it("ensures Demo Drop module has completely purged direct listening email and mailto links from the UI", () => {
+      // Step 1: Read view component source file
+      const viewPath = path.resolve(
+        process.cwd(),
+        "apps",
+        "web",
+        "src",
+        "app",
+        "musica",
+        "musica-view.tsx"
+      );
+      const content = fs.readFileSync(viewPath, "utf-8");
+
+      // Step 2: Ensure direct listening email text and mailto links are completely purged
+      expect(content).not.toContain("CORREO DIRECTO DE ESCUCHA");
+      expect(content).not.toContain("demos@industrialgirls.com");
+      expect(content).not.toContain("mailto:");
+
+      // Step 3: Ensure button is detached from mailto and configured with standby action
+      expect(content).toContain("[ ENVIAR DEMO ]");
+      expect(content).not.toContain("[ ENVIAR DEMO VÍA CORREO ]");
+    });
   });
 });

@@ -38,7 +38,7 @@ export function MusicaView(): React.ReactElement {
   const { isOpen, toggleDrawer, closeDrawer } = useDrawer();
 
   // Step 2: Manage global audio and tactile sound interactions
-  const { isSoundEnabled, toggleSound } = useSoundFx();
+  const { isSoundEnabled, toggleSound, playClick } = useSoundFx();
 
   // Step 3: Retrieve catalog datasets from infrastructure layer
   const releases = getReleasesCatalog();
@@ -47,6 +47,14 @@ export function MusicaView(): React.ReactElement {
 
   // Step 4: Maintain active tab filter
   const [activeTab, setActiveTab] = useState<"releases" | "podcasts" | "demodrop">("releases");
+
+  // Step 5: Maintain demo submission feedback state (standby for API integration)
+  const [demoFeedback, setDemoFeedback] = useState<string | null>(null);
+
+  const handleDemoSubmit = () => {
+    playClick();
+    setDemoFeedback("CANAL DE RECEPCIÓN EN CALIBRACIÓN // FORMULARIO DIRECTO PRÓXIMAMENTE.");
+  };
 
   return (
     <div className="flex min-h-screen flex-col bg-bg text-neutral-100 selection:bg-raveRed selection:text-black">
@@ -363,27 +371,26 @@ export function MusicaView(): React.ReactElement {
                 </div>
 
                 <div className="border-t border-raveBorder pt-6 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-                  <div>
-                    <span className="font-mono text-[10px] text-raveTextMuted block">CORREO DIRECTO DE ESCUCHA:</span>
-                    <a
-                      href={"mailto:" + demoDropSpecs.contactEmail}
-                      className="font-mono text-sm font-bold text-white hover:text-raveRed underline decoration-raveRed transition-colors"
-                    >
-                      {demoDropSpecs.contactEmail}
-                    </a>
+                  <div className="font-mono text-xs">
+                    {demoFeedback ? (
+                      <span className="text-raveRed font-bold tracking-wide">
+                        {demoFeedback}
+                      </span>
+                    ) : (
+                      <span className="text-neutral-500">
+                        {"// SISTEMA DE CURADURÍA & A&R // RECEPCIÓN DIGITAL"}
+                      </span>
+                    )}
                   </div>
-                  <a
-                    href={"mailto:" + demoDropSpecs.contactEmail}
-                    aria-label={`Enviar demo musical a ${demoDropSpecs.contactEmail} vía correo electrónico`}
+                  <TactileButton
+                    type="button"
+                    variant="primary"
+                    size="md"
+                    aria-label="Enviar demo musical a canal de curaduría"
+                    onClick={handleDemoSubmit}
                   >
-                    <TactileButton
-                      variant="primary"
-                      size="md"
-                      aria-label={`Enviar demo musical a ${demoDropSpecs.contactEmail} vía correo electrónico`}
-                    >
-                      <span>[ ENVIAR DEMO VÍA CORREO ]</span>
-                    </TactileButton>
-                  </a>
+                    <span>[ ENVIAR DEMO ]</span>
+                  </TactileButton>
                 </div>
               </div>
             </div>

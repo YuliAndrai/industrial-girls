@@ -126,9 +126,9 @@ describe("Semantic HTML & SEO Audit Invariants (IGW-009)", () => {
 
       // Step 2: Assert Spotify release streaming links have aria-label
       expect(content).toMatch(/href=\{release\.spotifyUrl\}[^>]*aria-label=/);
-      // Step 3: Assert YouTube video stream and Demo Drop email link have aria-label
+      // Step 3: Assert YouTube video stream and Demo Drop action button have aria-label
       expect(content).toMatch(/href=\{episode\.youtubeUrl\}[^>]*aria-label=/);
-      expect(content).toMatch(/mailto:[^>]*aria-label=/);
+      expect(content).toMatch(/aria-label="Enviar demo musical[^"]*"/);
     });
   });
 
