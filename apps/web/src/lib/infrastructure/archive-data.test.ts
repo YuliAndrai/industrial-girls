@@ -377,6 +377,26 @@ describe("Archive Section - Artists Roster Architecture — TDD Test Suite (@spe
       expect(content.includes('<h3 className="text-xs uppercase font-mono text-white/90 tracking-wider')).toBe(true);
     });
 
+    it("ensures local video player configures #t=0.001 initial frame, playsInline, dark color-scheme, and poster fallback", () => {
+      // Step 1: Read view component source file
+      const content = fs.readFileSync(archivoViewPath, "utf8");
+
+      // Step 2: Verify video element attributes for visible initial frame and dark controls
+      expect(content.includes("#t=0.001"), "Video source must include #t=0.001 media fragment").toBe(true);
+      expect(content.includes("playsInline"), "Video element must include playsInline").toBe(true);
+      expect(content.includes("scheme-dark"), "Video element must include scheme-dark").toBe(true);
+      expect(content.includes("colorScheme:"), "Video element must configure dark color-scheme").toBe(true);
+      expect(content.includes("poster="), "Video element must configure poster attribute").toBe(true);
+
+      // Step 3: Verify poster files exist on disk for all 5 local videos
+      const videosDir = path.resolve(__dirname, "../../../public/videos/archive");
+      for (let i = 1; i <= 5; i++) {
+        const posterFile = `video-${String(i).padStart(2, "0")}-poster.jpg`;
+        const posterPath = path.join(videosDir, posterFile);
+        expect(fs.existsSync(posterPath), `Poster file ${posterFile} must exist on disk`).toBe(true);
+      }
+    });
+
     it("ensures archivo-view.tsx integrates the photographic compact gallery terminal with dynamic telemetry", () => {
       // Step 1: Read view component source file
       const content = fs.readFileSync(archivoViewPath, "utf8");

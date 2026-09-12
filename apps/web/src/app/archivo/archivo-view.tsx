@@ -652,17 +652,21 @@ export function ArchivoView(): React.ReactElement {
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                   {archiveVideos.map((video) =>
                     video.type === "local" ? (
-                      /* Native Local HTML5 Video Player: ONLY player, zero text/labels */
                       <div
                         key={video.id}
                         className="relative aspect-video bg-black border border-white/10 overflow-hidden"
                       >
                         <video
-                          src={video.src}
+                          src={`${video.src}#t=0.001`}
                           controls
                           preload="metadata"
-                          className="w-full h-full object-cover"
-                        />
+                          playsInline
+                          poster={`/videos/archive/${video.id.replace("vid-", "video-")}-poster.jpg`}
+                          className="w-full h-full object-cover bg-neutral-950 text-white scheme-dark [color-scheme:dark]"
+                          style={{ colorScheme: "dark" }}
+                        >
+                          <track kind="captions" />
+                        </video>
                       </div>
                     ) : (
                       /* External YouTube Video Showcase Card: thumbnail + exclusive title link below */
