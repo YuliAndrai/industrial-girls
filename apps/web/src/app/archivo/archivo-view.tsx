@@ -116,28 +116,28 @@ export function ArchivoView(): React.ReactElement {
             </div>
 
             {/* Tactical Brutalism Roster Directory Rows */}
-            <div className="flex flex-col divide-y divide-raveBorder border border-raveBorder bg-panel/30">
+            <div className="flex flex-col divide-y divide-white/10 border border-raveBorder bg-panel/30">
               {filteredArtists.map((artist: ArtistProfile, index: number) => (
                 <article
                   key={artist.id}
-                  className="group relative flex flex-col md:flex-row md:items-center justify-between p-4 sm:px-6 transition-all duration-200 hover:bg-black/90 hover:border-l-4 hover:border-l-raveRed"
+                  className="group relative flex flex-col md:flex-row md:items-center justify-between py-3.5 px-4 sm:px-6 min-h-[52px] transition-all duration-200 hover:bg-black/90 hover:border-l-4 hover:border-l-raveRed"
                 >
                   {/* Left Column: Index, Artist Name & Country Code */}
                   <div className="flex items-center gap-3 sm:gap-4">
-                    <span className="font-mono text-xs text-neutral-500 w-8 shrink-0">
+                    <span className="font-mono text-xs text-white/40 w-8 shrink-0">
                       {String(index + 1).padStart(2, "0")}
                     </span>
-                    <h3 className="text-base sm:text-lg font-black uppercase tracking-tight text-white group-hover:text-raveRed group-hover:drop-shadow-[0_0_10px_rgba(255,0,0,0.5)] transition-colors">
+                    <h3 className="text-base sm:text-lg font-bold uppercase tracking-tight text-white group-hover:text-raveRed group-hover:drop-shadow-[0_0_10px_rgba(255,0,0,0.5)] transition-colors">
                       {artist.name}
                     </h3>
-                    <span className="font-mono text-xs font-bold text-raveRed tracking-wider">
+                    <span className="ml-2 font-mono text-xs font-bold text-raveRed tracking-wider">
                       {"[" + artist.countryCode + "]"}
                     </span>
                   </div>
 
                   {/* Right Column: Interactive Profile Link Buttons */}
                   {artist.links && (
-                    <div className="mt-3 md:mt-0 flex flex-wrap items-center gap-2 sm:gap-3 font-mono text-[11px]">
+                    <div className="mt-2 md:mt-0 md:ml-auto flex flex-wrap items-center gap-2 font-mono text-[11px]">
                       {artist.links.spotify && (
                         <a
                           href={artist.links.spotify}

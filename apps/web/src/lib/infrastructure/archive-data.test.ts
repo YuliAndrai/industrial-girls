@@ -170,5 +170,19 @@ describe("Archive Section - Artists Roster Architecture — TDD Test Suite (@spe
         "archivo-view.tsx must render ARTISTAS EN NUESTROS EVENTOS block title"
       ).toBe(true);
     });
+
+    it("ensures roster table rows enforce calibrated density, minimum tap height, and aligned links", () => {
+      // Step 1: Read view component source file
+      const content = fs.readFileSync(archivoViewPath, "utf8");
+
+      // Step 2: Verify row vertical padding and minimum height
+      expect(content.includes("py-3.5"), "Rows must apply py-3.5 vertical padding").toBe(true);
+      expect(content.includes("min-h-[52px]"), "Rows must maintain min-h-[52px]").toBe(true);
+
+      // Step 3: Verify button horizontal spacing and alignment
+      expect(content.includes("md:ml-auto"), "Profile links must be aligned to the right").toBe(true);
+      expect(content.includes("gap-2"), "Buttons must maintain gap-2 spacing").toBe(true);
+      expect(content.includes("text-white/40"), "Index numbering must have attenuated opacity").toBe(true);
+    });
   });
 });
