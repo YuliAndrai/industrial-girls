@@ -77,17 +77,21 @@ describe("Semantic HTML & SEO Audit Invariants (IGW-009)", () => {
 
   describe("2. Interactive Controls & Accessibility Aria-Labels", () => {
     it("verifies Footer official frequencies external links possess descriptive aria-labels and certifies minimal layout", () => {
-      // Step 1: Read Footer component
+      // Step 1: Read Footer component and footer data
       const footerPath = path.join(webSrcDir, "components/layout/footer.tsx");
+      const footerDataPath = path.join(webSrcDir, "lib/infrastructure/footer-data.ts");
       const content = fs.readFileSync(footerPath, "utf-8");
+      const dataContent = fs.readFileSync(footerDataPath, "utf-8");
 
-      // Step 2: Assert presence of aria-label for official social links
-      expect(content).toMatch(/href="https:\/\/soundcloud\.com[^"]*"[^>]*aria-label=/);
-      expect(content).toMatch(/href="https:\/\/www\.beatport\.com[^"]*"[^>]*aria-label=/);
-      expect(content).toMatch(/href="https:\/\/open\.spotify\.com[^"]*"[^>]*aria-label=/);
-      expect(content).toMatch(/href="https:\/\/youtube\.com[^"]*"[^>]*aria-label=/);
-      expect(content).toMatch(/href="https:\/\/instagram\.com[^"]*"[^>]*aria-label=/);
-      expect(content).toMatch(/href="https:\/\/t\.me\/industrialgirls"[^>]*aria-label=/);
+      // Step 2: Assert presence of aria-label and href for official social links
+      expect(content).toContain("aria-label={social.ariaLabel}");
+      expect(content).toContain("href={social.href}");
+      expect(dataContent).toContain("https://www.instagram.com/industrialgirlsmusic/");
+      expect(dataContent).toContain("https://soundcloud.com/industrial_girls");
+      expect(dataContent).toContain("https://www.youtube.com/@industrialgirls4388");
+      expect(dataContent).toContain("https://www.facebook.com/Industrialgirlsmusic.col/");
+      expect(dataContent).toContain("https://www.beatport.com/es/label/industrial-girls/106032");
+      expect(dataContent).toContain("https://industrialgirls.bandcamp.com/music");
 
       // Step 3: Assert minimal copyright branding
       expect(content).toContain("© 2026 INDUSTRIAL GIRLS // ALL RIGHTS RESERVED.");
