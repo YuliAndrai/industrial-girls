@@ -14,8 +14,10 @@ import { TactileButton } from "@/components/ui/tactile-button";
  * @returns {React.ReactElement} The rendered residents block.
  */
 export function ResidentsSection(): React.ReactElement {
+  // Step 1: Retrieve resident roster from infrastructure catalog
   const residents = getResidents();
 
+  // Step 2: Render brutalist resident artist grid with individual DJ cards and social links
   return (
     <section id="residents" className="w-full border-b border-raveBorder bg-black py-16 sm:py-24 px-4 sm:px-6 relative">
       <div className="mx-auto max-w-7xl">
@@ -75,6 +77,7 @@ export function ResidentsSection(): React.ReactElement {
                     target="_blank"
                     rel="noopener noreferrer"
                     className="flex-1 focus:outline-none"
+                    aria-label={`Perfil de SoundCloud de ${resident.name}`}
                   >
                     <TactileButton variant="outline" size="sm" className="w-full">
                       <span className="flex items-center justify-center gap-2">
@@ -90,6 +93,7 @@ export function ResidentsSection(): React.ReactElement {
                     target="_blank"
                     rel="noopener noreferrer"
                     className="flex-1 focus:outline-none"
+                    aria-label={`Perfil de Instagram de ${resident.name}`}
                   >
                     <TactileButton variant="primary" size="sm" className="w-full">
                       <span className="flex items-center justify-center gap-2">

@@ -7,6 +7,8 @@
  */
 
 import { describe, it, expect } from "vitest";
+import fs from "node:fs";
+import path from "node:path";
 import {
   getArtistDevPillars,
   getPillarById,
@@ -109,6 +111,26 @@ describe("Artist Development Module — Unit Test Suite", () => {
       expect(result.errors.musicLinks).toBeDefined();
       expect(result.errors.selectedServices).toBeDefined();
       expect(result.errors.goalsMessage).toBeDefined();
+    });
+  });
+
+  describe("3. Presentation Layer: ArtistDevHero Action CTAs Contract (@spec IGW-003-HERO-CTAS)", () => {
+    it("should render updated Hero CTA buttons without 4 pilares mention and linking to correct anchors", () => {
+      // Step 1: Read component source
+      const heroPath = path.resolve(__dirname, "../components/artist-development/artist-dev-hero.tsx");
+      const content = fs.readFileSync(heroPath, "utf-8");
+
+      // Step 2: Assert primary button [ SOLICITAR DIAGNÓSTICO ] anchors to #diagnostico
+      expect(content).toContain('href="#diagnostico"');
+      expect(content).toContain("[ SOLICITAR DIAGNÓSTICO ]");
+
+      // Step 3: Assert secondary button [ CATÁLOGO DE SERVICIOS ] anchors to #servicios
+      expect(content).toContain('href="#servicios"');
+      expect(content).toContain("[ CATÁLOGO DE SERVICIOS ]");
+
+      // Step 4: Assert legacy "[ EXPLORAR 4 PILARES ]" text is completely purged
+      expect(content).not.toContain("[ EXPLORAR 4 PILARES ]");
+      expect(content).not.toContain("4 PILARES");
     });
   });
 });

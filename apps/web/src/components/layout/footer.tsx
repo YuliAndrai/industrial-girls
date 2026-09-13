@@ -1,171 +1,132 @@
 /**
  * @file apps/web/src/components/layout/footer.tsx
- * @description Layer 1: Presentation - Brutalist Underground Footer.
- * Aligned with the 5 master routes, official socials (SoundCloud, YouTube, Instagram),
- * and interactive "Merch (Coming Soon)" waitlist modal trigger.
+ * @description Layer 1: Presentation - Minimal Industrial Footer.
+ * Ultra-streamlined technical single-row footer bar displaying copyright
+ * and 6 verified official social channels as high-definition vector icons
+ * with premium scale, circular interactive containers, and brand red glow.
  */
 
-"use client";
-
-import React, { useState } from "react";
-import Link from "next/link";
-import Image from "next/image";
-import { MerchWaitlistModal } from "@/components/common/merch-waitlist-modal";
+import React from "react";
+import { getOfficialSocialLinks, type SocialLinkItem } from "@/lib/infrastructure/footer-data";
 
 /**
- * Footer component providing label manifesto, 5 master section links, socials, and Merch waitlist.
+ * Renders the high-definition monochromatic vector SVG icon corresponding to the platform.
  *
- * @returns {React.ReactElement} The rendered footer layout.
+ * @param {object} props - Component properties.
+ * @param {SocialLinkItem["icon"]} props.icon - Icon identifier.
+ * @returns {React.ReactElement} The vector SVG element.
+ */
+function SocialIcon({ icon }: { icon: SocialLinkItem["icon"] }): React.ReactElement {
+  // Step 1: Render platform-specific high-fidelity vector icon (w-6 h-6, fill="currentColor", viewBox="0 0 24 24")
+  switch (icon) {
+    case "instagram":
+      return (
+        <svg
+          className="w-6 h-6"
+          viewBox="0 0 24 24"
+          fill="currentColor"
+          aria-hidden="true"
+        >
+          <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z" />
+        </svg>
+      );
+    case "soundcloud":
+      return (
+        <svg
+          className="w-6 h-6"
+          viewBox="0 0 24 24"
+          fill="currentColor"
+          aria-hidden="true"
+        >
+          <path d="M1.175 12.225c-.092 0-.175.083-.175.175v4.2c0 .092.083.175.175.175s.175-.083.175-.175v-4.2c0-.092-.083-.175-.175-.175zm1.75-1.4c-.092 0-.175.083-.175.175v7c0 .092.083.175.175.175s.175-.083.175-.175v-7c0-.092-.083-.175-.175-.175zm1.75-.7c-.092 0-.175.083-.175.175v8.4c0 .092.083.175.175.175s.175-.083.175-.175v-8.4c0-.092-.083-.175-.175-.175zm1.75-.7c-.092 0-.175.083-.175.175v9.8c0 .092.083.175.175.175s.175-.083.175-.175v-9.8c0-.092-.083-.175-.175-.175zm1.75.35c-.092 0-.175.083-.175.175v9.1c0 .092.083.175.175.175s.175-.083.175-.175v-9.1c0-.092-.083-.175-.175-.175zm1.75-.7c-.092 0-.175.083-.175.175v9.8c0 .092.083.175.175.175s.175-.083.175-.175v-9.8c0-.092-.083-.175-.175-.175zm1.75-1.05c-.092 0-.175.083-.175.175v10.85c0 .092.083.175.175.175s.175-.083.175-.175V8.275c0-.092-.083-.175-.175-.175zm1.75-.7c-.092 0-.175.083-.175.175v12.25c0 .092.083.175.175.175s.175-.083.175-.175V7.575c0-.092-.083-.175-.175-.175zm2.1-.35c-.437 0-.857.087-1.225.245v12.005h8.4c2.127 0 3.85-1.723 3.85-3.85 0-2.03-1.575-3.693-3.57-3.833-.315-2.555-2.485-4.567-5.105-4.567h-.35z" />
+        </svg>
+      );
+    case "youtube":
+      return (
+        <svg
+          className="w-6 h-6"
+          viewBox="0 0 24 24"
+          fill="currentColor"
+          aria-hidden="true"
+        >
+          <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z" />
+        </svg>
+      );
+    case "facebook":
+      return (
+        <svg
+          className="w-6 h-6"
+          viewBox="0 0 24 24"
+          fill="currentColor"
+          aria-hidden="true"
+        >
+          <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z" />
+        </svg>
+      );
+    case "beatport":
+      return (
+        <svg
+          className="w-6 h-6"
+          viewBox="0 0 24 24"
+          fill="currentColor"
+          aria-hidden="true"
+        >
+          <path d="M17.02 8.71C17.02 5.01 14.01 2 10.31 2H3.75v20h6.56c3.7 0 6.71-3.01 6.71-6.71 0-1.66-.61-3.18-1.62-4.36 1.01-1.18 1.62-2.7 1.62-4.22zm-4.71 6.58c0 1.87-1.52 3.39-3.39 3.39H7.07v-6.78h1.85c1.87 0 3.39 1.52 3.39 3.39zm0-6.58c0 1.87-1.52 3.39-3.39 3.39H7.07V5.32h1.85c1.87 0 3.39 1.52 3.39 3.39z" />
+        </svg>
+      );
+    case "bandcamp":
+      return (
+        <svg
+          className="w-6 h-6"
+          viewBox="0 0 24 24"
+          fill="currentColor"
+          aria-hidden="true"
+        >
+          <path d="M0 18.75l7.437-13.5H24l-7.438 13.5H0z" />
+        </svg>
+      );
+    default:
+      return <span className="w-6 h-6" aria-hidden="true" />;
+  }
+}
+
+/**
+ * Minimal technical footer bar for Industrial Girls with premium vector social icons.
+ *
+ * @returns {React.ReactElement} The rendered minimal footer.
  */
 export function Footer(): React.ReactElement {
-  const [isMerchModalOpen, setIsMerchModalOpen] = useState(false);
+  // Step 1: Retrieve official verified social links from Layer 4 Infrastructure
+  const socialLinks = getOfficialSocialLinks();
 
+  // Step 2: Render minimalist technical single-row bar with premium interactions
   return (
-    <>
-      <footer className="w-full border-t-2 border-raveRed bg-black text-white relative z-10">
-        {/* Top Banner with Slogan */}
-        <div className="border-b border-raveBorder bg-panel/60 py-3 px-4 sm:px-6">
-          <div className="mx-auto flex max-w-7xl items-center justify-between font-mono text-[11px] uppercase tracking-widest text-raveTextMuted">
-            <span>{"// INDUSTRIAL GIRLS RECORDINGS • EST. 2026"}</span>
-            <span className="hidden sm:inline">NO WEAK KICKS &bull; PURE UNDERGROUND SOUND</span>
-          </div>
+    <footer className="w-full border-t border-white/10 bg-black py-6 px-4">
+      <div className="max-w-5xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4 text-xs font-mono text-neutral-500">
+        {/* Left: Copyright text */}
+        <div>
+          <span>© 2026 INDUSTRIAL GIRLS // ALL RIGHTS RESERVED.</span>
         </div>
 
-        <div className="mx-auto max-w-7xl px-4 pt-12 pb-28 sm:px-6 sm:pt-16 sm:pb-32">
-          <div className="grid grid-cols-1 gap-10 sm:grid-cols-2 lg:grid-cols-4">
-            {/* Column 1: Brand & Logo */}
-            <div className="flex flex-col gap-4">
-              <div className="relative h-14 w-24 overflow-hidden rounded-sm border border-raveRed/50 bg-black">
-                <Image
-                  src="/assets/images/industrial-girls-logo-grid.png"
-                  alt="Industrial Girls Recordings"
-                  fill
-                  sizes="96px"
-                  className="object-contain p-1"
-                />
-              </div>
-              <p className="font-mono text-xs leading-relaxed text-raveTextMuted">
-                Plataforma de infraestructura cultural y sonora dedicada al hard techno industrial, la cultura de almacén y la vanguardia electrónica.
-              </p>
-              <div className="flex items-center gap-2 font-mono text-[10px] text-raveRed">
-                <span className="h-1.5 w-1.5 rounded-full bg-raveRed animate-pulse" />
-                TRANSMITIENDO DESDE BERLÍN & BOGOTÁ
-              </div>
-            </div>
-
-            {/* Column 2: 5 Master Sections */}
-            <div className="flex flex-col gap-3">
-              <h4 className="font-mono text-xs font-bold uppercase tracking-widest text-raveRed">
-                [ 5 SECCIONES MAESTRAS ]
-              </h4>
-              <nav className="flex flex-col gap-2 font-mono text-xs text-neutral-300">
-                <Link href="/musica" className="hover:text-raveRed transition-colors">
-                  &gt; 01. Música (Releases & Podcasts)
-                </Link>
-                <Link href="/desarrollo-artistico" className="hover:text-raveRed transition-colors">
-                  &gt; 02. Desarrollo Artístico (Agencia 360°)
-                </Link>
-                <Link href="/eventos" className="hover:text-raveRed transition-colors">
-                  &gt; 03. Eventos & Showcases
-                </Link>
-                <Link href="/archivo" className="hover:text-raveRed transition-colors">
-                  &gt; 04. Archivo & Roster
-                </Link>
-                <Link href="/comunidad" className="hover:text-raveRed transition-colors">
-                  &gt; 05. Comunidad & Journal
-                </Link>
-              </nav>
-            </div>
-
-            {/* Column 3: Demo Policy & Merch Waitlist Action */}
-            <div className="flex flex-col gap-3">
-              <h4 className="font-mono text-xs font-bold uppercase tracking-widest text-raveRed">
-                [ DEMO DROP & MERCH ]
-              </h4>
-              <p className="font-mono text-xs text-raveTextMuted">
-                Recepción de pistas terminadas (145-165 BPM) vía SoundCloud privado o Dropbox.
-              </p>
-              <Link
-                href="/musica#demo-drop"
-                className="font-mono text-xs font-bold text-white hover:text-raveRed underline decoration-raveRed underline-offset-4 transition-colors"
-              >
-                &gt; IR A REGLAS DE DEMO DROP
-              </Link>
-              <div className="pt-2">
-                <button
-                  type="button"
-                  onClick={() => setIsMerchModalOpen(true)}
-                  className="border border-white/30 bg-panel px-3 py-1.5 font-mono text-xs text-white hover:border-raveRed hover:text-raveRed transition-all text-left w-full"
-                >
-                  <span className="text-raveRed font-bold mr-1">&bull;</span>
-                  Merch (Coming Soon) &rarr;
-                </button>
-              </div>
-            </div>
-
-            {/* Column 4: Official Frequencies */}
-            <div className="flex flex-col gap-3">
-              <h4 className="font-mono text-xs font-bold uppercase tracking-widest text-raveRed">
-                [ FRECUENCIAS OFICIALES ]
-              </h4>
-              <div className="flex flex-col gap-2 font-mono text-xs text-neutral-300">
-                <a
-                  href="https://soundcloud.com"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="hover:text-raveRed transition-colors"
-                >
-                  &bull; SoundCloud // Industrial Girls
-                </a>
-                <a
-                  href="https://youtube.com"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="hover:text-raveRed transition-colors"
-                >
-                  &bull; YouTube // Industrial Girls TV
-                </a>
-                <a
-                  href="https://instagram.com"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="hover:text-raveRed transition-colors"
-                >
-                  &bull; Instagram // @industrialgirls_ofc
-                </a>
-                <a
-                  href="https://bandcamp.com"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="hover:text-raveRed transition-colors"
-                >
-                  &bull; Bandcamp // Industrial Girls Wax
-                </a>
-              </div>
-            </div>
-          </div>
-
-          {/* Bottom Legal Bar */}
-          <div className="mt-12 flex flex-col items-center justify-between border-t border-raveBorder/80 pt-6 sm:flex-row gap-4">
-            <p className="font-mono text-[11px] text-neutral-500">
-              &copy; 2026 Industrial Girls Records. All rights reserved. Tactile Brutalism Edition.
-            </p>
-            <div className="flex items-center gap-6 font-mono text-[11px] text-neutral-500">
-              <span className="hover:text-raveRed cursor-pointer">PRIVACY POLICY</span>
-              <span>&bull;</span>
-              <span className="hover:text-raveRed cursor-pointer">TERMS OF SERVICE</span>
-              <span>&bull;</span>
-              <span className="text-raveRed font-bold">ALL UNDERGROUND FREQUENCIES</span>
-            </div>
-          </div>
-        </div>
-      </footer>
-
-      {/* Merch Waitlist Modal */}
-      <MerchWaitlistModal
-        isOpen={isMerchModalOpen}
-        onClose={() => setIsMerchModalOpen(false)}
-      />
-    </>
+        {/* Right: 6 Verified Premium Social Vector Icons */}
+        <nav
+          aria-label="Redes oficiales de Industrial Girls"
+          className="gap-4 md:gap-5 flex items-center justify-center flex-wrap"
+        >
+          {socialLinks.map((social) => (
+            <a
+              key={social.id}
+              href={social.href}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label={social.ariaLabel}
+              className="p-2.5 rounded-full border border-white/10 bg-white/[0.03] backdrop-blur-sm text-neutral-300 opacity-80 transition-all duration-300 ease-out hover:scale-115 hover:opacity-100 hover:text-red-500 hover:border-red-600/70 hover:bg-red-950/20 hover:drop-shadow-[0_0_10px_rgba(239,68,68,0.6)] focus:outline-none focus:ring-1 focus:ring-red-500 inline-flex items-center justify-center"
+            >
+              <SocialIcon icon={social.icon} />
+            </a>
+          ))}
+        </nav>
+      </div>
+    </footer>
   );
 }

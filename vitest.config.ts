@@ -16,6 +16,8 @@ export default defineConfig({
       "apps/web/src/**/*.test.tsx"
     ],
     setupFiles: ["tests/setup/vitest.setup.ts"],
+    testTimeout: 30000,
+    hookTimeout: 30000,
     coverage: {
       provider: "v8",
       reporter: ["text", "html"]

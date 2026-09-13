@@ -117,13 +117,13 @@ describe("Master Architecture (IGW-004) — TDD Test Suite", () => {
   });
 
   describe("2. Events Section Infrastructure (@spec IGW-004-EVENTS)", () => {
-    it("should provide calendar status indicating Season in Preparation", () => {
+    it("should provide calendar status indicating Selective Showcases and Active Season", () => {
       // Step 1: Arrange & Act
       const status = getEventCalendarStatus();
 
       // Step 2: Assert
-      expect(status.headline).toBe("PRÓXIMAS FECHAS — EN PREPARACIÓN");
-      expect(status.statusLabel).toContain("TEMPORADA EN CURADURÍA");
+      expect(status.headline).toBe("SHOWCASES & FECHAS SELECCIONADAS");
+      expect(status.statusLabel).toContain("TEMPORADA ACTIVA");
       expect(status.curatorialNote).toBeTruthy();
       expect(status.announcementWindow).toBeTruthy();
     });
@@ -141,18 +141,13 @@ describe("Master Architecture (IGW-004) — TDD Test Suite", () => {
       expect(countries).toContain("España");
     });
 
-    it("should contain past showcase history entries with video embed identifiers", () => {
+    it("should provide past showcases collection purged of mock unconfirmed entries", () => {
       // Step 1: Arrange & Act
       const showcases = getPastShowcases();
 
-      // Step 2: Assert
-      expect(showcases.length).toBeGreaterThanOrEqual(3);
-      showcases.forEach((showcase) => {
-        expect(showcase.venue).toBeTruthy();
-        expect(showcase.location).toBeTruthy();
-        expect(showcase.youtubeVideoId).toBeTruthy();
-        expect(showcase.lineup.length).toBeGreaterThan(0);
-      });
+      // Step 2: Assert collection is an array with zero mock entries
+      expect(Array.isArray(showcases)).toBe(true);
+      expect(showcases.length).toBe(0);
     });
   });
 
@@ -256,20 +251,20 @@ describe("Master Architecture (IGW-004) — TDD Test Suite", () => {
 
     it("should query journal articles by slug", () => {
       // Step 1: Query article
-      const article = getArticleBySlug("pioneras-de-la-sintesis");
+      const article = getArticleBySlug("pioneras-del-voltaje");
       expect(article).toBeDefined();
-      expect(article?.title).toContain("Pioneras de la Síntesis");
+      expect(article?.title).toContain("Pioneras del Voltaje");
 
       // Step 2: Query non-existent
       const nonExistent = getArticleBySlug("art-999");
       expect(nonExistent).toBeUndefined();
     });
 
-    it("should retrieve initial comments linked to articles", () => {
-      // Step 1: Query comments
-      const comments = getArticleComments("pioneras-de-la-sintesis");
-      expect(comments.length).toBeGreaterThan(0);
-      expect(comments[0].author).toBe("VANE_LIVE");
+    it("should verify comments collection is purged of fabricated mock testimonials", () => {
+      // Step 1: Query comments for article
+      const comments = getArticleComments("pioneras-del-voltaje");
+      expect(Array.isArray(comments)).toBe(true);
+      expect(comments.length).toBe(0);
     });
   });
 
@@ -319,9 +314,11 @@ describe("Master Architecture (IGW-004) — TDD Test Suite", () => {
       it("should accept valid article comment submission", () => {
         // Step 1: Arrange
         const payload: CommentSubmissionInput = {
-          articleId: "pioneras-de-la-sintesis",
+          articleId: "pioneras-del-voltaje",
           author: "AnalogExplorer",
           commentText: "Gran artículo sobre Daphne Oram y la técnica Oramics.",
+          email: "analog@explorer.org",
+          role: "Ingeniera de Sonido",
         };
 
         // Step 2: Act
@@ -375,7 +372,7 @@ describe("Master Architecture (IGW-004) — TDD Test Suite", () => {
   describe("6. Community Comments Application State (@spec IGW-004-STATE)", () => {
     it("should allow querying and adding comments reactively", () => {
       // Step 1: Query initial comments count
-      const articleId = "pioneras-de-la-sintesis";
+      const articleId = "pioneras-del-voltaje";
       const initial = getCommentsForArticle(articleId);
       const initialCount = initial.length;
 

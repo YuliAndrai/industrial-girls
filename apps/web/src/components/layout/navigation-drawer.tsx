@@ -6,9 +6,10 @@
 
 "use client";
 
-import React from "react";
+import React, { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
+import { getMainNavItems } from "@/lib/infrastructure/navigation-data";
 
 /**
  * Props for the NavigationDrawer component.
@@ -21,22 +22,23 @@ export interface NavigationDrawerProps {
 }
 
 /**
- * Fullscreen rave slide-out navigation overlay.
+ * Fullscreen rave slide-out navigation overlay with interactive accordions for subsections.
  *
  * @param {NavigationDrawerProps} props - Component properties.
  * @returns {React.ReactElement | null} The rendered drawer or null if inactive.
  */
 export function NavigationDrawer({ isOpen, onClose }: NavigationDrawerProps): React.ReactElement | null {
+  // Step 1: Manage active accordion state for expanding section subsections
+  const [expandedSection, setExpandedSection] = useState<string | null>(null);
+
   if (!isOpen) return null;
 
-  // Step 1: Nav items definition mapping to the 5 master routes
-  const navItems = [
-    { number: "01", label: "MÚSICA", href: "/musica", note: "CATÁLOGO VA 001-005, PODCASTS & DEMO DROP" },
-    { number: "02", label: "DESARROLLO ARTÍSTICO", href: "/desarrollo-artistico", note: "AGENCIA 360° // INFRAESTRUCTURA & GESTIÓN" },
-    { number: "03", label: "EVENTOS", href: "/eventos", note: "CALENDARIO DE GIRAS, ALERTA GEOGRÁFICA & SHOWCASES" },
-    { number: "04", label: "ARCHIVO", href: "/archivo", note: "ROSTER DE MÁS DE 30 ARTISTAS & REGISTRO VISUAL" },
-    { number: "05", label: "COMUNIDAD", href: "/comunidad", note: "JOURNAL EDITORIAL, DEBATE TÉCNICO & SUSCRIPCIÓN" },
-  ];
+  // Step 2: Retrieve strongly typed master routes and subsections from Layer 4 Infrastructure
+  const navItems = getMainNavItems();
+
+  const toggleSection = (href: string) => {
+    setExpandedSection((prev) => (prev === href ? null : href));
+  };
 
   return (
     <div
@@ -45,7 +47,7 @@ export function NavigationDrawer({ isOpen, onClose }: NavigationDrawerProps): Re
       aria-label="Site Navigation"
       className="fixed inset-0 z-50 flex flex-col bg-black/95 backdrop-blur-xl text-white rave-scanlines overflow-y-auto"
     >
-      {/* Step 2: Drawer Top Bar with Close Action */}
+      {/* Step 3: Drawer Top Bar with Close Action */}
       <div className="mx-auto flex w-full max-w-7xl items-center justify-between border-b border-raveBorder px-4 py-4 sm:px-6">
         <div className="flex items-center gap-3">
           <div className="relative h-9 w-14 overflow-hidden rounded-sm border border-raveRed/40 bg-black">
@@ -70,35 +72,77 @@ export function NavigationDrawer({ isOpen, onClose }: NavigationDrawerProps): Re
         </button>
       </div>
 
-      {/* Step 3: High-Impact Navigation Links */}
+      {/* Step 4: High-Impact Navigation Accordion Links */}
       <div className="mx-auto flex w-full max-w-7xl flex-1 flex-col justify-center px-6 py-12">
         <nav className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:gap-10">
-          {navItems.map((item) => (
-            <Link
-              key={item.number}
-              href={item.href}
-              onClick={onClose}
-              className="group flex flex-col border-b border-raveBorder/60 pb-4 transition-all hover:border-raveRed focus:outline-none"
-            >
-              <div className="flex items-baseline gap-3">
-                <span className="font-mono text-xs font-bold text-raveRed group-hover:translate-x-1 transition-transform">
-                  /{item.number}
-                </span>
-                <span className="text-2xl font-extrabold uppercase tracking-tight text-white group-hover:text-raveRed transition-colors sm:text-4xl">
-                  {item.label}
-                </span>
+          {navItems.map((item, idx) => {
+            const isExpanded = expandedSection === item.href;
+            const itemNumber = String(idx + 1).padStart(2, "0");
+
+            return (
+              <div
+                key={item.href}
+                className="group flex flex-col border-b border-raveBorder/60 pb-4 transition-all"
+              >
+                <div className="flex items-center justify-between gap-2">
+                  <Link
+                    href={item.href}
+                    onClick={onClose}
+                    className="flex items-baseline gap-3 hover:border-raveRed focus:outline-none flex-1"
+                  >
+                    <span className="font-mono text-xs font-bold text-raveRed group-hover:translate-x-1 transition-transform">
+                      /{itemNumber}
+                    </span>
+                    <span className="text-2xl font-extrabold uppercase tracking-tight text-white group-hover:text-raveRed transition-colors sm:text-4xl">
+                      {item.label}
+                    </span>
+                  </Link>
+
+                  {item.subSections.length > 0 && (
+                    <button
+                      type="button"
+                      onClick={() => toggleSection(item.href)}
+                      aria-expanded={isExpanded}
+                      aria-label={`Desplegar subsecciones de ${item.label}`}
+                      className="px-2.5 py-1 text-xs font-mono border border-white/20 text-white/70 hover:border-raveRed hover:text-raveRed transition-colors"
+                    >
+                      {isExpanded ? "[ − ]" : "[ + ]"}
+                    </button>
+                  )}
+                </div>
+
+                {item.note && (
+                  <span className="mt-1 font-mono text-[10px] tracking-wider text-raveTextMuted group-hover:text-neutral-300">
+                    {item.note}
+                  </span>
+                )}
+
+                {/* Subsections Accordion Drawer */}
+                {isExpanded && item.subSections.length > 0 && (
+                  <div className="mt-3 space-y-1 pl-4 sm:pl-6 border-l-2 border-raveRed/60">
+                    {item.subSections.map((sub) => (
+                      <Link
+                        key={sub.href}
+                        href={sub.href}
+                        onClick={onClose}
+                        className="flex items-center gap-2 py-1.5 px-2 font-mono text-xs tracking-wider text-neutral-300 hover:text-white hover:bg-red-600/20 border-l border-transparent hover:border-red-600 transition-all block"
+                      >
+                        <span className="text-raveRed font-bold text-[10px]">&gt;</span>
+                        <span>{sub.label}</span>
+                      </Link>
+                    ))}
+                  </div>
+                )}
               </div>
-              <span className="mt-1 font-mono text-[10px] tracking-wider text-raveTextMuted group-hover:text-neutral-300">
-                {item.note}
-              </span>
-            </Link>
-          ))}
+            );
+          })}
 
           {/* Quick Demo Drop item in drawer */}
           <Link
             href="/musica#demo-drop"
             onClick={onClose}
             className="group flex flex-col border border-raveRed/50 bg-raveRed/10 p-4 transition-all hover:border-raveRed hover:bg-raveRed/20 focus:outline-none"
+            aria-label="Ir a reglas de Demo Drop y envío de tracks inéditos"
           >
             <div className="flex items-center gap-2">
               <span className="h-2 w-2 rounded-full bg-raveRed animate-ping" />
@@ -126,6 +170,7 @@ export function NavigationDrawer({ isOpen, onClose }: NavigationDrawerProps): Re
                 target="_blank"
                 rel="noopener noreferrer"
                 className="hover:text-raveRed transition-colors"
+                aria-label="SoundCloud de Industrial Girls"
               >
                 SOUNDCLOUD
               </a>
@@ -134,6 +179,7 @@ export function NavigationDrawer({ isOpen, onClose }: NavigationDrawerProps): Re
                 target="_blank"
                 rel="noopener noreferrer"
                 className="hover:text-raveRed transition-colors"
+                aria-label="Canal de YouTube de Industrial Girls"
               >
                 YOUTUBE
               </a>
@@ -142,6 +188,7 @@ export function NavigationDrawer({ isOpen, onClose }: NavigationDrawerProps): Re
                 target="_blank"
                 rel="noopener noreferrer"
                 className="hover:text-raveRed transition-colors"
+                aria-label="Perfil de Instagram de Industrial Girls"
               >
                 INSTAGRAM
               </a>

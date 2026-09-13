@@ -239,7 +239,7 @@ export const DEMO_DROP_SPECS: DemoDropSpecifications = {
   allowedProviders: ["SoundCloud enlace privado habilitado para descarga", "Dropbox carpeta directa"],
   rules: [
     "Solo producciones originales terminadas e inéditas (no bootlegs sin autorización ni mashups).",
-    "BPM sugerido: 145 a 165 BPM dentro de las vertientes de Hard Techno, Industrial, Acid y Schranz.",
+    "Libertad Estética & Tempo: Sin restricciones de BPM ni géneros impuestos. Buscamos identidad autoral, crudeza, vanguardia y diseño sonoro contundente.",
     "Incluir datos del artista, bio breve y enlaces a redes sociales en la descripción del link.",
     "Tiempo de respuesta promedio: 7 a 14 días laborables si el track es seleccionado para compilado o EP solista.",
   ],

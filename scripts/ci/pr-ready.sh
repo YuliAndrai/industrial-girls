@@ -26,6 +26,14 @@ while [[ $# -gt 0 ]]; do
       HEAD_BRANCH_OVERRIDE="$2"
       shift 2
       ;;
+    --size-exempt)
+      SIZE_EXEMPT="$2"
+      shift 2
+      ;;
+    --branch-age-exempt)
+      BRANCH_AGE_EXEMPT="$2"
+      shift 2
+      ;;
     *)
       if [[ "${BASE_REF}" == "develop" && "$1" != -* ]]; then
         BASE_REF="$1"

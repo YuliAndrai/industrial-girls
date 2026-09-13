@@ -43,6 +43,7 @@ collect_scope() {
   echo "| --- | --- | --- | --- |"
 
   while IFS= read -r file; do
+    file="${file%$'\r'}"
     name="$(basename "$file")"
     rel_path="${file#"$ROOT_DIR/"}"
     scope="$(collect_scope "$name")"
@@ -64,7 +65,13 @@ collect_scope() {
     fi
 
     printf '| [`%s`](./%s) | %s | %s | %s |\n' "$name" "$rel_path" "$scope" "$last_updated" "$last_commit"
-  done < <(find "$ROOT_DIR/knowledge/architecture" -maxdepth 1 -type f -name '*.md' | sort)
+  done < <(
+    FIND_BIN="/usr/bin/find"
+    if [[ ! -x "$FIND_BIN" ]]; then
+      FIND_BIN="find"
+    fi
+    "$FIND_BIN" "$ROOT_DIR/knowledge/architecture" -maxdepth 1 -type f -name '*.md' | sort
+  )
 
   echo
   echo "### Required Docs by Change Type"
@@ -73,6 +80,21 @@ collect_scope() {
 } > "$TMP_BLOCK"
 
 if grep -q "$START_MARKER" "$README_FILE" && grep -q "$END_MARKER" "$README_FILE"; then
+  # Check if table content actually changed (ignoring the timestamp line)
+  EXISTING_CONTENT="$(awk -v start="$START_MARKER" -v end="$END_MARKER" '
+    $0 == start { in_block = 1; next }
+    $0 == end { in_block = 0; next }
+    in_block && !/^Updated:/ { print }
+  ' "$README_FILE")"
+
+  NEW_CONTENT="$(grep -v '^Updated:' "$TMP_BLOCK")"
+
+  if [[ "$EXISTING_CONTENT" == "$NEW_CONTENT" ]]; then
+    rm -f "$TMP_BLOCK"
+    echo "✅ README sincronizado con documentación (sin cambios)"
+    exit 0
+  fi
+
   awk -v start="$START_MARKER" -v end="$END_MARKER" -v block_file="$TMP_BLOCK" '
     $0 == start {
       print
@@ -102,7 +124,5 @@ else
 fi
 
 rm -f "$TMP_BLOCK" "$TMP_README"
-
-git -C "$ROOT_DIR" add README.md 2>/dev/null || true
 
 echo "✅ README sincronizado con documentación"

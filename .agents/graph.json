@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-09-09T01:59:33.793Z",
+  "generatedAt": "2026-09-11T23:43:30.978Z",
   "nodes": [
     {
       "id": "AGENTS.md",
@@ -110,6 +110,78 @@
       "path": "knowledge\\features\\feature-jaymusicmachine-IGW-003-artist-development.md"
     },
     {
+      "id": "knowledge\\features\\feature-jaymusicmachine-IGW-004-master-architecture-implementation.md",
+      "type": "governance",
+      "label": "feature-jaymusicmachine-IGW-004-master-architecture-implementation",
+      "path": "knowledge\\features\\feature-jaymusicmachine-IGW-004-master-architecture-implementation.md"
+    },
+    {
+      "id": "knowledge\\features\\feature-jaymusicmachine-IGW-004-master-architecture.md",
+      "type": "governance",
+      "label": "feature-jaymusicmachine-IGW-004-master-architecture",
+      "path": "knowledge\\features\\feature-jaymusicmachine-IGW-004-master-architecture.md"
+    },
+    {
+      "id": "knowledge\\features\\feature-jaymusicmachine-IGW-005-home-brand-statement-implementation.md",
+      "type": "governance",
+      "label": "feature-jaymusicmachine-IGW-005-home-brand-statement-implementation",
+      "path": "knowledge\\features\\feature-jaymusicmachine-IGW-005-home-brand-statement-implementation.md"
+    },
+    {
+      "id": "knowledge\\features\\feature-jaymusicmachine-IGW-005-home-brand-statement.md",
+      "type": "governance",
+      "label": "feature-jaymusicmachine-IGW-005-home-brand-statement",
+      "path": "knowledge\\features\\feature-jaymusicmachine-IGW-005-home-brand-statement.md"
+    },
+    {
+      "id": "knowledge\\features\\feature-jaymusicmachine-IGW-006-community-journal-page-implementation.md",
+      "type": "governance",
+      "label": "feature-jaymusicmachine-IGW-006-community-journal-page-implementation",
+      "path": "knowledge\\features\\feature-jaymusicmachine-IGW-006-community-journal-page-implementation.md"
+    },
+    {
+      "id": "knowledge\\features\\feature-jaymusicmachine-IGW-006-community-journal-page.md",
+      "type": "governance",
+      "label": "feature-jaymusicmachine-IGW-006-community-journal-page",
+      "path": "knowledge\\features\\feature-jaymusicmachine-IGW-006-community-journal-page.md"
+    },
+    {
+      "id": "knowledge\\features\\feature-jaymusicmachine-IGW-007-root-jsonld-schema-implementation.md",
+      "type": "governance",
+      "label": "feature-jaymusicmachine-IGW-007-root-jsonld-schema-implementation",
+      "path": "knowledge\\features\\feature-jaymusicmachine-IGW-007-root-jsonld-schema-implementation.md"
+    },
+    {
+      "id": "knowledge\\features\\feature-jaymusicmachine-IGW-007-root-jsonld-schema.md",
+      "type": "governance",
+      "label": "feature-jaymusicmachine-IGW-007-root-jsonld-schema",
+      "path": "knowledge\\features\\feature-jaymusicmachine-IGW-007-root-jsonld-schema.md"
+    },
+    {
+      "id": "knowledge\\features\\feature-jaymusicmachine-IGW-008-route-metadata-seo-implementation.md",
+      "type": "governance",
+      "label": "feature-jaymusicmachine-IGW-008-route-metadata-seo-implementation",
+      "path": "knowledge\\features\\feature-jaymusicmachine-IGW-008-route-metadata-seo-implementation.md"
+    },
+    {
+      "id": "knowledge\\features\\feature-jaymusicmachine-IGW-008-route-metadata-seo.md",
+      "type": "governance",
+      "label": "feature-jaymusicmachine-IGW-008-route-metadata-seo",
+      "path": "knowledge\\features\\feature-jaymusicmachine-IGW-008-route-metadata-seo.md"
+    },
+    {
+      "id": "knowledge\\features\\feature-jaymusicmachine-IGW-009-semantic-seo-audit-implementation.md",
+      "type": "governance",
+      "label": "feature-jaymusicmachine-IGW-009-semantic-seo-audit-implementation",
+      "path": "knowledge\\features\\feature-jaymusicmachine-IGW-009-semantic-seo-audit-implementation.md"
+    },
+    {
+      "id": "knowledge\\features\\feature-jaymusicmachine-IGW-009-semantic-seo-audit.md",
+      "type": "governance",
+      "label": "feature-jaymusicmachine-IGW-009-semantic-seo-audit",
+      "path": "knowledge\\features\\feature-jaymusicmachine-IGW-009-semantic-seo-audit.md"
+    },
+    {
       "id": "knowledge\\fixes\\fix-jaymusicmachine-IGW-002-rebrand-and-cleanup-implementation.md",
       "type": "governance",
       "label": "fix-jaymusicmachine-IGW-002-rebrand-and-cleanup-implementation",
@@ -120,6 +192,30 @@
       "type": "governance",
       "label": "fix-jaymusicmachine-IGW-002-rebrand-and-cleanup",
       "path": "knowledge\\fixes\\fix-jaymusicmachine-IGW-002-rebrand-and-cleanup.md"
+    },
+    {
+      "id": "knowledge\\fixes\\fix-jaymusicmachine-IGW-010-events-hero-curated-dates-implementation.md",
+      "type": "governance",
+      "label": "fix-jaymusicmachine-IGW-010-events-hero-curated-dates-implementation",
+      "path": "knowledge\\fixes\\fix-jaymusicmachine-IGW-010-events-hero-curated-dates-implementation.md"
+    },
+    {
+      "id": "knowledge\\fixes\\fix-jaymusicmachine-IGW-010-events-hero-curated-dates.md",
+      "type": "governance",
+      "label": "fix-jaymusicmachine-IGW-010-events-hero-curated-dates",
+      "path": "knowledge\\fixes\\fix-jaymusicmachine-IGW-010-events-hero-curated-dates.md"
+    },
+    {
+      "id": "knowledge\\fixes\\fix-jaymusicmachine-IGW-011-events-hero-top-badge-implementation.md",
+      "type": "governance",
+      "label": "fix-jaymusicmachine-IGW-011-events-hero-top-badge-implementation",
+      "path": "knowledge\\fixes\\fix-jaymusicmachine-IGW-011-events-hero-top-badge-implementation.md"
+    },
+    {
+      "id": "knowledge\\fixes\\fix-jaymusicmachine-IGW-011-events-hero-top-badge.md",
+      "type": "governance",
+      "label": "fix-jaymusicmachine-IGW-011-events-hero-top-badge",
+      "path": "knowledge\\fixes\\fix-jaymusicmachine-IGW-011-events-hero-top-badge.md"
     },
     {
       "id": "knowledge\\governance\\clean-code-folder-structure.md",

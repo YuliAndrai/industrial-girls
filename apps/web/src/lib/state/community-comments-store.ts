@@ -1,7 +1,7 @@
 /**
  * @file apps/web/src/lib/state/community-comments-store.ts
  * @description Layer 2: Application - Client State Store for Journal Article Comments.
- * Manages reactive comment additions alongside initial catalog comments.
+ * Manages reactive comment additions alongside initial catalog comments, with roles and threading.
  */
 
 import { ArticleComment, INITIAL_COMMENTS } from "../infrastructure/community-catalog";
@@ -38,26 +38,41 @@ export function getCommentsForArticle(articleId: string): ArticleComment[] {
   return state.commentsByArticle[articleId] || [];
 }
 
+let commentCounter = 0;
+
 /**
  * Adds a new comment to the in-memory store.
  *
  * @param {string} articleId - Target article slug.
  * @param {string} author - Author alias.
  * @param {string} content - Comment body.
+ * @param {string} [role] - Participant scene role.
+ * @param {string} [parentId] - Optional parent comment ID for threading.
+ * @param {string} [email] - Optional email address.
+ * @param {boolean} [isPublic=true] - Visibility status: true for public forum, false for private editorial message.
  * @returns {ArticleComment} The created comment.
  */
 export function addArticleComment(
   articleId: string,
   author: string,
-  content: string
+  content: string,
+  role?: string,
+  parentId?: string,
+  email?: string,
+  isPublic: boolean = false
 ): ArticleComment {
-  // Step 1: Construct new comment entity
+  // Step 1: Construct new comment entity with collision-free unique ID
+  const uniqueId = `comm-${Date.now()}-${++commentCounter}-${Math.random().toString(36).substring(2, 7)}`;
   const newComment: ArticleComment = {
-    id: "comm-" + Date.now(),
+    id: uniqueId,
     articleId,
     author: author.trim(),
     content: content.trim(),
     createdAt: new Date().toISOString(),
+    isPublic: isPublic === true,
+    ...(role ? { role } : {}),
+    ...(parentId ? { parentId } : {}),
+    ...(email ? { email: email.trim() } : {}),
   };
 
   // Step 2: Append to article comments
@@ -67,4 +82,17 @@ export function addArticleComment(
   state.commentsByArticle[articleId].unshift(newComment);
 
   return newComment;
+}
+
+/**
+ * Resets the in-memory comments store back to initial catalog comments.
+ */
+export function resetCommentsStore(): void {
+  state.commentsByArticle = {};
+  INITIAL_COMMENTS.forEach((comment) => {
+    if (!state.commentsByArticle[comment.articleId]) {
+      state.commentsByArticle[comment.articleId] = [];
+    }
+    state.commentsByArticle[comment.articleId].push(comment);
+  });
 }

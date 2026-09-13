@@ -28,10 +28,14 @@ export interface PastShowcase {
  * Current calendar season state definition.
  */
 export interface EventCalendarStatus {
+  /** Top eyebrow badge label */
+  topBadge: string;
   /** Season headline */
   headline: string;
   /** Status banner label */
   statusLabel: string;
+  /** Status callout secondary badge */
+  statusCallout: string;
   /** Curatorial note */
   curatorialNote: string;
   /** Expected announcement window */
@@ -61,46 +65,22 @@ export const STANDARD_COUNTRIES: string[] = [
 
 /**
  * Current status of the touring calendar.
+ * Reflects selective curated club sessions and female DJ lineup concept.
  */
 export const CALENDAR_STATUS: EventCalendarStatus = {
-  headline: "PRÓXIMAS FECHAS — EN PREPARACIÓN",
-  statusLabel: "TEMPORADA EN CURADURÍA // GIRA 2026-2027",
-  curatorialNote: "Nuestro equipo se encuentra diseñando la nueva serie de noches clandestinas y residencias en almacenes de Europa y América Latina. Las fechas, locaciones secretas y accesos se liberarán primero a quienes se encuentren registrados en el radar geográfico.",
-  announcementWindow: "PRIMER ANUNCIO: Q4 2026",
+  topBadge: "// SELECTIVE DATES & CLUB SESSIONS //",
+  headline: "SHOWCASES & FECHAS SELECCIONADAS",
+  statusLabel: "TEMPORADA ACTIVA // PRÓXIMAS CIUDADES EN CONFIRMACIÓN",
+  statusCallout: "[ TEMPORADA ACTIVA // PRÓXIMAS CIUDADES EN CONFIRMACIÓN ]",
+  curatorialNote: "Conexiones entre cabinas, clubs y residencias underground en desarrollo. Curadurías directas para la pista de baile.",
+  announcementWindow: "TEMPORADA ACTIVA // PRÓXIMAS CIUDADES EN CONFIRMACIÓN",
 };
 
 /**
  * Historical record of past Industrial Girls showcases.
+ * Invariant: Zero mock or unconfirmed dates. Verified historical flyers are maintained in events-data.ts.
  */
-export const PAST_SHOWCASES: PastShowcase[] = [
-  {
-    id: "showcase-001",
-    venue: "Tresor Globus Vault",
-    location: "Berlín, Alemania",
-    date: "2025-05-18",
-    lineup: ["DISTORTA", "CLARA CUVÉ", "HEX99", "WALLIS"],
-    youtubeVideoId: "dQw4w9WgXcQ",
-    highlight: "Capacidad completa en la bóveda subterránea. 7 horas de hard techno continuo a 155 BPM.",
-  },
-  {
-    id: "showcase-002",
-    venue: "Warehouse Almacén 44",
-    location: "Bogotá, Colombia",
-    date: "2025-08-25",
-    lineup: ["VANE", "DISTORTA", "ØTTA", "SOMNIAC ONE"],
-    youtubeVideoId: "dQw4w9WgXcQ",
-    highlight: "Showcase industrial en nave de manufactura abandonada con sistema de sonido Funktion-One calibrado a medida.",
-  },
-  {
-    id: "showcase-003",
-    venue: "Fold Basement",
-    location: "Londres, Reino Unido",
-    date: "2025-11-12",
-    lineup: ["CASSIE RAPTOR", "HEX99", "PARFAIT", "LADY MARU"],
-    youtubeVideoId: "dQw4w9WgXcQ",
-    highlight: "Sesión extendida de 24 horas con escenografía de hierro forjado y visuales estroboscópicos.",
-  },
-];
+export const PAST_SHOWCASES: readonly PastShowcase[] = [];
 
 /**
  * Retrieves the event calendar season status.
@@ -125,9 +105,9 @@ export function getStandardCountries(): string[] {
 /**
  * Retrieves the list of historical showcases.
  *
- * @returns {PastShowcase[]} Showcase records array.
+ * @returns {readonly PastShowcase[]} Showcase records array.
  */
-export function getPastShowcases(): PastShowcase[] {
+export function getPastShowcases(): readonly PastShowcase[] {
   // Step 1: Return past showcases list
   return PAST_SHOWCASES;
 }
