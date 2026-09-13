@@ -278,6 +278,21 @@ describe("Music Releases Catalog & Spotify Integration — TDD Test Suite", () =
       const nonexistent = getReleaseByCode("VA 999");
       expect(nonexistent).toBeUndefined();
     });
+
+    it("verifies that VA 002 has exactly 5 tracks and does not contain ØTTA", () => {
+      // Step 1: Retrieve VA 002 compilation
+      const va002 = getReleaseByCode("IGVA002");
+      expect(va002).toBeDefined();
+
+      // Step 2: Assert exactly 5 tracks in official tracklist
+      expect(va002?.tracklist.length).toBe(5);
+
+      // Step 3: Assert ØTTA is completely purged
+      const ottaTrack = va002?.tracklist.find(
+        (t) => t.artist.toLowerCase().includes("øtta") || t.artist.toLowerCase().includes("otta")
+      );
+      expect(ottaTrack).toBeUndefined();
+    });
   });
 
   describe("2. Layer 1 (Presentation): Streaming & Buy Action Buttons Contract", () => {
@@ -294,9 +309,11 @@ describe("Music Releases Catalog & Spotify Integration — TDD Test Suite", () =
         buyLabel: "BEATPORT",
         tracklist: [
           {
+            id: "va005-01",
             artist: "ÆTERIS",
             title: "Psycho Moves",
-            spotifyUrl: "https://open.spotify.com/search/%C3%86TERIS%20Psycho%20Moves",
+            spotifyUrl: "https://open.spotify.com/track/1aE5hVRBrKqTioBzjWySd8",
+            spotifyTrackId: "1aE5hVRBrKqTioBzjWySd8",
           },
         ],
       };

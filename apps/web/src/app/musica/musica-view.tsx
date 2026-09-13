@@ -20,7 +20,9 @@ import { useSoundFx } from "@/lib/hooks/use-sound-fx";
 import {
   getReleasesCatalog,
   ReleaseItem,
+  TrackItem,
 } from "@/lib/infrastructure/music-data";
+import { useSpotifyPlayer } from "@/lib/hooks/use-spotify-player";
 import {
   getDemoDropSpecs,
 } from "@/lib/infrastructure/music-catalog";
@@ -163,123 +165,7 @@ export function MusicaView(): React.ReactElement {
               {/* Compilations List Descending (VA 005 to VA 001) */}
               <div className="space-y-12">
                 {releases.map((release, index) => (
-                  <article
-                    key={release.id}
-                    id={release.id}
-                    className="grid grid-cols-1 lg:grid-cols-12 gap-8 border border-raveBorder bg-panel/40 p-6 sm:p-10 hover:border-white/20 transition-all scroll-mt-24"
-                  >
-                    {/* Left Column: Square Cover Art (1:1) and Spotify Button */}
-                    <div className="lg:col-span-4 flex flex-col gap-4">
-                      <div className="relative aspect-square w-full overflow-hidden border-2 border-raveRed bg-black">
-                        <Image
-                          src={release.coverImage}
-                          alt={`${release.catalogNumber} - ${release.title}`}
-                          fill
-                          sizes="(max-width: 768px) 100vw, 400px"
-                          className="object-cover p-2"
-                          priority={index === 0}
-                        />
-                      </div>
-                      <div>
-                        <span className="font-mono text-xs text-raveRed font-bold tracking-wider">
-                          {`[ ${release.catalogNumber} // ${release.year} ]`}
-                        </span>
-                        <h3 className="text-xl sm:text-2xl font-black uppercase text-white mt-1">
-                          {release.title}
-                        </h3>
-                      </div>
-                      <div className="flex flex-wrap items-center gap-2 mt-4">
-                        <SpotifyTrackTrigger
-                          track={
-                            release.spotifyAlbumId
-                              ? {
-                                  id: `release-${release.id}`,
-                                  title: release.title,
-                                  artist: "Various Artists",
-                                  spotifyTrackId: release.spotifyAlbumId,
-                                  releaseCatalogCode: release.catalogNumber,
-                                  duration: "COMPILATION",
-                                  type: "album",
-                                }
-                              : release.catalogNumber
-                          }
-                          className="inline-flex items-center gap-2 px-3 py-1.5 text-xs font-mono uppercase border border-red-500 text-white bg-red-600/20 hover:bg-red-600/30 transition-colors"
-                        >
-                          ▷ PREVIEW EN WEB
-                        </SpotifyTrackTrigger>
-                        <a
-                          href={release.spotifyUrl}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          aria-label={`Escuchar ${release.title} en Spotify`}
-                          className="inline-flex items-center gap-2 px-3 py-1.5 text-xs font-mono uppercase border border-white/20 text-white/80 hover:border-white hover:text-white transition-colors"
-                        >
-                          ESCUCHAR EN SPOTIFY ↗
-                        </a>
-                        <a
-                          href={release.buyUrl}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          aria-label={`Comprar ${release.title} en ${release.buyLabel}`}
-                          className="inline-flex items-center gap-2 px-3 py-1.5 text-xs font-mono uppercase border border-white/20 text-white/80 hover:border-white hover:text-white transition-colors"
-                        >
-                          COMPRAR EN {release.buyLabel} ↗
-                        </a>
-                      </div>
-                    </div>
-
-                    {/* Right Column: Monospace Tracklist */}
-                    <div className="lg:col-span-8 flex flex-col justify-between">
-                      <div>
-                        <div className="border-b border-raveBorder pb-2 mb-4 flex items-center justify-between font-mono text-xs text-raveTextMuted">
-                          <span># TRACKLIST OFICIAL</span>
-                          <span>DETALLE & PREVIEW</span>
-                        </div>
-                        <div className="space-y-1 mt-3">
-                          {release.tracklist.map((track, idx) => (
-                            <div
-                              key={`${track.artist}-${track.title}-${idx}`}
-                              className="group flex items-center justify-between text-xs font-mono py-1.5 px-2 rounded hover:bg-white/5 transition-colors"
-                            >
-                              <span className="text-white/70 group-hover:text-white transition-colors truncate mr-2">
-                                <span className="text-red-500 mr-2">[{String(idx + 1).padStart(2, '0')}]</span>
-                                {track.artist} — {track.title}
-                              </span>
-                              <div className="flex items-center gap-2 shrink-0">
-                                <SpotifyTrackTrigger
-                                  track={{
-                                    id: `track-${release.catalogNumber}-${idx + 1}`,
-                                    title: track.title,
-                                    artist: track.artist,
-                                    spotifyTrackId: track.spotifyTrackId || "",
-                                    releaseCatalogCode: release.catalogNumber,
-                                    duration: track.duration || "05:00",
-                                  }}
-                                  className="text-[10px] py-0.5 px-2 bg-neutral-900 border-neutral-700 hover:border-raveRed text-white/70 hover:text-white"
-                                >
-                                  ▷ PREVIEW
-                                </SpotifyTrackTrigger>
-                                <a
-                                  href={track.spotifyUrl}
-                                  target="_blank"
-                                  rel="noopener noreferrer"
-                                  aria-label={`Escuchar ${track.artist} - ${track.title} en Spotify`}
-                                  className="text-[10px] text-white/30 hover:text-red-500 uppercase transition-colors"
-                                >
-                                  ↗
-                                </a>
-                              </div>
-                            </div>
-                          ))}
-                        </div>
-                      </div>
-
-                      <div className="mt-8 border-t border-raveBorder/60 pt-4 font-mono text-xs text-neutral-400 flex items-center justify-between">
-                        <span>FORMATO: DIGITAL LOSSLESS</span>
-                        <span className="text-raveRed font-bold">145-165 BPM</span>
-                      </div>
-                    </div>
-                  </article>
+                  <ReleaseCard key={release.id} release={release} index={index} />
                 ))}
               </div>
             </div>
@@ -455,5 +341,172 @@ export function MusicaView(): React.ReactElement {
       <FloatingSoundBar isSoundActive={isSoundEnabled} onToggleSound={toggleSound} />
       <Footer />
     </div>
+  );
+}
+
+/**
+ * Properties contract for ReleaseCard component.
+ */
+interface ReleaseCardProps {
+  /** The release data item */
+  release: ReleaseItem;
+  /** Index position in list for layout prioritization */
+  index: number;
+}
+
+/**
+ * Interactive Release Card component with inline embedded Spotify player and tracklist triggers.
+ *
+ * @param {ReleaseCardProps} props - Component properties.
+ * @returns {React.JSX.Element} The rendered release article card.
+ */
+function ReleaseCard({ release, index }: ReleaseCardProps): React.JSX.Element {
+  // Step 1: Manage active embedded preview track ID state per release card
+  const [activeTrackId, setActiveTrackId] = useState<string | null>(null);
+  const { playTrack } = useSpotifyPlayer();
+
+  // Step 2: Handle track preview selection
+  const handleTrackPreview = (track: TrackItem) => {
+    setActiveTrackId(track.spotifyTrackId);
+    try {
+      playTrack({
+        id: track.id,
+        title: track.title,
+        artist: track.artist,
+        spotifyTrackId: track.spotifyTrackId,
+        releaseCatalogCode: release.catalogNumber,
+        duration: track.duration || "05:00",
+      });
+    } catch {
+      // Graceful fallback
+    }
+  };
+
+  return (
+    <article
+      id={release.id}
+      className="grid grid-cols-1 lg:grid-cols-12 gap-8 border border-raveBorder bg-panel/40 p-6 sm:p-10 hover:border-white/20 transition-all scroll-mt-24"
+    >
+      {/* Left Column: Square Cover Art (1:1) and Spotify Button */}
+      <div className="lg:col-span-4 flex flex-col gap-4">
+        <div className="relative aspect-square w-full overflow-hidden border-2 border-raveRed bg-black">
+          <Image
+            src={release.coverImage}
+            alt={`${release.catalogNumber} - ${release.title}`}
+            fill
+            sizes="(max-width: 768px) 100vw, 400px"
+            className="object-cover p-2"
+            priority={index === 0}
+          />
+        </div>
+        <div>
+          <span className="font-mono text-xs text-raveRed font-bold tracking-wider">
+            {`[ ${release.catalogNumber} // ${release.year} ]`}
+          </span>
+          <h3 className="text-xl sm:text-2xl font-black uppercase text-white mt-1">
+            {release.title}
+          </h3>
+        </div>
+        <div className="flex flex-wrap items-center gap-2 mt-4">
+          <SpotifyTrackTrigger
+            track={
+              release.spotifyAlbumId
+                ? {
+                    id: `release-${release.id}`,
+                    title: release.title,
+                    artist: "Various Artists",
+                    spotifyTrackId: release.spotifyAlbumId,
+                    releaseCatalogCode: release.catalogNumber,
+                    duration: "COMPILATION",
+                    type: "album",
+                  }
+                : release.catalogNumber
+            }
+            className="inline-flex items-center gap-2 px-3 py-1.5 text-xs font-mono uppercase border border-red-500 text-white bg-red-600/20 hover:bg-red-600/30 transition-colors"
+          >
+            ▷ PREVIEW EN WEB
+          </SpotifyTrackTrigger>
+          <a
+            href={release.spotifyUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label={`Escuchar ${release.title} en Spotify`}
+            className="inline-flex items-center gap-2 px-3 py-1.5 text-xs font-mono uppercase border border-white/20 text-white/80 hover:border-white hover:text-white transition-colors"
+          >
+            ESCUCHAR EN SPOTIFY ↗
+          </a>
+          <a
+            href={release.buyUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label={`Comprar ${release.title} en ${release.buyLabel}`}
+            className="inline-flex items-center gap-2 px-3 py-1.5 text-xs font-mono uppercase border border-white/20 text-white/80 hover:border-white hover:text-white transition-colors"
+          >
+            COMPRAR EN {release.buyLabel} ↗
+          </a>
+        </div>
+
+        {/* Embedded Spotify Track Preview Iframe */}
+        {activeTrackId && (
+          <div className="mt-4 border border-red-500/40 bg-black p-1">
+            <iframe
+              src={`https://open.spotify.com/embed/track/${activeTrackId}?utm_source=generator&theme=0`}
+              width="100%"
+              height="152"
+              frameBorder="0"
+              allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+              loading="lazy"
+              title="Spotify Track Preview"
+            />
+          </div>
+        )}
+      </div>
+
+      {/* Right Column: Monospace Tracklist */}
+      <div className="lg:col-span-8 flex flex-col justify-between">
+        <div>
+          <div className="border-b border-raveBorder pb-2 mb-4 flex items-center justify-between font-mono text-xs text-raveTextMuted">
+            <span># TRACKLIST OFICIAL</span>
+            <span>DETALLE & PREVIEW</span>
+          </div>
+          <div className="space-y-1 mt-3">
+            {release.tracklist.map((track, idx) => (
+              <div
+                key={track.id ?? `${track.artist}-${track.title}-${idx}`}
+                className="group flex items-center justify-between text-xs font-mono py-1.5 px-2 rounded hover:bg-white/5 transition-colors"
+              >
+                <span className="text-white/70 group-hover:text-white transition-colors truncate mr-2">
+                  <span className="text-red-500 mr-2">[{String(idx + 1).padStart(2, '0')}]</span>
+                  {track.artist} — {track.title}
+                </span>
+                <div className="flex items-center gap-2 shrink-0">
+                  <button
+                    type="button"
+                    onClick={() => handleTrackPreview(track)}
+                    className="text-[10px] py-0.5 px-2 bg-neutral-900 border border-neutral-700 hover:border-raveRed text-white/70 hover:text-white font-mono uppercase transition-colors"
+                  >
+                    ▷ PREVIEW
+                  </button>
+                  <a
+                    href={track.spotifyUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label={`Escuchar ${track.artist} - ${track.title} en Spotify`}
+                    className="text-[10px] text-white/30 hover:text-red-500 uppercase transition-colors"
+                  >
+                    ↗
+                  </a>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        <div className="mt-8 border-t border-raveBorder/60 pt-4 font-mono text-xs text-neutral-400 flex items-center justify-between">
+          <span>FORMATO: DIGITAL LOSSLESS</span>
+          <span className="text-raveRed font-bold">145-165 BPM</span>
+        </div>
+      </div>
+    </article>
   );
 }
