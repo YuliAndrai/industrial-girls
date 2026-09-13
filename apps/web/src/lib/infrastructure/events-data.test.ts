@@ -34,14 +34,12 @@ describe("Events Showcases Visual Flyers Architecture — Test Suite", () => {
       // Step 3: Validate each showcase item schema including city, date, and countryCode
       showcases.forEach((showcase: RecentShowcase, index: number) => {
         const expectedCode = String(index + 1).padStart(2, "0");
-        expect(showcase.id).toBe(`showcase-${expectedCode}`);
+        expect(showcase.id).toMatch(/^showcase-[a-z]+-[0-9]{4}$/);
         expect(showcase.flyerImage).toBe(`/images/events/showcase-${expectedCode}.jpg`);
         expect(showcase.alt).toBeTruthy();
         expect(showcase.city).toBeTruthy();
         expect(showcase.date).toBeTruthy();
-        if (showcase.countryCode) {
-          expect(showcase.countryCode).toMatch(/^[A-Z]{2}$/);
-        }
+        expect(showcase.countryCode).toMatch(/^[A-Z]{2}$/);
       });
     });
 
@@ -65,16 +63,73 @@ describe("Events Showcases Visual Flyers Architecture — Test Suite", () => {
 
     it("queries showcases correctly by id and returns undefined for unknown ids", () => {
       // Step 1: Query existing showcase
-      const showcase01 = getRecentShowcaseById("showcase-01");
+      const showcase01 = getRecentShowcaseById("showcase-bogota-2026");
       expect(showcase01).toBeDefined();
       expect(showcase01?.flyerImage).toBe("/images/events/showcase-01.jpg");
       expect(showcase01?.city).toBe("BOGOTÁ");
       expect(showcase01?.countryCode).toBe("CO");
-      expect(showcase01?.date).toBe("02 DIC 2023");
+      expect(showcase01?.date).toBe("28 JUN 2026");
 
       // Step 2: Query non-existent showcase
       const nonExistent = getRecentShowcaseById("showcase-999");
       expect(nonExistent).toBeUndefined();
+    });
+
+    it("validates all 5 official showcases with corrected city, countryCode, and date metadata", () => {
+      // Step 1: Verify Bogota
+      const bogota = getRecentShowcaseById("showcase-bogota-2026");
+      expect(bogota).toEqual({
+        id: "showcase-bogota-2026",
+        flyerImage: "/images/events/showcase-01.jpg",
+        city: "BOGOTÁ",
+        countryCode: "CO",
+        date: "28 JUN 2026",
+        alt: "Industrial Girls Showcase — Bogotá [CO] // 28 JUN 2026",
+      });
+
+      // Step 2: Verify Medellin
+      const medellin = getRecentShowcaseById("showcase-medellin-2026");
+      expect(medellin).toEqual({
+        id: "showcase-medellin-2026",
+        flyerImage: "/images/events/showcase-02.jpg",
+        city: "MEDELLÍN",
+        countryCode: "CO",
+        date: "26 JUN 2026",
+        alt: "Industrial Girls Showcase — Medellín [CO] // 26 JUN 2026",
+      });
+
+      // Step 3: Verify Roma
+      const roma = getRecentShowcaseById("showcase-roma-2026");
+      expect(roma).toEqual({
+        id: "showcase-roma-2026",
+        flyerImage: "/images/events/showcase-03.jpg",
+        city: "ROMA",
+        countryCode: "IT",
+        date: "01 JUN 2026",
+        alt: "Industrial Girls Showcase — Roma [IT] // 01 JUN 2026",
+      });
+
+      // Step 4: Verify Manizales
+      const manizales = getRecentShowcaseById("showcase-manizales-2025");
+      expect(manizales).toEqual({
+        id: "showcase-manizales-2025",
+        flyerImage: "/images/events/showcase-04.jpg",
+        city: "MANIZALES",
+        countryCode: "CO",
+        date: "04 DIC 2025",
+        alt: "Industrial Girls Showcase — Manizales [CO] // 04 DIC 2025",
+      });
+
+      // Step 5: Verify Padova
+      const padova = getRecentShowcaseById("showcase-padova-2025");
+      expect(padova).toEqual({
+        id: "showcase-padova-2025",
+        flyerImage: "/images/events/showcase-05.jpg",
+        city: "PADOVA",
+        countryCode: "IT",
+        date: "07 NOV 2025",
+        alt: "Industrial Girls Showcase — Padova [IT] // 07 NOV 2025",
+      });
     });
   });
 

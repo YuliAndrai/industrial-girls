@@ -88,7 +88,7 @@ export function EventosView(): React.ReactElement {
                   {/* Clean Footer Bar with Geographic and Chronological Metadata */}
                   <div className="mt-2.5 flex items-center justify-between font-mono text-[11px] tracking-wider uppercase">
                     <span className="text-white font-semibold">
-                      {showcase.city} {showcase.countryCode ? `[${showcase.countryCode}]` : ""}
+                      {showcase.city} [{showcase.countryCode}]
                     </span>
                     <span className="text-red-500 font-bold">
                       {showcase.date}

@@ -14,8 +14,8 @@ export interface RecentShowcase {
   flyerImage: string;
   /** City where the showcase took place */
   city: string;
-  /** Optional ISO 3166-1 alpha-2 country code (e.g. 'CO', 'IT') */
-  countryCode?: string;
+  /** ISO 3166-1 alpha-2 country code (e.g. 'CO', 'IT') */
+  countryCode: string;
   /** Chronological event date label */
   date: string;
   /** Accessible alt text for screen readers */
@@ -28,44 +28,44 @@ export interface RecentShowcase {
  */
 export const RECENT_SHOWCASES: readonly RecentShowcase[] = [
   {
-    id: "showcase-01",
+    id: "showcase-bogota-2026",
     flyerImage: "/images/events/showcase-01.jpg",
     city: "BOGOTÁ",
     countryCode: "CO",
-    date: "02 DIC 2023",
-    alt: "Industrial Girls Showcase — Bogotá",
+    date: "28 JUN 2026",
+    alt: "Industrial Girls Showcase — Bogotá [CO] // 28 JUN 2026",
   },
   {
-    id: "showcase-02",
+    id: "showcase-medellin-2026",
     flyerImage: "/images/events/showcase-02.jpg",
     city: "MEDELLÍN",
     countryCode: "CO",
-    date: "26 JUN 2024",
-    alt: "Industrial Girls Showcase — Medellín",
+    date: "26 JUN 2026",
+    alt: "Industrial Girls Showcase — Medellín [CO] // 26 JUN 2026",
   },
   {
-    id: "showcase-03",
+    id: "showcase-roma-2026",
     flyerImage: "/images/events/showcase-03.jpg",
     city: "ROMA",
     countryCode: "IT",
-    date: "01 JUN 2024",
-    alt: "Industrial Girls Showcase — Roma",
+    date: "01 JUN 2026",
+    alt: "Industrial Girls Showcase — Roma [IT] // 01 JUN 2026",
   },
   {
-    id: "showcase-04",
+    id: "showcase-manizales-2025",
     flyerImage: "/images/events/showcase-04.jpg",
     city: "MANIZALES",
     countryCode: "CO",
-    date: "04 DIC 2021",
-    alt: "Industrial Girls Showcase — Manizales",
+    date: "04 DIC 2025",
+    alt: "Industrial Girls Showcase — Manizales [CO] // 04 DIC 2025",
   },
   {
-    id: "showcase-05",
+    id: "showcase-padova-2025",
     flyerImage: "/images/events/showcase-05.jpg",
     city: "PADOVA",
     countryCode: "IT",
     date: "07 NOV 2025",
-    alt: "Industrial Girls Showcase — Padova",
+    alt: "Industrial Girls Showcase — Padova [IT] // 07 NOV 2025",
   },
 ] as const;
 
