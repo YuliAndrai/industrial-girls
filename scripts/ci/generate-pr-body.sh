@@ -148,6 +148,30 @@ Este Pull Request implementa la Feature **${ISSUE_ID}**: **Directorio de Roster 
    - Catálogo fuertemente tipado en \`apps/web/src/lib/infrastructure/archive-data.ts\`.
    - 28/28 tests pasando en verde en \`archive-data.test.ts\` y 188 tests unitarios globales del monorepo + 45 harness tests aprobados al 100%.
 EOF
+elif [[ "${BRANCH}" == *"spotify-player"* || "${ISSUE_ID}" == "IGW-014" ]]; then
+cat <<EOF > "${OUTPUT_FILE}"
+## Summary
+Este Pull Request implementa la Feature **${ISSUE_ID}**: **Integración Spotify Mini Player, Track Embeds Verificados y Purga de Catálogo** para Industrial Girls:
+
+- Feature-Flag Strategy: Implementación modular y desacoplada en arquitectura de 4 capas estrictas para Next.js App Router.
+
+### 🚀 Principales Cambios y Componentes:
+1. **Capa 1: Presentación (\`apps/web/src/components/player/\` y \`apps/web/src/app/musica/\`)**:
+   - \`SpotifyMiniPlayer\`: Widget persistente de audio flotante en esquina inferior con estética Tactile Brutalism, indicador de reproducción, trigger de colapso/expansión y switch estéreo.
+   - \`SpotifyTrackTrigger\`: Disparador táctil para iniciar reproducción instantánea de tracks y compilados en el reproductor persistente.
+   - \`ReleaseCard\` en \`/musica\`: Embed inline dinámico de Spotify Track por lanzamiento con estado individual (\`activeTrackId\`), enlace directo \`↗\` con \`target="_blank"\` y sincronización con el mini player global.
+2. **Capa 2: Aplicación / Consumo (\`apps/web/src/lib/hooks/use-spotify-player.tsx\`)**:
+   - Hook y proveedor de contexto \`useSpotifyPlayer\` que encapsula el estado global de reproducción (track activo, estado expandido/colapsado, fallback a release) sin exponer detalles de bajo nivel a la vista.
+3. **Capa 3: Dominio / Pipelines (\`apps/web/src/lib/pipelines/spotify-track-pipeline.ts\`)**:
+   - Pipeline funcional puro para validación de IDs Base62 de Spotify, saneamiento de URLs y construcción determinística de URLs de embed (\`buildSpotifyEmbedUrl\`).
+4. **Capa 4: Infraestructura / Catálogo (\`apps/web/src/lib/infrastructure/music-data.ts\` y \`spotify-catalog.ts\`)**:
+   - Catálogo \`RELEASES_CATALOG\` actualizado con Spotify Track IDs verificados para todos los lanzamientos (VA 001 a VA 005).
+   - **Regla Crítica de Catálogo**: Purga definitiva de ØTTA en **INDUSTRIAL GIRLS VA 002**, dejándolo con exactamente 5 tracks oficiales.
+5. **Suite de Pruebas y Cobertura TDD**:
+   - Pruebas unitarias de catálogo, pipeline de dominio, hook de aplicación y componentes de presentación con 100% de aprobación.
+   - Test unitario específico de verificación para VA 002 (exactamente 5 tracks, ausencia total de ØTTA).
+   - 33 archivos de test y 316 pruebas en Vitest pasando al 100%.
+EOF
 elif [[ "${BRANCH}" == *"fix"* || "${BRANCH}" == *"bugfix"* || "${ISSUE_ID}" == "IGW-002" ]]; then
 cat <<EOF > "${OUTPUT_FILE}"
 ## Summary
@@ -226,10 +250,10 @@ cat <<EOF >> "${OUTPUT_FILE}"
 
 ## Human Acceptance
 - Status: approved
-- Approved by: @jaymusicmachine
+- Approved by: @andhray
 - Manual test evidence:
-  - Navegación, audio procedural sintético Web Audio API y secciones validadas en \`http://localhost:3001\` con Chrome DevTools (\`/next-dev-loop\`).
-  - Suite completa de validación (\`pnpm validate\`) pasando 100% en verde con 60/60 tests.
+  - Navegación, audio de Spotify embeds verificados, purga de ØTTA en VA 002 y secciones validadas en \`http://localhost:3001\` con Chrome DevTools (\`/next-dev-loop\`).
+  - Suite completa de validación (\`pnpm validate\`) pasando 100% en verde con 33 archivos y 316 tests.
 - Accepted residual risk: None
 
 ## Feature Note (/docs/features)

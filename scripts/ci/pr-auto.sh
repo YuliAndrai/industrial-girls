@@ -21,6 +21,8 @@ elif [[ "${BRANCH}" == *"artist-development"* || "${ISSUE_ID}" == "IGW-003" ]]; 
   DEFAULT_TITLE="feat(artist-development): Artist Development 360 Module (${ISSUE_ID})"
 elif [[ "${BRANCH}" == *"archive"* || "${ISSUE_ID}" == "IGW-012" ]]; then
   DEFAULT_TITLE="feat(archivo): artists roster directory, media archive & performance terminal (${ISSUE_ID})"
+elif [[ "${BRANCH}" == *"spotify-player"* || "${ISSUE_ID}" == "IGW-014" ]]; then
+  DEFAULT_TITLE="feat(player): persistent brutalist spotify mini player widget (${ISSUE_ID})"
 elif [[ "${BRANCH}" == *"fix"* || "${BRANCH}" == *"bugfix"* || "${ISSUE_ID}" == "IGW-002" ]]; then
   DEFAULT_TITLE="fix(governance): rebrand project to Industrial Girls, purge Web3 and standardize on IGW (${ISSUE_ID})"
 else

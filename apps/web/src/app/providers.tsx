@@ -8,6 +8,7 @@
 
 import React from "react";
 import { MotionProvider } from "@/components/motion/motion-provider";
+import { SpotifyPlayerProvider } from "@/lib/hooks/use-spotify-player";
 
 /**
  * Root providers wrapper properties contract.
@@ -24,10 +25,12 @@ export interface ProvidersProps {
  * @returns {React.ReactElement} The wrapped provider hierarchy.
  */
 export function Providers({ children }: ProvidersProps): React.ReactElement {
-  // Step 1: Render client animation and motion provider tree
+  // Step 1: Wrap application tree with Motion and Spotify Player context providers
   return (
     <MotionProvider>
-      {children}
+      <SpotifyPlayerProvider>
+        {children}
+      </SpotifyPlayerProvider>
     </MotionProvider>
   );
 }

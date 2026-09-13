@@ -54,7 +54,7 @@
     "block_on_unassigned_subagent": true,
     "require_dual_governing_artifact": true,
     "require_double_gatekeeper_architect_approval": true,
-    "allowed_developer_handles": ["jaymusicmachine", "jeisonsosa"],
+    "allowed_developer_handles": ["jaymusicmachine", "jeisonsosa", "andhray"],
     "require_linear_issue_exists": true
   }
 }

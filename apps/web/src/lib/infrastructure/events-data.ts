@@ -5,13 +5,19 @@
  */
 
 /**
- * Recent showcase item contract representing an official event flyer.
+ * Recent showcase item contract representing an official event flyer with city and date metadata.
  */
 export interface RecentShowcase {
   /** Unique showcase identifier */
   id: string;
   /** Relative web path to the high-resolution flyer image in public/images/events/ */
   flyerImage: string;
+  /** City where the showcase took place */
+  city: string;
+  /** ISO 3166-1 alpha-2 country code (e.g. 'CO', 'IT') */
+  countryCode: string;
+  /** Chronological event date label */
+  date: string;
   /** Accessible alt text for screen readers */
   alt: string;
 }
@@ -22,29 +28,44 @@ export interface RecentShowcase {
  */
 export const RECENT_SHOWCASES: readonly RecentShowcase[] = [
   {
-    id: "showcase-01",
+    id: "showcase-bogota-2026",
     flyerImage: "/images/events/showcase-01.jpg",
-    alt: "Industrial Girls Showcase - Bogotá",
+    city: "BOGOTÁ",
+    countryCode: "CO",
+    date: "28 JUN 2026",
+    alt: "Industrial Girls Showcase — Bogotá [CO] // 28 JUN 2026",
   },
   {
-    id: "showcase-02",
+    id: "showcase-medellin-2026",
     flyerImage: "/images/events/showcase-02.jpg",
-    alt: "Industrial Girls Showcase - Medellín",
+    city: "MEDELLÍN",
+    countryCode: "CO",
+    date: "26 JUN 2026",
+    alt: "Industrial Girls Showcase — Medellín [CO] // 26 JUN 2026",
   },
   {
-    id: "showcase-03",
+    id: "showcase-roma-2026",
     flyerImage: "/images/events/showcase-03.jpg",
-    alt: "Industrial Girls Showcase - Roma",
+    city: "ROMA",
+    countryCode: "IT",
+    date: "01 JUN 2026",
+    alt: "Industrial Girls Showcase — Roma [IT] // 01 JUN 2026",
   },
   {
-    id: "showcase-04",
+    id: "showcase-manizales-2025",
     flyerImage: "/images/events/showcase-04.jpg",
-    alt: "Industrial Girls Showcase - Manizales",
+    city: "MANIZALES",
+    countryCode: "CO",
+    date: "04 DIC 2025",
+    alt: "Industrial Girls Showcase — Manizales [CO] // 04 DIC 2025",
   },
   {
-    id: "showcase-05",
+    id: "showcase-padova-2025",
     flyerImage: "/images/events/showcase-05.jpg",
-    alt: "Industrial Girls Showcase - Padova",
+    city: "PADOVA",
+    countryCode: "IT",
+    date: "07 NOV 2025",
+    alt: "Industrial Girls Showcase — Padova [IT] // 07 NOV 2025",
   },
 ] as const;
 
