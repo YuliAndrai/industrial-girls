@@ -1,7 +1,7 @@
 /**
  * @file apps/web/src/lib/infrastructure/services-data.ts
  * @description Layer 4: Infrastructure - Strongly-typed Technical Services Catalog for Artist Development.
- * Option 3 Architecture: 5 technical services with Launch Campaign (Campaña de Lanzamiento)
+ * Option 3 Architecture: 6 technical services with Launch Campaign (Campaña de Lanzamiento)
  * designated as the primary flagship service.
  */
 
@@ -15,6 +15,8 @@ export interface ServiceItem {
   code: string;
   /** High-level uppercase service title */
   title: string;
+  /** Optional technical subtitle or domain brief */
+  subtitle?: string;
   /** Optional badge description (e.g., 'SERVICIO INSIGNIA // FLAGSHIP') */
   badge?: string;
   /** Comprehensive editorial service description */
@@ -93,7 +95,21 @@ export const SERVICES_CATALOG: readonly ServiceItem[] = [
       "Diseño y desarrollo de páginas web para artistas",
       "Diseño de artes gráficas y piezas de identidad",
       "Automatización de procesos operativos",
-      "Migración de software y flujos de trabajo en estudio",
+      "Ecosistema de almacenamiento y portales de prensa",
+    ],
+  },
+  {
+    id: "flujos-estudio",
+    code: "06",
+    title: "MIGRACIÓN DE SOFTWARE & FLUJOS DE TRABAJO EN ESTUDIO",
+    subtitle: "Infraestructura técnica para el entorno de producción musical",
+    description:
+      "Optimización y transición de DAWs, configuración de librerías, ruteo de hardware/instrumentos virtuales y automatización de procesos en el estudio de producción.",
+    features: [
+      "Transición y configuración avanzada entre DAWs (Ableton, FL Studio, Logic)",
+      "Ruteo de sintetizadores analógicos, módulos eurorack y cajas de ritmo",
+      "Gestión de librerías de samples, plugins VST y plantillas de mezcla",
+      "Estandarización de stems y respaldo seguro en la nube para colaboración",
     ],
   },
 ] as const;
