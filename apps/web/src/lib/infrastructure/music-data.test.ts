@@ -140,14 +140,14 @@ describe("Music Releases Catalog & Spotify Integration — TDD Test Suite", () =
       });
     });
 
-    it("validates exact Spotify search URLs without markdown format brackets", () => {
-      // Step 1: Expected official Spotify search endpoints for each VA release
+    it("validates exact Spotify streaming and search URLs without markdown format brackets", () => {
+      // Step 1: Expected official Spotify endpoints for each VA release
       const expectedUrls: Record<string, string> = {
         "IGVA005": "https://open.spotify.com/search/INDUSTRIAL%20GIRLS%20VA%20005",
-        "IGVA004": "https://open.spotify.com/search/INDUSTRIAL%20GIRLS%20VA%20004",
+        "IGVA004": "https://open.spotify.com/album/2NYM9hi9JCz7fe0CIUv6hO",
         "IGVA003": "https://open.spotify.com/search/INDUSTRIAL%20GIRLS%20VA%20003",
-        "IGVA002": "https://open.spotify.com/search/INDUSTRIAL%20GIRLS%20VA%20002",
-        "IGVA001": "https://open.spotify.com/search/INDUSTRIAL%20GIRLS%20VA%20001",
+        "IGVA002": "https://open.spotify.com/album/0EcJxLjGjzv5Y6xNkp62h8",
+        "IGVA001": "https://open.spotify.com/album/0e32qlFYpBFxqXyQxKl6AV",
       };
 
       // Step 2: Validate each URL format
@@ -159,7 +159,7 @@ describe("Music Releases Catalog & Spotify Integration — TDD Test Suite", () =
         // Invariant: Pure string without markdown brackets [ ] or ( )
         expect(release.spotifyUrl).not.toContain("[");
         expect(release.spotifyUrl).not.toContain("]");
-        expect(release.spotifyUrl.startsWith("https://open.spotify.com/search/")).toBe(true);
+        expect(release.spotifyUrl.startsWith("https://open.spotify.com/")).toBe(true);
       });
     });
 
@@ -235,9 +235,15 @@ describe("Music Releases Catalog & Spotify Integration — TDD Test Suite", () =
 
           expect(track.spotifyUrl).toBeDefined();
           expect(typeof track.spotifyUrl).toBe("string");
-          expect(track.spotifyUrl.startsWith("https://open.spotify.com/search/")).toBe(true);
+          expect(track.spotifyUrl.startsWith("https://open.spotify.com/")).toBe(true);
           expect(track.spotifyUrl).not.toContain("[");
           expect(track.spotifyUrl).not.toContain("]");
+
+          if (track.spotifyTrackId) {
+            expect(track.spotifyUrl).toBe(`https://open.spotify.com/track/${track.spotifyTrackId}`);
+          } else {
+            expect(track.spotifyUrl.startsWith("https://open.spotify.com/search/")).toBe(true);
+          }
 
           if (track.position) {
             expect(typeof track.position).toBe("string");

@@ -20,6 +20,8 @@ export interface SpotifyTrackItem {
   releaseCatalogCode: string;
   /** Track duration formatted as MM:SS */
   duration: string;
+  /** Optional Spotify resource type override ('track' or 'album') */
+  type?: "track" | "album";
 }
 
 /**

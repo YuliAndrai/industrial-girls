@@ -190,7 +190,19 @@ export function MusicaView(): React.ReactElement {
                       </div>
                       <div className="flex flex-wrap items-center gap-2 mt-4">
                         <SpotifyTrackTrigger
-                          track={release.spotifyAlbumId || release.catalogNumber}
+                          track={
+                            release.spotifyAlbumId
+                              ? {
+                                  id: `release-${release.id}`,
+                                  title: release.title,
+                                  artist: "Various Artists",
+                                  spotifyTrackId: release.spotifyAlbumId,
+                                  releaseCatalogCode: release.catalogNumber,
+                                  duration: "COMPILATION",
+                                  type: "album",
+                                }
+                              : release.catalogNumber
+                          }
                           className="inline-flex items-center gap-2 px-3 py-1.5 text-xs font-mono uppercase border border-red-500 text-white bg-red-600/20 hover:bg-red-600/30 transition-colors"
                         >
                           ▷ PREVIEW EN WEB

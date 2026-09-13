@@ -69,18 +69,19 @@ export function SpotifyPlayerProvider({ children }: { children: ReactNode }): Re
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const [isMinimized, setIsMinimized] = useState<boolean>(false);
 
-  // Step 3: Compute sanitized embed URL for currently active track
+  // Step 3: Compute sanitized embed URL for currently active track or album
   const activeTrackId = currentTrack?.spotifyTrackId;
+  const resourceType = currentTrack?.type ?? "track";
   const embedUrl = useMemo(() => {
     if (!activeTrackId) {
       return "";
     }
     try {
-      return buildSpotifyEmbedUrl(activeTrackId, { theme: "0" });
+      return buildSpotifyEmbedUrl(activeTrackId, { theme: "0", type: resourceType });
     } catch {
       return "";
     }
-  }, [activeTrackId]);
+  }, [activeTrackId, resourceType]);
 
   // Step 4: Action to play a track item or raw Spotify track ID/URI
   const playTrack = useCallback((trackOrId: SpotifyTrackItem | string) => {
