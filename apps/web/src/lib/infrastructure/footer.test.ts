@@ -74,10 +74,13 @@ describe("Minimal Industrial Footer Architecture — Test Suite (@spec IGW-013)"
     expect(content).not.toContain("[ INSTAGRAM ]");
     expect(content).not.toContain("[ TELEGRAM ]");
 
-    // Step 3: Assert horizontal icon layout and styling
-    expect(content).toContain("flex items-center gap-5");
-    expect(content).toContain("w-5 h-5");
-    expect(content).toContain("text-neutral-400 hover:text-red-500 transition-colors duration-200");
+    // Step 3: Assert horizontal icon layout, premium scale and microinteraction styling
+    expect(content).toContain("gap-4 md:gap-5 flex items-center justify-center flex-wrap");
+    expect(content).toContain("w-6 h-6");
+    expect(content).toContain("p-2.5 rounded-full border border-white/10 bg-white/[0.03] backdrop-blur-sm");
+    expect(content).toContain("hover:scale-115 hover:opacity-100");
+    expect(content).toContain("hover:text-red-500 hover:border-red-600/70 hover:bg-red-950/20");
+    expect(content).toContain("hover:drop-shadow-[0_0_10px_rgba(239,68,68,0.6)]");
 
     // Step 4: Assert security attributes
     expect(content).toContain('target="_blank"');

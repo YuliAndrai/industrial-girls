@@ -126,21 +126,32 @@ describe("Layer 4 & Layer 1: Footer Official Social Links Contract (@spec IGW-01
       expect(content).not.toContain("[ TELEGRAM ]");
     });
 
-    it("validates vector icon layout container classes (flex items-center gap-5)", () => {
+    it("validates vector icon layout container classes (gap-4 md:gap-5 flex items-center justify-center flex-wrap)", () => {
       // Step 1: Read footer component source
       const content = fs.readFileSync(footerPath, "utf-8");
 
       // Step 2: Assert container layout classes
-      expect(content).toContain("flex items-center gap-5");
+      expect(content).toContain("gap-4 md:gap-5 flex items-center justify-center flex-wrap");
     });
 
-    it("validates monochromatic vector icon sizing and color styling (w-5 h-5 text-neutral-400 hover:text-red-500)", () => {
+    it("validates upgraded icon scale (w-6 h-6) and padded interactive circular container", () => {
       // Step 1: Read footer component source
       const content = fs.readFileSync(footerPath, "utf-8");
 
-      // Step 2: Assert icon sizing and transition classes
-      expect(content).toContain("w-5 h-5");
-      expect(content).toContain("text-neutral-400 hover:text-red-500 transition-colors duration-200");
+      // Step 2: Assert icon sizing and padded interactive container classes
+      expect(content).toContain("w-6 h-6");
+      expect(content).toContain("p-2.5 rounded-full border border-white/10 bg-white/[0.03] backdrop-blur-sm");
+      expect(content).toContain("text-neutral-300 opacity-80 transition-all duration-300 ease-out");
+    });
+
+    it("validates premium hover microinteractions with brand red glow", () => {
+      // Step 1: Read footer component source
+      const content = fs.readFileSync(footerPath, "utf-8");
+
+      // Step 2: Assert hover states
+      expect(content).toContain("hover:scale-115 hover:opacity-100");
+      expect(content).toContain("hover:text-red-500 hover:border-red-600/70 hover:bg-red-950/20");
+      expect(content).toContain("hover:drop-shadow-[0_0_10px_rgba(239,68,68,0.6)]");
     });
 
     it("validates all 6 platforms contain target='_blank', rel='noopener noreferrer' and aria-label", () => {
