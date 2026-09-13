@@ -19,13 +19,13 @@ import {
 
 describe("Artist Development Technical Services (Option 3) — Unit Test Suite", () => {
   describe("1. Layer 4: Services Catalog Contract & Integrity (@spec IGW-003-SERVICES-CATALOG)", () => {
-    it("should provide exactly 5 technical services in SERVICES_CATALOG", () => {
+    it("should provide exactly 6 technical services in SERVICES_CATALOG", () => {
       // Step 1: Arrange & Act
       const services = getServicesCatalog();
 
-      // Step 2: Assert exactly 5 services
-      expect(services).toHaveLength(5);
-      expect(SERVICES_CATALOG).toHaveLength(5);
+      // Step 2: Assert exactly 6 services
+      expect(services).toHaveLength(6);
+      expect(SERVICES_CATALOG).toHaveLength(6);
 
       const expectedIds = [
         "campana-lanzamiento",
@@ -33,8 +33,9 @@ describe("Artist Development Technical Services (Option 3) — Unit Test Suite",
         "legal-contratos",
         "audio-mastering",
         "infraestructura-digital",
+        "flujos-estudio",
       ];
-      const expectedCodes = ["01", "02", "03", "04", "05"];
+      const expectedCodes = ["01", "02", "03", "04", "05", "06"];
 
       services.forEach((service, index) => {
         expect(service.id).toBe(expectedIds[index]);
@@ -43,6 +44,20 @@ describe("Artist Development Technical Services (Option 3) — Unit Test Suite",
         expect(service.description).toBeTruthy();
         expect(service.features.length).toBeGreaterThanOrEqual(3);
       });
+    });
+
+    it("should verify that flujos-estudio is defined with code 06 and complete features", () => {
+      // Step 1: Query flujos-estudio service
+      const flujos = getServiceById("flujos-estudio");
+
+      // Step 2: Assert properties
+      expect(flujos).toBeDefined();
+      expect(flujos?.code).toBe("06");
+      expect(flujos?.title).toBe("MIGRACIÓN DE SOFTWARE & FLUJOS DE TRABAJO EN ESTUDIO");
+      expect(flujos?.subtitle).toBe("Infraestructura técnica para el entorno de producción musical");
+      expect(flujos?.description).toContain("Optimización y transición de DAWs");
+      expect(flujos?.features).toHaveLength(4);
+      expect(flujos?.features[0]).toContain("Transición y configuración avanzada entre DAWs");
     });
 
     it("should verify that campana-lanzamiento is designated as the flagship primary service", () => {
@@ -117,6 +132,9 @@ describe("Artist Development Technical Services (Option 3) — Unit Test Suite",
 
       // Step 3: Assert flagship styling and badge
       expect(content).toContain("[ FLAGSHIP // SERVICIO INSIGNIA ]");
+
+      // Step 4: Assert deep-link anchor support
+      expect(content).toContain("id={service.id}");
 
       // Step 4: Assert absolute purge of 'ghost' and 'pilares' from the component
       const lowerContent = content.toLowerCase();

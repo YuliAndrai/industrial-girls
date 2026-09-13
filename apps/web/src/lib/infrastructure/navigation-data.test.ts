@@ -14,6 +14,7 @@ import {
   NavItem,
   SubNavItem,
 } from "./navigation-data";
+import { SERVICES_CATALOG } from "./services-data";
 
 describe("Layer 4: Master Navigation Data Catalog Contract", () => {
   // Step 1: Validate master items count and integrity
@@ -54,7 +55,8 @@ describe("Layer 4: Master Navigation Data Catalog Contract", () => {
     expect(dev?.label).toBe("DESARROLLO ARTÍSTICO");
     expect(dev?.subSections).toEqual([
       { label: "CATÁLOGO DE SERVICIOS", href: "/desarrollo-artistico#servicios" },
-      { label: "SOLICITAR DIAGNÓSTICO", href: "/desarrollo-artistico#diagnostico" },
+      { label: "MIGRACIÓN & ESTUDIO", href: "/desarrollo-artistico#flujos-estudio" },
+      { label: "DIAGNÓSTICO ARTÍSTICO", href: "/desarrollo-artistico#diagnostico" },
     ]);
   });
 
@@ -108,7 +110,7 @@ describe("Layer 1: View Anchors & Deep-Link Destination Verification", () => {
   });
 
   // Step 8: Verify anchor IDs on /desarrollo-artistico
-  it("verifies /desarrollo-artistico components contain #servicios and #diagnostico target IDs", () => {
+  it("verifies /desarrollo-artistico components contain #servicios, #flujos-estudio, and #diagnostico target IDs", () => {
     const servicesFile = path.join(rootSrc, "components/artist-development/services-grid.tsx");
     const diagnosticFile = path.join(rootSrc, "components/artist-development/intake-diagnostic-form.tsx");
 
@@ -116,6 +118,8 @@ describe("Layer 1: View Anchors & Deep-Link Destination Verification", () => {
     const diagnosticContent = fs.readFileSync(diagnosticFile, "utf-8");
 
     expect(servicesContent).toContain('id="servicios"');
+    expect(servicesContent).toContain("id={service.id}");
+    expect(SERVICES_CATALOG.some((service) => service.id === "flujos-estudio")).toBe(true);
     expect(diagnosticContent).toContain('id="diagnostico"');
   });
 

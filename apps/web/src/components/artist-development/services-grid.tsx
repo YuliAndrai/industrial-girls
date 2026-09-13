@@ -2,7 +2,8 @@
  * @file apps/web/src/components/artist-development/services-grid.tsx
  * @description Layer 1: Presentation - Technical Services Console Grid (Option 3 Architecture).
  * Renders asymmetric technical console cards covering Launch Campaign (Flagship),
- * 360° Artist Plan, Legal & Contracts, Audio & Mastering, and Digital Infrastructure.
+ * 360° Artist Plan, Legal & Contracts, Audio & Mastering, Digital Infrastructure,
+ * and Studio Workflow & Software Migration.
  */
 
 import React from "react";
@@ -40,12 +41,13 @@ export function ServicesGrid(): React.ReactElement {
           </p>
         </div>
 
-        {/* Step 3: Asymmetric Technical Grid (Flagship Card 01 full-width, followed by 2x2 grid) */}
+        {/* Step 3: Asymmetric Technical Grid (Flagship Card 01 full-width, followed by standard technical grid) */}
         <div className="space-y-6 lg:space-y-8">
           {/* Card 01: Flagship Service Card (Campaña de Lanzamiento) */}
           <article
             key={flagship.id}
-            className="group relative border border-red-600/70 bg-panel/90 p-6 sm:p-8 lg:p-10 transition-all duration-300 hover:border-red-500 hover:shadow-rave"
+            id={flagship.id}
+            className="group relative border border-red-600/70 bg-panel/90 p-6 sm:p-8 lg:p-10 transition-all duration-300 hover:border-red-500 hover:shadow-rave scroll-mt-24"
           >
             <div className="flex flex-col lg:flex-row lg:items-start lg:justify-between gap-6">
               <div className="flex-1">
@@ -93,18 +95,19 @@ export function ServicesGrid(): React.ReactElement {
             </div>
           </article>
 
-          {/* Cards 02 to 05: Standard 2x2 Technical Grid */}
+          {/* Cards 02 to 06: Standard Technical Grid */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 lg:gap-6">
             {secondaryServices.map((service) => (
               <article
                 key={service.id}
-                className="group flex flex-col justify-between border border-white/10 bg-black/80 backdrop-blur-sm p-6 sm:p-8 transition-all duration-300 hover:border-raveRed hover:shadow-rave"
+                id={service.id}
+                className="group flex flex-col justify-between border border-white/10 bg-black/80 backdrop-blur-sm p-6 sm:p-8 transition-all duration-300 hover:border-raveRed hover:shadow-rave scroll-mt-24"
               >
                 <div>
                   {/* Card Header */}
                   <div className="flex items-center justify-between border-b border-white/10 pb-4 mb-6">
                     <span className="font-mono text-sm font-black text-raveRed group-hover:scale-110 transition-transform">
-                      /{service.code}
+                      [ {service.code} ]
                     </span>
                     <span className="border border-white/20 bg-white/5 px-2 py-0.5 font-mono text-[10px] uppercase tracking-wider text-neutral-400">
                       MODULO ACTIVO
@@ -114,6 +117,11 @@ export function ServicesGrid(): React.ReactElement {
                   <h3 className="text-xl sm:text-2xl font-black uppercase tracking-tight text-white group-hover:text-raveRed transition-colors font-mono">
                     {service.title}
                   </h3>
+                  {service.subtitle && (
+                    <p className="mt-1 font-mono text-[11px] uppercase tracking-wider text-raveRed/90">
+                      {service.subtitle}
+                    </p>
+                  )}
                   <p className="mt-2 font-mono text-xs text-neutral-400 leading-relaxed">
                     {service.description}
                   </p>
