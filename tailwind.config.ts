@@ -33,6 +33,9 @@ const config: Config = {
       backgroundImage: {
         scanline: "repeating-linear-gradient(0deg, rgba(0,0,0,0.15), rgba(0,0,0,0.15) 1px, transparent 1px, transparent 2px)",
         gridPattern: "radial-gradient(rgba(255,0,0,0.15) 1px, transparent 0)"
+      },
+      scale: {
+        "115": "1.15"
       }
     }
   },
