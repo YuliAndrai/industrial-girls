@@ -31,12 +31,17 @@ describe("Events Showcases Visual Flyers Architecture — Test Suite", () => {
       expect(showcases).toHaveLength(5);
       expect(RECENT_SHOWCASES).toHaveLength(5);
 
-      // Step 3: Validate each showcase item schema
+      // Step 3: Validate each showcase item schema including city, date, and countryCode
       showcases.forEach((showcase: RecentShowcase, index: number) => {
         const expectedCode = String(index + 1).padStart(2, "0");
         expect(showcase.id).toBe(`showcase-${expectedCode}`);
         expect(showcase.flyerImage).toBe(`/images/events/showcase-${expectedCode}.jpg`);
         expect(showcase.alt).toBeTruthy();
+        expect(showcase.city).toBeTruthy();
+        expect(showcase.date).toBeTruthy();
+        if (showcase.countryCode) {
+          expect(showcase.countryCode).toMatch(/^[A-Z]{2}$/);
+        }
       });
     });
 
@@ -63,6 +68,9 @@ describe("Events Showcases Visual Flyers Architecture — Test Suite", () => {
       const showcase01 = getRecentShowcaseById("showcase-01");
       expect(showcase01).toBeDefined();
       expect(showcase01?.flyerImage).toBe("/images/events/showcase-01.jpg");
+      expect(showcase01?.city).toBe("BOGOTÁ");
+      expect(showcase01?.countryCode).toBe("CO");
+      expect(showcase01?.date).toBe("02 DIC 2023");
 
       // Step 2: Query non-existent showcase
       const nonExistent = getRecentShowcaseById("showcase-999");
@@ -89,6 +97,21 @@ describe("Events Showcases Visual Flyers Architecture — Test Suite", () => {
       // Step 5: Assert flyer container aspect ratio and styling
       expect(content).toContain("aspect-[3/4]");
       expect(content).toContain("border-white/10");
+    });
+
+    it("ensures /eventos renders city, date, and countryCode metadata bar below each flyer", () => {
+      // Step 1: Read eventos-view component source
+      const viewPath = path.resolve(__dirname, "../../app/eventos/eventos-view.tsx");
+      const content = fs.readFileSync(viewPath, "utf-8");
+
+      // Step 2: Assert vertical flex container structure
+      expect(content).toContain("flex flex-col");
+
+      // Step 3: Assert metadata footer properties
+      expect(content).toContain("showcase.city");
+      expect(content).toContain("showcase.date");
+      expect(content).toContain("showcase.countryCode");
+      expect(content).toContain("text-[11px]");
     });
   });
 

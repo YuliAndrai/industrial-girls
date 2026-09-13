@@ -5,13 +5,19 @@
  */
 
 /**
- * Recent showcase item contract representing an official event flyer.
+ * Recent showcase item contract representing an official event flyer with city and date metadata.
  */
 export interface RecentShowcase {
   /** Unique showcase identifier */
   id: string;
   /** Relative web path to the high-resolution flyer image in public/images/events/ */
   flyerImage: string;
+  /** City where the showcase took place */
+  city: string;
+  /** Optional ISO 3166-1 alpha-2 country code (e.g. 'CO', 'IT') */
+  countryCode?: string;
+  /** Chronological event date label */
+  date: string;
   /** Accessible alt text for screen readers */
   alt: string;
 }
@@ -24,27 +30,42 @@ export const RECENT_SHOWCASES: readonly RecentShowcase[] = [
   {
     id: "showcase-01",
     flyerImage: "/images/events/showcase-01.jpg",
-    alt: "Industrial Girls Showcase - Bogotá",
+    city: "BOGOTÁ",
+    countryCode: "CO",
+    date: "02 DIC 2023",
+    alt: "Industrial Girls Showcase — Bogotá",
   },
   {
     id: "showcase-02",
     flyerImage: "/images/events/showcase-02.jpg",
-    alt: "Industrial Girls Showcase - Medellín",
+    city: "MEDELLÍN",
+    countryCode: "CO",
+    date: "26 JUN 2024",
+    alt: "Industrial Girls Showcase — Medellín",
   },
   {
     id: "showcase-03",
     flyerImage: "/images/events/showcase-03.jpg",
-    alt: "Industrial Girls Showcase - Roma",
+    city: "ROMA",
+    countryCode: "IT",
+    date: "01 JUN 2024",
+    alt: "Industrial Girls Showcase — Roma",
   },
   {
     id: "showcase-04",
     flyerImage: "/images/events/showcase-04.jpg",
-    alt: "Industrial Girls Showcase - Manizales",
+    city: "MANIZALES",
+    countryCode: "CO",
+    date: "04 DIC 2021",
+    alt: "Industrial Girls Showcase — Manizales",
   },
   {
     id: "showcase-05",
     flyerImage: "/images/events/showcase-05.jpg",
-    alt: "Industrial Girls Showcase - Padova",
+    city: "PADOVA",
+    countryCode: "IT",
+    date: "07 NOV 2025",
+    alt: "Industrial Girls Showcase — Padova",
   },
 ] as const;
 

@@ -69,21 +69,31 @@ export function EventosView(): React.ReactElement {
               </h2>
             </div>
 
-            {/* Visual Flyers Grid (Cartel Proportion aspect-[3/4]) - CERO TEXTO SUPERPUESTO */}
+            {/* Visual Flyers Grid with City & Date Metadata Footers */}
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6">
               {recentShowcases.map((showcase) => (
-                <article
-                  key={showcase.id}
-                  className="group relative aspect-[3/4] w-full overflow-hidden rounded-sm border border-white/10 bg-black transition-all duration-300 hover:border-raveRed hover:shadow-rave"
-                >
-                  <Image
-                    src={showcase.flyerImage}
-                    alt={showcase.alt}
-                    fill
-                    sizes="(max-width: 640px) 100vw, (max-width: 768px) 50vw, (max-width: 1024px) 33vw, 20vw"
-                    className="object-cover transition-transform duration-500 group-hover:scale-105"
-                  />
-                  <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                <article key={showcase.id} className="flex flex-col">
+                  {/* Flyer Poster Frame (Cartel Proportion aspect-[3/4]) */}
+                  <div className="group relative aspect-[3/4] w-full overflow-hidden rounded-sm border border-white/10 bg-black transition-all duration-300 hover:border-raveRed hover:shadow-rave">
+                    <Image
+                      src={showcase.flyerImage}
+                      alt={showcase.alt}
+                      fill
+                      sizes="(max-width: 640px) 100vw, (max-width: 768px) 50vw, (max-width: 1024px) 33vw, 20vw"
+                      className="object-cover transition-transform duration-500 group-hover:scale-105"
+                    />
+                    <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                  </div>
+
+                  {/* Clean Footer Bar with Geographic and Chronological Metadata */}
+                  <div className="mt-2.5 flex items-center justify-between font-mono text-[11px] tracking-wider uppercase">
+                    <span className="text-white font-semibold">
+                      {showcase.city} {showcase.countryCode ? `[${showcase.countryCode}]` : ""}
+                    </span>
+                    <span className="text-red-500 font-bold">
+                      {showcase.date}
+                    </span>
+                  </div>
                 </article>
               ))}
             </div>
