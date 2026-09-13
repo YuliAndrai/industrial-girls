@@ -190,66 +190,7 @@ export function MusicaView(): React.ReactElement {
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                 {podcasts.map((episode) => (
-                  <article
-                    key={episode.id}
-                    className="border border-raveBorder bg-panel/60 p-6 flex flex-col justify-between hover:border-raveRed transition-all"
-                  >
-                    <div>
-                      {/* Cover Image (16:9 MaxRes HD) */}
-                      <div className="group relative aspect-video w-full overflow-hidden border border-white/10 bg-black mb-4">
-                        <Image
-                          src={episode.coverImage}
-                          alt={episode.title}
-                          fill
-                          sizes="(max-width: 768px) 100vw, (max-width: 1280px) 50vw, 640px"
-                          quality={90}
-                          className="w-full h-full object-cover object-center contrast-[1.05] brightness-95 group-hover:brightness-105 group-hover:scale-[1.02] transition-all duration-300"
-                        />
-                      </div>
-
-                      {/* Metadata Badge */}
-                      <div className="flex items-center justify-between border-b border-raveBorder pb-2 mb-3 font-mono text-xs">
-                        <span className="font-mono text-xs text-raveRed font-bold tracking-wider">
-                          {`[ IG MIX ${episode.seriesNumber} ]`}
-                        </span>
-                      </div>
-
-                      {/* Artist Name & Title */}
-                      <h3 className="text-xl sm:text-2xl font-black uppercase text-white">
-                        {episode.artist}
-                      </h3>
-                      <p className="font-mono text-xs text-neutral-300 mt-1">
-                        {episode.title}
-                      </p>
-                    </div>
-
-                    {/* Action Buttons: SoundCloud Primary, YouTube Secondary */}
-                    <div className="flex flex-wrap items-center gap-2 mt-4 pt-3 border-t border-raveBorder/40">
-                      {/* BOTÓN PRIMARIO SOUNDCLOUD */}
-                      <a
-                        href={episode.soundcloudUrl}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        aria-label={`Escuchar sesión de ${episode.artist} en SoundCloud`}
-                        className="inline-flex items-center gap-2 px-3 py-1.5 text-xs font-mono uppercase bg-red-600/90 text-white hover:bg-red-500 border border-red-500 transition-colors"
-                      >
-                        <span>ESCUCHAR EN SOUNDCLOUD</span>
-                        <span>↗</span>
-                      </a>
-
-                      {/* BOTÓN SECUNDARIO YOUTUBE */}
-                      <a
-                        href={episode.youtubeUrl}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        aria-label={`Ver sesión de ${episode.artist} en YouTube`}
-                        className="inline-flex items-center gap-2 px-2.5 py-1.5 text-xs font-mono uppercase border border-white/20 text-white/70 hover:border-white hover:text-white transition-colors"
-                      >
-                        <span>VER EN YOUTUBE</span>
-                        <span>↗</span>
-                      </a>
-                    </div>
-                  </article>
+                  <PodcastCard key={episode.id} episode={episode} />
                 ))}
               </div>
             </div>
@@ -506,6 +447,115 @@ function ReleaseCard({ release, index }: ReleaseCardProps): React.JSX.Element {
           <span>FORMATO: DIGITAL LOSSLESS</span>
           <span className="text-raveRed font-bold">145-165 BPM</span>
         </div>
+      </div>
+    </article>
+  );
+}
+
+/**
+ * Properties contract for PodcastCard component.
+ */
+interface PodcastCardProps {
+  /** The podcast episode entity */
+  episode: PodcastEpisode;
+}
+
+/**
+ * Interactive Podcast Episode Card component with on-demand SoundCloud player embed.
+ *
+ * @param {PodcastCardProps} props - Component properties.
+ * @returns {React.JSX.Element} The rendered podcast article card.
+ */
+function PodcastCard({ episode }: PodcastCardProps): React.JSX.Element {
+  // Step 1: Manage embedded SoundCloud player toggle state
+  const [isPlaying, setIsPlaying] = useState(false);
+
+  return (
+    <article
+      key={episode.id}
+      className="border border-raveBorder bg-panel/60 p-6 flex flex-col justify-between hover:border-raveRed transition-all"
+    >
+      <div>
+        {/* Cover Image (16:9 MaxRes HD) */}
+        <div className="group relative aspect-video w-full overflow-hidden border border-white/10 bg-black mb-4">
+          <Image
+            src={episode.coverImage}
+            alt={episode.title}
+            fill
+            sizes="(max-width: 768px) 100vw, (max-width: 1280px) 50vw, 640px"
+            quality={90}
+            className="w-full h-full object-cover object-center contrast-[1.05] brightness-95 group-hover:brightness-105 group-hover:scale-[1.02] transition-all duration-300"
+          />
+        </div>
+
+        {/* Metadata Badge */}
+        <div className="flex items-center justify-between border-b border-raveBorder pb-2 mb-3 font-mono text-xs">
+          <span className="font-mono text-xs text-raveRed font-bold tracking-wider">
+            {`[ IG MIX ${episode.seriesNumber} ]`}
+          </span>
+        </div>
+
+        {/* Artist Name & Title */}
+        <h3 className="text-xl sm:text-2xl font-black uppercase text-white">
+          {episode.artist}
+        </h3>
+        <p className="font-mono text-xs text-neutral-300 mt-1">
+          {episode.title}
+        </p>
+
+        {/* Embedded SoundCloud Player Iframe (Toggled on-demand) */}
+        {isPlaying && (
+          <div className="mt-4 border border-red-500/40 bg-black p-1">
+            <iframe
+              width="100%"
+              height="166"
+              scrolling="no"
+              frameBorder="no"
+              allow="autoplay"
+              src={`https://w.soundcloud.com/player/?url=${encodeURIComponent(
+                episode.soundcloudUrl
+              )}&color=%23ff0000&auto_play=true&hide_related=true&show_comments=false&show_user=true&show_reposts=false&show_teaser=false`}
+              title={`${episode.title} SoundCloud Player`}
+              className="w-full"
+            />
+          </div>
+        )}
+      </div>
+
+      {/* Action Buttons: Web Preview Toggle, SoundCloud Primary, YouTube Secondary */}
+      <div className="flex flex-wrap items-center gap-2 mt-4 pt-3 border-t border-raveBorder/40">
+        {/* BOTÓN PREVIEW EN WEB */}
+        <button
+          type="button"
+          onClick={() => setIsPlaying((prev) => !prev)}
+          className="inline-flex items-center gap-2 px-3 py-1.5 text-xs font-mono uppercase border border-red-500 text-white bg-red-600/20 hover:bg-red-600/30 transition-colors"
+        >
+          <span>{isPlaying ? "✕ CERRAR PLAYER" : "▷ PREVIEW EN WEB"}</span>
+        </button>
+
+        {/* BOTÓN PRIMARIO SOUNDCLOUD */}
+        <a
+          href={episode.soundcloudUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label={`Escuchar sesión de ${episode.artist} en SoundCloud`}
+          className="inline-flex items-center gap-2 px-3 py-1.5 text-xs font-mono uppercase bg-red-600/90 text-white hover:bg-red-500 border border-red-500 transition-colors"
+        >
+          <span>ESCUCHAR EN SOUNDCLOUD</span>
+          <span>↗</span>
+        </a>
+
+        {/* BOTÓN SECUNDARIO YOUTUBE */}
+        <a
+          href={episode.youtubeUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label={`Ver sesión de ${episode.artist} en YouTube`}
+          className="inline-flex items-center gap-2 px-2.5 py-1.5 text-xs font-mono uppercase border border-white/20 text-white/70 hover:border-white hover:text-white transition-colors"
+        >
+          <span>VER EN YOUTUBE</span>
+          <span>↗</span>
+        </a>
       </div>
     </article>
   );

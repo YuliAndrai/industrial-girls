@@ -250,5 +250,27 @@ describe("Podcast Series (IG MIX 001 - 004) — TDD Test Suite", () => {
       expect(content).toContain("group-hover:scale-[1.02]");
       expect(content).toContain("quality={90}");
     });
+
+    it("ensures /musica view integrates on-demand SoundCloud player embed with preview trigger", () => {
+      // Step 1: Read view component source file
+      const viewPath = path.resolve(
+        process.cwd(),
+        "apps",
+        "web",
+        "src",
+        "app",
+        "musica",
+        "musica-view.tsx"
+      );
+      const content = fs.readFileSync(viewPath, "utf-8");
+
+      // Step 2: Validate presence of preview trigger button
+      expect(content).toContain("▷ PREVIEW EN WEB");
+      expect(content).toContain("✕ CERRAR PLAYER");
+
+      // Step 3: Validate official SoundCloud widget embed URL construction
+      expect(content).toContain("https://w.soundcloud.com/player/?url=");
+      expect(content).toContain("color=%23ff0000");
+    });
   });
 });
