@@ -6,6 +6,7 @@
 
 import type { Metadata } from "next";
 import { Providers } from "./providers";
+import { SpotifyMiniPlayer } from "@/components/player/spotify-mini-player";
 import { ROOT_JSON_LD_SCHEMA } from "@/lib/infrastructure/seo-schema";
 import "./globals.css";
 
@@ -22,7 +23,7 @@ export default function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
-  // Step 1: Wrap app contents in HTML shell with dark theme, head metadata/JSON-LD, and providers
+  // Step 1: Wrap app contents in HTML shell with dark theme, head metadata/JSON-LD, providers, and persistent Spotify player
   return (
     <html lang="en" className="dark">
       <head>
@@ -33,7 +34,11 @@ export default function RootLayout({
         />
       </head>
       <body className="bg-bg text-neutral-100 antialiased selection:bg-raveRed selection:text-black">
-        <Providers>{children}</Providers>
+        <Providers>
+          {children}
+          {/* Step 3: Mount persistent Spotify Mini Player widget at root layout */}
+          <SpotifyMiniPlayer />
+        </Providers>
       </body>
     </html>
   );
