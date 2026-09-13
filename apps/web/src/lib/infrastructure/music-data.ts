@@ -30,6 +30,8 @@ export interface TrackItem {
   title: string;
   /** Direct Spotify search or track URL */
   spotifyUrl: string;
+  /** Official verified Spotify Track ID (22-character Base62) (optional) */
+  spotifyTrackId?: string;
   /** Sequential track position on release (e.g., '01', '02', '03') (optional) */
   position?: string;
   /** Track duration in MM:SS format (optional) */
@@ -52,6 +54,8 @@ export interface ReleaseItem {
   coverImage: string;
   /** Official Spotify search endpoint URL */
   spotifyUrl: string;
+  /** Official verified Spotify Album ID (22-character Base62) (optional) */
+  spotifyAlbumId?: string;
   /** Direct official buy URL (Bandcamp or Beatport) */
   buyUrl: string;
   /** Dynamic label designating the purchase platform */
@@ -128,7 +132,8 @@ export const RELEASES_CATALOG: readonly ReleaseItem[] = [
     title: "INDUSTRIAL GIRLS VA 004",
     year: "2023",
     coverImage: "/images/releases/va-004.jpg",
-    spotifyUrl: "https://open.spotify.com/search/INDUSTRIAL%20GIRLS%20VA%20004",
+    spotifyUrl: "https://open.spotify.com/album/2NYM9hi9JCz7fe0CIUv6hO",
+    spotifyAlbumId: "2NYM9hi9JCz7fe0CIUv6hO",
     buyUrl: "https://industrialgirls.bandcamp.com/album/industrial-girls-004",
     buyLabel: "BANDCAMP",
     beatportUrl: "https://industrialgirls.bandcamp.com/album/industrial-girls-004",
@@ -136,42 +141,50 @@ export const RELEASES_CATALOG: readonly ReleaseItem[] = [
       {
         artist: "Ayako Mori",
         title: "Red Ribbon",
-        spotifyUrl: "https://open.spotify.com/search/Ayako%20Mori%20Red%20Ribbon",
+        spotifyUrl: "https://open.spotify.com/track/2qFqOsh2Z0HeasyC7bv4jY",
+        spotifyTrackId: "2qFqOsh2Z0HeasyC7bv4jY",
       },
       {
         artist: "Lady Maru",
         title: "Order and Anarchy",
-        spotifyUrl: "https://open.spotify.com/search/Lady%20Maru%20Order%20and%20Anarchy",
+        spotifyUrl: "https://open.spotify.com/track/7oQdWfeMVdfCeK6rF1aSAC",
+        spotifyTrackId: "7oQdWfeMVdfCeK6rF1aSAC",
       },
       {
         artist: "Isabelle Beaucamp",
         title: "Rave in Peace",
-        spotifyUrl: "https://open.spotify.com/search/Isabelle%20Beaucamp%20Rave%20in%20Peace",
+        spotifyUrl: "https://open.spotify.com/track/1T8zWfYg7Ynj3aVIFpAMNg",
+        spotifyTrackId: "1T8zWfYg7Ynj3aVIFpAMNg",
       },
       {
         artist: "Bietka AKA Acid Zombeat & Mind Haze",
         title: "Ghost Planes",
-        spotifyUrl: "https://open.spotify.com/search/Bietka%20Ghost%20Planes",
+        spotifyUrl: "https://open.spotify.com/track/1EQgQ3cOC2nlnjcfRYOIRg",
+        spotifyTrackId: "1EQgQ3cOC2nlnjcfRYOIRg",
       },
       {
         artist: "Lea Node",
         title: "I Decide To Dance",
-        spotifyUrl: "https://open.spotify.com/search/Lea%20Node%20I%20Decide%20To%20Dance",
+        spotifyUrl: "https://open.spotify.com/track/7jqzqB7aD2fEOTQ6N95DZZ",
+        spotifyTrackId: "7jqzqB7aD2fEOTQ6N95DZZ",
       },
       {
         artist: "Masicaya",
         title: "Bass Lad",
-        spotifyUrl: "https://open.spotify.com/search/Masicaya%20Bass%20Lad",
+        spotifyUrl: "https://open.spotify.com/track/6niiGkuOQpw06URwC623sh",
+        spotifyTrackId: "6niiGkuOQpw06URwC623sh",
       },
       {
         artist: "Kamra",
         title: "Du Hast Re Edit",
-        spotifyUrl: "https://open.spotify.com/search/Kamra%20Du%20Hast%20Re%20Edit",
+        spotifyUrl: "https://open.spotify.com/track/4sVJddkcjoaDXEkdgRqnEJ",
+        spotifyTrackId: "4sVJddkcjoaDXEkdgRqnEJ",
       },
       {
         artist: "Hidalgo",
         title: "Wolf",
-        spotifyUrl: "https://open.spotify.com/search/Hidalgo%20Wolf",
+        spotifyUrl: "https://open.spotify.com/track/1d3UoEo7SUANbhzbV8G1vJ",
+        spotifyTrackId: "1d3UoEo7SUANbhzbV8G1vJ",
       },
     ],
   },
@@ -239,7 +252,8 @@ export const RELEASES_CATALOG: readonly ReleaseItem[] = [
     title: "INDUSTRIAL GIRLS VA 002",
     year: "2022",
     coverImage: "/images/releases/va-002.jpg",
-    spotifyUrl: "https://open.spotify.com/search/INDUSTRIAL%20GIRLS%20VA%20002",
+    spotifyUrl: "https://open.spotify.com/album/0EcJxLjGjzv5Y6xNkp62h8",
+    spotifyAlbumId: "0EcJxLjGjzv5Y6xNkp62h8",
     buyUrl: "https://www.beatport.com/es/release/industrial-girls-002/4716681",
     buyLabel: "BEATPORT",
     beatportUrl: "https://www.beatport.com/es/release/industrial-girls-002/4716681",
@@ -247,32 +261,44 @@ export const RELEASES_CATALOG: readonly ReleaseItem[] = [
       {
         artist: "Daniela Fuzz",
         title: "Bangover",
-        spotifyUrl: "https://open.spotify.com/search/Daniela%20Fuzz%20Bangover",
+        spotifyUrl: "https://open.spotify.com/track/1LSGW3EwPLabMyqPaAoW1g",
+        spotifyTrackId: "1LSGW3EwPLabMyqPaAoW1g",
       },
       {
         artist: "Debbie & Andhray",
         title: "Feline Blink",
-        spotifyUrl: "https://open.spotify.com/search/Debbie%20Andhray%20Feline%20Blink",
+        spotifyUrl: "https://open.spotify.com/track/6A5CFrLWOu4CS4GE8paXU5",
+        spotifyTrackId: "6A5CFrLWOu4CS4GE8paXU5",
       },
       {
         artist: "Zaphy",
         title: "Don't Be Afraid",
-        spotifyUrl: "https://open.spotify.com/search/Zaphy%20Don't%20Be%20Afraid",
+        spotifyUrl: "https://open.spotify.com/track/7zKoEL5jafl5ZIgX4aRscJ",
+        spotifyTrackId: "7zKoEL5jafl5ZIgX4aRscJ",
       },
       {
         artist: "Paula Vélez",
         title: "Spektra",
-        spotifyUrl: "https://open.spotify.com/search/Paula%20V%C3%A9lez%20Spektra",
+        spotifyUrl: "https://open.spotify.com/track/6BEtpEWk1cfMXnTTR5AK32",
+        spotifyTrackId: "6BEtpEWk1cfMXnTTR5AK32",
       },
       {
         artist: "Sunny K & Masicaya",
         title: "Kidding",
-        spotifyUrl: "https://open.spotify.com/search/Sunny%20K%20Masicaya%20Kidding",
+        spotifyUrl: "https://open.spotify.com/track/0N6RwWPTtlMsy6NYAPJrpe",
+        spotifyTrackId: "0N6RwWPTtlMsy6NYAPJrpe",
       },
       {
         artist: "Celeste Betancur",
         title: "Hyperion",
-        spotifyUrl: "https://open.spotify.com/search/Celeste%20Betancur%20Hyperion",
+        spotifyUrl: "https://open.spotify.com/track/0r8znhYLy4v0MwgQ03kfVz",
+        spotifyTrackId: "0r8znhYLy4v0MwgQ03kfVz",
+      },
+      {
+        artist: "ØTTA",
+        title: "8Dayswait",
+        spotifyUrl: "https://open.spotify.com/track/5kSiFutXGcgIp05d6ZFvIY",
+        spotifyTrackId: "5kSiFutXGcgIp05d6ZFvIY",
       },
     ],
   },
@@ -282,7 +308,8 @@ export const RELEASES_CATALOG: readonly ReleaseItem[] = [
     title: "INDUSTRIAL GIRLS VA 001",
     year: "2021",
     coverImage: "/images/releases/va-001.jpg",
-    spotifyUrl: "https://open.spotify.com/search/INDUSTRIAL%20GIRLS%20VA%20001",
+    spotifyUrl: "https://open.spotify.com/album/0e32qlFYpBFxqXyQxKl6AV",
+    spotifyAlbumId: "0e32qlFYpBFxqXyQxKl6AV",
     buyUrl: "https://www.beatport.com/es/release/industrial-girls-001/3916941",
     buyLabel: "BEATPORT",
     beatportUrl: "https://www.beatport.com/es/release/industrial-girls-001/3916941",
@@ -290,37 +317,44 @@ export const RELEASES_CATALOG: readonly ReleaseItem[] = [
       {
         artist: "Juliana Yamasaki",
         title: "Sensor",
-        spotifyUrl: "https://open.spotify.com/search/Juliana%20Yamasaki%20Sensor",
+        spotifyUrl: "https://open.spotify.com/track/3VBn3rngTQXhAzvMbtkD1N",
+        spotifyTrackId: "3VBn3rngTQXhAzvMbtkD1N",
       },
       {
         artist: "Caravel",
         title: "Wounded Pride",
-        spotifyUrl: "https://open.spotify.com/search/Caravel%20Wounded%20Pride",
+        spotifyUrl: "https://open.spotify.com/track/6TphGLmyTqbmvuwvRrIFHo",
+        spotifyTrackId: "6TphGLmyTqbmvuwvRrIFHo",
       },
       {
         artist: "BB Deng",
         title: "Broken Ego",
-        spotifyUrl: "https://open.spotify.com/search/BB%20Deng%20Broken%20Ego",
+        spotifyUrl: "https://open.spotify.com/track/2EQopxt5nX5VcGE59fUSUN",
+        spotifyTrackId: "2EQopxt5nX5VcGE59fUSUN",
       },
       {
         artist: "Camila Villegas",
         title: "Sticky",
-        spotifyUrl: "https://open.spotify.com/search/Camila%20Villegas%20Sticky",
+        spotifyUrl: "https://open.spotify.com/track/2l47vO7JN60OWixQCJOQfm",
+        spotifyTrackId: "2l47vO7JN60OWixQCJOQfm",
       },
       {
         artist: "Andhray",
         title: "Trip In The City",
-        spotifyUrl: "https://open.spotify.com/search/Andhray%20Trip%20In%20The%20City",
+        spotifyUrl: "https://open.spotify.com/track/2wy4ZpkMSeDphIjfEeZ98d",
+        spotifyTrackId: "2wy4ZpkMSeDphIjfEeZ98d",
       },
       {
         artist: "Sunny K",
         title: "Electric Voices",
-        spotifyUrl: "https://open.spotify.com/search/Sunny%20K%20Electric%20Voices",
+        spotifyUrl: "https://open.spotify.com/track/071jkVavDcCGrBLgYNClxH",
+        spotifyTrackId: "071jkVavDcCGrBLgYNClxH",
       },
       {
         artist: "Zige",
         title: "Futuro Primitivo",
-        spotifyUrl: "https://open.spotify.com/search/Zige%20Futuro%20Primitivo",
+        spotifyUrl: "https://open.spotify.com/track/3kXIeSkjEurUICeZvaGGIS",
+        spotifyTrackId: "3kXIeSkjEurUICeZvaGGIS",
       },
     ],
   },

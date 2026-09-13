@@ -14,6 +14,7 @@ import { NavigationDrawer } from "@/components/layout/navigation-drawer";
 import { Footer } from "@/components/layout/footer";
 import { FloatingSoundBar } from "@/components/landing/floating-sound-bar";
 import { TactileButton } from "@/components/ui/tactile-button";
+import { SpotifyTrackTrigger } from "@/components/player/spotify-track-trigger";
 import { useDrawer } from "@/lib/hooks/use-drawer";
 import { useSoundFx } from "@/lib/hooks/use-sound-fx";
 import {
@@ -188,12 +189,30 @@ export function MusicaView(): React.ReactElement {
                         </h3>
                       </div>
                       <div className="flex flex-wrap items-center gap-2 mt-4">
+                        <SpotifyTrackTrigger
+                          track={
+                            release.spotifyAlbumId
+                              ? {
+                                  id: `release-${release.id}`,
+                                  title: release.title,
+                                  artist: "Various Artists",
+                                  spotifyTrackId: release.spotifyAlbumId,
+                                  releaseCatalogCode: release.catalogNumber,
+                                  duration: "COMPILATION",
+                                  type: "album",
+                                }
+                              : release.catalogNumber
+                          }
+                          className="inline-flex items-center gap-2 px-3 py-1.5 text-xs font-mono uppercase border border-red-500 text-white bg-red-600/20 hover:bg-red-600/30 transition-colors"
+                        >
+                          ▷ PREVIEW EN WEB
+                        </SpotifyTrackTrigger>
                         <a
                           href={release.spotifyUrl}
                           target="_blank"
                           rel="noopener noreferrer"
                           aria-label={`Escuchar ${release.title} en Spotify`}
-                          className="inline-flex items-center gap-2 px-3 py-1.5 text-xs font-mono uppercase border border-red-500 text-white hover:bg-red-500/20 transition-colors"
+                          className="inline-flex items-center gap-2 px-3 py-1.5 text-xs font-mono uppercase border border-white/20 text-white/80 hover:border-white hover:text-white transition-colors"
                         >
                           ESCUCHAR EN SPOTIFY ↗
                         </a>
@@ -214,26 +233,43 @@ export function MusicaView(): React.ReactElement {
                       <div>
                         <div className="border-b border-raveBorder pb-2 mb-4 flex items-center justify-between font-mono text-xs text-raveTextMuted">
                           <span># TRACKLIST OFICIAL</span>
-                          <span>DETALLE</span>
+                          <span>DETALLE & PREVIEW</span>
                         </div>
                         <div className="space-y-1 mt-3">
                           {release.tracklist.map((track, idx) => (
-                            <a
+                            <div
                               key={`${track.artist}-${track.title}-${idx}`}
-                              href={track.spotifyUrl}
-                              target="_blank"
-                              rel="noopener noreferrer"
-                              aria-label={`Escuchar ${track.artist} - ${track.title} en Spotify`}
                               className="group flex items-center justify-between text-xs font-mono py-1.5 px-2 rounded hover:bg-white/5 transition-colors"
                             >
-                              <span className="text-white/70 group-hover:text-white transition-colors">
+                              <span className="text-white/70 group-hover:text-white transition-colors truncate mr-2">
                                 <span className="text-red-500 mr-2">[{String(idx + 1).padStart(2, '0')}]</span>
                                 {track.artist} — {track.title}
                               </span>
-                              <span className="text-[10px] text-white/30 group-hover:text-red-500 uppercase transition-colors">
-                                ESCUCHAR ↗
-                              </span>
-                            </a>
+                              <div className="flex items-center gap-2 shrink-0">
+                                <SpotifyTrackTrigger
+                                  track={{
+                                    id: `track-${release.catalogNumber}-${idx + 1}`,
+                                    title: track.title,
+                                    artist: track.artist,
+                                    spotifyTrackId: track.spotifyTrackId || "",
+                                    releaseCatalogCode: release.catalogNumber,
+                                    duration: track.duration || "05:00",
+                                  }}
+                                  className="text-[10px] py-0.5 px-2 bg-neutral-900 border-neutral-700 hover:border-raveRed text-white/70 hover:text-white"
+                                >
+                                  ▷ PREVIEW
+                                </SpotifyTrackTrigger>
+                                <a
+                                  href={track.spotifyUrl}
+                                  target="_blank"
+                                  rel="noopener noreferrer"
+                                  aria-label={`Escuchar ${track.artist} - ${track.title} en Spotify`}
+                                  className="text-[10px] text-white/30 hover:text-red-500 uppercase transition-colors"
+                                >
+                                  ↗
+                                </a>
+                              </div>
+                            </div>
                           ))}
                         </div>
                       </div>
