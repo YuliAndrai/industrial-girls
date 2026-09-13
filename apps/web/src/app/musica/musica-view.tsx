@@ -190,7 +190,7 @@ export function MusicaView(): React.ReactElement {
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                 {podcasts.map((episode) => (
-                  <PodcastCard key={episode.id} episode={episode} />
+                  <PodcastCardItem key={episode.id} episode={episode} />
                 ))}
               </div>
             </div>
@@ -453,9 +453,9 @@ function ReleaseCard({ release, index }: ReleaseCardProps): React.JSX.Element {
 }
 
 /**
- * Properties contract for PodcastCard component.
+ * Properties contract for PodcastCardItem component.
  */
-interface PodcastCardProps {
+export interface PodcastCardItemProps {
   /** The podcast episode entity */
   episode: PodcastEpisode;
 }
@@ -467,7 +467,7 @@ interface PodcastCardProps {
  * @param {string} url - Raw SoundCloud track or mix URL.
  * @returns {string} Sanitized embed iframe source URL.
  */
-function getSoundcloudEmbedUrl(url: string): string {
+export function getSoundcloudEmbedUrl(url: string): string {
   const encoded = encodeURIComponent(url);
   return `https://w.soundcloud.com/player/?url=${encoded}&color=%23dc2626&auto_play=false&hide_related=true&show_comments=false&show_user=true&show_reposts=false&show_teaser=false&visual=false`;
 }
@@ -475,12 +475,16 @@ function getSoundcloudEmbedUrl(url: string): string {
 /**
  * Interactive Podcast Episode Card component with on-demand SoundCloud player embed.
  *
- * @param {PodcastCardProps} props - Component properties.
+ * @param {PodcastCardItemProps} props - Component properties.
  * @returns {React.JSX.Element} The rendered podcast article card.
  */
-function PodcastCard({ episode }: PodcastCardProps): React.JSX.Element {
-  // Step 1: Manage embedded SoundCloud player toggle state
-  const [isPlaying, setIsPlaying] = useState(false);
+export function PodcastCardItem({ episode }: PodcastCardItemProps): React.JSX.Element {
+  // Step 1: Manage embedded SoundCloud player toggle state per card
+  const [isOpen, setIsOpen] = useState(false);
+
+  // Step 2: Helper oficial de SoundCloud Widget
+  const encodedUrl = encodeURIComponent(episode.soundcloudUrl);
+  const soundcloudEmbedSrc = `https://w.soundcloud.com/player/?url=${encodedUrl}&color=%23dc2626&auto_play=false&hide_related=true&show_comments=false&show_user=true&show_reposts=false&show_teaser=false&visual=false`;
 
   return (
     <article
@@ -508,60 +512,65 @@ function PodcastCard({ episode }: PodcastCardProps): React.JSX.Element {
         </div>
 
         {/* Artist Name & Title */}
-        <h3 className="text-xl sm:text-2xl font-black uppercase text-white">
+        <h3 className="text-xl sm:text-2xl font-black uppercase text-white font-mono">
           {episode.artist}
         </h3>
-        <p className="font-mono text-xs text-neutral-300 mt-1">
+        <p className="font-mono text-xs text-neutral-300 mt-1 mb-4">
           {episode.title}
         </p>
 
-        {/* Embedded SoundCloud Player Iframe (Toggled on-demand) */}
-        {isPlaying && (
-          <div className="mt-4 border border-red-500/40 bg-black p-1">
+        {/* REPRODUCTOR EMBEBIDO OFICIAL DE SOUNDCLOUD (DESPLEGABLE) */}
+        {isOpen && (
+          <div className="w-full my-3 border border-red-500/50 bg-neutral-900 transition-all">
             <iframe
               width="100%"
               height="166"
               scrolling="no"
               frameBorder="no"
               allow="autoplay"
-              src={getSoundcloudEmbedUrl(episode.soundcloudUrl)}
-              title={`${episode.title} SoundCloud Player`}
-              className="w-full"
+              src={soundcloudEmbedSrc}
+              title={episode.title}
+              loading="lazy"
+              className="w-full block"
             />
           </div>
         )}
       </div>
 
-      {/* Action Buttons: Web Preview Toggle, SoundCloud Primary, YouTube Secondary */}
-      <div className="flex flex-wrap items-center gap-2 mt-4 pt-3 border-t border-raveBorder/40">
-        {/* BOTÓN PREVIEW EN WEB */}
+      {/* BOTONERA DE ACCIONES */}
+      <div className="flex flex-wrap items-center gap-2 mt-auto pt-3 border-t border-raveBorder/40">
+        {/* BOTÓN TOGGLE PREVIEW EN WEB */}
         <button
           type="button"
-          onClick={() => setIsPlaying((prev) => !prev)}
-          className="inline-flex items-center gap-2 px-3 py-1.5 text-xs font-mono uppercase border border-red-500 text-white bg-red-600/20 hover:bg-red-600/30 transition-colors"
+          onClick={() => setIsOpen(!isOpen)}
+          className={`px-3 py-1.5 text-xs font-mono uppercase border transition-colors ${
+            isOpen
+              ? "border-red-600 bg-red-950/40 text-white hover:bg-red-900/60"
+              : "border-white/20 text-white/80 hover:border-red-500 hover:text-white"
+          }`}
         >
-          <span>{isPlaying ? "✕ CERRAR PLAYER" : "▷ PREVIEW EN WEB"}</span>
+          {isOpen ? "✕ CERRAR PLAYER" : "▷ PREVIEW EN WEB"}
         </button>
 
-        {/* BOTÓN PRIMARIO SOUNDCLOUD */}
+        {/* BOTÓN EXTERNO SOUNDCLOUD */}
         <a
           href={episode.soundcloudUrl}
           target="_blank"
           rel="noopener noreferrer"
           aria-label={`Escuchar sesión de ${episode.artist} en SoundCloud`}
-          className="inline-flex items-center gap-2 px-3 py-1.5 text-xs font-mono uppercase bg-red-600/90 text-white hover:bg-red-500 border border-red-500 transition-colors"
+          className="px-3 py-1.5 text-xs font-mono uppercase bg-red-600/90 text-white hover:bg-red-500 border border-red-500 transition-colors inline-flex items-center gap-1 font-semibold"
         >
           <span>ESCUCHAR EN SOUNDCLOUD</span>
           <span>↗</span>
         </a>
 
-        {/* BOTÓN SECUNDARIO YOUTUBE */}
+        {/* BOTÓN EXTERNO YOUTUBE */}
         <a
           href={episode.youtubeUrl}
           target="_blank"
           rel="noopener noreferrer"
           aria-label={`Ver sesión de ${episode.artist} en YouTube`}
-          className="inline-flex items-center gap-2 px-2.5 py-1.5 text-xs font-mono uppercase border border-white/20 text-white/70 hover:border-white hover:text-white transition-colors"
+          className="px-3 py-1.5 text-xs font-mono uppercase border border-white/20 text-white/70 hover:border-white hover:text-white transition-colors inline-flex items-center gap-1"
         >
           <span>VER EN YOUTUBE</span>
           <span>↗</span>
@@ -570,3 +579,6 @@ function PodcastCard({ episode }: PodcastCardProps): React.JSX.Element {
     </article>
   );
 }
+
+/** Export alias to maintain backwards compatibility with existing consumers */
+export const PodcastCard = PodcastCardItem;
