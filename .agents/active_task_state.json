@@ -1,7 +1,7 @@
 {
   "version": "1.0.0",
-  "task_id": "IGW-012",
-  "branch": "feature/jaymusicmachine-IGW-012-archive-roster-directory",
+  "task_id": "IGW-014",
+  "branch": "feature/andhray-IGW-014-integracion-spotify-player",
   "current_phase": "PHASE_8_HUMAN_MERGE_APPROVED",
   "phases": {
     "PHASE_1_BOOTSTRAP": { "completed": true },

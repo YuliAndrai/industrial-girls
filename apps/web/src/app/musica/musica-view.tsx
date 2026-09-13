@@ -14,12 +14,15 @@ import { NavigationDrawer } from "@/components/layout/navigation-drawer";
 import { Footer } from "@/components/layout/footer";
 import { FloatingSoundBar } from "@/components/landing/floating-sound-bar";
 import { TactileButton } from "@/components/ui/tactile-button";
+import { SpotifyTrackTrigger } from "@/components/player/spotify-track-trigger";
 import { useDrawer } from "@/lib/hooks/use-drawer";
 import { useSoundFx } from "@/lib/hooks/use-sound-fx";
 import {
   getReleasesCatalog,
   ReleaseItem,
+  TrackItem,
 } from "@/lib/infrastructure/music-data";
+import { useSpotifyPlayer } from "@/lib/hooks/use-spotify-player";
 import {
   getDemoDropSpecs,
 } from "@/lib/infrastructure/music-catalog";
@@ -162,88 +165,7 @@ export function MusicaView(): React.ReactElement {
               {/* Compilations List Descending (VA 005 to VA 001) */}
               <div className="space-y-12">
                 {releases.map((release, index) => (
-                  <article
-                    key={release.id}
-                    id={release.id}
-                    className="grid grid-cols-1 lg:grid-cols-12 gap-8 border border-raveBorder bg-panel/40 p-6 sm:p-10 hover:border-white/20 transition-all scroll-mt-24"
-                  >
-                    {/* Left Column: Square Cover Art (1:1) and Spotify Button */}
-                    <div className="lg:col-span-4 flex flex-col gap-4">
-                      <div className="relative aspect-square w-full overflow-hidden border-2 border-raveRed bg-black">
-                        <Image
-                          src={release.coverImage}
-                          alt={`${release.catalogNumber} - ${release.title}`}
-                          fill
-                          sizes="(max-width: 768px) 100vw, 400px"
-                          className="object-cover p-2"
-                          priority={index === 0}
-                        />
-                      </div>
-                      <div>
-                        <span className="font-mono text-xs text-raveRed font-bold tracking-wider">
-                          {`[ ${release.catalogNumber} // ${release.year} ]`}
-                        </span>
-                        <h3 className="text-xl sm:text-2xl font-black uppercase text-white mt-1">
-                          {release.title}
-                        </h3>
-                      </div>
-                      <div className="flex flex-wrap items-center gap-2 mt-4">
-                        <a
-                          href={release.spotifyUrl}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          aria-label={`Escuchar ${release.title} en Spotify`}
-                          className="inline-flex items-center gap-2 px-3 py-1.5 text-xs font-mono uppercase border border-red-500 text-white hover:bg-red-500/20 transition-colors"
-                        >
-                          ESCUCHAR EN SPOTIFY ↗
-                        </a>
-                        <a
-                          href={release.buyUrl}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          aria-label={`Comprar ${release.title} en ${release.buyLabel}`}
-                          className="inline-flex items-center gap-2 px-3 py-1.5 text-xs font-mono uppercase border border-white/20 text-white/80 hover:border-white hover:text-white transition-colors"
-                        >
-                          COMPRAR EN {release.buyLabel} ↗
-                        </a>
-                      </div>
-                    </div>
-
-                    {/* Right Column: Monospace Tracklist */}
-                    <div className="lg:col-span-8 flex flex-col justify-between">
-                      <div>
-                        <div className="border-b border-raveBorder pb-2 mb-4 flex items-center justify-between font-mono text-xs text-raveTextMuted">
-                          <span># TRACKLIST OFICIAL</span>
-                          <span>DETALLE</span>
-                        </div>
-                        <div className="space-y-1 mt-3">
-                          {release.tracklist.map((track, idx) => (
-                            <a
-                              key={`${track.artist}-${track.title}-${idx}`}
-                              href={track.spotifyUrl}
-                              target="_blank"
-                              rel="noopener noreferrer"
-                              aria-label={`Escuchar ${track.artist} - ${track.title} en Spotify`}
-                              className="group flex items-center justify-between text-xs font-mono py-1.5 px-2 rounded hover:bg-white/5 transition-colors"
-                            >
-                              <span className="text-white/70 group-hover:text-white transition-colors">
-                                <span className="text-red-500 mr-2">[{String(idx + 1).padStart(2, '0')}]</span>
-                                {track.artist} — {track.title}
-                              </span>
-                              <span className="text-[10px] text-white/30 group-hover:text-red-500 uppercase transition-colors">
-                                ESCUCHAR ↗
-                              </span>
-                            </a>
-                          ))}
-                        </div>
-                      </div>
-
-                      <div className="mt-8 border-t border-raveBorder/60 pt-4 font-mono text-xs text-neutral-400 flex items-center justify-between">
-                        <span>FORMATO: DIGITAL LOSSLESS</span>
-                        <span className="text-raveRed font-bold">145-165 BPM</span>
-                      </div>
-                    </div>
-                  </article>
+                  <ReleaseCard key={release.id} release={release} index={index} />
                 ))}
               </div>
             </div>
@@ -268,66 +190,7 @@ export function MusicaView(): React.ReactElement {
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                 {podcasts.map((episode) => (
-                  <article
-                    key={episode.id}
-                    className="border border-raveBorder bg-panel/60 p-6 flex flex-col justify-between hover:border-raveRed transition-all"
-                  >
-                    <div>
-                      {/* Cover Image (16:9 MaxRes HD) */}
-                      <div className="group relative aspect-video w-full overflow-hidden border border-white/10 bg-black mb-4">
-                        <Image
-                          src={episode.coverImage}
-                          alt={episode.title}
-                          fill
-                          sizes="(max-width: 768px) 100vw, (max-width: 1280px) 50vw, 640px"
-                          quality={90}
-                          className="w-full h-full object-cover object-center contrast-[1.05] brightness-95 group-hover:brightness-105 group-hover:scale-[1.02] transition-all duration-300"
-                        />
-                      </div>
-
-                      {/* Metadata Badge */}
-                      <div className="flex items-center justify-between border-b border-raveBorder pb-2 mb-3 font-mono text-xs">
-                        <span className="font-mono text-xs text-raveRed font-bold tracking-wider">
-                          {`[ IG MIX ${episode.seriesNumber} ]`}
-                        </span>
-                      </div>
-
-                      {/* Artist Name & Title */}
-                      <h3 className="text-xl sm:text-2xl font-black uppercase text-white">
-                        {episode.artist}
-                      </h3>
-                      <p className="font-mono text-xs text-neutral-300 mt-1">
-                        {episode.title}
-                      </p>
-                    </div>
-
-                    {/* Action Buttons: SoundCloud Primary, YouTube Secondary */}
-                    <div className="flex flex-wrap items-center gap-2 mt-4 pt-3 border-t border-raveBorder/40">
-                      {/* BOTÓN PRIMARIO SOUNDCLOUD */}
-                      <a
-                        href={episode.soundcloudUrl}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        aria-label={`Escuchar sesión de ${episode.artist} en SoundCloud`}
-                        className="inline-flex items-center gap-2 px-3 py-1.5 text-xs font-mono uppercase bg-red-600/90 text-white hover:bg-red-500 border border-red-500 transition-colors"
-                      >
-                        <span>ESCUCHAR EN SOUNDCLOUD</span>
-                        <span>↗</span>
-                      </a>
-
-                      {/* BOTÓN SECUNDARIO YOUTUBE */}
-                      <a
-                        href={episode.youtubeUrl}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        aria-label={`Ver sesión de ${episode.artist} en YouTube`}
-                        className="inline-flex items-center gap-2 px-2.5 py-1.5 text-xs font-mono uppercase border border-white/20 text-white/70 hover:border-white hover:text-white transition-colors"
-                      >
-                        <span>VER EN YOUTUBE</span>
-                        <span>↗</span>
-                      </a>
-                    </div>
-                  </article>
+                  <PodcastCardItem key={episode.id} episode={episode} />
                 ))}
               </div>
             </div>
@@ -421,3 +284,301 @@ export function MusicaView(): React.ReactElement {
     </div>
   );
 }
+
+/**
+ * Properties contract for ReleaseCard component.
+ */
+interface ReleaseCardProps {
+  /** The release data item */
+  release: ReleaseItem;
+  /** Index position in list for layout prioritization */
+  index: number;
+}
+
+/**
+ * Interactive Release Card component with inline embedded Spotify player and tracklist triggers.
+ *
+ * @param {ReleaseCardProps} props - Component properties.
+ * @returns {React.JSX.Element} The rendered release article card.
+ */
+function ReleaseCard({ release, index }: ReleaseCardProps): React.JSX.Element {
+  // Step 1: Manage active embedded preview track ID state per release card
+  const [activeTrackId, setActiveTrackId] = useState<string | null>(null);
+  const { playTrack } = useSpotifyPlayer();
+
+  // Step 2: Handle track preview selection
+  const handleTrackPreview = (track: TrackItem) => {
+    setActiveTrackId(track.spotifyTrackId);
+    try {
+      playTrack({
+        id: track.id,
+        title: track.title,
+        artist: track.artist,
+        spotifyTrackId: track.spotifyTrackId,
+        releaseCatalogCode: release.catalogNumber,
+        duration: track.duration || "05:00",
+      });
+    } catch {
+      // Graceful fallback
+    }
+  };
+
+  return (
+    <article
+      id={release.id}
+      className="grid grid-cols-1 lg:grid-cols-12 gap-8 border border-raveBorder bg-panel/40 p-6 sm:p-10 hover:border-white/20 transition-all scroll-mt-24"
+    >
+      {/* Left Column: Square Cover Art (1:1) and Spotify Button */}
+      <div className="lg:col-span-4 flex flex-col gap-4">
+        <div className="relative aspect-square w-full overflow-hidden border-2 border-raveRed bg-black">
+          <Image
+            src={release.coverImage}
+            alt={`${release.catalogNumber} - ${release.title}`}
+            fill
+            sizes="(max-width: 768px) 100vw, 400px"
+            className="object-cover p-2"
+            priority={index === 0}
+          />
+        </div>
+        <div>
+          <span className="font-mono text-xs text-raveRed font-bold tracking-wider">
+            {`[ ${release.catalogNumber} // ${release.year} ]`}
+          </span>
+          <h3 className="text-xl sm:text-2xl font-black uppercase text-white mt-1">
+            {release.title}
+          </h3>
+        </div>
+        <div className="flex flex-wrap items-center gap-2 mt-4">
+          <SpotifyTrackTrigger
+            track={
+              release.spotifyAlbumId
+                ? {
+                    id: `release-${release.id}`,
+                    title: release.title,
+                    artist: "Various Artists",
+                    spotifyTrackId: release.spotifyAlbumId,
+                    releaseCatalogCode: release.catalogNumber,
+                    duration: "COMPILATION",
+                    type: "album",
+                  }
+                : release.catalogNumber
+            }
+            className="inline-flex items-center gap-2 px-3 py-1.5 text-xs font-mono uppercase border border-red-500 text-white bg-red-600/20 hover:bg-red-600/30 transition-colors"
+          >
+            ▷ PREVIEW EN WEB
+          </SpotifyTrackTrigger>
+          <a
+            href={release.spotifyUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label={`Escuchar ${release.title} en Spotify`}
+            className="inline-flex items-center gap-2 px-3 py-1.5 text-xs font-mono uppercase border border-white/20 text-white/80 hover:border-white hover:text-white transition-colors"
+          >
+            ESCUCHAR EN SPOTIFY ↗
+          </a>
+          <a
+            href={release.buyUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label={`Comprar ${release.title} en ${release.buyLabel}`}
+            className="inline-flex items-center gap-2 px-3 py-1.5 text-xs font-mono uppercase border border-white/20 text-white/80 hover:border-white hover:text-white transition-colors"
+          >
+            COMPRAR EN {release.buyLabel} ↗
+          </a>
+        </div>
+
+        {/* Embedded Spotify Track Preview Iframe */}
+        {activeTrackId && (
+          <div className="mt-4 border border-red-500/40 bg-black p-1">
+            <iframe
+              src={`https://open.spotify.com/embed/track/${activeTrackId}?utm_source=generator&theme=0`}
+              width="100%"
+              height="152"
+              frameBorder="0"
+              allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+              loading="lazy"
+              title="Spotify Track Preview"
+            />
+          </div>
+        )}
+      </div>
+
+      {/* Right Column: Monospace Tracklist */}
+      <div className="lg:col-span-8 flex flex-col justify-between">
+        <div>
+          <div className="border-b border-raveBorder pb-2 mb-4 flex items-center justify-between font-mono text-xs text-raveTextMuted">
+            <span># TRACKLIST OFICIAL</span>
+            <span>DETALLE & PREVIEW</span>
+          </div>
+          <div className="space-y-1 mt-3">
+            {release.tracklist.map((track, idx) => (
+              <div
+                key={track.id ?? `${track.artist}-${track.title}-${idx}`}
+                className="group flex items-center justify-between text-xs font-mono py-1.5 px-2 rounded hover:bg-white/5 transition-colors"
+              >
+                <span className="text-white/70 group-hover:text-white transition-colors truncate mr-2">
+                  <span className="text-red-500 mr-2">[{String(idx + 1).padStart(2, '0')}]</span>
+                  {track.artist} — {track.title}
+                </span>
+                <div className="flex items-center gap-2 shrink-0">
+                  <button
+                    type="button"
+                    onClick={() => handleTrackPreview(track)}
+                    className="text-[10px] py-0.5 px-2 bg-neutral-900 border border-neutral-700 hover:border-raveRed text-white/70 hover:text-white font-mono uppercase transition-colors"
+                  >
+                    ▷ PREVIEW
+                  </button>
+                  <a
+                    href={track.spotifyUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label={`Escuchar ${track.artist} - ${track.title} en Spotify`}
+                    className="text-[10px] text-white/30 hover:text-red-500 uppercase transition-colors"
+                  >
+                    ↗
+                  </a>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        <div className="mt-8 border-t border-raveBorder/60 pt-4 font-mono text-xs text-neutral-400 flex items-center justify-between">
+          <span>FORMATO: DIGITAL LOSSLESS</span>
+          <span className="text-raveRed font-bold">145-165 BPM</span>
+        </div>
+      </div>
+    </article>
+  );
+}
+
+/**
+ * Properties contract for PodcastCardItem component.
+ */
+export interface PodcastCardItemProps {
+  /** The podcast episode entity */
+  episode: PodcastEpisode;
+}
+
+/**
+ * Constructs official SoundCloud widget embed URL with visual=false,
+ * customized brutalist red accent (#dc2626), and disabled auto-play.
+ *
+ * @param {string} url - Raw SoundCloud track or mix URL.
+ * @returns {string} Sanitized embed iframe source URL.
+ */
+export function getSoundcloudEmbedUrl(url: string): string {
+  const encoded = encodeURIComponent(url);
+  return `https://w.soundcloud.com/player/?url=${encoded}&color=%23dc2626&auto_play=false&hide_related=true&show_comments=false&show_user=true&show_reposts=false&show_teaser=false&visual=false`;
+}
+
+/**
+ * Interactive Podcast Episode Card component with on-demand SoundCloud player embed.
+ *
+ * @param {PodcastCardItemProps} props - Component properties.
+ * @returns {React.JSX.Element} The rendered podcast article card.
+ */
+export function PodcastCardItem({ episode }: PodcastCardItemProps): React.JSX.Element {
+  // Step 1: Manage embedded SoundCloud player toggle state per card
+  const [isOpen, setIsOpen] = useState(false);
+
+  // Step 2: Helper oficial de SoundCloud Widget
+  const encodedUrl = encodeURIComponent(episode.soundcloudUrl);
+  const soundcloudEmbedSrc = `https://w.soundcloud.com/player/?url=${encodedUrl}&color=%23dc2626&auto_play=false&hide_related=true&show_comments=false&show_user=true&show_reposts=false&show_teaser=false&visual=false`;
+
+  return (
+    <article
+      key={episode.id}
+      className="border border-raveBorder bg-panel/60 p-6 flex flex-col justify-between hover:border-raveRed transition-all"
+    >
+      <div>
+        {/* Cover Image (16:9 MaxRes HD) */}
+        <div className="group relative aspect-video w-full overflow-hidden border border-white/10 bg-black mb-4">
+          <Image
+            src={episode.coverImage}
+            alt={episode.title}
+            fill
+            sizes="(max-width: 768px) 100vw, (max-width: 1280px) 50vw, 640px"
+            quality={90}
+            className="w-full h-full object-cover object-center contrast-[1.05] brightness-95 group-hover:brightness-105 group-hover:scale-[1.02] transition-all duration-300"
+          />
+        </div>
+
+        {/* Metadata Badge */}
+        <div className="flex items-center justify-between border-b border-raveBorder pb-2 mb-3 font-mono text-xs">
+          <span className="font-mono text-xs text-raveRed font-bold tracking-wider">
+            {`[ IG MIX ${episode.seriesNumber} ]`}
+          </span>
+        </div>
+
+        {/* Artist Name & Title */}
+        <h3 className="text-xl sm:text-2xl font-black uppercase text-white font-mono">
+          {episode.artist}
+        </h3>
+        <p className="font-mono text-xs text-neutral-300 mt-1 mb-4">
+          {episode.title}
+        </p>
+
+        {/* REPRODUCTOR EMBEBIDO OFICIAL DE SOUNDCLOUD (DESPLEGABLE) */}
+        {isOpen && (
+          <div className="w-full my-3 border border-red-500/50 bg-neutral-900 transition-all">
+            <iframe
+              width="100%"
+              height="166"
+              scrolling="no"
+              frameBorder="no"
+              allow="autoplay"
+              src={soundcloudEmbedSrc}
+              title={episode.title}
+              loading="lazy"
+              className="w-full block"
+            />
+          </div>
+        )}
+      </div>
+
+      {/* BOTONERA DE ACCIONES */}
+      <div className="flex flex-wrap items-center gap-2 mt-auto pt-3 border-t border-raveBorder/40">
+        {/* BOTÓN TOGGLE PREVIEW EN WEB */}
+        <button
+          type="button"
+          onClick={() => setIsOpen(!isOpen)}
+          className={`px-3 py-1.5 text-xs font-mono uppercase border transition-colors ${
+            isOpen
+              ? "border-red-600 bg-red-950/40 text-white hover:bg-red-900/60"
+              : "border-white/20 text-white/80 hover:border-red-500 hover:text-white"
+          }`}
+        >
+          {isOpen ? "✕ CERRAR PLAYER" : "▷ PREVIEW EN WEB"}
+        </button>
+
+        {/* BOTÓN EXTERNO SOUNDCLOUD */}
+        <a
+          href={episode.soundcloudUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label={`Escuchar sesión de ${episode.artist} en SoundCloud`}
+          className="px-3 py-1.5 text-xs font-mono uppercase bg-red-600/90 text-white hover:bg-red-500 border border-red-500 transition-colors inline-flex items-center gap-1 font-semibold"
+        >
+          <span>ESCUCHAR EN SOUNDCLOUD</span>
+          <span>↗</span>
+        </a>
+
+        {/* BOTÓN EXTERNO YOUTUBE */}
+        <a
+          href={episode.youtubeUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label={`Ver sesión de ${episode.artist} en YouTube`}
+          className="px-3 py-1.5 text-xs font-mono uppercase border border-white/20 text-white/70 hover:border-white hover:text-white transition-colors inline-flex items-center gap-1"
+        >
+          <span>VER EN YOUTUBE</span>
+          <span>↗</span>
+        </a>
+      </div>
+    </article>
+  );
+}
+
+/** Export alias to maintain backwards compatibility with existing consumers */
+export const PodcastCard = PodcastCardItem;
