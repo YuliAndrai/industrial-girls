@@ -2,7 +2,7 @@
  * @file apps/web/src/lib/infrastructure/footer.test.ts
  * @description Layer 1 Presentation Test Suite - Minimal Industrial Footer Contract.
  * Validates the ultra-streamlined single-row technical footer layout,
- * copyright declaration, compact official social links, and security attributes.
+ * copyright declaration, 6 verified vector social icons, and security attributes.
  *
  * @spec IGW-013-MINIMAL-FOOTER
  */
@@ -38,9 +38,8 @@ describe("Minimal Industrial Footer Architecture — Test Suite (@spec IGW-013)"
     expect(content).not.toContain("MerchWaitlistModal");
     expect(content).not.toContain("Merch (Coming Soon)");
 
-    // Step 5: Assert absence of Column 4 (legacy frequencies header and Bandcamp)
+    // Step 5: Assert absence of Column 4 (legacy frequencies header and mock label)
     expect(content).not.toContain("FRECUENCIAS OFICIALES");
-    expect(content).not.toContain("bandcamp.com");
     expect(content).not.toContain("Industrial Girls Wax");
   });
 
@@ -63,25 +62,22 @@ describe("Minimal Industrial Footer Architecture — Test Suite (@spec IGW-013)"
     expect(content).toContain("© 2026 INDUSTRIAL GIRLS // ALL RIGHTS RESERVED.");
   });
 
-  it("validates right in-line compact official networks and security attributes", () => {
+  it("validates right in-line 6 vector social icons, purge of bracketed text, and security attributes", () => {
     // Step 1: Read footer component source
     const content = fs.readFileSync(footerPath, "utf-8");
 
-    // Step 2: Assert all 6 network labels exist in exact format
-    expect(content).toContain("[ SOUNDCLOUD ]");
-    expect(content).toContain("[ BEATPORT ]");
-    expect(content).toContain("[ SPOTIFY ]");
-    expect(content).toContain("[ YOUTUBE ]");
-    expect(content).toContain("[ INSTAGRAM ]");
-    expect(content).toContain("[ TELEGRAM ]");
+    // Step 2: Assert purge of bracketed textual labels
+    expect(content).not.toContain("[ SOUNDCLOUD ]");
+    expect(content).not.toContain("[ BEATPORT ]");
+    expect(content).not.toContain("[ SPOTIFY ]");
+    expect(content).not.toContain("[ YOUTUBE ]");
+    expect(content).not.toContain("[ INSTAGRAM ]");
+    expect(content).not.toContain("[ TELEGRAM ]");
 
-    // Step 3: Assert canonical URLs
-    expect(content).toContain("https://soundcloud.com/industrial_girls");
-    expect(content).toContain("https://www.beatport.com/es/label/industrial-girls/106032");
-    expect(content).toContain("https://open.spotify.com");
-    expect(content).toContain("https://youtube.com");
-    expect(content).toContain("https://instagram.com");
-    expect(content).toContain("https://t.me/industrialgirls");
+    // Step 3: Assert horizontal icon layout and styling
+    expect(content).toContain("flex items-center gap-5");
+    expect(content).toContain("w-5 h-5");
+    expect(content).toContain("text-neutral-400 hover:text-red-500 transition-colors duration-200");
 
     // Step 4: Assert security attributes
     expect(content).toContain('target="_blank"');
