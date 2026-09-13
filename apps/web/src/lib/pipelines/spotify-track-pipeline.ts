@@ -23,6 +23,31 @@ const SPOTIFY_URI_REGEX = /^spotify:track:([a-zA-Z0-9]{22})$/;
 const SPOTIFY_URL_REGEX = /^(?:https?:\/\/)?open\.spotify\.com(?:\/[a-zA-Z]{2}(?:-[a-zA-Z]{2})?)?\/track\/([a-zA-Z0-9]{22})(?:[/?#]|$)/;
 
 /**
+ * Regular expression extracting album ID from canonical Spotify URIs ('spotify:album:ID').
+ */
+const SPOTIFY_ALBUM_URI_REGEX = /^spotify:album:([a-zA-Z0-9]{22})$/;
+
+/**
+ * Regular expression extracting album ID from Spotify web URLs.
+ */
+const SPOTIFY_ALBUM_URL_REGEX = /^(?:https?:\/\/)?open\.spotify\.com(?:\/[a-zA-Z]{2}(?:-[a-zA-Z]{2})?)?\/album\/([a-zA-Z0-9]{22})(?:[/?#]|$)/;
+
+/**
+ * Supported Spotify embeddable resource types.
+ */
+export type SpotifyResourceType = "track" | "album";
+
+/**
+ * Parsed Spotify resource metadata.
+ */
+export interface SpotifyParsedResource {
+  /** Canonical 22-character Spotify ID */
+  id: string;
+  /** Resource type ('track' or 'album') */
+  type: SpotifyResourceType;
+}
+
+/**
  * Spotify track pipeline execution context contract.
  */
 export interface SpotifyPipelineContext {
@@ -52,6 +77,8 @@ export interface SpotifyPipelineResult {
 export interface SpotifyEmbedOptions {
   /** Visual theme override ('0' for dark, '1' for light) */
   theme?: "0" | "1";
+  /** Explicit resource type override ('track' or 'album') */
+  type?: SpotifyResourceType;
 }
 
 /**
@@ -71,12 +98,12 @@ export function validateSpotifyId(id: string): boolean {
 }
 
 /**
- * Parses and extracts a 22-character Spotify Track ID from a raw URL, Spotify URI, or plain ID.
+ * Parses and extracts a Spotify resource (ID and type) from a raw URL, URI, or plain ID.
  *
  * @param {string} input - The input string (web URL, spotify URI, or plain ID).
- * @returns {string | null} The extracted 22-character Track ID, or null if invalid.
+ * @returns {SpotifyParsedResource | null} The parsed resource metadata or null if invalid.
  */
-export function parseSpotifyTrackId(input: string): string | null {
+export function parseSpotifyResource(input: string): SpotifyParsedResource | null {
   // Step 1: Invariant check - reject non-strings and empty input
   if (!input || typeof input !== "string") {
     return null;
@@ -84,49 +111,78 @@ export function parseSpotifyTrackId(input: string): string | null {
 
   const trimmed = input.trim();
 
-  // Step 2: Fast path - verify if input is already a direct valid 22-character ID
+  // Step 2: Direct 22-character Base62 ID (defaults to track)
   if (SPOTIFY_ID_REGEX.test(trimmed)) {
-    return trimmed;
+    return { id: trimmed, type: "track" };
   }
 
-  // Step 3: Check canonical Spotify URI format (spotify:track:...)
-  const uriMatch = trimmed.match(SPOTIFY_URI_REGEX);
-  if (uriMatch && uriMatch[1]) {
-    return uriMatch[1];
+  // Step 3: Check Spotify Track URI format (spotify:track:...)
+  const trackUriMatch = trimmed.match(SPOTIFY_URI_REGEX);
+  if (trackUriMatch && trackUriMatch[1]) {
+    return { id: trackUriMatch[1], type: "track" };
   }
 
-  // Step 4: Check Spotify web URL format with optional query params and regional subpaths
-  const urlMatch = trimmed.match(SPOTIFY_URL_REGEX);
-  if (urlMatch && urlMatch[1]) {
-    return urlMatch[1];
+  // Step 4: Check Spotify Track web URL format
+  const trackUrlMatch = trimmed.match(SPOTIFY_URL_REGEX);
+  if (trackUrlMatch && trackUrlMatch[1]) {
+    return { id: trackUrlMatch[1], type: "track" };
   }
 
-  // Step 5: If no pattern matches, safely return null
+  // Step 5: Check Spotify Album URI format (spotify:album:...)
+  const albumUriMatch = trimmed.match(SPOTIFY_ALBUM_URI_REGEX);
+  if (albumUriMatch && albumUriMatch[1]) {
+    return { id: albumUriMatch[1], type: "album" };
+  }
+
+  // Step 6: Check Spotify Album web URL format
+  const albumUrlMatch = trimmed.match(SPOTIFY_ALBUM_URL_REGEX);
+  if (albumUrlMatch && albumUrlMatch[1]) {
+    return { id: albumUrlMatch[1], type: "album" };
+  }
+
+  // Step 7: No recognized Spotify pattern
   return null;
 }
 
 /**
- * Builds a sanitized, secure Spotify embed iframe URL for a verified track ID.
+ * Parses and extracts a 22-character Spotify Track ID from a raw URL, Spotify URI, or plain ID.
  *
- * @param {string} trackId - Verified 22-character Spotify Track ID.
+ * @param {string} input - The input string (web URL, spotify URI, or plain ID).
+ * @returns {string | null} The extracted 22-character Track ID, or null if invalid.
+ */
+export function parseSpotifyTrackId(input: string): string | null {
+  // Step 1: Delegate to universal resource parser and return ID only if resource is a track
+  const parsed = parseSpotifyResource(input);
+  if (!parsed || parsed.type !== "track") {
+    return null;
+  }
+  return parsed.id;
+}
+
+/**
+ * Builds a sanitized, secure Spotify embed iframe URL for a verified track or album.
+ *
+ * @param {string} trackOrResource - Verified 22-character Spotify ID, URI, or URL.
  * @param {SpotifyEmbedOptions} [options] - Embed configuration options.
  * @returns {string} Fully qualified embed URL.
- * @throws {Error} If trackId is invalid or malformed.
+ * @throws {Error} If identifier is invalid or malformed.
  */
-export function buildSpotifyEmbedUrl(trackId: string, options?: SpotifyEmbedOptions): string {
-  // Step 1: Extract or validate the track ID
-  const sanitizedId = parseSpotifyTrackId(trackId);
+export function buildSpotifyEmbedUrl(trackOrResource: string, options?: SpotifyEmbedOptions): string {
+  // Step 1: Parse resource to extract clean ID and resource type
+  const parsed = parseSpotifyResource(trackOrResource);
+  const sanitizedId = parsed?.id ?? trackOrResource?.trim();
 
   // Step 2: Invariant enforcement - reject invalid IDs with explicit descriptive error
   if (!sanitizedId || !validateSpotifyId(sanitizedId)) {
-    throw new Error(`Invalid Spotify Track ID: "${trackId}". Expected 22-character Base62 string.`);
+    throw new Error(`Invalid Spotify Track ID: "${trackOrResource}". Expected 22-character Base62 string.`);
   }
 
-  // Step 3: Determine theme parameter (default '0' for brutalist dark aesthetic)
+  // Step 3: Determine resource type and theme parameter
+  const resourceType = options?.type ?? parsed?.type ?? "track";
   const theme = options?.theme ?? "0";
 
   // Step 4: Construct sanitized URL using official generator parameters
-  return `https://open.spotify.com/embed/track/${sanitizedId}?utm_source=generator&theme=${theme}`;
+  return `https://open.spotify.com/embed/${resourceType}/${sanitizedId}?utm_source=generator&theme=${theme}`;
 }
 
 /**

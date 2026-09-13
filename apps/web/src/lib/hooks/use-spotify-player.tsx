@@ -97,23 +97,23 @@ export function SpotifyPlayerProvider({ children }: { children: ReactNode }): Re
         if (byRelease) {
           setCurrentTrack(byRelease);
         } else {
-          // 4c. Attempt to parse Spotify Track ID from URI or URL
-          const parsedId = parseSpotifyTrackId(trimmed) ?? (validateSpotifyId(trimmed) ? trimmed : null);
+          // 4c. Attempt to parse Spotify Resource from URI, URL, or plain ID
+          const parsed = parseSpotifyTrackId(trimmed) ?? (validateSpotifyId(trimmed) ? trimmed : null);
 
-          if (parsedId && validateSpotifyId(parsedId)) {
+          if (parsed && validateSpotifyId(parsed)) {
             const bySpotifyId = SPOTIFY_FEATURED_TRACKS.find(
-              (t) => t.spotifyTrackId === parsedId
+              (t) => t.spotifyTrackId === parsed
             );
 
             if (bySpotifyId) {
               setCurrentTrack(bySpotifyId);
             } else {
               setCurrentTrack({
-                id: `custom-${parsedId}`,
-                title: "Selected Track",
-                artist: "Industrial Girls Underground",
-                spotifyTrackId: parsedId,
-                releaseCatalogCode: "VA 001",
+                id: `custom-${parsed}`,
+                title: "Industrial Girls Underground",
+                artist: "Various Artists",
+                spotifyTrackId: parsed,
+                releaseCatalogCode: "COMPILATION",
                 duration: "05:00",
               });
             }
@@ -128,7 +128,20 @@ export function SpotifyPlayerProvider({ children }: { children: ReactNode }): Re
         }
       }
     } else {
-      setCurrentTrack(trackOrId);
+      // 4e. If object provided without a valid track ID (undefined), resolve by release code or default
+      if (trackOrId.spotifyTrackId === undefined) {
+        try {
+          const fallback = getSpotifyTrackByReleaseCode(trackOrId.releaseCatalogCode) ?? getDefaultSpotifyTrack();
+          setCurrentTrack({
+            ...trackOrId,
+            spotifyTrackId: fallback.spotifyTrackId,
+          });
+        } catch {
+          setCurrentTrack(trackOrId);
+        }
+      } else {
+        setCurrentTrack(trackOrId);
+      }
     }
 
     // Automatically reveal and expand the player on track selection
