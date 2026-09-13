@@ -57,20 +57,7 @@ export function EventosView(): React.ReactElement {
           </div>
         </section>
 
-        {/* Block 2: Radar Geográfico (Formulario de Captación - id="radar") */}
-        <section id="radar" className="w-full border-b border-raveBorder bg-bg py-16 px-4 sm:px-6 scroll-mt-24">
-          <div className="mx-auto max-w-3xl">
-            <GeographicForm
-              source="events"
-              badge="// RADAR GEOGRÁFICO // PREVENTAS & ALERTAS"
-              title="PREVENTAS & ALERTAS POR CIUDAD"
-              subtitle="Recibe anuncios de locaciones, alineaciones y preventas prioritarias en tu región."
-              buttonText="[ RECIBIR ALERTAS EN MI CIUDAD ]"
-            />
-          </div>
-        </section>
-
-        {/* Block 3: Últimos Showcases (id="calendario") */}
+        {/* Block 2: Últimos Showcases (id="calendario") */}
         <section id="calendario" className="w-full border-b border-raveBorder bg-panel/40 py-16 px-4 sm:px-6 scroll-mt-24">
           <div className="mx-auto max-w-7xl">
             <div className="border-b-2 border-raveRed pb-4 mb-10">
@@ -100,6 +87,19 @@ export function EventosView(): React.ReactElement {
                 </article>
               ))}
             </div>
+          </div>
+        </section>
+
+        {/* Block 3: Radar Geográfico (Formulario de Captación - id="radar") */}
+        <section id="radar" className="w-full border-b border-raveBorder bg-bg py-16 px-4 sm:px-6 scroll-mt-24">
+          <div className="mx-auto max-w-3xl">
+            <GeographicForm
+              source="events"
+              badge="ÚNETE A NUESTRO TELEGRAM // RECIBE NOTICIAS"
+              title="PREVENTAS & ALERTAS POR CIUDAD"
+              subtitle="Recibe anuncios de locaciones, alineaciones y preventas prioritarias en tu región."
+              buttonText="[ RECIBIR NOTICIAS DE EVENTOS EN MI CIUDAD ]"
+            />
           </div>
         </section>
       </main>
