@@ -270,7 +270,8 @@ describe("Podcast Series (IG MIX 001 - 004) — TDD Test Suite", () => {
 
       // Step 3: Validate official SoundCloud widget embed URL construction
       expect(content).toContain("https://w.soundcloud.com/player/?url=");
-      expect(content).toContain("color=%23ff0000");
+      expect(content).toContain("color=%23dc2626");
+      expect(content).toContain("visual=false");
     });
   });
 });

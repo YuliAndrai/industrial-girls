@@ -461,6 +461,18 @@ interface PodcastCardProps {
 }
 
 /**
+ * Constructs official SoundCloud widget embed URL with visual=false,
+ * customized brutalist red accent (#dc2626), and disabled auto-play.
+ *
+ * @param {string} url - Raw SoundCloud track or mix URL.
+ * @returns {string} Sanitized embed iframe source URL.
+ */
+function getSoundcloudEmbedUrl(url: string): string {
+  const encoded = encodeURIComponent(url);
+  return `https://w.soundcloud.com/player/?url=${encoded}&color=%23dc2626&auto_play=false&hide_related=true&show_comments=false&show_user=true&show_reposts=false&show_teaser=false&visual=false`;
+}
+
+/**
  * Interactive Podcast Episode Card component with on-demand SoundCloud player embed.
  *
  * @param {PodcastCardProps} props - Component properties.
@@ -512,9 +524,7 @@ function PodcastCard({ episode }: PodcastCardProps): React.JSX.Element {
               scrolling="no"
               frameBorder="no"
               allow="autoplay"
-              src={`https://w.soundcloud.com/player/?url=${encodeURIComponent(
-                episode.soundcloudUrl
-              )}&color=%23ff0000&auto_play=true&hide_related=true&show_comments=false&show_user=true&show_reposts=false&show_teaser=false`}
+              src={getSoundcloudEmbedUrl(episode.soundcloudUrl)}
               title={`${episode.title} SoundCloud Player`}
               className="w-full"
             />
